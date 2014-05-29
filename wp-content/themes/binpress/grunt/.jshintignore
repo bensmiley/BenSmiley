@@ -1,0 +1,10 @@
+../js/html5shiv.js
+../js/*.scripts.min.js
+../js/bower_components/**/*.js
+../js/tests/test-main.js
+
+../SPA/*.spa.min.js
+../SPA/bower_components/**/*.js
+../SPA/tests/test-main.js
+
+../production/**/*.js

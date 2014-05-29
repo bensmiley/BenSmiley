@@ -1,0 +1,11 @@
+{
+  "name": "bower-spa-binpress",
+  "private": true,
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "almond": "~0.2.9",
+    "marionette": "~1.8.6",
+    "bootstrap": "~3.1.1"
+  },
+  "devDependencies": {}
+}
