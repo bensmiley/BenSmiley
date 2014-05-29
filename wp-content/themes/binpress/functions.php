@@ -341,7 +341,7 @@ function strip_user_last_name($username) {
 
     return $last_name;
 }
-
+//TODO: make this function resauable by passing  status value, can be resued in send_email function
 /**
  * Function to update the user status on user creation
  *
@@ -452,7 +452,7 @@ function send_mail_cron() {
                 $user_data = get_user_data($pending_email['email_id']);
                 $mail_body = get_user_activation_mail_conent($user_data);
                 $subject = "Activate your Account on BenSmiley";
-                send_email($pending_email['email_id'], $subject, $mail_body);
+                send_email($pending_email['email_id'], $subject, $mail_body,$pending_email['ID']);
                 break;
         }
 
@@ -482,9 +482,15 @@ function get_user_activation_mail_conent($user_data) {
 
 }
 
-function send_email($recipient, $subject, $mail_body) {
+//TODO : put the number of parametrs passed into a array and send
+function send_email($recipient, $subject, $mail_body,$mail_id) {
+    global $wpdb;
 
-    wp_mail($recipient, $subject, $mail_body);
+    if(wp_mail($recipient, $subject, $mail_body)){
+
+        $wpdb->update('cron_module', array('status' => 0), array('ID' => $mail_id));
+    }
+
 }
 
 function get_user_data($user_email) {
