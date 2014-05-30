@@ -1,4 +1,4 @@
-define ['jquery','jquery-validate','bootstrap'] , ->
+define ['jquery', 'jquery-validate', 'bootstrap'], ->
     $(document).ready ->
         jQuery.validator.setDefaults
             debug: true,
@@ -7,11 +7,11 @@ define ['jquery','jquery-validate','bootstrap'] , ->
         $('#login-form').validate
             focusInvalid: false,
             rules:
-                user_name:
+                user_email:
                     required: true,
                     email: true
 
-                user_password:
+                user_pass:
                     required: true
 
 
@@ -25,32 +25,30 @@ define ['jquery','jquery-validate','bootstrap'] , ->
                 parent.removeClass('error-control').addClass('success-control')
 
         $('#btn-login').click ->
-
             if($('#login-form').valid())
                 $('#login-form').submit ->
                     #get the details from the sign up form and convert it to json format
                     loginDetailsArray = $(this).serializeArray();
-                    loginDetails= formatLoginData loginDetailsArray
+                    loginDetails = formatLoginData loginDetailsArray
 
                     #set the form ajax action
                     formAction =
-                        'action' : 'user-login'
+                        'action': 'user-login'
 
                     #merge the objects to be passed in ajax call
                     $.extend(loginDetails, formAction);
 
-                    $.post(AJAXURL, loginDetails , (response)->
-
-                        #if(response.code == "OK")
-                            #successMsg = response.msg
-                            #$('#display-login-msg').empty()
-                            #$('#display-login-msg').append successMsg
-                            #$('#btn-signup-form-reset').click()
-
-                        #if(response.code == "ERROR")
-                            #errorMsg = response.msg
-                            #$('#display-login-msg').empty()
-                            #$('#display-login-msg').append errorMsg
+                    $.post(AJAXURL, loginDetails, (response)->
+                        if(response.code == "OK")
+                            successMsg = response.msg
+                            $('#display-login-msg').empty()
+                            $('#display-login-msg').append successMsg
+                            page = "/dashboard"
+                            window.location.href = response.site_url+page
+                        if(response.code == "ERROR")
+                            errorMsg = response.msg
+                            $(' #display-login-msg').empty()
+                            $('#display-login-msg').append errorMsg
                     )
             else
                 $('#display-login-msg').empty()
@@ -58,6 +56,6 @@ define ['jquery','jquery-validate','bootstrap'] , ->
 
         formatLoginData = (serializedDataArray)->
             data = {}
-            $.each serializedDataArray,( key, ele )->
+            $.each serializedDataArray, (key, ele)->
                 data[ele.name] = ele.value
             data

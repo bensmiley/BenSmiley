@@ -247,7 +247,7 @@ function pick_user_fields($signupform_data) {
         return array();
 
     // the user fields required to be stored
-    $user_fields = array('user_name', 'user_email', 'user_password');
+    $user_fields = array('user_name', 'user_email', 'user_pass');
 
     $user_data = array();
 
@@ -387,7 +387,7 @@ function set_user_activation_key($user_activation_key, $user_id) {
 
 }
 
-//TODO: seperate each inserts into separte functions
+//TODO: seperate each inserts into separte functions and make it generic so can b used for all email
 /**
  * Function to insert the user details into table cron_module
  *
@@ -428,7 +428,7 @@ function set_user_details_for_mail($user_data) {
 }
 
 function send_email_through_cron() {
-    //send_mail_cron();
+    send_mail_cron();
 }
 
 add_action('CRON_SEND_EMAIL', 'send_email_through_cron');
@@ -454,6 +454,12 @@ function send_mail_cron() {
                 $subject = "Activate your Account on BenSmiley";
                 send_email($pending_email['email_id'], $subject, $mail_body,$pending_email['ID']);
                 break;
+            case "new-user-welcome":
+                $user_data = get_user_data($pending_email['email_id']);
+                $mail_body = get_user_welcome_mail_conent($user_data);
+                $subject = "Welcome to BenSmiley";
+                send_email($pending_email['email_id'], $subject, $mail_body,$pending_email['ID']);
+                break;
         }
 
     }
@@ -466,8 +472,8 @@ function get_user_activation_mail_conent($user_data) {
     $body .= __('Thank you for creating an account with BenSmiley.
               Please confirm your email address by following the link below:') . "\r\n\r\n";
 
-    $body .= '<' . site_url("user-activation?action=activate-user&key=$user_data->user_activation_key
-                &login=" . rawurlencode($user_data->user_login), 'login') . ">\r\n";
+    $body .= '<' . site_url("user-activation?action=activate-user&key=".$user_data->user_activation_key.
+                   "&login=" . rawurlencode($user_data->user_login), 'login') . ">\r\n";
 
     $body .= sprintf(__("If you're not %s or didn't request verification, you can ignore this email."),
             $user_data->display_name) . "\r\n\r\n";
@@ -505,51 +511,163 @@ function get_user_data($user_email) {
  *
  * Function to log in user into the site
  * */
-function ajax_user_login() { /*
+function ajax_user_login() {
+
+    // check if a user is already logged in
     if ( is_user_logged_in() ) {
 
-        $blog     = get_active_blog_for_user( get_current_user_id() );
-        $blogUrl  = $blog->siteurl;
-        $response = array( "code" => "OK", 'blog_url' => $blogUrl, 'msg' => 'User already logged in' );
+        $site_url  = get_site_url();
+
+        $response = array( "code" => "OK", 'site_url' => $site_url, 'msg' => 'User already logged in' );
+
         wp_send_json( $response );
     }
 
-
-    $pd_email = trim( $_POST[ 'pdemail' ] );
-    $pd_pass  = trim( $_POST[ 'pdpass' ] );
+    $user_email = trim( $_POST[ 'user_email' ] );
+    $user_pass  = trim( $_POST[ 'user_pass' ] );
 
     $credentials = array();
 
-    $credentials[ 'user_login' ]    = $pd_email;
-    $credentials[ 'user_password' ] = $pd_pass;
+    $credentials[ 'user_login' ]    = $user_email;
+    $credentials[ 'user_password' ] = $user_pass;
 
-    $user_ = get_user_by( 'email', $pd_email );
+    $user = get_user_by( 'email', $user_email );
 
-    if ( $user_ ) {
-        $user = wp_signon( $credentials );
+    if ( $user ) {
+        $user_login = wp_signon( $credentials );
 
-        if ( is_wp_error( $user ) ) {
+        if ( is_wp_error( $user_login ) ) {
             $msg      = "The email / password doesn't seem right. Check if your caps is on and try again.";
-            $response = array( 'code' => "FAILED", 'user' => $user_->user_login . $pd_pass, 'msg' => $msg );
+            $response = array( 'code' => "ERROR",'msg' => $msg );
             wp_send_json( $response );
+
         } else {
-            $blog     = get_active_blog_for_user( $user->ID );
-            $blog_url = $blog->siteurl;
-            $response = array( "code" => "OK", 'blog_url' => $blog_url, 'msg' => 'Successful Login' );
+            $site_url  = get_site_url();
+            $response = array( "code" => "OK", 'site_url' => $site_url, 'msg' => 'Login Success' );
             wp_send_json( $response );
         }
-    } else {
+    }
+
+    else {
         $msg      = "The email / password doesn't seem right. Check if your caps is on and try again.";
-        $response = array( 'code' => "FAILED", 'msg' => $msg );
+        $response = array( 'code' => "ERROR", 'msg' => $msg );
         wp_send_json( $response );
-    }cx
-   */
-    wp_send_json(array('code' => 'OK'));
+    }
 
 }
 
 add_action('wp_ajax_user-login', 'ajax_user_login');
 add_action('wp_ajax_nopriv_user-login', 'ajax_user_login');
+
+/******************************USER ACTIVATION *********************************************************/
+function check_get_parameters($get_parameters){
+
+    if( isset($get_parameters['action']) && $get_parameters['action'] == "activate-user" ){
+
+        if( isset($get_parameters['key']) && isset($get_parameters['login']) ){
+
+            $success_msg = array("code"=>true,
+                                 "login"=>$get_parameters['login'],
+                                 "key"=>$get_parameters['key']);
+            return $success_msg;
+        }
+        else{
+
+            $error_msg = array("code"=>false,"msg"=>"Broken Link");
+            return $error_msg;
+        }
+
+    }
+    else{
+        $error_msg = array("code"=>false,"msg"=>"Broken Link");
+        return $error_msg;
+    }
+
+}
+// TODO: remove multiple if stmts
+function check_user_exists($user_email){
+
+    $user_data = get_user_by('email',$user_email);
+
+    if($user_data){
+        // check user status
+        if($user_data->user_status == 0){
+
+            $error_msg = array("code"=>false,"msg"=>"Link expired and user already activated");
+            return $error_msg;
+        }
+        else{
+            $success_msg = array("code"=>true);
+            return $success_msg;
+        }
+
+    }
+    else{
+        $error_msg = array("code"=>false,"msg"=>"No such user exists");
+        return $error_msg;
+    }
+
+}
+function validate_activation_key($userdata){
+
+    global $wpdb;
+
+    $table_name = $wpdb->users;
+
+    $query = "SELECT count(*) as user_count FROM $table_name WHERE user_login = %s AND user_activation_key = '%s'";
+
+    $user = $wpdb->get_results($wpdb->prepare($query, $userdata['login'],$userdata['key']),ARRAY_A);
+
+    $count = $user[0]['user_count'];
+
+    return $count;
+
+}
+function activate_user($userdata){
+    global $wpdb;
+
+    $table_name = $wpdb->users;
+
+    $wpdb->update($table_name,
+                  array('user_status'=>0,'user_activation_key'=>' '),
+                  array('user_login'=>$userdata['login']));
+}
+function set_welcome_mail_details($user_data) {
+    global $wpdb;
+
+    // insert the user details for sending user email in cron_module table
+    $wpdb->insert('cron_module',
+        array(
+            'email_type' => 'new-user-welcome',
+            'email_id' => $user_data['login'],
+            'status' => '1'
+        ));
+
+}
+function get_user_welcome_mail_conent($user_data){
+
+    $body = sprintf(__('Hi  %s'), $user_data->display_name) . "\r\n\r\n";
+    $body .= __('Welcome to BenSmiley. ') . "\r\n\r\n";
+
+    $body .= __('Your account has been successfully verified! You can
+                    now login with the credentials provided by you at the time of registration
+                to start using your account.') . "\r\n\r\n";
+
+    $body .= __('Start by following these 3 simple steps ') . "\r\n\r\n";
+    $body .= __('1. Login to your account ') . "\r\n\r\n";
+    $body .= __('2. Select a plan that is best suited for you.You can choose from our range of plans ') . "\r\n\r\n";
+    $body .= __('3. Start adding domains & creating groups ') . "\r\n\r\n";
+    $body .= __('You can then chat, add/edit groups anytime on the go!  ') . "\r\n\r\n";
+    $body .= __('In the meanwhile,
+                if you have any queries please feel free to contact our team on number
+                or email us at support@bensmiley.com.  ') . "\r\n\r\n";
+
+    $body .= __('Regards,') . "\r\n\r\n";
+
+    $body .= __('BenSmiley team') . "\r\n\r\n";
+
+    return $body;
+}
 
 
 

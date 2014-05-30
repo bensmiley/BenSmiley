@@ -18,13 +18,13 @@ define(['jquery', 'jquery-validate'], function() {
           required: true,
           email: true
         },
-        user_password: {
+        user_pass: {
           required: true,
           minlength: 5
         },
         user_confirm_password: {
           required: true,
-          equalTo: "#user_password"
+          equalTo: "#user_pass"
         },
         agree_tc: {
           required: true

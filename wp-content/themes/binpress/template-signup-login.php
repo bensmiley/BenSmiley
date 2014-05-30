@@ -43,7 +43,7 @@ get_header();  ?>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input type="password" name="user_password" id="user_password" class="form-control">
+                                    <input type="password" name="user_pass" id="user_pass" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@ get_header();  ?>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input type="text" name="user_name" id="user_name" class="form-control">
+                                    <input type="text" name="user_email" id="user_email" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,7 @@ get_header();  ?>
                             <div class="controls">
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input type="password" name="user_password" id="user_password" class="form-control">
+                                    <input type="password" name="user_pass" id="user_pass" class="form-control">
                                 </div>
                             </div>
                         </div>

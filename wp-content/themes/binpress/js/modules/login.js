@@ -9,11 +9,11 @@ define(['jquery', 'jquery-validate', 'bootstrap'], function() {
     $('#login-form').validate({
       focusInvalid: false,
       rules: {
-        user_name: {
+        user_email: {
           required: true,
           email: true
         },
-        user_password: {
+        user_pass: {
           required: true
         }
       },
@@ -39,7 +39,21 @@ define(['jquery', 'jquery-validate', 'bootstrap'], function() {
             'action': 'user-login'
           };
           $.extend(loginDetails, formAction);
-          return $.post(AJAXURL, loginDetails, function(response) {});
+          return $.post(AJAXURL, loginDetails, function(response) {
+            var errorMsg, page, successMsg;
+            if (response.code === "OK") {
+              successMsg = response.msg;
+              $('#display-login-msg').empty();
+              $('#display-login-msg').append(successMsg);
+              page = "/dashboard";
+              window.location.href = response.site_url + page;
+            }
+            if (response.code === "ERROR") {
+              errorMsg = response.msg;
+              $(' #display-login-msg').empty();
+              return $('#display-login-msg').append(errorMsg);
+            }
+          });
         });
       } else {
         $('#display-login-msg').empty();

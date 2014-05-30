@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "user-activation.scripts.js",
+  "sourceRoot": "",
+  "sources": [
+    "user-activation.scripts.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA"
+}

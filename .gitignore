@@ -37,3 +37,4 @@ wp-content/cache/
 wp-content/uploads
 wp-content/upgrade
 wp-content/wp-cache-config.php
+wp-content/plugins/wp-mail-smtp
