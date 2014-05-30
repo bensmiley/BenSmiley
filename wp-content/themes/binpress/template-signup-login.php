@@ -128,14 +128,21 @@ get_header();  ?>
                                             <p class="no-margin">No problem! Enter your email address here to receive a link to change password.</p>
                                         </div>
                                         <div class="tiles white padding-20">
+                                            <form id="forgot-password-form">
                                             <div class="row form-row">
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control" placeholder="Email">
+                                                    <div class="input-with-icon  right">
+                                                        <i class=""></i>
+                                                        <input type="text" class="form-control" placeholder="Email"
+                                                        name="user_email" id="user_email">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="m-t-10">
-                                                <button type="button" class="btn btn-primary btn-cons">Submit</button>
+                                                <button type="button" class="btn btn-primary btn-cons"
+                                                id="btn-forgot-pass">Submit</button>
                                             </div>
+                                            </form>
                                         </div>
                                         <!-- /.modal-content -->
                                     </div>

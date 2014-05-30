@@ -6,5 +6,5 @@
     "sign-up.scripts.coffee"
   ],
   "names": [],
-  "mappings": ";AAAA,OAAA,CAAQ,CAAC,gBAAD,EAAkB,eAAlB,CAAR,EAA4C,SAAA,GAAA,CAA5C,CAAA,CAAA"
+  "mappings": ";AAAA,OAAA,CAAQ,CAAC,gBAAD,EAAkB,eAAlB,EAAkC,yBAAlC,CAAR,EAAsE,SAAA,GAAA,CAAtE,CAAA,CAAA"
 }

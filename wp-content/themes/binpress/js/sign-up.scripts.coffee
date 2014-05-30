@@ -1,1 +1,1 @@
-require ['modules/signup','modules/login'], ->
+require ['modules/signup','modules/login','modules/forgot-password'], ->

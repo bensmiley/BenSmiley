@@ -113,6 +113,7 @@ module.exports = (grunt) ->
                     paths : ["../css"]
                     cleancss : true
                     compress : true
+                    syncImport : true
                 files : [
                     expand : true
                     cwd : "../css"
@@ -232,5 +233,6 @@ module.exports = (grunt) ->
     grunt.registerTask "validate", ["lesslint", "coffeelint" ,"jshint", "phpcs"]
     grunt.registerTask "runtests", ["karma", "phpunit"]
     grunt.registerTask "optimize", ["less", "themeJSOptimize", "themeSPAOptimize"]
+    grunt.registerTask "build", [ "themeJSOptimize","less","clean:production","copyto","clean:prevBuilds"]
 
     grunt.registerTask "deploy", ["validate", "runtests", "optimize", "clean", "copyto", "notify:readyToDeploy"]
