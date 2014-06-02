@@ -5,7 +5,7 @@ requirejs.config
         jquery : 'bower_components/jquery/dist/jquery'
         'jquery-validate' : 'bower_components/jquery.validation/dist/jquery.validate'
         bootstrap : 'bower_components/bootstrap/dist/js/bootstrap.min'
-    shim:
+    shim :
         'jquery-validate' : ['jquery']
-        bootstrap       : ['jquery']
+        bootstrap : ['jquery']
 
