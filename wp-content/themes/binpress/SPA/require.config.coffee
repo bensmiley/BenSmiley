@@ -10,6 +10,7 @@ requirejs.config
         mustache : 'bower_components/mustache/mustache'
         text : 'bower_components/requirejs-text/text'
         backbonesyphon : 'bower_components/backbone.syphon/lib/backbone.syphon'
+        plupload : 'bower_components/plupload/js/plupload.full.min.js'
         'jquery-validate' : 'bower_components/jquery.validation/dist/jquery.validate'
         configloader : 'configs/dashboard-spa-config-loader'
         appsloader : 'apps/dashboard-spa-apps-loader'
@@ -30,6 +31,9 @@ requirejs.config
             exports : 'Marionette'
         backbonesyphon : ['backbone']
         'jquery-validate' : ['jquery']
+        plupload:
+            deps: ['jquery']
+            exports: 'plupload'
         app : ['configloader']
 
 ## Start with application

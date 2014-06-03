@@ -19,6 +19,10 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html', 'backbonesyp
 
       UserProfileView.prototype.id = "user-profile-form";
 
+      UserProfileView.prototype.regions = {
+        userPhotoRegion: '#user-photo'
+      };
+
       UserProfileView.prototype.events = {
         'click #save-user-profile': function() {
           var userdata;
@@ -58,8 +62,13 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html', 'backbonesyp
         };
       };
 
+      UserProfileView.prototype.onUserProfileUpdated = function() {
+        this.$el.find('#form-msg').empty();
+        return this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+      };
+
       return UserProfileView;
 
-    })(Marionette.ItemView);
+    })(Marionette.Layout);
   });
 });

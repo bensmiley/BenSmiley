@@ -15,20 +15,23 @@ define(['app', 'region-controller', 'apps/user-profile/user-profile-view'], func
       UserProfileController.prototype.initialize = function(opts) {
         var usermodel;
         this.usermodel = usermodel = App.request("get:user:model");
-        this.view = this.getView(this.usermodel);
-        this.listenTo(this.view, "save:user:profile:clicked", this.saveUserProfile);
-        return this.show(this.view);
+        this.layout = this.getLayout(this.usermodel);
+        this.listenTo(this.layout, "show", function() {
+          return App.execute("start:upload:app", {
+            region: this.layout.userPhotoRegion
+          });
+        });
+        this.listenTo(this.layout, "save:user:profile:clicked", this.saveUserProfile);
+        return this.show(this.layout);
       };
 
-      UserProfileController.prototype.getView = function(usermodel) {
+      UserProfileController.prototype.getLayout = function(usermodel) {
         return new View.UserProfileView({
           model: usermodel
         });
       };
 
       UserProfileController.prototype.saveUserProfile = function(userdata) {
-        console.log(this.usermodel);
-        console.log(userdata);
         this.usermodel.set(userdata);
         return this.usermodel.save(null, {
           wait: true,
@@ -36,7 +39,9 @@ define(['app', 'region-controller', 'apps/user-profile/user-profile-view'], func
         });
       };
 
-      UserProfileController.prototype.showSuccess = function() {};
+      UserProfileController.prototype.showSuccess = function() {
+        return this.layout.triggerMethod("user:profile:updated");
+      };
 
       return UserProfileController;
 

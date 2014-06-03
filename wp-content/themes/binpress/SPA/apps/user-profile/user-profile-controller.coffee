@@ -15,24 +15,26 @@ define ['app'
                 @usermodel = usermodel = App.request "get:user:model"
 
                 #get user profile view
-                @view = @getView @usermodel
+                @layout = @getLayout @usermodel
 
-                @listenTo @view,"save:user:profile:clicked",@saveUserProfile
+                @listenTo @layout, "show", ->
+                    App.execute "start:upload:app", region : @layout.userPhotoRegion
 
-                @show @view
+                @listenTo @layout, "save:user:profile:clicked", @saveUserProfile
 
-            getView :(usermodel) ->
+                @show @layout
+
+            getLayout : (usermodel) ->
                 new View.UserProfileView
                     model : usermodel
 
-            saveUserProfile :(userdata)->
-                console.log @usermodel
-                console.log userdata
+            saveUserProfile : (userdata)->
                 @usermodel.set userdata
                 @usermodel.save null,
-                            wait:true,
-                            success : @showSuccess()
-            showSuccess :->
+                    wait : true,
+                    success : @showSuccess()
+            showSuccess : ->
+                @layout.triggerMethod "user:profile:updated"
 
 
         #handler for showing the user profile : triggered from left nav region

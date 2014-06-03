@@ -9,7 +9,7 @@ define ['app'
     App.module 'UserProfileAppView', (View, App)->
 
         # View class for showing user profile
-        class View.UserProfileView extends Marionette.ItemView
+        class View.UserProfileView extends Marionette.Layout
 
             className : 'user-profile-container'
 
@@ -19,17 +19,20 @@ define ['app'
 
             id : "user-profile-form"
 
+            regions :
+                userPhotoRegion : '#user-photo'
+
             events :
-                'click #save-user-profile' :->
+                'click #save-user-profile' : ->
                     if @$el.valid()
                         userdata = Backbone.Syphon.serialize @
                         @trigger "save:user:profile:clicked", userdata
-            onShow :->
+            onShow : ->
 
                 #validate the user profile form with the validation rules
                 @$el.validate @validationOptions()
 
-            validationOptions :->
+            validationOptions : ->
                 rules :
                     display_name :
                         required : true,
@@ -46,7 +49,12 @@ define ['app'
                         required : true,
                         equalTo : "#user_pass"
                 messages :
-                    user_name :'Enter valid user name'
+                    user_name : 'Enter valid user name'
+
+            onUserProfileUpdated : ->
+                @$el.find('#form-msg').empty()
+                @$el.find('#form-msg').append "<p>Updated User profile</p>"
+
 
 
 

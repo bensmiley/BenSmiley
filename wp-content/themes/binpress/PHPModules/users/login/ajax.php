@@ -19,7 +19,12 @@ function ajax_user_login() {
 
         $site_url = get_site_url();
 
-        $response = array( "code" => "OK", 'site_url' => $site_url, 'msg' => 'User already logged in' );
+        $current_user = wp_get_current_user();
+
+        $response = array( "code" => "OK",
+                    'site_url' => $site_url,
+                    'msg' => 'User already logged in',
+                    'data' => $current_user->data );
 
         wp_send_json( $response );
     }
