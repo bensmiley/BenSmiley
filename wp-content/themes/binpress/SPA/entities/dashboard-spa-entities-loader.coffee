@@ -1,0 +1,1 @@
+define ['entities/user-entities'], ()->

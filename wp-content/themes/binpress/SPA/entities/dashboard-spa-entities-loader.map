@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "dashboard-spa-entities-loader.js",
+  "sourceRoot": "",
+  "sources": [
+    "dashboard-spa-entities-loader.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,MAAA,CAAO,CAAC,wBAAD,CAAP,EAAmC,SAAA,GAAA,CAAnC,CAAA,CAAA"
+}
