@@ -15,5 +15,3 @@ define(['app', 'apps/header/show/header-controller'], function(App) {
     });
   });
 });
-
-//# sourceMappingURL=header-app.map

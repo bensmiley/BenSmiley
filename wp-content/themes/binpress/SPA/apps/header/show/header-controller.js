@@ -29,10 +29,8 @@ define(['app', 'base-controller', 'entities/user-entities'], function(App, AppCo
         var usermodel;
         this.usermodel = usermodel = App.request("get:user:model");
         this.userDisplayView = this.getUserDisplayView(this.usermodel);
-        console.log(this.usermodel);
         return App.execute("when:fetched", [this.usermodel], (function(_this) {
           return function() {
-            console.log(_this.usermodel);
             return _this.layout.userDisplayRegion.show(_this.userDisplayView);
           };
         })(this));
@@ -77,15 +75,13 @@ define(['app', 'base-controller', 'entities/user-entities'], function(App, AppCo
       UserDisplayView.prototype.className = 'pull-right';
 
       UserDisplayView.prototype.onShow = function() {
-        console.log(this.model);
         return console.log(this.model.get('display_name'));
       };
 
       UserDisplayView.prototype.serializeData = function() {
         var data;
         data = UserDisplayView.__super__.serializeData.call(this);
-        data;
-        return console.log(data);
+        return data;
       };
 
       return UserDisplayView;

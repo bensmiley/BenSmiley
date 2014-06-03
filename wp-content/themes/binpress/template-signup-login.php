@@ -127,7 +127,7 @@ get_header();  ?>
                     <div class="row">
                         <div class="control-group  col-md-10">
                             <div class=""><a href="#" data-toggle="modal" data-target="#myModal">
-                            Forgot Password?</a>&nbsp;&nbsp;
+                                    Forgot Password?</a>&nbsp;&nbsp;
                             </div>
 
                         </div>
@@ -139,8 +139,10 @@ get_header();  ?>
                             </button>
                         </div>
                     </div>
-                </form> <!-- LOGIN FORM END -->
-                <div id="display-login-msg"></div> <!-- display error msg in div -->
+                </form>
+                <!-- LOGIN FORM END -->
+                <div id="display-login-msg"></div>
+                <!-- display error msg in div -->
             </div>
             <br>
 
@@ -182,7 +184,8 @@ get_header();  ?>
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-            </div> <!--FORGOT PASSWORD MODAL END -->
+            </div>
+            <!--FORGOT PASSWORD MODAL END -->
         </div>
     </div>
     <!-- END CONTAINER -->

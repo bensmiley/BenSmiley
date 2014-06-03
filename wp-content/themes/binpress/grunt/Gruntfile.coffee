@@ -46,7 +46,7 @@ module.exports = (grunt) ->
         # It can also help prevent some common semantic errors made by developers.
         phpcs :
             options :
-                bin : '/usr/bin/cs'
+                bin : 'C:/xampp/php/phpcs.bat'
                 standard : "Wordpress"
             theme :
                 dir : ["../*.php", "../**/*.php"]

@@ -6,62 +6,62 @@ define ['marionette', 'mustache'], (Marionette, Mustache)->
     # Extends the Marionette.Application to add some additional functions
     _.extend Marionette.Application::,
 
-        navigate: (route, options = {}) ->
+        navigate : (route, options = {}) ->
             Backbone.history.navigate route, options
 
-        getCurrentRoute: ->
+        getCurrentRoute : ->
             frag = Backbone.history.fragment
             if _.isEmpty(frag) then null else frag
 
-        startHistory: ->
+        startHistory : ->
             if Backbone.history
                 Backbone.history.start()
 
-        # register a controller instance
-        register: (instance, id) ->
+    # register a controller instance
+        register : (instance, id) ->
             @_registry ?= {}
             @_registry[id] = instance
 
 
-        unregister: (instance, id) ->
+        unregister : (instance, id) ->
             delete @_registry[id]
 
-        resetRegistry: ->
+        resetRegistry : ->
             oldCount = @getRegistrySize()
             for key, controller of @_registry
                 controller.region.close()
             msg = "There were #{oldCount} controllers in the registry, there are now #{@getRegistrySize()}"
             if @getRegistrySize() > 0 then console.warn(msg, @_registry) else console.log(msg)
 
-        getRegistrySize: ->
+        getRegistrySize : ->
             _.size @_registry
 
     # register a controller instance
-        registerElement: (instance, id) ->
+        registerElement : (instance, id) ->
             @_elementRegistry ?= {}
             @_elementRegistry[id] = instance
 
     # unregister a controller instance
-        unregisterElement: (instance, id) ->
+        unregisterElement : (instance, id) ->
             delete @_elementRegistry[id]
 
-        resetElementRegistry: ->
+        resetElementRegistry : ->
             oldCount = @getElementRegistrySize()
             for key, controller of @_elementRegistry
                 controller.layout.close()
             msg = "There were #{oldCount} controllers in the registry, there are now #{@getElementRegistrySize()}"
             if @getElementRegistrySize() > 0 then console.warn(msg, @_elementRegistry) else console.log(msg)
 
-        getElementRegistrySize: ->
+        getElementRegistrySize : ->
             _.size @_elementRegistry
 
     # add hide /unhide functionality to a region
     _.extend Marionette.Region::,
 
-        hide: ->
+        hide : ->
             @$el.hide()
 
-        unhide: ->
+        unhide : ->
             @$el.show()
 
     # overwrite the default rendering engine to mustache
@@ -94,10 +94,10 @@ define ['marionette', 'mustache'], (Marionette, Mustache)->
     # Form view
     class Marionette.FormView extends Marionette.ItemView
 
-        tagName: 'form'
+        tagName : 'form'
 
-        className: 'form-horizontal'
+        className : 'form-horizontal'
 
         # add validation
-        onShow: ->
+        onShow : ->
             @$el.validate()

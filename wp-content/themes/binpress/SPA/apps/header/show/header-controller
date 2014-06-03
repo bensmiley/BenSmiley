@@ -31,10 +31,7 @@ define ['app'
 
                 @userDisplayView = @getUserDisplayView @usermodel
 
-                console.log @usermodel
-
                 App.execute "when:fetched", [@usermodel], =>
-                    console.log @usermodel
                     @layout.userDisplayRegion.show @userDisplayView
 
             getUserDisplayView :(usermodel) ->
@@ -83,13 +80,10 @@ define ['app'
             className : 'pull-right'
 
             onShow :->
-                console.log @model
                 console.log @model.get 'display_name'
 
             serializeData: ->
                 data = super()
-#                data.display_name = @model.get 'display_name'
                 data
-                console.log data
 
 

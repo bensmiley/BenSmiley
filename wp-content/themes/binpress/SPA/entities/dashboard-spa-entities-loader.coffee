@@ -1,1 +1,1 @@
-define ['entities/user-entities'], ()->
+define ['entities/user-entities'], ->

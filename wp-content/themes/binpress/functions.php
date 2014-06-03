@@ -19,113 +19,113 @@ require_once 'PHPModules/cron/send-email.php';
 function binpress_theme_setup() {
 
     // load language
-    load_theme_textdomain('binpress', get_template_directory() . '/languages');
+    load_theme_textdomain( 'binpress', get_template_directory() . '/languages' );
 
     // add theme support
-    add_theme_support('post-formats', array('image', 'quote', 'status', 'link'));
-    add_theme_support('post-thumbnails');
-    add_theme_support('menus');
-    add_theme_support('automatic-feed-links');
-    add_theme_support('html5', array('search-form', 'comment-form', 'comment-list'));
+    add_theme_support( 'post-formats', array( 'image', 'quote', 'status', 'link' ) );
+    add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'menus' );
+    add_theme_support( 'automatic-feed-links' );
+    add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
 
     // define you image sizes here
-    add_image_size('binpress-full-width', 1038, 576, TRUE);
+    add_image_size( 'binpress-full-width', 1038, 576, TRUE );
 
     // This theme uses its own gallery styles.
-    add_filter('use_default_gallery_style', '__return_false');
+    add_filter( 'use_default_gallery_style', '__return_false' );
 
     // set the custom user roles for the site
     set_site_user_role();
 
 }
 
-add_action('setup_theme', 'binpress_theme_setup');
+add_action( 'setup_theme', 'binpress_theme_setup' );
 
 
 function binpress_after_init() {
 
-    show_admin_bar(FALSE);
+    show_admin_bar( FALSE );
 }
 
-add_action('init', 'binpress_after_init');
+add_action( 'init', 'binpress_after_init' );
 
 
-if (is_development_environment()) {
+if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_scripts() {
 
-        wp_enqueue_script("requirejs",
+        wp_enqueue_script( "requirejs",
             get_template_directory_uri() . "/js/bower_components/requirejs/require.js",
             array(),
             get_current_version(),
-            TRUE);
+            TRUE );
 
-        wp_enqueue_script("require-config",
+        wp_enqueue_script( "require-config",
             get_template_directory_uri() . "/js/require.config.js",
-            array("requirejs"));
+            array( "requirejs" ) );
 
         $module = get_module_name();
 
-        wp_enqueue_script("$module-script",
+        wp_enqueue_script( "$module-script",
             get_template_directory_uri() . "/js/{$module}.scripts.js",
-            array("require-config"));
+            array( "require-config" ) );
 
         // localized variables
-        wp_localize_script("requirejs", "AJAXURL", admin_url("admin-ajax.php"));
+        wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
     }
 
-    add_action('wp_enqueue_scripts', 'binpress_dev_enqueue_scripts');
+    add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_scripts' );
 
     function binpress_dev_enqueue_styles() {
 
         $module = get_module_name();
 
-        wp_enqueue_style("$module-script", get_template_directory_uri() . "/css/{$module}.styles.css");
+        wp_enqueue_style( "$module-script", get_template_directory_uri() . "/css/{$module}.styles.css" );
 
     }
 
-    add_action('wp_enqueue_scripts', 'binpress_dev_enqueue_styles');
+    add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_styles' );
 }
 
-if (!is_development_environment()) {
+if ( !is_development_environment() ) {
 
     function binpress_production_enqueue_script() {
 
         $module = get_module_name();
         $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
-        if (is_single_page_app())
+        if ( is_single_page_app() )
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
 
-        wp_enqueue_script("$module-script",
+        wp_enqueue_script( "$module-script",
             $path,
             array(),
             get_current_version(),
-            TRUE);
+            TRUE );
 
     }
 
-    add_action('wp_enqueue_scripts', 'binpress_production_enqueue_script');
+    add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_script' );
 
     function binpress_production_enqueue_styles() {
 
         $module = get_module_name();
 
-        wp_enqueue_style("$module-styles",
+        wp_enqueue_style( "$module-styles",
             get_template_directory_uri() . "/production/css/{$module}.styles.min.css",
             array(),
             get_current_version(),
-            TRUE);
+            TRUE );
 
     }
 
-    add_action('wp_enqueue_scripts', 'binpress_production_enqueue_styles');
+    add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_styles' );
 }
 
 
 function is_development_environment() {
 
-    if (defined('ENV') && ENV === "production")
+    if ( defined( 'ENV' ) && ENV === "production" )
         return FALSE;
 
     return TRUE;
@@ -136,7 +136,7 @@ function get_current_version() {
 
     global $wp_version;
 
-    if (defined('VERSION'))
+    if ( defined( 'VERSION' ) )
         return VERSION;
 
     return $wp_version;
@@ -156,8 +156,8 @@ function get_module_name() {
     $module = "";
 
     // TODO: Handle with better logic here. Regex or something
-    if (is_page())
-        $module = sanitize_title(get_the_title());
+    if ( is_page() )
+        $module = sanitize_title( get_the_title() );
 
 
     return $module;
@@ -175,15 +175,16 @@ function set_site_user_role() {
     $roles = get_editable_roles();
 
     // remove all user roles except administrator
-    foreach ($roles as $rolename => $role):
-        if ($rolename != "administrator")
-            remove_role($rolename);
+    foreach ( $roles as $rolename => $role ):
+        if ( $rolename != "administrator" )
+            remove_role( $rolename );
     endforeach;
 
     // add custom role site member with no capabilities
-    add_role('site-member', __('Site Member'), array());
+    add_role( 'site-member', __( 'Site Member' ), array() );
 
 }
+
 /**
  * Function to send all emails in the cron-module table through cron.
  *
@@ -195,6 +196,7 @@ function set_site_user_role() {
 function send_email_through_cron() {
     send_mail_cron();
 }
-add_action('CRON_SEND_EMAIL', 'send_email_through_cron');
+
+add_action( 'CRON_SEND_EMAIL', 'send_email_through_cron' );
 
 

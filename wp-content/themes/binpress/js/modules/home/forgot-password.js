@@ -105,5 +105,3 @@ define(['jquery', 'jquery-validate'], function() {
     });
   });
 });
-
-//# sourceMappingURL=forgot-password.map

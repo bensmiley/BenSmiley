@@ -34,7 +34,7 @@ define(['app', 'base-controller'], function(App, AppController) {
         return LeftNavView.__super__.constructor.apply(this, arguments);
       }
 
-      LeftNavView.prototype.template = '<div class="page-sidebar" id="main-menu"> <div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="index.html"> <i class="fa fa-user"></i>  <span class="title">User Profile</span>  <span class="selected"></span>  <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div> </div>';
+      LeftNavView.prototype.template = '<div class="page-sidebar" id="main-menu"> <div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="index.html"> <i class="fa fa-user"></i> <span class="title">User Profile</span>  <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div> </div>';
 
       return LeftNavView;
 

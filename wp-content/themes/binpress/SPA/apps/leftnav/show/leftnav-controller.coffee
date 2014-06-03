@@ -23,15 +23,17 @@ define ['app'
         class LeftNavView extends Marionette.Layout
 
             template : '<div class="page-sidebar" id="main-menu">
-                <div class="page-sidebar-wrapper" id="main-menu-wrapper">
-                    <ul>
-                        <li class="start">
-                            <a href="index.html"> <i class="fa fa-user"></i>  <span class="title">User Profile</span>  <span class="selected"></span>  <span class="arrow"></span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-            </div>'
+                            <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+                                <ul>
+                                    <li class="start">
+                                        <a href="index.html"> <i class="fa fa-user"></i>
+                                        <span class="title">User Profile</span>  <span class="selected"></span>
+                                        <span class="arrow"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>'
 
 

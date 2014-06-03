@@ -5,26 +5,26 @@
 
 get_header();
 
-    $form_action = "activate-user";
+$form_action = "activate-user";
 
-    // check if the url is valid
-    $validated_url = validate_activation_url($_GET,$form_action);
+// check if the url is valid
+$validated_url = validate_activation_url( $_GET, $form_action );
 
-    if(!$validated_url['code']){
-        // display the error message
-        echo error_message_div($validated_url['msg']);
-        die();
-    }
+if ( !$validated_url[ 'code' ] ) {
+    // display the error message
+    echo error_message_div( $validated_url[ 'msg' ] );
+    die();
+}
 
-    $user_data_object = $validated_url['user_data_obj'];
+$user_data_object = $validated_url[ 'user_data_obj' ];
 
-    // activate the user and set status to 0
-    activate_user($user_data_object->user_email);
+// activate the user and set status to 0
+activate_user( $user_data_object->user_email );
 
-    // insert details in db for sending welcome email to user and new-user signup mail to admin through cron
-    $user_data= array('user_email'=>$user_data_object->user_email,'user_name'=>$user_data_object->display_name);
-    set_user_details_for_mail($user_data,'new-user-welcome');
-    set_user_details_for_mail($user_data,'admin-newuser-notification');
+// insert details in db for sending welcome email to user and new-user signup mail to admin through cron
+$user_data = array( 'user_email' => $user_data_object->user_email, 'user_name' => $user_data_object->display_name );
+set_user_details_for_mail( $user_data, 'new-user-welcome' );
+set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
 ?>
     <!-- BEGIN CONTAINER -->
     <div class="container">
@@ -76,8 +76,10 @@ get_header();
                             </button>
                         </div>
                     </div>
-                </form> <!-- LOGIN FORM END -->
-                <div id="display-login-msg"></div> <!-- display error msg in div -->
+                </form>
+                <!-- LOGIN FORM END -->
+                <div id="display-login-msg"></div>
+                <!-- display error msg in div -->
             </div>
             <br>
 
@@ -119,9 +121,10 @@ get_header();
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-            </div> <!--FORGOT PASSWORD MODAL END -->
+            </div>
+            <!--FORGOT PASSWORD MODAL END -->
         </div>
     </div>
     <!-- END CONTAINER -->
 <?php
- get_footer(); ?>
+get_footer(); ?>

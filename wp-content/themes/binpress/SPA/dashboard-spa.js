@@ -24,14 +24,14 @@ define(['marionette'], function(Marionette) {
       return callback();
     });
   });
+  App.commands.setHandler("register:instance", function(instance, id) {
+    return App.register(instance, id);
+  });
+  App.commands.setHandler("unregister:instance", function(instance, id) {
+    return App.unregister(instance, id);
+  });
   App.on("initialize:after", function(options) {
     App.startHistory();
-    App.execute("show:headerapp", {
-      region: App.headerRegion
-    });
-    App.execute("show:leftnavapp", {
-      region: App.leftNavRegion
-    });
     if (!App.getCurrentRoute()) {
       return App.navigate(this.rootRoute, {
         trigger: true

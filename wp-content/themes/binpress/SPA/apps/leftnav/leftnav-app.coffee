@@ -9,7 +9,7 @@ define ['app'
         #PUBLIC API
         API =
         # show the left nav region
-            show : ()->
+            show : ->
                 leftnavController = new LeftNavApp.Show.Controller
                     region : App.leftNavRegion
 

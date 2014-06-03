@@ -144,7 +144,7 @@ function get_user_data_for_admin_mail( $mail_id ) {
     global $wpdb;
 
     //get all the rows from table where cron_module_ID = mail Id passed to function
-    $query = "SELECT * FROM cron_module_meta WHERE cron_module_ID = ".$mail_id;
+    $query = "SELECT * FROM cron_module_meta WHERE cron_module_ID = " . $mail_id;
 
     $user_data = $wpdb->get_results( $query, ARRAY_A );
 

@@ -2,24 +2,23 @@
 ## The main dashboard App
 ##
 define ['marionette'], (Marionette)->
-
     window.App = new Marionette.Application
 
     # Main app regions
     App.addRegions
-        headerRegion  		: '#header-region'
-        leftNavRegion  		: '#left-nav-region'
-        mainContentRegion  	: '#main-content-region'
-        breadcrumbRegion  	: '#breadcrumb-region'
-        footerRegion  		: '#footer-region'
-        dialogRegion		: '#dialog-region'
-        loginRegion 		: '#login-region'
+        headerRegion : '#header-region'
+        leftNavRegion : '#left-nav-region'
+        mainContentRegion : '#main-content-region'
+        breadcrumbRegion : '#breadcrumb-region'
+        footerRegion : '#footer-region'
+        dialogRegion : '#dialog-region'
+        loginRegion : '#login-region'
 
 
     # The default route for app
     App.rootRoute = "dashboard"
 
-    App.on 'start', ()->
+    App.on 'start', ->
         console.log "Application Started...."
 
     # Reqres handler to return a default region. If a controller is not explicitly specified a
@@ -34,12 +33,20 @@ define ['marionette'], (Marionette)->
         $.when(xhrs...).done ->
             callback()
 
+    # Registers a controller instance
+    App.commands.setHandler "register:instance", (instance, id) ->
+        App.register instance, id
+
+    # Unregisters a controller instance
+    App.commands.setHandler "unregister:instance", (instance, id) ->
+        App.unregister instance, id
+
     App.on "initialize:after", (options) ->
         App.startHistory()
-        App.execute "show:headerapp", region:App.headerRegion
-        App.execute "show:leftnavapp", region:App.leftNavRegion
+        #App.execute "show:headerapp", region:App.headerRegion
+        #App.execute "show:leftnavapp", region:App.leftNavRegion
 
 
-        App.navigate(@rootRoute, trigger: true) unless App.getCurrentRoute()
+        App.navigate(@rootRoute, trigger : true) unless App.getCurrentRoute()
 
     App

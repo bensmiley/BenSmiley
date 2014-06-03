@@ -17,13 +17,13 @@ define ['jquery', 'jquery-validate'], ->
                     required : true,
                     email : true
 
-            #error msg display
+        #error msg display
             errorPlacement : (label, element) ->
                 $('<span class="error"></span>').insertAfter(element).append(label)
                 parent = $(element).parent('.input-with-icon')
                 parent.removeClass('success-control').addClass('error-control')
 
-            #action on successful validation
+        #action on successful validation
             success : (label, element) ->
                 parent = $(element).parent('.input-with-icon')
                 parent.removeClass('error-control').addClass('success-control')
@@ -44,7 +44,6 @@ define ['jquery', 'jquery-validate'], ->
 
                 #trigger AJAX call
                 $.post(AJAXURL, formAction, (response)->
-
                     if(response.code == "OK")
                         successMsg = response.msg
                         $('#display-forgot-msg').empty()
@@ -101,11 +100,10 @@ define ['jquery', 'jquery-validate'], ->
                 formAction =
                     'action' : 'change-password'
                     'user_email' : user_email
-                    'user_pass'  : user_passwod
+                    'user_pass' : user_passwod
 
                 #trigger AJAX call
                 $.post(AJAXURL, formAction, (response)->
-
                     if(response.code == "OK")
                         successMsg = response.msg
                         $('#display-reset-msg').empty()

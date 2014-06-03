@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     },
     phpcs: {
       options: {
-        bin: '/usr/bin/cs',
+        bin: 'C:/xampp/php/phpcs.bat',
         standard: "Wordpress"
       },
       theme: {
@@ -220,5 +220,3 @@ module.exports = function(grunt) {
   grunt.registerTask("build", ["themeJSOptimize", "less", "clean:production", "copyto", "clean:prevBuilds"]);
   return grunt.registerTask("deploy", ["validate", "runtests", "optimize", "clean", "copyto", "notify:readyToDeploy"]);
 };
-
-//# sourceMappingURL=Gruntfile.map

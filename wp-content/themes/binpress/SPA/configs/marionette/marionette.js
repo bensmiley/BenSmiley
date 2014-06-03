@@ -126,5 +126,3 @@ define(['marionette', 'mustache'], function(Marionette, Mustache) {
 
   })(Marionette.ItemView);
 });
-
-//# sourceMappingURL=marionette.map

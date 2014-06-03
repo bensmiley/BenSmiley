@@ -3,15 +3,16 @@ define ["app", 'backbone'], (App, Backbone) ->
 
         #User model
         class Users.UserModel extends Backbone.Model
-            name: 'user'
-            idAttribute: 'ID'
+            name : 'user'
+            idAttribute : 'ID'
+
 
         user = new Users.UserModel
         user.fetch()
 
         #PUBLIC API
         API =
-            getUser: ()->
+            getUser : ->
                 user
 
         #REQUEST HANDLERS

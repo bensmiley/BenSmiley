@@ -9,7 +9,7 @@ define ['app'
         #PUBLIC API
         API =
         # show the header region
-            show : ()->
+            show : ->
                 headerController = new HeaderApp.Show.Controller
                     region : App.headerRegion
 

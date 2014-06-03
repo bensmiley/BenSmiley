@@ -59,5 +59,3 @@ define(["marionette", "app"], function(Marionette, App) {
 
   })(Marionette.Controller);
 });
-
-//# sourceMappingURL=base-controller.map
