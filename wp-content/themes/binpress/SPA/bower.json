@@ -8,7 +8,8 @@
     "bootstrap": "~3.1.1",
     "mustache": "~0.8.1",
     "requirejs-text": "~2.0.12",
-    "backbone.syphon": "~0.4.1"
+    "backbone.syphon": "~0.4.1",
+    "jquery.validation": "~1.12.0"
   },
   "devDependencies": {}
 }

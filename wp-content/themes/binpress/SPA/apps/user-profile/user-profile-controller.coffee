@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'base-controller'
+        'region-controller'
         'apps/user-profile/user-profile-view'], (App, AppController, View)->
 
     #start the app module
@@ -17,11 +17,22 @@ define ['app'
                 #get user profile view
                 @view = @getView @usermodel
 
+                @listenTo @view,"save:user:profile:clicked",@saveUserProfile
+
                 @show @view
 
             getView :(usermodel) ->
                 new View.UserProfileView
                     model : usermodel
+
+            saveUserProfile :(userdata)->
+                console.log @usermodel
+                console.log userdata
+                @usermodel.set userdata
+                @usermodel.save null,
+                            wait:true,
+                            success : @showSuccess()
+            showSuccess :->
 
 
         #handler for showing the user profile : triggered from left nav region

@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'base-controller'
+        'region-controller'
         'entities/user-entities'], (App, AppController,Entity)->
 
     #start the app module

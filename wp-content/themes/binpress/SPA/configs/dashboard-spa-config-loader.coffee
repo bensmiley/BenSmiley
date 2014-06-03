@@ -1,2 +1,3 @@
-define ['configs/marionette/marionette'
-        'configs/backbone'],->
+define ['configs/marionette.config'
+        'configs/backbone.config'
+        'configs/jquery.config'],->

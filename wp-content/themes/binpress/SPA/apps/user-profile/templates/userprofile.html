@@ -9,14 +9,14 @@
                 <h4><span class="semi-bold">Profile</span></h4>
             </div>
             <div class="grid-body no-border"><br>
-                <form id="user-profile-form">
+
                 <div class="row">
                     <div class="col-md-9 col-sm-9 col-xs-9">
                         <div class="form-group">
                             <label class="form-label">Your Name</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" name="display_name" id="display_name"
                                        placeholder="e.g. Mona Lisa Portrait" value ="{{display_name}}">
                             </div>
                         </div>
@@ -24,23 +24,15 @@
                             <label class="form-label">Email</label>
 
                             <div class="controls">
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" name="user_email" id="user_email"
                                        placeholder="e.g. some@example.com" value ="{{user_email}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Old Password</label>
-
-                            <div class="controls">
-                                <input type="password" class="form-control"
-                                       placeholder="**********">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">New Password</label>
 
                             <div class="controls">
-                                <input type="password" class="form-control"
+                                <input type="password" class="form-control" name="user_pass" id="user_pass"
                                        placeholder="**********">
                             </div>
                         </div>
@@ -48,7 +40,8 @@
                             <label class="form-label">Confirm Password</label>
 
                             <div class="controls">
-                                <input type="password" class="form-control"
+                                <input type="password" class="form-control" name="confirm_password"
+                                       id="confirm_password"
                                        placeholder="**********">
                             </div>
                         </div>
@@ -76,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                </form>
+
                 <div class=" m-t-20">
                     <a id="save_prof" class="pull-right" href="#" data-color-format="hex">Delete
                         Account</a>

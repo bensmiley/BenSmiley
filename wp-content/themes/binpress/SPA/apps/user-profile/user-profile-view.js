@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(App, userProfileTpl) {
+define(['app', 'text!apps/user-profile/templates/userprofile.html', 'backbonesyphon', 'jquery-validate'], function(App, userProfileTpl) {
   return App.module('UserProfileAppView', function(View, App) {
     return View.UserProfileView = (function(_super) {
       __extends(UserProfileView, _super);
@@ -15,12 +15,47 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(Ap
 
       UserProfileView.prototype.template = userProfileTpl;
 
+      UserProfileView.prototype.tagName = 'form';
+
+      UserProfileView.prototype.id = "user-profile-form";
+
       UserProfileView.prototype.events = {
         'click #save-user-profile': function() {
-          var data;
-          data = Backbone.Syphon.serialize(this);
-          return console.log(data);
+          var userdata;
+          if (this.$el.valid()) {
+            userdata = Backbone.Syphon.serialize(this);
+            return this.trigger("save:user:profile:clicked", userdata);
+          }
         }
+      };
+
+      UserProfileView.prototype.onShow = function() {
+        return this.$el.validate(this.validationOptions());
+      };
+
+      UserProfileView.prototype.validationOptions = function() {
+        return {
+          rules: {
+            display_name: {
+              required: true
+            },
+            user_email: {
+              required: true,
+              email: true
+            },
+            user_pass: {
+              required: true,
+              minlength: 5
+            },
+            confirm_password: {
+              required: true,
+              equalTo: "#user_pass"
+            }
+          },
+          messages: {
+            user_name: 'Enter valid user name'
+          }
+        };
       };
 
       return UserProfileView;

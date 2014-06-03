@@ -23,29 +23,29 @@
  * on successful validation returns array containing user email
  *
  */
-function validate_activation_url($get_parameters, $form_action) {
+function validate_activation_url( $get_parameters, $form_action ) {
 
-    $get_param_check = check_get_parameters($get_parameters, $form_action);
-    if (!$get_param_check['code'])
+    $get_param_check = check_get_parameters( $get_parameters, $form_action );
+    if ( !$get_param_check[ 'code' ] )
         return $get_param_check;
 
-    $user_exists_check = check_user_exists($get_parameters['login']);
-    if (!$user_exists_check['code'])
+    $user_exists_check = check_user_exists( $get_parameters[ 'login' ] );
+    if ( !$user_exists_check[ 'code' ] )
         return $user_exists_check;
 
-    $user_status_check = check_user_status($user_exists_check['user_data']);
-    if (!$user_status_check['code'])
+    $user_status_check = check_user_status( $user_exists_check[ 'user_data' ] );
+    if ( !$user_status_check[ 'code' ] )
         return $user_status_check;
 
-    $activation_duration_check = check_user_activation_duration($user_exists_check['user_data']);
-    if (!$activation_duration_check['code'])
+    $activation_duration_check = check_user_activation_duration( $user_exists_check[ 'user_data' ] );
+    if ( !$activation_duration_check[ 'code' ] )
         return $activation_duration_check;
 
-    $activation_duration_check = validate_activation_key($user_exists_check['user_data']);
-    if (!$activation_duration_check['code'])
+    $activation_duration_check = validate_activation_key( $user_exists_check[ 'user_data' ] );
+    if ( !$activation_duration_check[ 'code' ] )
         return $activation_duration_check;
 
-    return array("code" => true, "user_data_obj" => $user_exists_check['user_data']);
+    return array( "code" => true, "user_data_obj" => $user_exists_check[ 'user_data' ] );
 
 
 }
@@ -57,21 +57,21 @@ function validate_activation_url($get_parameters, $form_action) {
  * @param $form_action
  * @return array containing the error or success message
  */
-function check_get_parameters($get_parameters, $form_action) {
+function check_get_parameters( $get_parameters, $form_action ) {
 
     // Check if the form action isset and matches with the form action of the page
-    if (isset($get_parameters['action']) && $get_parameters['action'] == $form_action) {
+    if ( isset( $get_parameters[ 'action' ] ) && $get_parameters[ 'action' ] == $form_action ) {
 
         //Check if the key and login parameters are set in the URL
-        if (isset($get_parameters['key']) && isset($get_parameters['login'])) {
-            $success_msg = array("code" => true);
+        if ( isset( $get_parameters[ 'key' ] ) && isset( $get_parameters[ 'login' ] ) ) {
+            $success_msg = array( "code" => true );
             return $success_msg;
         } else {
-            $error_msg = array("code" => false, "msg" => "Broken Link");
+            $error_msg = array( "code" => false, "msg" => "Broken Link" );
             return $error_msg;
         }
     } else {
-        $error_msg = array("code" => false, "msg" => "Broken Link");
+        $error_msg = array( "code" => false, "msg" => "Broken Link" );
         return $error_msg;
     }
 
@@ -83,16 +83,16 @@ function check_get_parameters($get_parameters, $form_action) {
  * @param $user_email
  * @return array containing the error or success message
  */
-function check_user_exists($user_email) {
+function check_user_exists( $user_email ) {
 
-    $user_data = get_user_by('email', $user_email);
+    $user_data = get_user_by( 'email', $user_email );
 
-    if ($user_data) {
-        $success_msg = array("code" => true, 'user_data' => $user_data);
+    if ( $user_data ) {
+        $success_msg = array( "code" => true, 'user_data' => $user_data );
         return $success_msg;
 
     } else {
-        $error_msg = array("code" => false, "msg" => "No such user exists");
+        $error_msg = array( "code" => false, "msg" => "No such user exists" );
         return $error_msg;
     }
 
@@ -104,15 +104,15 @@ function check_user_exists($user_email) {
  * @param $user_data
  * @return array containing the error or success message
  */
-function check_user_status($user_data) {
+function check_user_status( $user_data ) {
 
-    if ($user_data->user_status == 0) {
+    if ( $user_data->user_status == 0 ) {
 
-        $error_msg = array("code" => false, "msg" => "Link expired and user already activated");
+        $error_msg = array( "code" => false, "msg" => "Link expired and user already activated" );
         return $error_msg;
 
     } else {
-        $success_msg = array("code" => true);
+        $success_msg = array( "code" => true );
         return $success_msg;
     }
 
@@ -127,16 +127,16 @@ function check_user_status($user_data) {
  * @param $user_data
  * @return array containing the error or success message
  */
-function check_user_activation_duration($user_data) {
+function check_user_activation_duration( $user_data ) {
 
-    if (strtotime($user_data->user_registered) + 3 * 24 * 60 * 60 < time()) {
+    if ( strtotime( $user_data->user_registered ) + 3 * 24 * 60 * 60 < time() ) {
 
-        $error_msg = array("code" => false, "msg" => "Activation time of 3 days expired");
+        $error_msg = array( "code" => false, "msg" => "Activation time of 3 days expired" );
         return $error_msg;
 
     } else {
 
-        $success_msg = array("code" => true);
+        $success_msg = array( "code" => true );
         return $success_msg;
     }
 }
@@ -149,7 +149,7 @@ function check_user_activation_duration($user_data) {
  * @param $user_data
  * @return array containing the error or success message
  */
-function validate_activation_key($user_data) {
+function validate_activation_key( $user_data ) {
 
     global $wpdb;
 
@@ -157,14 +157,14 @@ function validate_activation_key($user_data) {
 
     $query = "SELECT count(*) as user_count FROM $table_name WHERE user_login = %s AND user_activation_key = '%s'";
 
-    $user = $wpdb->get_results($wpdb->prepare($query, $user_data->user_login, $user_data->user_activation_key), ARRAY_A);
+    $user = $wpdb->get_results( $wpdb->prepare( $query, $user_data->user_login, $user_data->user_activation_key ), ARRAY_A );
 
-    $count = $user[0]['user_count'];
+    $count = $user[ 0 ][ 'user_count' ];
 
-    if ($count == 0)
-        return array("code" => false, "msg" => "Invalid activation key");
+    if ( $count == 0 )
+        return array( "code" => false, "msg" => "Invalid activation key" );
 
-    return array("code" => true);
+    return array( "code" => true );
 
 }
 
@@ -174,7 +174,7 @@ function validate_activation_key($user_data) {
  * @param $error_msg
  * @return string HTML
  */
-function error_message_div($error_msg) {
+function error_message_div( $error_msg ) {
 
     return '
                 <div class="row">
@@ -196,11 +196,11 @@ function error_message_div($error_msg) {
  *
  * @param $user_email
  */
-function activate_user($user_email) {
+function activate_user( $user_email ) {
     global $wpdb;
 
     $table_name = $wpdb->users;
 
-    $wpdb->update($table_name, array('user_status' => 0, 'user_activation_key' => ' '),
-                               array('user_login' => $user_email));
+    $wpdb->update( $table_name, array( 'user_status' => 0, 'user_activation_key' => ' ' ),
+        array( 'user_login' => $user_email ) );
 }

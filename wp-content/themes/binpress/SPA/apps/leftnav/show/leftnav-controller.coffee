@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'base-controller'], (App, AppController)->
+        'region-controller'], (App, AppController)->
 
     #start the app module
     App.module 'LeftNavApp.Show', (Show, App, Backbone, Marionette, $, _)->

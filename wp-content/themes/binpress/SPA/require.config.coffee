@@ -10,9 +10,10 @@ requirejs.config
         mustache : 'bower_components/mustache/mustache'
         text : 'bower_components/requirejs-text/text'
         backbonesyphon : 'bower_components/backbone.syphon/lib/backbone.syphon'
+        'jquery-validate' : 'bower_components/jquery.validation/dist/jquery.validate'
         configloader : 'configs/dashboard-spa-config-loader'
         appsloader : 'apps/dashboard-spa-apps-loader'
-        'base-controller' : 'controllers/base-controller'
+        'region-controller' : 'controllers/region-controller'
         entitiesloader : 'entities/dashboard-spa-entities-loader'
         app : 'dashboard-spa'
 
@@ -27,13 +28,14 @@ requirejs.config
         marionette :
             deps : ['backbone']
             exports : 'Marionette'
-        backbonesyphon: ['backbone']
+        backbonesyphon : ['backbone']
+        'jquery-validate' : ['jquery']
         app : ['configloader']
 
 ## Start with application
 require [   'configloader'
             'app',
-            'base-controller',
+            'region-controller',
             'appsloader',
             'entitiesloader'], (configs, App)->
     App.start()

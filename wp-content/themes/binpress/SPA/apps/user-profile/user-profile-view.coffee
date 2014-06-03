@@ -1,6 +1,9 @@
 #include the files for the app
+#TODO: remove the backbonesyphon from the file
 define ['app'
-        'text!apps/user-profile/templates/userprofile.html'], (App, userProfileTpl)->
+        'text!apps/user-profile/templates/userprofile.html'
+        'backbonesyphon'
+        'jquery-validate'], (App, userProfileTpl)->
 
     #start the app module
     App.module 'UserProfileAppView', (View, App)->
@@ -12,9 +15,43 @@ define ['app'
 
             template : userProfileTpl
 
+            tagName : 'form'
+
+            id : "user-profile-form"
+
             events :
                 'click #save-user-profile' :->
-                    data = Backbone.Syphon.serialize @
-                    console.log data
+                    if @$el.valid()
+                        userdata = Backbone.Syphon.serialize @
+                        @trigger "save:user:profile:clicked", userdata
+            onShow :->
+
+                #validate the user profile form with the validation rules
+                @$el.validate @validationOptions()
+
+            validationOptions :->
+                rules :
+                    display_name :
+                        required : true,
+
+                    user_email :
+                        required : true,
+                        email : true
+
+                    user_pass :
+                        required : true,
+                        minlength : 5
+
+                    confirm_password :
+                        required : true,
+                        equalTo : "#user_pass"
+                messages :
+                    user_name :'Enter valid user name'
+
+
+
+
+
+
 
 
