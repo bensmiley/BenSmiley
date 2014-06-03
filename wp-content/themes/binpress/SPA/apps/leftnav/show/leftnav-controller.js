@@ -17,6 +17,11 @@ define(['app', 'base-controller'], function(App, AppController) {
           opt = {};
         }
         this.layout = this.getLayout();
+        this.listenTo(this.layout, "user:profile:clicked", function() {
+          return App.execute("show:user:profile", {
+            region: App.mainContentRegion
+          });
+        });
         return this.show(this.layout);
       };
 
@@ -34,7 +39,17 @@ define(['app', 'base-controller'], function(App, AppController) {
         return LeftNavView.__super__.constructor.apply(this, arguments);
       }
 
-      LeftNavView.prototype.template = '<div class="page-sidebar" id="main-menu"> <div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="index.html"> <i class="fa fa-user"></i> <span class="title">User Profile</span>  <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div> </div>';
+      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
+
+      LeftNavView.prototype.className = 'page-sidebar';
+
+      LeftNavView.prototype.id = 'main-menu';
+
+      LeftNavView.prototype.events = {
+        'click #user-profile': function() {
+          return this.trigger("user:profile:clicked");
+        }
+      };
 
       return LeftNavView;
 

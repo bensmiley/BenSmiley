@@ -70,13 +70,9 @@ define(['app', 'base-controller', 'entities/user-entities'], function(App, AppCo
         return UserDisplayView.__super__.constructor.apply(this, arguments);
       }
 
-      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">a{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul> ';
+      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul> ';
 
       UserDisplayView.prototype.className = 'pull-right';
-
-      UserDisplayView.prototype.onShow = function() {
-        return console.log(this.model.get('display_name'));
-      };
 
       UserDisplayView.prototype.serializeData = function() {
         var data;

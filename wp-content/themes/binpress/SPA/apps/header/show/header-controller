@@ -67,7 +67,7 @@ define ['app'
                         <ul class="nav quick-section ">
                             <li class="quicklinks">
                                 <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-                                    <div class="pull-left"> <span class="bold">a{{display_name}}</span></div>
+                                    <div class="pull-left"> <span class="bold">{{display_name}}</span></div>
                                     &nbsp;
                                     <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                                 </a>
@@ -78,9 +78,6 @@ define ['app'
                         </ul> '
 
             className : 'pull-right'
-
-            onShow :->
-                console.log @model.get 'display_name'
 
             serializeData: ->
                 data = super()

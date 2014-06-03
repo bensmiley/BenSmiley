@@ -6,9 +6,10 @@ requirejs.config
         jquery : 'bower_components/jquery/dist/jquery'
         backbone : 'bower_components/backbone/backbone'
         underscore : 'bower_components/underscore/underscore'
-        marionette : 'bower_components/marionette/lib/backbone.marionette'
+        marionette : 'bower_components/marionette/lib/backbone.marionette.min'
         mustache : 'bower_components/mustache/mustache'
         text : 'bower_components/requirejs-text/text'
+        backbonesyphon : 'bower_components/backbone.syphon/lib/backbone.syphon'
         configloader : 'configs/dashboard-spa-config-loader'
         appsloader : 'apps/dashboard-spa-apps-loader'
         'base-controller' : 'controllers/base-controller'
@@ -26,6 +27,7 @@ requirejs.config
         marionette :
             deps : ['backbone']
             exports : 'Marionette'
+        backbonesyphon: ['backbone']
         app : ['configloader']
 
 ## Start with application
