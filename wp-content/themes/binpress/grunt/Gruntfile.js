@@ -39,7 +39,6 @@ module.exports = function(grunt) {
     },
     phpcs: {
       options: {
-        bin: 'C:/xampp/php/phpcs.bat',
         standard: "Wordpress"
       },
       theme: {
@@ -51,7 +50,6 @@ module.exports = function(grunt) {
     },
     phpunit: {
       options: {
-        bin: "/usr/bin/phpunit",
         bootstrap: "../../../../tests/includes/bootstrap.php",
         colors: true
       },
@@ -69,7 +67,6 @@ module.exports = function(grunt) {
     karma: {
       options: {
         runnerPort: 9999,
-        browsers: ['Chrome'],
         singleRun: true
       },
       themeJS: {
@@ -112,8 +109,7 @@ module.exports = function(grunt) {
         options: {
           paths: ["../css"],
           cleancss: true,
-          compress: true,
-          syncImport: true
+          compress: true
         },
         files: [
           {
@@ -192,22 +188,22 @@ module.exports = function(grunt) {
   });
   grunt.registerTask("gitCommit", "Commit production files", function() {});
   getRequireJSTasks = function(files, pattern) {
-    var optimizedExtension, originalExtension, subTasks;
+    var folderName, optimizedExtension, originalExtension, subTasks;
     subTasks = {};
+    folderName = pattern === 'scripts' ? 'js' : 'SPA';
     originalExtension = "" + pattern + ".js";
     optimizedExtension = "" + pattern + ".min.js";
     files.map(function(file) {
       var config, name;
       config = {
-        baseUrl: "../js/",
-        mainConfigFile: "../js/require.config.js",
-        name: "../js/bower_components/almond/almond.js",
+        baseUrl: "../" + folderName + "/",
+        mainConfigFile: "../" + folderName + "/require.config.js",
+        name: "../" + folderName + "/bower_components/almond/almond.js",
         include: [file],
         out: file.replace(originalExtension, optimizedExtension),
-        findNestedDependencies: true,
-        optimize: 'none'
+        findNestedDependencies: true
       };
-      file = file.replace("../js/", "");
+      file = file.replace("../" + folderName + "/", "");
       name = file.replace("." + pattern + ".js", "");
       subTasks[name] = {};
       return subTasks[name]["options"] = config;
@@ -217,6 +213,6 @@ module.exports = function(grunt) {
   grunt.registerTask("validate", ["lesslint", "coffeelint", "jshint", "phpcs"]);
   grunt.registerTask("runtests", ["karma", "phpunit"]);
   grunt.registerTask("optimize", ["less", "themeJSOptimize", "themeSPAOptimize"]);
-  grunt.registerTask("build", ["themeJSOptimize", "less", "clean:production", "copyto", "clean:prevBuilds"]);
+  grunt.registerTask("build", ["themeJSOptimize", "themeSPAOptimize", "less", "clean:production", "copyto", "clean:prevBuilds"]);
   return grunt.registerTask("deploy", ["validate", "runtests", "optimize", "clean", "copyto", "notify:readyToDeploy"]);
 };

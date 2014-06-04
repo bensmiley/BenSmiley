@@ -74,7 +74,7 @@ if ( is_development_environment() ) {
         // localized variables
         wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
         wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
-        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce('media-form') );
+        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce( 'media-form' ) );
     }
 
     add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_scripts' );
@@ -83,7 +83,7 @@ if ( is_development_environment() ) {
 
         $module = get_module_name();
 
-        wp_enqueue_style( "$module-script", get_template_directory_uri() . "/css/{$module}.styles.css" );
+        wp_enqueue_style( "$module-style", get_template_directory_uri() . "/css/{$module}.styles.css" );
 
     }
 
@@ -95,7 +95,7 @@ if ( !is_development_environment() ) {
     function binpress_production_enqueue_script() {
 
         $module = get_module_name();
-        $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
+        $path   = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
         if ( is_single_page_app() )
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
@@ -114,11 +114,11 @@ if ( !is_development_environment() ) {
 
         $module = get_module_name();
 
-        wp_enqueue_style( "$module-styles",
+        wp_enqueue_style( "$module-style",
             get_template_directory_uri() . "/production/css/{$module}.styles.min.css",
             array(),
             get_current_version(),
-            TRUE );
+            "screen" );
 
     }
 
@@ -147,6 +147,7 @@ function get_current_version() {
 }
 
 function is_single_page_app() {
+
     // TODO: Application logic to identify if current page is a SPA
 
     return FALSE;
@@ -189,8 +190,9 @@ function set_site_user_role() {
     add_capability_to_role();
 
 }
+
 //TODO: write proper comments
-function add_capability_to_role(){
+function add_capability_to_role() {
 
     // gets the author role
     $role = get_role( 'site-member' );
@@ -208,6 +210,7 @@ function add_capability_to_role(){
  *
  */
 function send_email_through_cron() {
+
     send_mail_cron();
 }
 

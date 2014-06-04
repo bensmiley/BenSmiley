@@ -6,7 +6,7 @@ requirejs.config
         jquery : 'bower_components/jquery/dist/jquery'
         backbone : 'bower_components/backbone/backbone'
         underscore : 'bower_components/underscore/underscore'
-        marionette : 'bower_components/marionette/lib/backbone.marionette.min'
+        marionette : 'bower_components/marionette/lib/backbone.marionette'
         mustache : 'bower_components/mustache/mustache'
         text : 'bower_components/requirejs-text/text'
         backbonesyphon : 'bower_components/backbone.syphon/lib/backbone.syphon'
