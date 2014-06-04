@@ -16,7 +16,7 @@ requirejs.config({
     appsloader: 'apps/dashboard-spa-apps-loader',
     'region-controller': 'controllers/region-controller',
     entitiesloader: 'entities/dashboard-spa-entities-loader',
-    app: 'dashboard-spa'
+    app: 'dashboard.spa'
   },
   shim: {
     underscore: {

@@ -54,7 +54,14 @@ add_action( 'init', 'binpress_after_init' );
 if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_scripts() {
-
+		
+		$module = get_module_name();
+		$spa_pages = array('dashboard');
+		
+		$pattern = in_array( $module, $spa_pages ) ? 'spa' : 'scripts';
+		
+		$folder_name = $pattern === 'spa' ? 'SPA' : 'js';
+		
         wp_enqueue_script( "requirejs",
             get_template_directory_uri() . "/js/bower_components/requirejs/require.js",
             array(),
@@ -62,13 +69,13 @@ if ( is_development_environment() ) {
             TRUE );
 
         wp_enqueue_script( "require-config",
-            get_template_directory_uri() . "/js/require.config.js",
+            get_template_directory_uri() . "/{$folder_name}/require.config.js",
             array( "requirejs" ) );
 
-        $module = get_module_name();
-
+        
+		
         wp_enqueue_script( "$module-script",
-            get_template_directory_uri() . "/js/{$module}.scripts.js",
+            get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
 
         // localized variables
