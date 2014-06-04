@@ -73,6 +73,8 @@ if ( is_development_environment() ) {
 
         // localized variables
         wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
+        wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
+        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce('media-form') );
     }
 
     add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_scripts' );
@@ -184,6 +186,17 @@ function set_site_user_role() {
     // add custom role site member with no capabilities
     add_role( 'site-member', __( 'Site Member' ), array() );
 
+    add_capability_to_role();
+
+}
+//TODO: write proper comments
+function add_capability_to_role(){
+
+    // gets the author role
+    $role = get_role( 'site-member' );
+
+    // This only works, because it accesses the class instance.
+    $role->add_cap( 'upload_files' );
 }
 
 /**

@@ -1,7 +1,7 @@
 define ['app'
         'plupload'], (App, plupload)->
 
-    App.module 'UploadApp.View', (View, App)->
+    App.module 'UploadAppView', (View, App)->
 
         class View.UploadView extends Marionette.ItemView
 
@@ -33,7 +33,7 @@ define ['app'
                     multipart: true
                     urlstream_upload: true
                     max_file_size: "10mb"
-                    url: '/examples/upload'
+                    url: UPLOADURL
                     flash_swf_url: "../../bower_components/plupload/wp-includes/js/Moxie.swf"
                     silverlight_xap_url: "../../bower_components/plupload/wp-includes/js/Moxie.xap"
                     filters: [
@@ -61,6 +61,7 @@ define ['app'
                     @$el.find(".progress-bar").css "width", "0%"
                     @$el.find("#progress").hide()
                     response = JSON.parse(response.response)
+                    console.log response
                     if response.success
                         console.log 'hi'
 

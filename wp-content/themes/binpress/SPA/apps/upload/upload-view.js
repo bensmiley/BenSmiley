@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['app', 'plupload'], function(App, plupload) {
-  return App.module('UploadApp.View', function(View, App) {
+  return App.module('UploadAppView', function(View, App) {
     return View.UploadView = (function(_super) {
       __extends(UploadView, _super);
 
@@ -22,7 +22,7 @@ define(['app', 'plupload'], function(App, plupload) {
           multipart: true,
           urlstream_upload: true,
           max_file_size: "10mb",
-          url: '/examples/upload',
+          url: UPLOADURL,
           flash_swf_url: "../../bower_components/plupload/wp-includes/js/Moxie.swf",
           silverlight_xap_url: "../../bower_components/plupload/wp-includes/js/Moxie.xap",
           filters: [
@@ -58,6 +58,7 @@ define(['app', 'plupload'], function(App, plupload) {
             _this.$el.find(".progress-bar").css("width", "0%");
             _this.$el.find("#progress").hide();
             response = JSON.parse(response.response);
+            console.log(response);
             if (response.success) {
               return console.log('hi');
             }

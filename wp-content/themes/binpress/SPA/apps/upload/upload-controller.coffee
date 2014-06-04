@@ -1,12 +1,13 @@
 #include the files for the app
 define ['app'
-        'region-controller'], (App, AppController)->
+        'region-controller'
+        'apps/upload/upload-view'], (App, AppController,View)->
 
     #start the app module
     App.module 'UploadApp', (UploadApp, App, Backbone, Marionette, $, _)->
 
         # Controller class for showing left nav nenu region
-        class Upload.Controller extends AppController
+        class UploadApp.Controller extends AppController
 
             # initialize
             initialize: (opts)->
@@ -19,5 +20,5 @@ define ['app'
 
 
         App.commands.setHandler 'start:upload:app', (options) =>
-            new Upload.Controller
+            new UploadApp.Controller
                 region: options.region
