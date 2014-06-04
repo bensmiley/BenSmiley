@@ -17,7 +17,12 @@ define ['app'
                                     to
                                     add/edit Profile Photo</a>
                             </div>
-                        </div>'
+                        </div>
+                       <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active">
+                            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+                            <span class="sr-only">0% Complete </span>
+                        </div>
+                       <div><input type="text" style="display: none" id="image_id" name="image_id"/></div>'
 
             # setup plupload on show
             # the url for plupload will be async-upload.php(wordpress default)
@@ -63,7 +68,9 @@ define ['app'
                     response = JSON.parse(response.response)
                     console.log response
                     if response.success
-                        console.log 'hi'
+                        @$el.find('#image_id').val(response.data.id)
+                        #console.log response.data.id
+
 
             # destroyt the plupload instance on close to release memory
             onClose: ->

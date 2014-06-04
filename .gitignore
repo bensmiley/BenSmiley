@@ -12,7 +12,7 @@ node_modules
 wp-config.php
 
 # ignore wordpress unit tests
-tests/
+/tests
 
 # Operating system files
 .Spotlight-V100
