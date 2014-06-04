@@ -31,9 +31,9 @@ requirejs.config
             exports : 'Marionette'
         backbonesyphon : ['backbone']
         'jquery-validate' : ['jquery']
-        plupload:
-            deps: ['jquery']
-            exports: 'plupload'
+        plupload :
+            deps : ['jquery']
+            exports : 'plupload'
         app : ['configloader']
 
 ## Start with application

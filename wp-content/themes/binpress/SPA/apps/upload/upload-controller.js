@@ -24,12 +24,10 @@ define(['app', 'region-controller', 'apps/upload/upload-view'], function(App, Ap
       return Controller;
 
     })(AppController);
-    return App.commands.setHandler('start:upload:app', (function(_this) {
-      return function(options) {
-        return new UploadApp.Controller({
-          region: options.region
-        });
-      };
-    })(this));
+    return App.commands.setHandler('start:upload:app', function(options) {
+      return new UploadApp.Controller({
+        region: options.region
+      });
+    });
   });
 });

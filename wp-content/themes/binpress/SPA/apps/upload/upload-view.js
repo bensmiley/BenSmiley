@@ -48,11 +48,9 @@ define(['app', 'plupload'], function(App, plupload) {
             return _this.$el.find(".progress-bar").css("width", file.percent + "%");
           };
         })(this));
-        this.uploader.bind("Error", (function(_this) {
-          return function(up, err) {
-            return up.refresh();
-          };
-        })(this));
+        this.uploader.bind("Error", function(up, err) {
+          return up.refresh();
+        });
         return this.uploader.bind("FileUploaded", (function(_this) {
           return function(up, file, response) {
             _this.$el.find(".progress-bar").css("width", "0%");

@@ -1,7 +1,7 @@
 #include the files for the app
 define ['app'
         'region-controller'
-        'apps/upload/upload-view'], (App, AppController,View)->
+        'apps/upload/upload-view'], (App, AppController, View)->
 
     #start the app module
     App.module 'UploadApp', (UploadApp, App, Backbone, Marionette, $, _)->
@@ -10,15 +10,15 @@ define ['app'
         class UploadApp.Controller extends AppController
 
             # initialize
-            initialize: (opts)->
+            initialize : (opts)->
                 view = @_getView()
                 @show view
 
             # gets the main login view
-            _getView: (mediaCollection)->
+            _getView : (mediaCollection)->
                 new View.UploadView
 
 
-        App.commands.setHandler 'start:upload:app', (options) =>
+        App.commands.setHandler 'start:upload:app', (options)->
             new UploadApp.Controller
-                region: options.region
+                region : options.region
