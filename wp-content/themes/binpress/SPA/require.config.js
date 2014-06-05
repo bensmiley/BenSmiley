@@ -12,6 +12,7 @@ requirejs.config({
     backbonesyphon: 'bower_components/backbone.syphon/lib/backbone.syphon',
     plupload: 'bower_components/plupload/js/plupload.full.min',
     'jquery-validate': 'bower_components/jquery.validation/dist/jquery.validate',
+    datatables: 'bower_components/datatables/media/js/jquery.dataTables',
     configloader: 'configs/dashboard-spa-config-loader',
     appsloader: 'apps/dashboard-spa-apps-loader',
     'region-controller': 'controllers/region-controller',
@@ -33,6 +34,7 @@ requirejs.config({
     },
     backbonesyphon: ['backbone'],
     'jquery-validate': ['jquery'],
+    datatables: ['jquery'],
     plupload: {
       deps: ['jquery'],
       exports: 'plupload'
@@ -41,6 +43,6 @@ requirejs.config({
   }
 });
 
-require(['configloader', 'app', 'region-controller', 'appsloader', 'entitiesloader'], function(configs, App) {
+require(['configloader', 'datatables', 'app', 'region-controller', 'appsloader', 'entitiesloader'], function(configs, table, App) {
   return App.start();
 });

@@ -1,0 +1,33 @@
+.grscale {
+  margin: auto;
+  -webkit-filter: grayscale(100%);
+  /* filter: url(css/grayscale.svg#greyscale); */
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: gray;
+  opacity: 0.5;
+  width: 64px !important;
+}
+.grscale:hover {
+  opacity: 0.9 !important;
+  -webkit-filter: grayscale(0%);
+  /* filter: url(css/grayscale.svg#greyscale); */
+  -moz-filter: grayscale(0%);
+  -ms-filter: grayscale(0%);
+  -o-filter: grayscale(0%);
+  filter: gray;
+}
+.dl-plan dt {
+  width: 130px !important;
+  font-size: 14px;
+}
+.dl-plan dd {
+  margin-left: 150px !important;
+  margin-bottom: 14px;
+}
+.alert-default {
+  background: #EEE !important;
+  color: #666666 !important;
+  border: 1px dashed #666666 !important;
+}
