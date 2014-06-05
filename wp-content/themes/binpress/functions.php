@@ -51,17 +51,17 @@ function binpress_after_init() {
 add_action( 'init', 'binpress_after_init' );
 
 
-if ( is_development_environment() ) {
+if (is_development_environment()) {
 
     function binpress_dev_enqueue_scripts() {
-		
-		$module = get_module_name();
-		$spa_pages = array('dashboard');
-		
-		$pattern = in_array( $module, $spa_pages ) ? 'spa' : 'scripts';
-		
-		$folder_name = $pattern === 'spa' ? 'SPA' : 'js';
-		
+        // TODO: handle with better logic to define patterns and folder names
+        $module = get_module_name();
+        $spa_pages = array( 'dashboard' );
+
+        $pattern = in_array( $module, $spa_pages ) ? 'spa' : 'scripts';
+
+        $folder_name = $pattern === 'spa' ? 'SPA' : 'js';
+
         wp_enqueue_script( "requirejs",
             get_template_directory_uri() . "/js/bower_components/requirejs/require.js",
             array(),
@@ -72,8 +72,7 @@ if ( is_development_environment() ) {
             get_template_directory_uri() . "/{$folder_name}/require.config.js",
             array( "requirejs" ) );
 
-        
-		
+
         wp_enqueue_script( "$module-script",
             get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
@@ -97,14 +96,14 @@ if ( is_development_environment() ) {
     add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_styles' );
 }
 
-if ( !is_development_environment() ) {
+if (!is_development_environment()) {
 
     function binpress_production_enqueue_script() {
 
         $module = get_module_name();
-        $path   = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
+        $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
-        if ( is_single_page_app() )
+        if (is_single_page_app())
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
 
         wp_enqueue_script( "$module-script",
@@ -135,7 +134,7 @@ if ( !is_development_environment() ) {
 
 function is_development_environment() {
 
-    if ( defined( 'ENV' ) && ENV === "production" )
+    if (defined( 'ENV' ) && ENV === "production")
         return FALSE;
 
     return TRUE;
@@ -146,7 +145,7 @@ function get_current_version() {
 
     global $wp_version;
 
-    if ( defined( 'VERSION' ) )
+    if (defined( 'VERSION' ))
         return VERSION;
 
     return $wp_version;
@@ -167,7 +166,7 @@ function get_module_name() {
     $module = "";
 
     // TODO: Handle with better logic here. Regex or something
-    if ( is_page() )
+    if (is_page())
         $module = sanitize_title( get_the_title() );
 
 
@@ -186,9 +185,9 @@ function set_site_user_role() {
     $roles = get_editable_roles();
 
     // remove all user roles except administrator
-    foreach ( $roles as $rolename => $role ):
-        if ( $rolename != "administrator" )
-            remove_role( $rolename );
+    foreach ($roles as $role_name => $role):
+        if ($role_name != "administrator")
+            remove_role( $role_name );
     endforeach;
 
     // add custom role site member with no capabilities

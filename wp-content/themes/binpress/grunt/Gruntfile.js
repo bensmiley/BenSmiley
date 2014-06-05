@@ -4,6 +4,25 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
+    watch: {
+      coffee: {
+        tasks: ['coffee'],
+        files: {
+          src: ["../../**/*.coffee"]
+        }
+      }
+    },
+    coffee: {
+      compile: {
+        files: {
+          expand: true,
+          flatten: true,
+          cwd: '../../',
+          src: ['*.coffee'],
+          ext: '.js'
+        }
+      }
+    },
     lesslint: {
       options: {
         csslint: {
