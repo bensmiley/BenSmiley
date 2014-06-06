@@ -26,12 +26,12 @@ define ['app'
             showUserDisplayView : ->
 
                 #get the user model for the current logged in user
-                @usermodel = usermodel = App.request "get:user:model"
+                @usermodel = App.request "get:current:user:model"
 
                 @userDisplayView = @getUserDisplayView @usermodel
 
-                App.execute "when:fetched", [@usermodel], =>
-                    @layout.userDisplayRegion.show @userDisplayView
+#                App.execute "when:fetched", [@usermodel], =>
+                @layout.userDisplayRegion.show @userDisplayView
 
             getUserDisplayView :(usermodel) ->
                 new UserDisplayView
@@ -59,9 +59,9 @@ define ['app'
         class UserDisplayView extends Marionette.ItemView
 
             template : '<div class="user-profile pull-left m-t-10">
-                          <img src="assets/img/profiles/avatar_small.jpg" alt=""
-                          data-src="assets/img/profiles/avatar_small.jpg"
-                          data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35">
+                          <img src="{{user_photo}}" alt=""
+                          data-src="{{user_photo}}"
+                          data-src-retina="{{user_photo}}" width="35" height="35">
                         </div>
                         <ul class="nav quick-section ">
                             <li class="quicklinks">
@@ -78,8 +78,8 @@ define ['app'
 
             className : 'pull-right'
 
-            serializeData: ->
-                data = super()
-                data
+#            mixinTemplateHelpers:(data) ->
+#                data = super(data)
+#                data
 
 

@@ -13,23 +13,22 @@ define(['app', 'region-controller', 'apps/upload/upload-view'], function(App, Ap
 
       Controller.prototype.initialize = function(opts) {
         var view;
-        view = this._getView();
+        this.usermodel = opts.model;
+        view = this._getView(this.usermodel);
         return this.show(view);
       };
 
-      Controller.prototype._getView = function(mediaCollection) {
-        return new View.UploadView;
+      Controller.prototype._getView = function(usermodel) {
+        return new View.UploadView({
+          model: usermodel
+        });
       };
 
       return Controller;
 
     })(AppController);
-    return App.commands.setHandler('start:upload:app', (function(_this) {
-      return function(options) {
-        return new UploadApp.Controller({
-          region: options.region
-        });
-      };
-    })(this));
+    return App.commands.setHandler('start:upload:app', function(options) {
+      return new UploadApp.Controller(options);
+    });
   });
 });

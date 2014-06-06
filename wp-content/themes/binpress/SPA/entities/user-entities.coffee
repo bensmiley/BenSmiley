@@ -1,5 +1,4 @@
 define ["app", 'backbone'], (App, Backbone) ->
-
     App.module "Entities.Users", (Users, App, Backbone, Marionette, $, _)->
 
         #User model
@@ -7,16 +6,25 @@ define ["app", 'backbone'], (App, Backbone) ->
             name : 'user'
             idAttribute : 'ID'
 
+
+
+
         # This is current user model (Logged in user model)
         currentUser = new Users.UserModel
         currentUser.set CURRENTUSERDATA
+
+
+
+        #model for user data
+        user = new Users.UserModel
+        user.fetch()
 
         #PUBLIC API
         API =
             getUser : ->
                 user
 
-            getCurrentUser:->
+            getCurrentUser : ->
                 currentUser
 
         #REQUEST HANDLERS

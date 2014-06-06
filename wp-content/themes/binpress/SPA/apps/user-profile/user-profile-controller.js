@@ -13,12 +13,12 @@ define(['app', 'region-controller', 'apps/user-profile/user-profile-view'], func
       }
 
       UserProfileController.prototype.initialize = function(opts) {
-        var usermodel;
-        this.usermodel = usermodel = App.request("get:user:model");
+        this.usermodel = App.request("get:current:user:model");
         this.layout = this.getLayout(this.usermodel);
         this.listenTo(this.layout, "show", function() {
           return App.execute("start:upload:app", {
-            region: this.layout.userPhotoRegion
+            region: this.layout.userPhotoRegion,
+            model: this.usermodel
           });
         });
         this.listenTo(this.layout, "save:user:profile:clicked", this.saveUserProfile);

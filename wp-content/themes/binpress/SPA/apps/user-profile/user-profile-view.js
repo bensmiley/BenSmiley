@@ -48,11 +48,9 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html', 'backbonesyp
               email: true
             },
             user_pass: {
-              required: true,
               minlength: 5
             },
             confirm_password: {
-              required: true,
               equalTo: "#user_pass"
             }
           },

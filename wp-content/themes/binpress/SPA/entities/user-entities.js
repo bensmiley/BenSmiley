@@ -4,7 +4,7 @@ var __hasProp = {}.hasOwnProperty,
 
 define(["app", 'backbone'], function(App, Backbone) {
   return App.module("Entities.Users", function(Users, App, Backbone, Marionette, $, _) {
-    var API, currentUser;
+    var API, currentUser, user;
     Users.UserModel = (function(_super) {
       __extends(UserModel, _super);
 
@@ -21,6 +21,8 @@ define(["app", 'backbone'], function(App, Backbone) {
     })(Backbone.Model);
     currentUser = new Users.UserModel;
     currentUser.set(CURRENTUSERDATA);
+    user = new Users.UserModel;
+    user.fetch();
     API = {
       getUser: function() {
         return user;

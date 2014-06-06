@@ -74,7 +74,10 @@ if ( is_development_environment() ) {
         // localized variables
         wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
         wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
-        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce('media-form') );
+        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce( 'media-form' ) );
+
+        if(is_user_logged_in() && is_page_template('template-dashboard.php'))
+            wp_localize_script( "requirejs", "CURRENTUSERDATA", get_current_user_data()  );
     }
 
     add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_scripts' );
@@ -189,8 +192,9 @@ function set_site_user_role() {
     add_capability_to_role();
 
 }
+
 //TODO: write proper comments
-function add_capability_to_role(){
+function add_capability_to_role() {
 
     // gets the author role
     $role = get_role( 'site-member' );

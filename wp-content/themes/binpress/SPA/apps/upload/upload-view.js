@@ -11,7 +11,7 @@ define(['app', 'plupload'], function(App, plupload) {
         return UploadView.__super__.constructor.apply(this, arguments);
       }
 
-      UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right"> <img class="m-b-10" width="90" height="90" data-src-retina="assets/img/profiles/avatar2x.jpg" data-src="assets/img/profiles/avatar.jpg" alt="" src="assets/img/profiles/avatar.jpg"> <div class="clearfix"></div> <a id="add-photo" class="m-t-10" href="#" data-color-format="hex">Click to add/edit Profile Photo</a> </div> </div> <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active"> <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div> <span class="sr-only">0% Complete </span> </div> <div><input type="text" style="display: none" id="image_id" name="image_id"/></div>';
+      UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right"> <img class="m-b-10" width="90" height="90" data-src-retina="assets/img/profiles/avatar2x.jpg" data-src="assets/img/profiles/avatar.jpg" alt="" src="{{user_photo}}"> <div class="clearfix"></div> <a id="add-photo" class="m-t-10" href="#" data-color-format="hex">Click to add/edit Profile Photo</a> </div> </div> <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active"> <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div> <span class="sr-only">0% Complete </span> </div> <div> <input type="text" style="display: none" id="user_photo_id" name="user_photo_id"/> </div>';
 
       UploadView.prototype.onShow = function() {
         this.uploader = new plupload.Uploader({
@@ -48,11 +48,9 @@ define(['app', 'plupload'], function(App, plupload) {
             return _this.$el.find(".progress-bar").css("width", file.percent + "%");
           };
         })(this));
-        this.uploader.bind("Error", (function(_this) {
-          return function(up, err) {
-            return up.refresh();
-          };
-        })(this));
+        this.uploader.bind("Error", function(up, err) {
+          return up.refresh();
+        });
         return this.uploader.bind("FileUploaded", (function(_this) {
           return function(up, file, response) {
             _this.$el.find(".progress-bar").css("width", "0%");
@@ -60,7 +58,7 @@ define(['app', 'plupload'], function(App, plupload) {
             response = JSON.parse(response.response);
             console.log(response);
             if (response.success) {
-              return _this.$el.find('#image_id').val(response.data.id);
+              return _this.$el.find('#user_photo_id').val(response.data.id);
             }
           };
         })(this));
