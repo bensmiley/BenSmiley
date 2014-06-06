@@ -54,6 +54,13 @@ add_action( 'init', 'binpress_after_init' );
 if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_scripts() {
+        // TODO: handle with better logic to define patterns and folder names
+        $module = get_module_name();
+        $spa_pages = array( 'dashboard' );
+
+        $pattern = in_array( $module, $spa_pages ) ? 'spa' : 'scripts';
+
+        $folder_name = $pattern === 'spa' ? 'SPA' : 'js';
 
         wp_enqueue_script( "requirejs",
             get_template_directory_uri() . "/js/bower_components/requirejs/require.js",
@@ -62,22 +69,21 @@ if ( is_development_environment() ) {
             TRUE );
 
         wp_enqueue_script( "require-config",
-            get_template_directory_uri() . "/js/require.config.js",
+            get_template_directory_uri() . "/{$folder_name}/require.config.js",
             array( "requirejs" ) );
 
-        $module = get_module_name();
 
         wp_enqueue_script( "$module-script",
-            get_template_directory_uri() . "/js/{$module}.scripts.js",
+            get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
 
         // localized variables
         wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
         wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
         wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce( 'media-form' ) );
+        if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
+            wp_localize_script( "requirejs", "CURRENTUSERDATA", get_current_user_data() );
 
-        if(is_user_logged_in() && is_page_template('template-dashboard.php'))
-            wp_localize_script( "requirejs", "CURRENTUSERDATA", get_current_user_data()  );
     }
 
     add_action( 'wp_enqueue_scripts', 'binpress_dev_enqueue_scripts' );
@@ -86,7 +92,7 @@ if ( is_development_environment() ) {
 
         $module = get_module_name();
 
-        wp_enqueue_style( "$module-script", get_template_directory_uri() . "/css/{$module}.styles.css" );
+        wp_enqueue_style( "$module-style", get_template_directory_uri() . "/css/{$module}.styles.css" );
 
     }
 
@@ -117,11 +123,11 @@ if ( !is_development_environment() ) {
 
         $module = get_module_name();
 
-        wp_enqueue_style( "$module-styles",
+        wp_enqueue_style( "$module-style",
             get_template_directory_uri() . "/production/css/{$module}.styles.min.css",
             array(),
             get_current_version(),
-            TRUE );
+            "screen" );
 
     }
 
@@ -150,6 +156,7 @@ function get_current_version() {
 }
 
 function is_single_page_app() {
+
     // TODO: Application logic to identify if current page is a SPA
 
     return FALSE;
@@ -181,9 +188,9 @@ function set_site_user_role() {
     $roles = get_editable_roles();
 
     // remove all user roles except administrator
-    foreach ( $roles as $rolename => $role ):
-        if ( $rolename != "administrator" )
-            remove_role( $rolename );
+    foreach ( $roles as $role_name => $role ):
+        if ( $role_name != "administrator" )
+            remove_role( $role_name );
     endforeach;
 
     // add custom role site member with no capabilities
@@ -212,6 +219,7 @@ function add_capability_to_role() {
  *
  */
 function send_email_through_cron() {
+
     send_mail_cron();
 }
 

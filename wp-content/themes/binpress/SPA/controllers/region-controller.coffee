@@ -1,5 +1,5 @@
-define ["marionette"
-        "app"], (Marionette, App) ->
+define ["marionette" , "app"], (Marionette, App) ->
+
     class RegionController extends Marionette.Controller
 
         constructor : (options = {}) ->

@@ -24,6 +24,7 @@ function ajax_read_user() {
         $current_user_data = get_current_user_data();
 
         wp_send_json( array( 'code' => 'OK', 'data' => $current_user_data ) );
+
     } else {
         wp_send_json( array( 'msg' => 'User not logged in' ) );
     }
@@ -38,17 +39,18 @@ add_action( 'wp_ajax_read-user', 'ajax_read_user' );
 function ajax_update_user() {
 
     // get all the POST data of the user
-    $userdata = $_POST;
+    $user_data = $_POST;
 
     //unset the action field
-    unset( $userdata[ 'action' ] );
+    unset( $user_data[ 'action' ] );
 
-    if ( update_user_display_details( $userdata ) ) {
+    if ( update_user_display_details( $user_data ) ) {
 
-        if(!empty($userdata[ 'user_pass' ]))
-             wp_set_password( $userdata[ 'user_pass' ], $userdata[ 'ID' ] );
+        if ( !empty( $userdata[ 'user_pass' ] ) )
+            wp_set_password( $userdata[ 'user_pass' ], $userdata[ 'ID' ] );
 
         wp_send_json( array( 'code' => 'OK', 'data' => $userdata ) );
+
     }
 
     wp_send_json( array( 'code' => 'OK', 'msg' => 'User profile update not successful' ) );

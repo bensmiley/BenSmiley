@@ -12,9 +12,9 @@ namespace tests;
 class TestSignUp extends \WP_Ajax_UnitTestCase {
 
 
-    public function test_ () {
+    public function test_() {
 
-        $ids = $this->factory->user->create_many(50);
+       // $ids = $this->factory->user->create_many( 50 );
 
     }
 }

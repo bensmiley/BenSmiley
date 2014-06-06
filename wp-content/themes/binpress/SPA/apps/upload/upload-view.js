@@ -23,8 +23,8 @@ define(['app', 'plupload'], function(App, plupload) {
           urlstream_upload: true,
           max_file_size: "10mb",
           url: UPLOADURL,
-          flash_swf_url: "../../bower_components/plupload/wp-includes/js/Moxie.swf",
-          silverlight_xap_url: "../../bower_components/plupload/wp-includes/js/Moxie.xap",
+          flash_swf_url: "../../bower_components/plupload/js/Moxie.swf",
+          silverlight_xap_url: "../../bower_components/plupload/js/Moxie.xap",
           filters: [
             {
               title: "Image files",
@@ -40,7 +40,7 @@ define(['app', 'plupload'], function(App, plupload) {
         this.uploader.bind("FilesAdded", (function(_this) {
           return function(up, files) {
             _this.uploader.start();
-            return _this.$el.find("#progress").show();
+            return _this.$el.find(".upload-progress").show();
           };
         })(this));
         this.uploader.bind("UploadProgress", (function(_this) {
@@ -54,9 +54,8 @@ define(['app', 'plupload'], function(App, plupload) {
         return this.uploader.bind("FileUploaded", (function(_this) {
           return function(up, file, response) {
             _this.$el.find(".progress-bar").css("width", "0%");
-            _this.$el.find("#progress").hide();
+            _this.$el.find(".upload-progress").hide();
             response = JSON.parse(response.response);
-            console.log(response);
             if (response.success) {
               return _this.$el.find('#user_photo_id').val(response.data.id);
             }

@@ -10,7 +10,8 @@
     "requirejs-text": "~2.0.12",
     "backbone.syphon": "~0.4.1",
     "jquery.validation": "~1.12.0",
-    "plupload": "~2.1.2"
+    "plupload": "~2.1.2",
+    "datatables": "~1.10.0"
   },
   "devDependencies": {}
 }

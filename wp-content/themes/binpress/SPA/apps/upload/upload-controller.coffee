@@ -18,11 +18,11 @@ define ['app'
                 view = @_getView @usermodel
 
                 @show view
-
-            _getView : (usermodel)->
+            # gets the main login view
+            _getView : ->
                 new View.UploadView
                     model : usermodel
 
-
         App.commands.setHandler 'start:upload:app', (options) ->
             new UploadApp.Controller options
+

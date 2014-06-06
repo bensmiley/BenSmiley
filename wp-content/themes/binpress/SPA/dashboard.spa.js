@@ -12,7 +12,7 @@ define(['marionette'], function(Marionette) {
   });
   App.rootRoute = "dashboard";
   App.on('start', function() {
-    return console.log("Application Started....");
+    return console.log("Application Started...");
   });
   App.reqres.setHandler("default:region", function() {
     return App.mainContentRegion;

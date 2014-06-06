@@ -75,7 +75,7 @@
     },
     "no_stand_alone_at": {
         "name": "no_stand_alone_at",
-        "level": "error"
+        "level": "ignore"
     },
     "space_operators": {
         "name": "space_operators",

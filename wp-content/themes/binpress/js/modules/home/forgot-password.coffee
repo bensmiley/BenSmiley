@@ -18,7 +18,7 @@ define ['jquery', 'jquery-validate'], ->
                     email : true
 
         #error msg display
-            errorPlacement : (label, element) ->
+            errorPlacement : (label, element)->
                 $('<span class="error"></span>').insertAfter(element).append(label)
                 parent = $(element).parent('.input-with-icon')
                 parent.removeClass('success-control').addClass('error-control')

@@ -17,10 +17,10 @@ module.exports = (grunt) ->
                 src : ["../css/*.less", "../css/**/*.less"]
 
 
-        # JS Linting
-        # JSHint is a program that flags suspicious usage in programs written in JavaScript.
-        # Tracks unsed variables. JS common errors. Configuration files is .jshintrc
-        # List of ignored files/folders is stored in .jshintignore
+    # JS Linting
+    # JSHint is a program that flags suspicious usage in programs written in JavaScript.
+    # Tracks unsed variables. JS common errors. Configuration files is .jshintrc
+    # List of ignored files/folders is stored in .jshintignore
         jshint :
             options :
                 jshintrc : '.jshintrc'
@@ -28,7 +28,7 @@ module.exports = (grunt) ->
             themeJS : []
             SPAJS : []
 
-        # CoffeeLint
+    # CoffeeLint
         coffeelint :
             options :
                 configFile : 'coffeelint.json'
@@ -40,13 +40,12 @@ module.exports = (grunt) ->
                     src : ["../SPA/*.coffee", "../SPA/**/*.coffee"]
 
 
-        # PHP Code Sniffer
-        # detects violations of a defined set of coding standards
-        # It is an essential development tool that ensures your code remains clean and consistent.
-        # It can also help prevent some common semantic errors made by developers.
+    # PHP Code Sniffer
+    # detects violations of a defined set of coding standards
+    # It is an essential development tool that ensures your code remains clean and consistent.
+    # It can also help prevent some common semantic errors made by developers.
         phpcs :
             options :
-                bin : 'C:/xampp/php/phpcs.bat'
                 standard : "Wordpress"
             theme :
                 dir : ["../*.php", "../**/*.php"]
@@ -54,12 +53,11 @@ module.exports = (grunt) ->
                 dir : []
 
 
-        # PHP Unit
-        # PHPUnit is a programmer-oriented testing framework for PHP.
-        # It is an instance of the xUnit architecture for unit testing frameworks.
+    # PHP Unit
+    # PHPUnit is a programmer-oriented testing framework for PHP.
+    # It is an instance of the xUnit architecture for unit testing frameworks.
         phpunit :
             options :
-                bin : "/usr/bin/phpunit"
                 bootstrap : "../../../../tests/includes/bootstrap.php"
                 colors : true
             theme :
@@ -70,12 +68,11 @@ module.exports = (grunt) ->
                     dir : []
 
 
-        # Karma js unit testing
-        # Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
+    # Karma js unit testing
+    # Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
         karma :
             options :
                 runnerPort : 9999
-                browsers : ['Chrome']
                 singleRun : true
             themeJS :
                 configFile : "../js/tests/karma.conf.js"
@@ -83,10 +80,10 @@ module.exports = (grunt) ->
                 configFile : "../SPA/tests/karma.conf.js"
 
 
-        # "TODO" list
-        # Find TODO, FIXME and NOTE inside project files
-        # Developers can add TODO comments in their code when they need to leave something behind
-        # Running this grunt will give the full list of todo list item through out the project source code
+    # "TODO" list
+    # Find TODO, FIXME and NOTE inside project files
+    # Developers can add TODO comments in their code when they need to leave something behind
+    # Running this grunt will give the full list of todo list item through out the project source code
         todo :
             options :
                 marks : [
@@ -104,16 +101,15 @@ module.exports = (grunt) ->
                 src : ["../SPA/*.coffee", "../SPA/**/*.coffee"]
 
 
-        # Less => Css
-        # Compiles all *.styles.less files to respective css files for production
-        # Uses *.styles.less pattern to detect files to compile
+    # Less => Css
+    # Compiles all *.styles.less files to respective css files for production
+    # Uses *.styles.less pattern to detect files to compile
         less :
             production :
                 options :
                     paths : ["../css"]
                     cleancss : true
                     compress : true
-                    syncImport : true
                 files : [
                     expand : true
                     cwd : "../css"
@@ -123,7 +119,7 @@ module.exports = (grunt) ->
                 ]
 
 
-        # Clean production folder before new files are copied over
+    # Clean production folder before new files are copied over
         clean :
             prevBuilds :
                 src : ["../css/*.styles.min.css", "../js/*.scripts.min.js", "../SPA/*.spa.min.js"]
@@ -135,7 +131,7 @@ module.exports = (grunt) ->
                     force : true
 
 
-        # Copy all production resources to "production" folder
+    # Copy all production resources to "production" folder
         copyto :
             production :
                 files : [
@@ -157,7 +153,7 @@ module.exports = (grunt) ->
                 ]
 
 
-        # Cross OS notifier
+    # Cross OS notifier
         notify :
             readyToDeploy :
                 options :
@@ -200,27 +196,28 @@ module.exports = (grunt) ->
 
 
     # Custom task to create a git commit
-    grunt.registerTask "gitCommit","Commit production files", ->
+    grunt.registerTask "gitCommit", "Commit production files", ->
 
 
 
-    # create the subtasks for the require js optimizer
+        # create the subtasks for the require js optimizer
     getRequireJSTasks = (files, pattern)->
         subTasks = {}
+        folderName = if pattern is 'scripts' then 'js' else 'SPA'
         originalExtension = "#{pattern}.js"
         optimizedExtension = "#{pattern}.min.js"
         files.map (file)->
             config =
-                baseUrl : "../js/"
-                mainConfigFile : "../js/require.config.js"
-                name : "../js/bower_components/almond/almond.js"
+                baseUrl : "../#{folderName}/"
+                mainConfigFile : "../#{folderName}/require.config.js"
+                name : "../#{folderName}/bower_components/almond/almond.js"
                 include : [file]
                 out : file.replace originalExtension, optimizedExtension
                 findNestedDependencies : true
-                optimize : 'none' # uncomment for testing minified JS
+            #optimize : 'none' # uncomment for testing minified JS
 
             # get the module/page name
-            file = file.replace "../js/", ""
+            file = file.replace "../#{folderName}/", ""
             name = file.replace ".#{pattern}.js", ""
 
             # set the task
@@ -230,9 +227,10 @@ module.exports = (grunt) ->
         subTasks
 
     # helper commands to run series of tasks
-    grunt.registerTask "validate", ["lesslint", "coffeelint" ,"jshint", "phpcs"]
+    grunt.registerTask "validate", ["lesslint", "coffeelint" , "jshint", "phpcs"]
     grunt.registerTask "runtests", ["karma", "phpunit"]
     grunt.registerTask "optimize", ["less", "themeJSOptimize", "themeSPAOptimize"]
-    grunt.registerTask "build", [ "themeJSOptimize","less","clean:production","copyto","clean:prevBuilds"]
+    grunt.registerTask "build",
+      [ "themeJSOptimize", "themeSPAOptimize", "less", "clean:production", "copyto", "clean:prevBuilds"]
 
     grunt.registerTask "deploy", ["validate", "runtests", "optimize", "clean", "copyto", "notify:readyToDeploy"]
