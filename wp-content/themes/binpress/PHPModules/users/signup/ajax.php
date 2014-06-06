@@ -5,7 +5,7 @@
  * Date: 6/1/14
  * Time: 2:56 PM
  *
- * File Description :  Contains a list of ajax functions called from the sign up form on the home page
+ * File Description : Contains a list of ajax functions called from the sign up form on the home page
  */
 
 require "functions.php";
