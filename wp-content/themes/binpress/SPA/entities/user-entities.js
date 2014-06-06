@@ -4,7 +4,7 @@ var __hasProp = {}.hasOwnProperty,
 
 define(["app", 'backbone'], function(App, Backbone) {
   return App.module("Entities.Users", function(Users, App, Backbone, Marionette, $, _) {
-    var API, user;
+    var API, currentUser;
     Users.UserModel = (function(_super) {
       __extends(UserModel, _super);
 
@@ -19,18 +19,27 @@ define(["app", 'backbone'], function(App, Backbone) {
       return UserModel;
 
     })(Backbone.Model);
-    user = new Users.UserModel;
-    user.fetch();
+    currentUser = new Users.UserModel;
+    currentUser.set(CURRENTUSERDATA);
     API = {
       getUser: function() {
         return user;
+      },
+      getCurrentUser: function() {
+        return currentUser;
       }
     };
-    return App.reqres.setHandler("get:user:model", function(options) {
+    App.reqres.setHandler("get:user:model", function(options) {
       if (options == null) {
         options = {};
       }
       return API.getUser();
+    });
+    return App.reqres.setHandler("get:current:user:model", function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return API.getCurrentUser();
     });
   });
 });
