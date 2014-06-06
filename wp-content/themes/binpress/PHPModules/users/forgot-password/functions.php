@@ -67,8 +67,6 @@ function check_user_status_password_reset( $user_data ) {
         $success_msg = array( "code" => true );
         return $success_msg;
     }
-
-
 }
 
 /**

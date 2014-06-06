@@ -120,7 +120,7 @@ define ["backbone", "mustache"], (Backbone, Mustache) ->
             # return the xhr object. this is a jquery deffered object
             xhr
 
-    # model parse function
+        # model parse function
         parse : (resp)->
             # change sizes to an array
             if resp.code is 'OK'

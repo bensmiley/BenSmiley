@@ -17,8 +17,6 @@ requirejs.config
         'region-controller' : 'controllers/region-controller'
         entitiesloader : 'entities/dashboard-spa-entities-loader'
         app : 'dashboard.spa'
-
-
     shim :
         underscore :
             exports : '_'

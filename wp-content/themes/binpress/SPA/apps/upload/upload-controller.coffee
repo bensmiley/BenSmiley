@@ -10,15 +10,15 @@ define ['app'
         class UploadApp.Controller extends AppController
 
             # initialize
-            initialize : (opts)->
+            initialize: (opts)->
                 view = @_getView()
                 @show view
 
             # gets the main login view
-            _getView : (mediaCollection)->
+            _getView: ->
                 new View.UploadView
 
 
         App.commands.setHandler 'start:upload:app', (options)->
             new UploadApp.Controller
-                region : options.region
+                region: options.region
