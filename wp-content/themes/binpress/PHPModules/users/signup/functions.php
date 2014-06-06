@@ -5,7 +5,7 @@
  * Date: 6/1/14
  * Time: 3:04 PM
  *
- * File Description :  Contains list of functions called from the ajax file for the sign up form ajax actions
+ * File Description :Contains list of functions called from the ajax file for the sign up form ajax actions
  */
 
 
