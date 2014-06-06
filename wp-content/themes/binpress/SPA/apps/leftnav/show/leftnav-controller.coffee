@@ -18,6 +18,9 @@ define ['app'
                 @listenTo @layout, "user:profile:clicked", ->
                     App.execute "show:user:profile" , region : App.mainContentRegion
 
+                @listenTo @layout, "user:domains:clicked", ->
+                    App.execute "show:user:domains" , region : App.mainContentRegion
+
                 @show @layout
 
             getLayout : ->
@@ -36,6 +39,14 @@ define ['app'
                                         <span class="arrow"></span>
                                     </a>
                                 </li>
+                                 <li class="start">
+                                    <a href="javascript:void(0)" id="user-domains">
+                                        <i class="fa fa-user"></i>
+                                        <span class="title">My Domains</span>
+                                        <span class="selected"></span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                </li>
                             </ul>
                             <div class="clearfix"></div>
                          </div>'
@@ -48,6 +59,10 @@ define ['app'
                 'click #user-profile' : ->
                     #trigger user profile click event to controller
                     @trigger "user:profile:clicked"
+
+                'click #user-domains' : ->
+                    #trigger user domain click event to controller
+                    @trigger "user:domains:clicked"
 
 
 

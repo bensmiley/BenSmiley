@@ -46,10 +46,21 @@ add_action( 'setup_theme', 'binpress_theme_setup' );
 function binpress_after_init() {
 
     show_admin_bar( FALSE );
+
+    register_plan_taxonomy();
+
+    register_domain_post();
 }
 
 add_action( 'init', 'binpress_after_init' );
 
+//TODO: add the taxnonomy
+function register_plan_taxonomy(){
+ //register_taxonomy();
+}
+function register_domain_post(){
+    //register_post_type( 'domain', $args )
+}
 
 if ( is_development_environment() ) {
 

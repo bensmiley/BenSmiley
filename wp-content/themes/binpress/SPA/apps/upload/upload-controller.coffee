@@ -11,6 +11,7 @@ define ['app'
 
             # initialize
             initialize : (opts)->
+
                 #get the logged in user model
                 @usermodel = opts.model
 
@@ -19,7 +20,7 @@ define ['app'
 
                 @show view
             # gets the main login view
-            _getView : ->
+            _getView : (usermodel) ->
                 new View.UploadView
                     model : usermodel
 

@@ -22,6 +22,11 @@ define(['app', 'region-controller'], function(App, AppController) {
             region: App.mainContentRegion
           });
         });
+        this.listenTo(this.layout, "user:domains:clicked", function() {
+          return App.execute("show:user:domains", {
+            region: App.mainContentRegion
+          });
+        });
         return this.show(this.layout);
       };
 
@@ -39,7 +44,7 @@ define(['app', 'region-controller'], function(App, AppController) {
         return LeftNavView.__super__.constructor.apply(this, arguments);
       }
 
-      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
+      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> <li class="start"> <a href="javascript:void(0)" id="user-domains"> <i class="fa fa-user"></i> <span class="title">My Domains</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
 
       LeftNavView.prototype.className = 'page-sidebar';
 
@@ -48,6 +53,9 @@ define(['app', 'region-controller'], function(App, AppController) {
       LeftNavView.prototype.events = {
         'click #user-profile': function() {
           return this.trigger("user:profile:clicked");
+        },
+        'click #user-domains': function() {
+          return this.trigger("user:domains:clicked");
         }
       };
 

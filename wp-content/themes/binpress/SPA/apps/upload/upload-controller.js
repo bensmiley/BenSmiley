@@ -18,7 +18,7 @@ define(['app', 'region-controller', 'apps/upload/upload-view'], function(App, Ap
         return this.show(view);
       };
 
-      Controller.prototype._getView = function() {
+      Controller.prototype._getView = function(usermodel) {
         return new View.UploadView({
           model: usermodel
         });
