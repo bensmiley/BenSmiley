@@ -5,7 +5,7 @@
  * Date: 6/1/14
  * Time: 10:01 PM
  *
- *  File Description :  Contains a list of ajax functions called from the login form on the home page
+ *  File Description :Contains a list of ajax functions called from the login form on the home page
  */
 
 /***
