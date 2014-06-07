@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'region-controller'
+        'regioncontroller'
         'apps/user-domains/show/user-domains-view'
         'apps/user-domains/add/user-domain-add-controller'], (App, AppController, View)->
 

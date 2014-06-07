@@ -1,6 +1,5 @@
 #include the files for the app
-define ['app'
-        'apps/leftnav/show/leftnav-controller'], (App)->
+define ['app','apps/leftnav/show/leftnav-controller'], (App)->
 
     #define the app module
     App.module 'LeftNavApp', (LeftNavApp, App, Backbone, Marionette, $, _)->

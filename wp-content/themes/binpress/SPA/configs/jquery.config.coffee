@@ -1,6 +1,6 @@
-define ['jquery','jquery-validate'],(jQuery)->
+define ['jquery','jqueryvalidate'],(jQuery)->
 
-    #set the deafults for jQuery validator to prevent form submit
+    # FIXME: Move jquery validate config into its own separate file
     jQuery.validator.setDefaults
         debug : true,
         success : "valid"

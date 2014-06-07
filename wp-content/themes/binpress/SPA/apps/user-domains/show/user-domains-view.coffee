@@ -1,7 +1,5 @@
 #include the files for the app
-#TODO: remove the backbonesyphon from the file
-define ['app'
-        'text!apps/user-domains/templates/listUserDomain.html'], (App, userDomainTpl)->
+define ['app', 'text!apps/user-domains/templates/listUserDomain.html'], (App, userDomainTpl)->
 
     #start the app module
     App.module 'UserDomainAppView', (View, App)->

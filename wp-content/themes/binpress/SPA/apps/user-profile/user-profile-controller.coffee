@@ -1,13 +1,13 @@
 #include the files for the app
 define ['app'
-        'region-controller'
-        'apps/user-profile/user-profile-view'], (App, AppController, View)->
+        'regioncontroller'
+        'apps/user-profile/user-profile-view'], (App, RegionController, View)->
 
     #start the app module
     App.module "UserProfileApp", (UserProfileApp, App, BackBone, Marionette, $, _)->
 
         # Controller class for showing user profile
-        class UserProfileController extends AppController
+        class UserProfileController extends RegionController
 
             initialize : (opts)->
 

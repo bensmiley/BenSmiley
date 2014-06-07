@@ -90,14 +90,3 @@ define ['marionette', 'mustache'], (Marionette, Mustache)->
             throw err
 
         template
-
-    # Form view
-    class Marionette.FormView extends Marionette.ItemView
-
-        tagName : 'form'
-
-        className : 'form-horizontal'
-
-        # add validation
-        onShow : ->
-            @$el.validate()

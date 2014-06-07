@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'region-controller'
+        'regioncontroller'
         'apps/user-domains/add/user-domain-add-view'], (App, AppController, View)->
 
     #start the app module

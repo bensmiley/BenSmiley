@@ -60,11 +60,14 @@ if ( is_development_environment() ) {
     function binpress_dev_enqueue_scripts() {
         // TODO: handle with better logic to define patterns and folder names
         $module = get_module_name();
-        $spa_pages = array( 'dashboard' );
 
-        $pattern = in_array( $module, $spa_pages ) ? 'spa' : 'scripts';
+        $pattern = 'scripts';
+        $folder_name = 'js';
 
-        $folder_name = $pattern === 'spa' ? 'SPA' : 'js';
+        if (is_single_page_app( $module )){
+            $pattern =  'spa';
+            $folder_name = 'SPA';
+        }
 
         wp_enqueue_script( "requirejs",
             get_template_directory_uri() . "/js/bower_components/requirejs/require.js",
@@ -108,10 +111,12 @@ if ( !is_development_environment() ) {
     function binpress_production_enqueue_script() {
 
         $module = get_module_name();
-        $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
-        if ( is_single_page_app() )
+        //TODO: Move this logic in separate function
+        if (is_single_page_app( $module ))
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
+        else
+            $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
         wp_enqueue_script( "$module-script",
             $path,
@@ -159,11 +164,12 @@ function get_current_version() {
 
 }
 
-function is_single_page_app() {
+function is_single_page_app( $module_name ) {
 
-    // TODO: Application logic to identify if current page is a SPA
+    // add slugs of SPA pages here
+    $spa_pages = array('dashboard');
 
-    return FALSE;
+    return in_array( $module_name, $spa_pages );
 
 }
 

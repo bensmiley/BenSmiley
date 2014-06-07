@@ -1,9 +1,6 @@
 #include the files for the app
-#TODO: remove the backbonesyphon from the file
-define ['app'
-        'text!apps/user-profile/templates/userprofile.html'
-        'backbonesyphon'
-        'jquery-validate'], (App, userProfileTpl)->
+
+define ['app','text!apps/user-profile/templates/userprofile.html'], (App, userProfileTpl)->
 
     #start the app module
     App.module 'UserProfileAppView', (View, App)->

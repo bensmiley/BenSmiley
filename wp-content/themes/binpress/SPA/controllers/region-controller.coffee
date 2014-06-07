@@ -1,26 +1,26 @@
-define ["marionette" , "app"], (Marionette, App) ->
+define ["marionette" , "msgbus"], (Marionette, msgbus) ->
 
+    #TODO: remove "app" dependency for controller
     class RegionController extends Marionette.Controller
 
         constructor : (options = {}) ->
             @region = options.region or App.request "default:region"
-            #App.execute "register:instance", @, @_instance_id
             @_instance_id = _.uniqueId("controller")
-            App.commands.execute "register:instance", @, @_instance_id
+            msgbus.commands.execute "register:instance", @, @_instance_id
             super options
 
 
         close : (args...) ->
             delete @region
             delete @options
-            App.commands.execute "unregister:instance", @, @_instance_id
+            msgbus.commands.execute "unregister:instance", @, @_instance_id
             super args
 
 
         show : (view, options = {}) ->
             _.defaults options,
-                loading : false
-                region : @region
+                    loading : false
+                    region : @region
 
             @_setMainView view
             @_manageView view, options
@@ -34,6 +34,6 @@ define ["marionette" , "app"], (Marionette, App) ->
 
         _manageView : (view, options) ->
             if options.loading
-                App.commands.execute "show:loading", view, options
+                msgbus.commands.execute "show:loading", view, options
             else
                 options.region.show view

@@ -1,12 +1,11 @@
 #include the files for the app
-define ['app'
-        'region-controller'], (App, AppController)->
+define ['app', 'regioncontroller'], (App, RegionController)->
 
     #start the app module
     App.module 'LeftNavApp.Show', (Show, App, Backbone, Marionette, $, _)->
 
         # Controller class for showing left nav nenu region
-        class Show.Controller extends AppController
+        class Show.Controller extends RegionController
 
             # initialize the controller
             initialize : (opt = {})->
@@ -15,6 +14,7 @@ define ['app'
                 @layout = @getLayout()
 
                 #listen to layout click events
+                # TODO:  Handle this through routers and not with click
                 @listenTo @layout, "user:profile:clicked", ->
                     App.execute "show:user:profile" , region : App.mainContentRegion
 
@@ -26,7 +26,9 @@ define ['app'
             getLayout : ->
                 new LeftNavView
 
+
         # Header main layout
+        # TODO: Change layout to Composite view.
         class LeftNavView extends Marionette.Layout
 
             template : '<div class="page-sidebar-wrapper" id="main-menu-wrapper">

@@ -1,9 +1,5 @@
 #include the files for the app
-#TODO: remove the backbonesyphon from the file
-define ['app'
-        'text!apps/user-domains/templates/addUserDomain.html'
-        'backbonesyphon'
-        'jquery-validate'], (App, addUserDomainTpl)->
+define ['app', 'text!apps/user-domains/templates/addUserDomain.html'], (App, addUserDomainTpl)->
 
     #start the app module
     App.module 'UserDomainAddAppView', (View, App)->

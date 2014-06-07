@@ -1,7 +1,5 @@
 #include the files for the app
-define ['app'
-        'region-controller'
-        'entities/user-entities'], (App, AppController,Entity)->
+define [ 'app', 'regioncontroller', 'behaviors/closewarn' ], (App, AppController, CloseWarn)->
 
     #start the app module
     App.module 'HeaderApp.Show', (Show, App, Backbone, Marionette, $, _)->
@@ -30,25 +28,25 @@ define ['app'
 
                 @userDisplayView = @getUserDisplayView @usermodel
 
-#                App.execute "when:fetched", [@usermodel], =>
+                #                App.execute "when:fetched", [@usermodel], =>
                 @layout.userDisplayRegion.show @userDisplayView
 
-            getUserDisplayView :(usermodel) ->
+            getUserDisplayView : (usermodel) ->
                 new UserDisplayView
-                        model : usermodel
+                    model : usermodel
 
         # Header main layout
         class HeaderView extends Marionette.Layout
 
             template : '<div class="navbar-inner">
-                                        <div class="">
-                                            <div class="pull-left">
-                                                <a href="index.html">
-                                                    <h3 class="p-l-20 text-white">Logo</h3></a>
-                                            </div>
-                                            <div id="userDisplay"></div>
-                                        </div>
-                                    </div>'
+                            <div class="">
+                                <div class="pull-left">
+                                    <a href="index.html">
+                                        <h3 class="p-l-20 text-white">Logo</h3></a>
+                                </div>
+                                <div id="userDisplay"></div>
+                            </div>
+                        </div>'
 
             className : 'header navbar navbar-inverse'
 
@@ -59,9 +57,9 @@ define ['app'
         class UserDisplayView extends Marionette.ItemView
 
             template : '<div class="user-profile pull-left m-t-10">
-                          <img src="{{user_photo}}" alt=""
-                          data-src="{{user_photo}}"
-                          data-src-retina="{{user_photo}}" width="35" height="35">
+                            <img src="{{user_photo}}" alt=""
+                            data-src="{{user_photo}}"
+                            data-src-retina="{{user_photo}}" width="35" height="35">
                         </div>
                         <ul class="nav quick-section ">
                             <li class="quicklinks">
@@ -74,12 +72,8 @@ define ['app'
                                     <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                                 </ul>
                             </li>
-                        </ul> '
+                        </ul>'
 
             className : 'pull-right'
-
-#            mixinTemplateHelpers:(data) ->
-#                data = super(data)
-#                data
 
 

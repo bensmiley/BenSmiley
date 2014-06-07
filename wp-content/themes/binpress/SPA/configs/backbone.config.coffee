@@ -115,7 +115,7 @@ define ["backbone", "mustache"], (Backbone, Mustache) ->
             model.trigger "request", model, xhr, options
 
             # attache _fetch to model
-            model._fetch = xhr if method is 'read' or method is 'create'
+            model["_#{method}"] = xhr
 
             # return the xhr object. this is a jquery deffered object
             xhr
@@ -135,7 +135,7 @@ define ["backbone", "mustache"], (Backbone, Mustache) ->
             return resp.data if resp.code is 'OK'
             resp
 
-
+    # TODO: Better implementation for collection fetch action
     _sync = Backbone.sync
 
     # Overwrite the Backbone.sync to set additional _fetch object to entity
