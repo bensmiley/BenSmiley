@@ -33,7 +33,6 @@ function validate_activation_url( $get_parameters, $form_action ) {
     if (!$user_exists_check['code'])
         return $user_exists_check;
 
-<<<<<<< HEAD
     $user_status_check = check_user_status( $user_exists_check['user_data'] );
     if (!$user_status_check['code'])
         return $user_status_check;
@@ -47,24 +46,6 @@ function validate_activation_url( $get_parameters, $form_action ) {
         return $activation_duration_check;
 
     return array( "code" => true, "user_data_obj" => $user_exists_check['user_data'] );
-=======
-    // get the user data
-    $user_data = get_user_data( $get_parameters['login'] );
-
-    $user_status_check = check_user_status( $user_data );
-    if (!$user_status_check['code'])
-        return $user_status_check;
-
-    $activation_duration_check = check_user_activation_duration( $user_data );
-    if (!$activation_duration_check['code'])
-        return $activation_duration_check;
-
-    $activation_key_check = validate_activation_key( $user_data );
-    if (!$activation_key_check['code'])
-        return $activation_key_check;
-
-    return array( "code" => true, "user_data_obj" => $user_data );
->>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
 }
 
 /**
@@ -105,11 +86,7 @@ function check_user_exists( $user_email ) {
 
     $user_data = email_exists( $user_email );
 
-<<<<<<< HEAD
     if ($user_data === true) {
-=======
-    if ($user_data == true) {
->>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
         $success_msg = array( "code" => true, 'user_data' => $user_data );
         return $success_msg;
 

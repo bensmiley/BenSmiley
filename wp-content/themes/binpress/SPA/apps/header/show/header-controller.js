@@ -65,11 +65,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppCont
         return UserDisplayView.__super__.constructor.apply(this, arguments);
       }
 
-<<<<<<< HEAD
-      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul> ';
-=======
       UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul>';
->>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
 
       UserDisplayView.prototype.className = 'pull-right';
 
