@@ -2,55 +2,54 @@
 
 define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, userProfileTpl )->
 
-    #start the app module
-    App.module 'UserProfileAppView', ( View, App )->
+    # View class for showing user profile
+    class UserProfileView extends Marionette.Layout
 
-        # View class for showing user profile
-        class View.UserProfileView extends Marionette.Layout
+        className : 'user-profile-container'
 
-            className : 'user-profile-container'
+        template : userProfileTpl
 
-            template : userProfileTpl
+        tagName : 'form'
 
-            tagName : 'form'
+        id : "user-profile-form"
 
-            id : "user-profile-form"
+        regions :
+            userPhotoRegion : '#user-photo'
 
-            regions :
-                userPhotoRegion : '#user-photo'
+        events :
+            'click #save-user-profile' : ->
+                #check if the form is valid
+                if @$el.valid()
+                    #get all serialized data from the form
+                    userdata = Backbone.Syphon.serialize @
+                    @trigger "save:user:profile:clicked", userdata
+        onShow : ->
 
-            events :
-                'click #save-user-profile' : ->
-                    #check if the form is valid
-                    if @$el.valid()
-                        #get all serialized data from the form
-                        userdata = Backbone.Syphon.serialize @
-                        @trigger "save:user:profile:clicked", userdata
-            onShow : ->
+            #validate the user profile form with the validation rules
+            @$el.validate @validationOptions()
 
-                #validate the user profile form with the validation rules
-                @$el.validate @validationOptions()
+        validationOptions : ->
+            rules :
+                display_name :
+                    required : true,
 
-            validationOptions : ->
-                rules :
-                    display_name :
-                        required : true,
+                user_email :
+                    required : true,
+                    email : true
 
-                    user_email :
-                        required : true,
-                        email : true
+                user_pass :
+                    minlength : 5
 
-                    user_pass :
-                        minlength : 5
+                confirm_password :
+                    equalTo : "#user_pass"
+            messages :
+                user_name : 'Enter valid user name'
 
-                    confirm_password :
-                        equalTo : "#user_pass"
-                messages :
-                    user_name : 'Enter valid user name'
+        onUserProfileUpdated : ->
+            @$el.find( '#form-msg' ).empty()
+            @$el.find( '#form-msg' ).append "<p>Updated User profile</p>"
 
-            onUserProfileUpdated : ->
-                @$el.find( '#form-msg' ).empty()
-                @$el.find( '#form-msg' ).append "<p>Updated User profile</p>"
+    UserProfileView
 
 
 

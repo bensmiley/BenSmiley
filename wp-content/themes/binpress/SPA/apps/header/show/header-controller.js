@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppController, CloseWarn) {
+define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(App, AppController, CloseWarn, msgbus) {
   return App.module('HeaderApp.Show', function(Show, App, Backbone, Marionette, $, _) {
     var HeaderView, UserDisplayView;
     Show.Controller = (function(_super) {
@@ -26,7 +26,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppCont
       };
 
       Controller.prototype.showUserDisplayView = function() {
-        this.usermodel = App.request("get:current:user:model");
+        this.usermodel = msgbus.reqres.request("get:current:user:model");
         this.userDisplayView = this.getUserDisplayView(this.usermodel);
         return this.layout.userDisplayRegion.show(this.userDisplayView);
       };
@@ -58,7 +58,8 @@ define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppCont
       return HeaderView;
 
     })(Marionette.Layout);
-    return UserDisplayView = (function(_super) {
+    HeaderView;
+    UserDisplayView = (function(_super) {
       __extends(UserDisplayView, _super);
 
       function UserDisplayView() {
@@ -72,5 +73,6 @@ define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppCont
       return UserDisplayView;
 
     })(Marionette.ItemView);
+    return UserDisplayView;
   });
 });

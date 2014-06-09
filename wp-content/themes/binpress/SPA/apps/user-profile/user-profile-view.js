@@ -3,70 +3,70 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(App, userProfileTpl) {
-  return App.module('UserProfileAppView', function(View, App) {
-    return View.UserProfileView = (function(_super) {
-      __extends(UserProfileView, _super);
+  var UserProfileView;
+  UserProfileView = (function(_super) {
+    __extends(UserProfileView, _super);
 
-      function UserProfileView() {
-        return UserProfileView.__super__.constructor.apply(this, arguments);
+    function UserProfileView() {
+      return UserProfileView.__super__.constructor.apply(this, arguments);
+    }
+
+    UserProfileView.prototype.className = 'user-profile-container';
+
+    UserProfileView.prototype.template = userProfileTpl;
+
+    UserProfileView.prototype.tagName = 'form';
+
+    UserProfileView.prototype.id = "user-profile-form";
+
+    UserProfileView.prototype.regions = {
+      userPhotoRegion: '#user-photo'
+    };
+
+    UserProfileView.prototype.events = {
+      'click #save-user-profile': function() {
+        var userdata;
+        if (this.$el.valid()) {
+          userdata = Backbone.Syphon.serialize(this);
+          return this.trigger("save:user:profile:clicked", userdata);
+        }
       }
+    };
 
-      UserProfileView.prototype.className = 'user-profile-container';
+    UserProfileView.prototype.onShow = function() {
+      return this.$el.validate(this.validationOptions());
+    };
 
-      UserProfileView.prototype.template = userProfileTpl;
-
-      UserProfileView.prototype.tagName = 'form';
-
-      UserProfileView.prototype.id = "user-profile-form";
-
-      UserProfileView.prototype.regions = {
-        userPhotoRegion: '#user-photo'
-      };
-
-      UserProfileView.prototype.events = {
-        'click #save-user-profile': function() {
-          var userdata;
-          if (this.$el.valid()) {
-            userdata = Backbone.Syphon.serialize(this);
-            return this.trigger("save:user:profile:clicked", userdata);
+    UserProfileView.prototype.validationOptions = function() {
+      return {
+        rules: {
+          display_name: {
+            required: true
+          },
+          user_email: {
+            required: true,
+            email: true
+          },
+          user_pass: {
+            minlength: 5
+          },
+          confirm_password: {
+            equalTo: "#user_pass"
           }
+        },
+        messages: {
+          user_name: 'Enter valid user name'
         }
       };
+    };
 
-      UserProfileView.prototype.onShow = function() {
-        return this.$el.validate(this.validationOptions());
-      };
+    UserProfileView.prototype.onUserProfileUpdated = function() {
+      this.$el.find('#form-msg').empty();
+      return this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+    };
 
-      UserProfileView.prototype.validationOptions = function() {
-        return {
-          rules: {
-            display_name: {
-              required: true
-            },
-            user_email: {
-              required: true,
-              email: true
-            },
-            user_pass: {
-              minlength: 5
-            },
-            confirm_password: {
-              equalTo: "#user_pass"
-            }
-          },
-          messages: {
-            user_name: 'Enter valid user name'
-          }
-        };
-      };
+    return UserProfileView;
 
-      UserProfileView.prototype.onUserProfileUpdated = function() {
-        this.$el.find('#form-msg').empty();
-        return this.$el.find('#form-msg').append("<p>Updated User profile</p>");
-      };
-
-      return UserProfileView;
-
-    })(Marionette.Layout);
-  });
+  })(Marionette.Layout);
+  return UserProfileView;
 });

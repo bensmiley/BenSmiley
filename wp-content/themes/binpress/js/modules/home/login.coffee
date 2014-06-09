@@ -1,5 +1,5 @@
 #load the necessary js files for the page
-define ['jquery', 'jquery-validate', 'bootstrap'], ->
+define ['jquery', 'jqueryvalidate', 'bootstrap'], ->
 
     #trigger all action on document load
     $(document).ready ->

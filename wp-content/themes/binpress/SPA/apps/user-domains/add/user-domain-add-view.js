@@ -3,20 +3,20 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['app', 'text!apps/user-domains/templates/addUserDomain.html'], function(App, addUserDomainTpl) {
-  return App.module('UserDomainAddAppView', function(View, App) {
-    return View.UserDomainAddView = (function(_super) {
-      __extends(UserDomainAddView, _super);
+  var UserDomainAddView;
+  UserDomainAddView = (function(_super) {
+    __extends(UserDomainAddView, _super);
 
-      function UserDomainAddView() {
-        return UserDomainAddView.__super__.constructor.apply(this, arguments);
-      }
+    function UserDomainAddView() {
+      return UserDomainAddView.__super__.constructor.apply(this, arguments);
+    }
 
-      UserDomainAddView.prototype.className = 'add-user-domain-container';
+    UserDomainAddView.prototype.className = 'add-user-domain-container';
 
-      UserDomainAddView.prototype.template = addUserDomainTpl;
+    UserDomainAddView.prototype.template = addUserDomainTpl;
 
-      return UserDomainAddView;
+    return UserDomainAddView;
 
-    })(Marionette.Layout);
-  });
+  })(Marionette.Layout);
+  return UserDomainAddView;
 });

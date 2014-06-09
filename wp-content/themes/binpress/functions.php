@@ -47,9 +47,14 @@ function binpress_after_init() {
 
     show_admin_bar( FALSE );
 
+    // add a custom post type:domain
     register_domain_post();
 
+    // add a custom taxonomy:plan
     register_plan_taxonomy();
+
+    // add terms for taxonomy
+    register_terms_for_plans();
 }
 
 add_action( 'init', 'binpress_after_init' );
@@ -318,5 +323,21 @@ function register_domain_post() {
     );
 
     register_post_type( 'domain', $args );
+}
+
+/**
+ * Function to insert custom terms for the taxonomy: plan
+ */
+function register_terms_for_plans(){
+
+    wp_insert_term('Free', 'plan', array(
+                                    'Title'=> 'Free plan',
+                                    'Amount' => '0'
+                                     ));
+
+    wp_insert_term('Gold', 'plan', array(
+                                    'Title'=> 'Gold plan',
+                                    'Amount' => '100'
+                                     ));
 }
 

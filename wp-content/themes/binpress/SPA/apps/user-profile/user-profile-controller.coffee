@@ -1,7 +1,8 @@
 #include the files for the app
 define [ 'app'
+         'msgbus'
          'regioncontroller'
-         'apps/user-profile/user-profile-view' ], ( App, RegionController, View )->
+         'apps/user-profile/user-profile-view' ], ( App,msgbus,RegionController, UserProfileView )->
 
     #start the app module
     App.module "UserProfileApp", ( UserProfileApp, App, BackBone, Marionette, $, _ )->
@@ -12,7 +13,7 @@ define [ 'app'
             initialize : ( opts )->
 
                 #get the user model for the current logged in user
-                @usermodel = App.request "get:current:user:model"
+                @usermodel = msgbus.reqres.request "get:current:user:model"
 
                 #get user profile layout
                 @layout = @getLayout @usermodel
@@ -28,7 +29,7 @@ define [ 'app'
                 @show @layout
 
             getLayout : ( usermodel ) ->
-                new View.UserProfileView
+                new UserProfileView
                     model : usermodel
 
             saveUserProfile : ( userdata )->

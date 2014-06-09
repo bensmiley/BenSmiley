@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['backbone', 'msgbus'], function(Backbone, msgbus) {
-  var API, CURRENTUSERDATA, UserModel, currentUser;
+  var API, UserModel, currentUser;
   UserModel = (function(_super) {
     __extends(UserModel, _super);
 
@@ -19,7 +19,6 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
 
   })(Backbone.Model);
   currentUser = new UserModel;
-  CURRENTUSERDATA = CURRENTUSERDATA || {};
   currentUser.set(CURRENTUSERDATA);
   API = {
     getCurrentUser: function() {

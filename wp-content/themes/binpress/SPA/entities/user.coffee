@@ -1,5 +1,4 @@
 define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
-
     class UserModel extends Backbone.Model
 
         name : 'user'
@@ -8,7 +7,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     # This is current user model (Logged in user model)
     currentUser = new UserModel
-    CURRENTUSERDATA = CURRENTUSERDATA || {}
+    #CURRENTUSERDATA = CURRENTUSERDATA || {}
     currentUser.set CURRENTUSERDATA
 
     #PUBLIC API

@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'apps/user-profile/user-profile-view'], function(App, RegionController, View) {
+define(['app', 'msgbus', 'regioncontroller', 'apps/user-profile/user-profile-view'], function(App, msgbus, RegionController, UserProfileView) {
   return App.module("UserProfileApp", function(UserProfileApp, App, BackBone, Marionette, $, _) {
     var UserProfileController;
     UserProfileController = (function(_super) {
@@ -13,7 +13,7 @@ define(['app', 'regioncontroller', 'apps/user-profile/user-profile-view'], funct
       }
 
       UserProfileController.prototype.initialize = function(opts) {
-        this.usermodel = App.request("get:current:user:model");
+        this.usermodel = msgbus.reqres.request("get:current:user:model");
         this.layout = this.getLayout(this.usermodel);
         this.listenTo(this.layout, "show", function() {
           return App.execute("start:upload:app", {
@@ -26,7 +26,7 @@ define(['app', 'regioncontroller', 'apps/user-profile/user-profile-view'], funct
       };
 
       UserProfileController.prototype.getLayout = function(usermodel) {
-        return new View.UserProfileView({
+        return new UserProfileView({
           model: usermodel
         });
       };
