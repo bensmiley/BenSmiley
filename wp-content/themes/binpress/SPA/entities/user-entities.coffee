@@ -7,6 +7,15 @@ define ["app", 'backbone'], (App, Backbone) ->
             idAttribute : 'ID'
 
 
+
+
+        # This is current user model (Logged in user model)
+        currentUser = new Users.UserModel
+        currentUser.set CURRENTUSERDATA
+
+
+
+        #model for user data
         user = new Users.UserModel
         user.fetch()
 
@@ -15,6 +24,12 @@ define ["app", 'backbone'], (App, Backbone) ->
             getUser : ->
                 user
 
+            getCurrentUser : ->
+                currentUser
+
         #REQUEST HANDLERS
         App.reqres.setHandler "get:user:model", (options = {}) ->
             API.getUser()
+
+        App.reqres.setHandler "get:current:user:model", (options = {}) ->
+            API.getCurrentUser()

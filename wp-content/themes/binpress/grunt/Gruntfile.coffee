@@ -5,9 +5,9 @@ module.exports = (grunt) ->
 
         pkg : grunt.file.readJSON "package.json"
 
-    # LESS lint.
-    # Verifies if less file are proper. Checks for any unused variables
-    # invalid/bad selectors
+        # LESS lint.
+        # Verifies if less file are proper. Checks for any unused variables
+        # invalid/bad selectors
         lesslint :
             options :
                 csslint :

@@ -12,14 +12,17 @@ define ['app'
             initialize : (opts)->
 
                 #get the user model for the current logged in user
-                @usermodel = usermodel = App.request "get:user:model"
+                @usermodel = App.request "get:current:user:model"
 
-                #get user profile view
+                #get user profile layout
                 @layout = @getLayout @usermodel
 
                 @listenTo @layout, "show", ->
-                    App.execute "start:upload:app", region : @layout.userPhotoRegion
+                    App.execute "start:upload:app",
+                        region : @layout.userPhotoRegion
+                        model : @usermodel
 
+                # listen to user profile save click event
                 @listenTo @layout, "save:user:profile:clicked", @saveUserProfile
 
                 @show @layout
@@ -33,6 +36,7 @@ define ['app'
                 @usermodel.save null,
                     wait : true,
                     success : @showSuccess()
+
             showSuccess : ->
                 @layout.triggerMethod "user:profile:updated"
 

@@ -5,7 +5,7 @@
  * Date: 6/1/14
  * Time: 3:04 PM
  *
- * File Description :  Contains list of functions called from the ajax file for the sign up form ajax actions
+ * File Description :Contains list of functions called from the ajax file for the sign up form ajax actions
  */
 
 
@@ -14,25 +14,25 @@
  *
  * an array with the required user specific fields
  *
- * @param array $signupform_data
+ * @param array $signup_form_data
  *
  * @return array user_data fields
  */
-function pick_user_fields($signupform_data) {
+function pick_user_fields( $signup_form_data ) {
 
     // return if passed argument is not an array
-    if (!is_array($signupform_data))
+    if (!is_array( $signup_form_data ))
         return array();
 
     // the user fields required to be stored
-    $user_fields = array('user_name', 'user_email', 'user_pass');
+    $user_fields = array( 'user_name', 'user_email', 'user_pass' );
 
     $user_data = array();
 
     // map  the $signupform_data and pick user fields
-    foreach ($signupform_data as $field => $value) {
+    foreach ($signup_form_data as $field => $value) {
 
-        if (in_array($field, $user_fields))
+        if (in_array( $field, $user_fields ))
             $user_data[$field] = $value;
     }
 
@@ -50,9 +50,10 @@ function pick_user_fields($signupform_data) {
  * @param  array $userdata
  * @return bool true or bool false
  */
-function check_email_exists($user_email) {
+// TODO: Redundant code logic. email_exists and this function perform same logic
+function check_email_exists( $user_email ) {
 
-    $check_email_exists = email_exists($user_email);
+    $check_email_exists = email_exists( $user_email );
 
     if ($check_email_exists == false) {
         // email does not exists
@@ -71,7 +72,7 @@ function check_email_exists($user_email) {
  *
  * @return new user_id or (int)WP_Error object
  */
-function create_new_user($user_data) {
+function create_new_user( $user_data ) {
 
     // user_name is not captured, so use user_email as the  user_name
     $user_data['user_login'] = $user_data['user_email'];
@@ -80,13 +81,14 @@ function create_new_user($user_data) {
     $user_data['role'] = 'site-member';
 
     // set the first and last name of the user
-    $user_data['first_name'] = strip_user_first_name($user_data['user_name']);
-    $user_data['last_name'] = strip_user_last_name($user_data['user_name']);
+    $user_data['first_name'] = strip_user_first_name( $user_data['user_name'] );
+    $user_data['last_name'] = strip_user_last_name( $user_data['user_name'] );
 
     // create the new user
-    $user_id = wp_insert_user($user_data);
+    $user_id = wp_insert_user( $user_data );
 
-    if (is_wp_error($user_id))
+    // FIXME : not required as both returns the same data on success and on error
+    if (is_wp_error( $user_id ))
         return $user_id;
 
     return $user_id;
@@ -95,15 +97,15 @@ function create_new_user($user_data) {
 /**
  * Function returns the first name of the user
  *
- * @param string $username
+ * @param string $user_name
  * @return string $first_name
  */
-function strip_user_first_name($username) {
+function strip_user_first_name( $user_name ) {
 
     //explode the string
-    $name = explode(" ", $username);
+    $name = explode( " ", $user_name );
 
-    $first_name = count($name) > 0 ? $name[0] : '';
+    $first_name = count( $name ) > 0 ? $name[0] : '';
 
     return $first_name;
 }
@@ -111,15 +113,15 @@ function strip_user_first_name($username) {
 /**
  *Function returns the last name of the user
  *
- * @param string $username
+ * @param string $user_name
  * @return string $last_name
  */
-function strip_user_last_name($username) {
+function strip_user_last_name( $user_name ) {
 
     //explode the string
-    $name = explode(" ", $username);
+    $name = explode( " ", $user_name );
 
-    $last_name = count($name) > 1 ? $name[1] : '';
+    $last_name = count( $name ) > 1 ? $name[1] : '';
 
     return $last_name;
 }
@@ -131,10 +133,10 @@ function strip_user_last_name($username) {
  *
  * @param $user_id
  */
-function update_user_status_in_db($user_id) {
+function update_user_status_in_db( $user_id ) {
     global $wpdb;
 
-    $wpdb->update($wpdb->users, array('user_status' => 1), array('ID' => $user_id));
+    $wpdb->update( $wpdb->users, array( 'user_status' => 1 ), array( 'ID' => $user_id ) );
 }
 
 /**
@@ -143,12 +145,12 @@ function update_user_status_in_db($user_id) {
  * @param $user_email
  * @return string $key
  */
-function generate_user_activation_key($user_email) {
+function generate_user_activation_key( $user_email ) {
 
-    $salt = wp_generate_password(20); // 20 character "random" string
+    $salt = wp_generate_password( 20 ); // 20 character "random" string
 
     // generate key using SHA1 encryption
-    $key = sha1($salt . $user_email . uniqid(time(), true));
+    $key = sha1( $salt . $user_email . uniqid( time(), true ) );
 
     return $key;
 }
@@ -160,9 +162,9 @@ function generate_user_activation_key($user_email) {
  * @param $user_activation_key
  * @param $user_id
  */
-function set_user_activation_key($user_activation_key, $user_id) {
+function set_user_activation_key( $user_activation_key, $user_id ) {
     global $wpdb;
 
-    $wpdb->update($wpdb->users, array('user_activation_key' => $user_activation_key), array('ID' => $user_id));
+    $wpdb->update( $wpdb->users, array( 'user_activation_key' => $user_activation_key ), array( 'ID' => $user_id ) );
 
 }

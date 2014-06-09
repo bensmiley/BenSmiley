@@ -11,14 +11,18 @@ define ['app'
 
             # initialize
             initialize : (opts)->
-                view = @_getView()
+                #get the logged in user model
+                @usermodel = opts.model
+
+                #get upload view
+                view = @_getView @usermodel
+
                 @show view
-
             # gets the main login view
-            _getView : (mediaCollection)->
+            _getView : ->
                 new View.UploadView
+                    model : usermodel
 
+        App.commands.setHandler 'start:upload:app', (options) ->
+            new UploadApp.Controller options
 
-        App.commands.setHandler 'start:upload:app', (options)->
-            new UploadApp.Controller
-                region : options.region

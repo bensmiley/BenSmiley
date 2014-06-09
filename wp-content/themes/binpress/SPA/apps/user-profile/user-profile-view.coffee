@@ -24,7 +24,9 @@ define ['app'
 
             events :
                 'click #save-user-profile' : ->
+                    #check if the form is valid
                     if @$el.valid()
+                        #get all serialized data from the form
                         userdata = Backbone.Syphon.serialize @
                         @trigger "save:user:profile:clicked", userdata
             onShow : ->
@@ -42,11 +44,9 @@ define ['app'
                         email : true
 
                     user_pass :
-                        required : true,
                         minlength : 5
 
                     confirm_password :
-                        required : true,
                         equalTo : "#user_pass"
                 messages :
                     user_name : 'Enter valid user name'
