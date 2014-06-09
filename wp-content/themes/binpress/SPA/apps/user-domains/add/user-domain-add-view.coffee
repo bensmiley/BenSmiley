@@ -7,7 +7,6 @@ define [ 'app', 'text!apps/user-domains/templates/addUserDomain.html' ], ( App, 
         # Layout for displaying the user domains
         class View.UserDomainAddView extends Marionette.Layout
 
-
             className : 'add-user-domain-container'
 
             template : addUserDomainTpl
