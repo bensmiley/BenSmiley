@@ -27,7 +27,13 @@
     "grunt-coffeelint": "0.0.10",
     "grunt-less-imports": "~0.9.1",
     "grunt-contrib-coffee": "~0.10.1",
+<<<<<<< HEAD
     "karma-phantomjs-launcher": "~0.1.4"
+=======
+    "karma-phantomjs-launcher": "~0.1.4",
+    "grunt-prompt": "~1.1.0",
+    "grunt-exec": "~0.4.5"
+>>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
   },
   "description": "Package json for binpress",
   "main": "Gruntfile.coffee",

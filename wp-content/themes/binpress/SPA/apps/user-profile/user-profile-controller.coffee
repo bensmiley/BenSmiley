@@ -1,15 +1,15 @@
 #include the files for the app
-define ['app'
-        'region-controller'
-        'apps/user-profile/user-profile-view'], (App, AppController, View)->
+define [ 'app'
+         'regioncontroller'
+         'apps/user-profile/user-profile-view' ], ( App, RegionController, View )->
 
     #start the app module
-    App.module "UserProfileApp", (UserProfileApp, App, BackBone, Marionette, $, _)->
+    App.module "UserProfileApp", ( UserProfileApp, App, BackBone, Marionette, $, _ )->
 
         # Controller class for showing user profile
-        class UserProfileController extends AppController
+        class UserProfileController extends RegionController
 
-            initialize : (opts)->
+            initialize : ( opts )->
 
                 #get the user model for the current logged in user
                 @usermodel = App.request "get:current:user:model"
@@ -27,11 +27,11 @@ define ['app'
 
                 @show @layout
 
-            getLayout : (usermodel) ->
+            getLayout : ( usermodel ) ->
                 new View.UserProfileView
                     model : usermodel
 
-            saveUserProfile : (userdata)->
+            saveUserProfile : ( userdata )->
                 @usermodel.set userdata
                 @usermodel.save null,
                     wait : true,
@@ -42,7 +42,7 @@ define ['app'
 
 
         #handler for showing the user profile : triggered from left nav region
-        App.commands.setHandler "show:user:profile", (opts) ->
+        App.commands.setHandler "show:user:profile", ( opts ) ->
             new UserProfileController opts
 
 

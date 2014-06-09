@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'region-controller', 'apps/user-profile/user-profile-view'], function(App, AppController, View) {
+define(['app', 'regioncontroller', 'apps/user-profile/user-profile-view'], function(App, RegionController, View) {
   return App.module("UserProfileApp", function(UserProfileApp, App, BackBone, Marionette, $, _) {
     var UserProfileController;
     UserProfileController = (function(_super) {
@@ -45,7 +45,7 @@ define(['app', 'region-controller', 'apps/user-profile/user-profile-view'], func
 
       return UserProfileController;
 
-    })(AppController);
+    })(RegionController);
     return App.commands.setHandler("show:user:profile", function(opts) {
       return new UserProfileController(opts);
     });

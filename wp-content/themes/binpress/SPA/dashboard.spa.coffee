@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ##
 ## The main dashboard App
 ##
@@ -48,3 +49,30 @@ define ['marionette'], (Marionette)->
         App.navigate(@rootRoute, trigger : true) unless App.getCurrentRoute()
 
     App
+=======
+# set all plugins for this SPA here
+define "plugins-loader", [ 'underscore', 'jquery', 'backbone', 'marionette', 'backbonesyphon', 'jqueryvalidate' ], ->
+
+# set all plugin configurations for this SPA here
+define "config-loader", [ 'configs/backbone.config', 'configs/marionette.config', 'configs/jquery.config' ], ->
+
+define "apps-loader", [ 'apps/leftnav/leftnav-app'
+                        'apps/header/header-app'
+                        'apps/upload/upload-controller'
+                        'apps/user-profile/user-profile-controller'
+                        'apps/user-domains/show/user-domains-show-controller' ]
+
+define "entitites-loader", [ 'entities/user' ]
+
+# define 'app'
+define "app", [ 'pages/dashboard.app' ], ( App ) ->
+    App
+
+# All Done, Load all in browser and start the App
+require [ 'plugins-loader'
+          'config-loader'
+          'app'
+          'entitites-loader'
+          'apps-loader' ], ( p, c, App ) ->
+    App.start()
+>>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a

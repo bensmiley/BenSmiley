@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'region-controller', 'apps/upload/upload-view'], function(App, AppController, View) {
+define(['app', 'regioncontroller', 'apps/upload/upload-view'], function(App, AppController, View) {
   return App.module('UploadApp', function(UploadApp, App, Backbone, Marionette, $, _) {
     UploadApp.Controller = (function(_super) {
       __extends(Controller, _super);
@@ -18,7 +18,11 @@ define(['app', 'region-controller', 'apps/upload/upload-view'], function(App, Ap
         return this.show(view);
       };
 
+<<<<<<< HEAD
       Controller.prototype._getView = function() {
+=======
+      Controller.prototype._getView = function(usermodel) {
+>>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
         return new View.UploadView({
           model: usermodel
         });

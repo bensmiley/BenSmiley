@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'region-controller', 'entities/user-entities'], function(App, AppController, Entity) {
+define(['app', 'regioncontroller', 'behaviors/closewarn'], function(App, AppController, CloseWarn) {
   return App.module('HeaderApp.Show', function(Show, App, Backbone, Marionette, $, _) {
     var HeaderView, UserDisplayView;
     Show.Controller = (function(_super) {
@@ -65,7 +65,11 @@ define(['app', 'region-controller', 'entities/user-entities'], function(App, App
         return UserDisplayView.__super__.constructor.apply(this, arguments);
       }
 
+<<<<<<< HEAD
       UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul> ';
+=======
+      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul>';
+>>>>>>> 6888129e2109d9ed9ad8b860bce95e11f998974a
 
       UserDisplayView.prototype.className = 'pull-right';
 
