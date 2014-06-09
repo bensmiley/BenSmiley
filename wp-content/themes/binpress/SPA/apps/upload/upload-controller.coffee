@@ -1,6 +1,6 @@
 #include the files for the app
 define ['app'
-        'region-controller'
+        'regioncontroller'
         'apps/upload/upload-view'], (App, AppController, View)->
 
     #start the app module
