@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'region-controller'], function(App, AppController) {
+define(['app', 'regioncontroller'], function(App, RegionController) {
   return App.module('LeftNavApp.Show', function(Show, App, Backbone, Marionette, $, _) {
     var LeftNavView;
     Show.Controller = (function(_super) {
@@ -36,7 +36,7 @@ define(['app', 'region-controller'], function(App, AppController) {
 
       return Controller;
 
-    })(AppController);
+    })(RegionController);
     return LeftNavView = (function(_super) {
       __extends(LeftNavView, _super);
 

@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   __slice = [].slice;
 
-define(["marionette", "app"], function(Marionette, App) {
+define(["marionette", "msgbus"], function(Marionette, msgbus) {
   var RegionController;
   return RegionController = (function(_super) {
     __extends(RegionController, _super);
@@ -14,7 +14,7 @@ define(["marionette", "app"], function(Marionette, App) {
       }
       this.region = options.region || App.request("default:region");
       this._instance_id = _.uniqueId("controller");
-      App.commands.execute("register:instance", this, this._instance_id);
+      msgbus.commands.execute("register:instance", this, this._instance_id);
       RegionController.__super__.constructor.call(this, options);
     }
 
@@ -23,7 +23,7 @@ define(["marionette", "app"], function(Marionette, App) {
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       delete this.region;
       delete this.options;
-      App.commands.execute("unregister:instance", this, this._instance_id);
+      msgbus.commands.execute("unregister:instance", this, this._instance_id);
       return RegionController.__super__.close.call(this, args);
     };
 
@@ -49,7 +49,7 @@ define(["marionette", "app"], function(Marionette, App) {
 
     RegionController.prototype._manageView = function(view, options) {
       if (options.loading) {
-        return App.commands.execute("show:loading", view, options);
+        return msgbus.commands.execute("show:loading", view, options);
       } else {
         return options.region.show(view);
       }

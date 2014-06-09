@@ -4,7 +4,7 @@ define ['app'
         'text!apps/user-domains/templates/ListUserDomain.html'], (App, listUserDomainTpl)->
 
     #start the app module
-    App.module 'UserDomainAppView', (View, App)->
+    App.module 'UserDomainAppView', ( View, App )->
 
         # Layout for displaying the user domains
         class View.UserDomainView extends Marionette.Layout
@@ -44,6 +44,7 @@ define ['app'
                             <span class="glyphicon glyphicon-pencil"></span>
                             <span class="glyphicon glyphicon-trash"></span>
                         </td>'
+
 
         #Empty item view, when no domains are added
         class EmptyView extends Marionette.ItemView

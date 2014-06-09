@@ -1,0 +1,12 @@
+{
+    "name": "ajency/binpress",
+    "description": "Composer.json for binpress",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Team Ajency",
+            "email": "team@ajency.in"
+        }
+    ]
+}
