@@ -151,7 +151,7 @@ function get_user_data_for_admin_mail( $mail_id ) {
     return $user_data;
 }
 
-//TODO : put the number of parametrs passed into a array and send
+
 /**
  * Function to send the mail and update the mail status to 0 on successful mail send
  *
@@ -172,7 +172,6 @@ function send_email( $recipient, $subject, $mail_body, $mail_id ) {
 
 }
 
-//TODO : if the activation key starts with $, the link breaks:sort the bug
 /**
  * Function to get the mail body content for user activation email
  *
@@ -270,8 +269,8 @@ function get_password_reset_mail_content( $user_data ) {
 
     $body .= __( ' use this link:' ) . "\r\n\r\n";
 
-    $body .= '<' . site_url( "reset-password?action=reset-password&key=$user_data->user_activation_key
-            &login=" . rawurlencode( $user_data->user_login ), 'login' ) . ">\r\n";
+    $body .= '<' . site_url( "reset-password?action=reset-password&key=" . $user_data->user_activation_key .
+            "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . ">\r\n";
 
     $body .= __( 'The meanwhile,
                 if you have any queries please feel free to contact our team on number

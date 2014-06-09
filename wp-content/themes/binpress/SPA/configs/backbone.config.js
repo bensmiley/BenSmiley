@@ -50,9 +50,7 @@ define(["backbone", "mustache"], function(Backbone, Mustache) {
       }
       xhr = options.xhr = Backbone.ajax(_.extend(params, options));
       model.trigger("request", model, xhr, options);
-      if (method === 'read' || method === 'create') {
-        model._fetch = xhr;
-      }
+      model["_" + method] = xhr;
       return xhr;
     },
     parse: function(resp) {

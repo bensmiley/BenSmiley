@@ -11,13 +11,8 @@ requirejs.config({
     text: 'bower_components/requirejs-text/text',
     backbonesyphon: 'bower_components/backbone.syphon/lib/backbone.syphon',
     plupload: 'bower_components/plupload/js/plupload.full.min',
-    'jquery-validate': 'bower_components/jquery.validation/dist/jquery.validate',
-    datatables: 'bower_components/datatables/media/js/jquery.dataTables',
-    configloader: 'configs/dashboard-spa-config-loader',
-    appsloader: 'apps/dashboard-spa-apps-loader',
-    'region-controller': 'controllers/region-controller',
-    entitiesloader: 'entities/dashboard-spa-entities-loader',
-    app: 'dashboard.spa'
+    jqueryvalidate: 'bower_components/jquery.validation/dist/jquery.validate',
+    regioncontroller: 'controllers/region-controller'
   },
   shim: {
     underscore: {
@@ -33,16 +28,10 @@ requirejs.config({
       exports: 'Marionette'
     },
     backbonesyphon: ['backbone'],
-    'jquery-validate': ['jquery'],
-    datatables: ['jquery'],
+    jqueryvalidate: ['jquery'],
     plupload: {
       deps: ['jquery'],
       exports: 'plupload'
-    },
-    app: ['configloader']
+    }
   }
-});
-
-require(['configloader', 'datatables', 'app', 'region-controller', 'appsloader', 'entitiesloader'], function(configs, table, App) {
-  return App.start();
 });

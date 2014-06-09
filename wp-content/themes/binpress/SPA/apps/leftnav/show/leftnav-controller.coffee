@@ -1,44 +1,57 @@
 #include the files for the app
-define ['app'
-        'region-controller'], (App, AppController)->
+define [ 'app', 'regioncontroller' ], ( App, RegionController )->
 
     #start the app module
-    App.module 'LeftNavApp.Show', (Show, App, Backbone, Marionette, $, _)->
+    App.module 'LeftNavApp.Show', ( Show, App, Backbone, Marionette, $, _ )->
 
         # Controller class for showing left nav nenu region
-        class Show.Controller extends AppController
+        class Show.Controller extends RegionController
 
             # initialize the controller
-            initialize : (opt = {})->
+            initialize : ( opt = {} )->
 
                 #get the layout for left nav menu
                 @layout = @getLayout()
 
                 #listen to layout click events
+                # TODO:  Handle this through routers and not with click
                 @listenTo @layout, "user:profile:clicked", ->
-                    App.execute "show:user:profile" , region : App.mainContentRegion
+                    App.execute "show:user:profile", region : App.mainContentRegion
+
+                @listenTo @layout, "user:domains:clicked", ->
+                    App.execute "show:user:domains", region : App.mainContentRegion
 
                 @show @layout
 
             getLayout : ->
                 new LeftNavView
 
+
         # Header main layout
+        # TODO: Change layout to Composite view.
         class LeftNavView extends Marionette.Layout
 
             template : '<div class="page-sidebar-wrapper" id="main-menu-wrapper">
-                            <ul>
-                                <li class="start">
-                                    <a href="javascript:void(0)" id="user-profile">
-                                        <i class="fa fa-user"></i>
-                                        <span class="title">User Profile</span>
-                                        <span class="selected"></span>
-                                        <span class="arrow"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                         </div>'
+                                        <ul>
+                                            <li class="start">
+                                                <a href="javascript:void(0)" id="user-profile">
+                                                    <i class="fa fa-user"></i>
+                                                    <span class="title">User Profile</span>
+                                                    <span class="selected"></span>
+                                                    <span class="arrow"></span>
+                                                </a>
+                                            </li>
+                                             <li class="start">
+                                                <a href="javascript:void(0)" id="user-domains">
+                                                    <i class="fa fa-user"></i>
+                                                    <span class="title">My Domains</span>
+                                                    <span class="selected"></span>
+                                                    <span class="arrow"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                     </div>'
 
             className : 'page-sidebar'
 
@@ -48,6 +61,10 @@ define ['app'
                 'click #user-profile' : ->
                     #trigger user profile click event to controller
                     @trigger "user:profile:clicked"
+
+                'click #user-domains' : ->
+                    #trigger user domain click event to controller
+                    @trigger "user:domains:clicked"
 
 
 
