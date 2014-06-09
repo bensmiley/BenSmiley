@@ -7,12 +7,9 @@ define ["app", 'backbone'], (App, Backbone) ->
             idAttribute : 'ID'
 
 
-
-
         # This is current user model (Logged in user model)
         currentUser = new Users.UserModel
         currentUser.set CURRENTUSERDATA
-
 
 
         #model for user data

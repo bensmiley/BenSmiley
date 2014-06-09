@@ -37,7 +37,7 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>Minyawns</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <span class="glyphicon glyphicon-pencil"></span> <span class="glyphicon glyphicon-trash"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <span class="glyphicon glyphicon-pencil"></span> <span class="glyphicon glyphicon-trash"></span> </td>';
 
     return DomainItemView;
 

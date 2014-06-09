@@ -15,6 +15,45 @@ define(['app', 'text!apps/user-domains/templates/addUserDomain.html'], function(
 
     UserDomainAddView.prototype.template = addUserDomainTpl;
 
+    UserDomainAddView.prototype.events = {
+      'click #btn-add-user-domain': function() {
+        var domaindata;
+        if (this.$el.find('#add-user-domain-form').valid()) {
+          domaindata = Backbone.Syphon.serialize(this);
+          return this.trigger("add:user:domain:clicked", domaindata);
+        }
+      }
+    };
+
+    UserDomainAddView.prototype.onShow = function() {
+      return this.$el.find('#add-user-domain-form').validate(this.validationOptions());
+    };
+
+    UserDomainAddView.prototype.onUserDomainAdded = function() {
+      var successhtml;
+      this.$el.find('#btn-reset-add-domain').click();
+      this.$el.find('#msg').empty();
+      successhtml = '<div class="alert alert-success"> <button class="close" data-dismiss="alert">&times;</button> Domain Sucessfully Added </div>';
+      return this.$el.find('#msg').append(successhtml);
+    };
+
+    UserDomainAddView.prototype.validationOptions = function() {
+      return {
+        rules: {
+          domain_name: {
+            required: true
+          },
+          domain_url: {
+            required: true,
+            url: true
+          }
+        },
+        messages: {
+          domain_url: 'Enter valid url'
+        }
+      };
+    };
+
     return UserDomainAddView;
 
   })(Marionette.Layout);

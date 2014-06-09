@@ -7,8 +7,8 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     # This is current user model (Logged in user model)
     currentUser = new UserModel
-    #CURRENTUSERDATA = CURRENTUSERDATA || {}
     currentUser.set CURRENTUSERDATA
+
 
     #PUBLIC API
     API =
