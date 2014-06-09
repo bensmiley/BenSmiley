@@ -13,6 +13,7 @@ define ['app'
 
             className : 'add-user-domain-container'
 
+
             template : addUserDomainTpl
 
 

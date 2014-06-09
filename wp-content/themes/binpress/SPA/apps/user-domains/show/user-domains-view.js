@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function(App, userDomainTpl) {
+define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function(App, listUserDomainTpl) {
   return App.module('UserDomainAppView', function(View, App) {
     var DomainItemView, EmptyView;
     View.UserDomainView = (function(_super) {
@@ -14,10 +14,10 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
 
       UserDomainView.prototype.className = 'user-domain-container';
 
-      UserDomainView.prototype.template = userDomainTpl;
+      UserDomainView.prototype.template = '<!-- TABS --> <ul class="nav nav-tabs" id="tab-01"> <li class="active"><a href="#domain-details">Domain Details</a></li> <li><a href="#tab1FollowUs">Domain Plan</a></li> <li><a href="#tab1Inspire">Statistics</a></li> </ul> <div class="tab-content"> <!-- Show user domain and add new user domain region --> <div class="tab-pane active" id="domain-details"></div> <hr> </div>';
 
       UserDomainView.prototype.regions = {
-        domainListRegion: '#user-domain-list'
+        domainListRegion: '#domain-details'
       };
 
       UserDomainView.prototype.events = {
@@ -64,11 +64,7 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
         return DomainListView.__super__.constructor.apply(this, arguments);
       }
 
-      DomainListView.prototype.template = '<thead> <tr> <th>Domain Name</th> <th>Plan</th> <th>Billing Due Date</th> <th>Action</th> </tr> </thead> <tbody></tbody>';
-
-      DomainListView.prototype.className = 'table table-striped';
-
-      DomainListView.prototype.tagName = 'table';
+      DomainListView.prototype.template = listUserDomainTpl;
 
       DomainListView.prototype.itemView = DomainItemView;
 

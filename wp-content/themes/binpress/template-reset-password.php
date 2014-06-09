@@ -2,7 +2,9 @@
 /**
  * Template Name: Reset Password
  */
-
+/**
+ * http://localhost/bensmiley/reset-password/?action=reset-password&key=c476f62d9d1d00450b77797b827ed2d74eb9166b&login=tina%40mailinator.com
+ */
 get_header();
 
 $form_action = "reset-password";
@@ -18,7 +20,7 @@ if ( !$validated_url[ 'code' ] ) {
 
 $user_data_object = $validated_url[ 'user_data_obj' ];
 
-// activate the user and set status to 0
+// on successful validation: clear the activation key
 reset_activation_key( $user_data_object->user_email ); ?>
 
     <div class="row login-container">
@@ -28,7 +30,7 @@ reset_activation_key( $user_data_object->user_email ); ?>
             <h2> Reset Password</h2>
             <br>
 
-            <form id="reset-password-form" class="login-form">
+            <form id="reset-password-form" class="login-form" method="post"  >
                 <div class="row">
                     <div class="form-group col-md-10">
                         <label class="form-label">Email</label>
@@ -36,7 +38,8 @@ reset_activation_key( $user_data_object->user_email ); ?>
                         <div class="controls">
                             <div class="input-with-icon  right">
                                 <i class=""></i>
-                                <input type="text" name="user_email" id="user_email" class="form-control">
+                                <input type="text" name="user_email" id="user_email" class="form-control"
+                                       value="<?php echo $_GET[ 'login' ]; ?>">
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@ define ['app'
                     @layout.domainListRegion.show @getDomainListView()
 
                 @listenTo @layout ,"add:user:domain:clicked",->
-                    App.execute "add:user:domain" , region : App.mainContentRegion
+                    App.execute "add:user:domain" , region : @layout.domainListRegion
 
                 @show @layout
 

@@ -9,7 +9,7 @@ define ['jquery', 'jquery-validate'], ->
             debug : true,
             success : "valid"
 
-        #validate the forgot password form with the validation rules
+        #validate the forgot password modal with the validation rules
         $('#forgot-password-form').validate
             focusInvalid : false,
             rules :
@@ -28,7 +28,7 @@ define ['jquery', 'jquery-validate'], ->
                 parent = $(element).parent('.input-with-icon')
                 parent.removeClass('error-control').addClass('success-control')
 
-        #action on form submit button click event
+        #action on  forgot password form, submit button click
         $('#btn-forgot-pass').click ->
 
             #check if forgot password form is valid and passes validation rules
@@ -82,37 +82,4 @@ define ['jquery', 'jquery-validate'], ->
             success : (label, element) ->
                 parent = $(element).parent('.input-with-icon')
                 parent.removeClass('error-control').addClass('success-control')
-
-
-        #action on form submit button click event
-        $('#btn-reset-password').click ->
-
-            #check if forgot password form is valid and passes validation rules
-            if($('#reset-password-form').valid())
-
-                #get the user email
-                user_email = $('#user_email').val()
-
-                #get the user password
-                user_passwod = $('#user_pass').val()
-
-                #set the form action
-                formAction =
-                    'action' : 'change-password'
-                    'user_email' : user_email
-                    'user_pass' : user_passwod
-
-                #trigger AJAX call
-                $.post(AJAXURL, formAction, (response)->
-                    if(response.code == "OK")
-                        successMsg = response.msg
-                        $('#display-reset-msg').empty()
-                        $('#display-reset-msg').append successMsg
-                        $('#btn-reset-form').click()
-
-                    if(response.code == "ERROR")
-                        errorMsg = response.msg
-                        $('#display-reset-msg').empty()
-                        $('#display-reset-msg').append errorMsg
-                )
 

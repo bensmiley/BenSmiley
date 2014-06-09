@@ -19,7 +19,7 @@ define(['app', 'region-controller', 'apps/user-domains/show/user-domains-view', 
         });
         this.listenTo(this.layout, "add:user:domain:clicked", function() {
           return App.execute("add:user:domain", {
-            region: App.mainContentRegion
+            region: this.layout.domainListRegion
           });
         });
         return this.show(this.layout);

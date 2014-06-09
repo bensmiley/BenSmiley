@@ -1,256 +1,78 @@
-<!-- ADD DOMIANS -->
-<div class="row">
-    <div class="col-md-12">
-        <ul class="nav nav-tabs" id="tab-01">
-            <li class="active"><a href="#tab1hellowWorld">Domain Details</a></li>
-            <li><a href="#tab1FollowUs">Domain Plan</a></li>
-            <li><a href="#tab1Inspire">Statistics</a></li>
-        </ul>
-        <div class="tools">
-            <a href="javascript:void(0);" class="collapse"></a>
-            <a href="#grid-config" data-toggle="modal" class="config"></a>
-            <a href="javascript:void(0);" class="reload"></a>
-            <a href="javascript:void(0);" class="remove"></a>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab1hellowWorld">
+<!--- Success message -->
+<div class="alert alert-success">
+    <button class="close" data-dismiss="alert">&times;</button>
+    Domain Sucessfully Added
+</div>
+<!--- Add Domain Section -->
+<div class="row ">
+    <div class="col-md-6">
+        <h3 class="m-b-20"><span class="semi-bold">Add/Edit Domain</span></h3>
 
-            <!-- Alert Message Added -->
-            <!--<div class="alert alert-success">-->
-                <!--<button class="close" data-dismiss="alert">&times;</button>-->
-                <!--Domain Sucessfully Added-->
-            <!--</div>-->
-            <!-- End Alert Message Added -->
+        <div class="grid simple">
+            <div class="grid-body no-border">
+                <form id="add-user-domain-form">
 
-            <!--- Add Domain Section -->
-            <div class="row ">
-                <div class="col-md-6">
-                    <h3 class="m-b-20"><span class="semi-bold">Add/Edit Domain</span></h3>
-                    <div class="grid simple">
-                        <div class="grid-body no-border">
-                            <form id="add-user-domain-form">
+                    <div class="form-group">
+                        <label class="form-label">Domain Name</label>
+                        <span class="help">e.g. "xyz"</span>
 
-                                <div class="form-group">
-                                    <label class="form-label">Domain Name</label>
-                                    <span class="help">e.g. "xyz"</span>
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" name="form1Domainname" id="form1Domainname" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Site Url</label>
-                                    <span class="help">e.g. "http://www.xyz.com"</span>
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" name="form1siteurl" id="form1siteurl" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i> Save</button>
-                                </div>
-
-                            </form>
+                        <div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" name="form1Domainname" id="form1Domainname" class="form-control">
                         </div>
                     </div>
-                </div>
-                <!-- display on success side bar -->
-                <!--<div class="col-md-6">-->
-                    <!--<div class="alert alert-success alert-default">-->
-                        <!--<h3>My<span class="semi-bold"> Site</span> Is Made With</h3>-->
-                        <!--<form id="Site-upload" action="#">-->
-                            <!--<div class="form-group">-->
-                                <!--<div class="input-with-icon  right">-->
-                                    <!--<select class="form-control">-->
-                                        <!--<option>Wordpress</option>-->
-                                        <!--<option>Wordpress</option>-->
-                                        <!--<option>Wordpress</option>-->
-                                        <!--<option>Wordpress</option>-->
-                                        <!--<option>Wordpress</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="pull-Left">-->
-                                <!--<button type="submit" class="btn btn-success btn-cons">Download our Php Plugin</button>-->
-                            <!--</div>-->
-                            <!--<div class="clearfix"></div><br>-->
-                            <!--If you haven't already-->
-                            <!--You'll need this API key in order to securely-->
-                            <!--<b>Sign your Single Sign On request</b>-->
-                            <!--<div class="form-group">-->
-                                <!--<div class="input-with-icon  right">-->
-                                    <!--<i class=""></i>-->
-                                    <!--<input type="text" name="form1siteurl" id="form1siteurl" class="form-control">-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="row small-text">-->
-                                <!--<p class="col-md-12">-->
-                                    <!--we recommend that you read our full PHP libiary instructions <a href="#">here </a>-->
-                                <!--</p>-->
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
-                <!--</div>--> <!-- display on success side bar -->
+                    <div class="form-group">
+                        <label class="form-label">Site Url</label>
+                        <span class="help">e.g. "http://www.xyz.com"</span>
+
+                        <div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" name="form1siteurl" id="form1siteurl" class="form-control">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i> Save</button>
+                    </div>
+
+                </form>
             </div>
-        <hr>
-        <!--- End Domain Section -->
-
-        <!--- Add Groups Section -->
-        <!--<div class="row column-seperation">-->
-            <!--<div class="col-md-8">-->
-                <!--<h3  class="m-b-20" ><span class="semi-bold">Groups</span></h3>-->
-                <!--<div class="grid simple">-->
-                    <!--<div class="grid-body no-border">-->
-                        <!--<form id="form_traditional_validation" action="#">-->
-                            <!--<div class="row">-->
-
-                                <!--<div class="col-md-3">-->
-                                    <!--<img src="../wp-content/themes/binpress/images/default.png" class=" image-responsive-width"/>-->
-                                    <!--<br><br>-->
-                                    <!--<button type="submit" class="btn btn-primary btn-block"><i class="icon-ok"></i> Edit Group Image</button>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-9">-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="form-label">Group Name</label>-->
-                                        <!--<span class="help">e.g. "xyz"</span>-->
-                                        <!--<div class="input-with-icon  right">-->
-                                            <!--<i class=""></i>-->
-                                            <!--<input type="text" name="form1Groupname" id="form1Groupname" class="form-control">-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<label class="form-label">Description</label>-->
-                                        <!--<div class="input-with-icon  right">-->
-                                            <!--<i class=""></i>-->
-                                            <!--<textarea type="text" name="form1Description" id="form1Description" class="form-control">-->
-                                            <!--</textarea>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="pull-right">-->
-                                        <!--<button type="submit" class="btn btn-success btn-cons"><i class="icon-ok"></i> Save</button>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                            <!--</div>-->
-                        <!--</form>-->
-                    <!--</div>-->
-                    <!--<hr>-->
-                    <!--<table class="table table-hover table-condensed" id="example">-->
-                        <!--<thead>-->
-                        <!--<tr>-->
-                            <!--<th style="width:10%">Group Logo</th>-->
-                            <!--<th style="width:15%" >Group Name</th>-->
-                            <!--<th style="width:30%" data-hide="phone,tablet">Description</th>-->
-                            <!--<th style="width:10%">Action</th>-->
-                        <!--</tr>-->
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                        <!--<tr >-->
-                            <!--<td class="v-align-middle"><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class="image-responsive-width grscale" width="60px"/></td>-->
-                            <!--<td class="v-align-middle"><span class="muted">Group 1</span></td>-->
-                            <!--<td><span class="muted">frequently involving research or design</span></td>-->
-                            <!--<td class="v-align-middle">-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>  &nbsp;-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class=" image-responsive-width grscale" width="60px"/></td>-->
-                            <!--<td><span class="muted">Group 2</span></td>-->
-                            <!--<td><span class="muted">Something goes here</span></td>-->
-                            <!--<td>-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>  &nbsp;-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class=" image-responsive-width grscale" width="60px"/></td>-->
-                            <!--<td class="v-align-middle"><span class="muted">Group 3</span></td>-->
-                            <!--<td><span class="muted">Redesign project template</span></td>-->
-                            <!--<td>-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>  &nbsp;-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><img src="../wp-content/themes/binpress/images/livefyre-logo.png"-->
-                                     <!--class="grscale image-responsive-width" width="60px"/></td>-->
-                            <!--<td class="v-align-middle"><span class="muted">Group 4</span></td>-->
-                            <!--<td><span class="muted">A project in business and science is typically defined</span></td>-->
-                            <!--<td>-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span>  &nbsp;-->
-                                <!--<span class="glyphicon glyphicon-trash"></span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-
-
-
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-4">-->
-                <!--<div class="alert alert-info">-->
-                    <!--<h3  class="m-b-20" ><span class="semi-bold">Plans Details</span></h3>-->
-                    <!--<div class="grid simple">-->
-                        <!--&lt;!&ndash;-->
-                           <!--<form id="form_traditional_validation" action="#">-->
-                                 <!--<div class="form-group">-->
-                                   <!--<label class="form-label">Current Plan</label>-->
-                                      <!--<div class="input-with-icon  right">-->
-                                           <!--<i class=""></i>-->
-                                           <!--<input type="text" name="form1Domainname" id="form1Domainname" class="form-control" placeholder="Free" disabled>-->
-                                       <!--</div>-->
-                                 <!--</div>-->
-
-                                 <!--<button type="submit" class="btn btn-success btn-block"><i class="icon-ok"></i> Change Plan</button>-->
-
-                            <!--<div class="clearfix"></div>-->
-                           <!--</form>-->
-                       <!--&ndash;&gt;-->
-                        <!--<dl class="dl-horizontal dl-plan">-->
-                            <!--<dt>Current Plan :</dt>-->
-                            <!--<dd><span class="label label-info">Silver</span></dd>-->
-                            <!--<dt>Payement :</dt>-->
-                            <!--<dd>US $99.0/month</dd>-->
-                            <!--<dt>Billing Cycle :</dt>-->
-                            <!--<dd>From 08/02/2014 To 09/02/2015</dd>-->
-                        <!--</dl>-->
-
-
-                        <!--<button type="submit" class="btn btn-success btn-block"><i class="icon-ok"></i> Change Plan</button>-->
-
-                        <!--<div class="clearfix"></div>-->
-
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--- End Domain Section -->
         </div>
-        <!--<div class="tab-pane" id="tab1FollowUs">-->
-            <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                    <!--<h3>� Nothing is<span class="semi-bold"> impossible</span>, the word itself says 'I'm <span class="semi-bold">possible</span>'! �</h3>-->
-                    <!--<p>A style represents visual customizations on top of a layout. By editing a style, you can use Squarespace's visual interface to customize your...</p>-->
-                    <!--<br>-->
-                    <!--<p class="pull-right">-->
-                        <!--<button type="button" class="btn btn-white btn-cons">White</button>-->
-                        <!--<button type="button" class="btn btn-success btn-cons">Success</button>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="tab-pane" id="tab1Inspire">-->
-            <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                    <!--<h3>Follow us & get updated!</h3>-->
-                    <!--<p>Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.</p>-->
-                    <!--<br>-->
-
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+    </div>
+    <!-- show side box -->
+    <div class="col-md-6">
+        <div class="alert alert-success alert-default">
+            <h3>My<span class="semi-bold"> Site</span> Is Made With</h3>
+            <form id="Site-upload" action="#">
+                <div class="form-group">
+                    <div class="input-with-icon  right">
+                        <select class="form-control">
+                            <option>Wordpress</option>
+                            <option>Wordpress</option>
+                            <option>Wordpress</option>
+                            <option>Wordpress</option>
+                            <option>Wordpress</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pull-Left">
+                    <button type="submit" class="btn btn-success btn-cons">Download our Php Plugin</button>
+                </div>
+                <div class="clearfix"></div><br>
+                If you haven't already
+                You'll need this API key in order to securely
+                <b>Sign your Single Sign On request</b>
+                <div class="form-group">
+                    <div class="input-with-icon  right">
+                        <i class=""></i>
+                        <input type="text" name="form1siteurl" id="form1siteurl" class="form-control">
+                    </div>
+                </div>
+                <div class="row small-text">
+                    <p class="col-md-12">
+                        we recommend that you read our full PHP libiary instructions <a href="#">here </a>
+                    </p>
+                </div>
+            </form>
         </div>
     </div>
 </div>

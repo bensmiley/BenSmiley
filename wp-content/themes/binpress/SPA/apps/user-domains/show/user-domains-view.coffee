@@ -1,7 +1,7 @@
 #include the files for the app
 #TODO: remove the backbonesyphon from the file
 define ['app'
-        'text!apps/user-domains/templates/listUserDomain.html'], (App, userDomainTpl)->
+        'text!apps/user-domains/templates/ListUserDomain.html'], (App, listUserDomainTpl)->
 
     #start the app module
     App.module 'UserDomainAppView', (View, App)->
@@ -11,10 +11,21 @@ define ['app'
 
             className : 'user-domain-container'
 
-            template : userDomainTpl
+            template : '<!-- TABS -->
+                        <ul class="nav nav-tabs" id="tab-01">
+                            <li class="active"><a href="#domain-details">Domain Details</a></li>
+                            <li><a href="#tab1FollowUs">Domain Plan</a></li>
+                            <li><a href="#tab1Inspire">Statistics</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Show user domain and add new user domain region -->
+                            <div class="tab-pane active" id="domain-details"></div>
+                            <hr>
+                        </div>'
 
             regions :
-                domainListRegion : '#user-domain-list'
+                domainListRegion : '#domain-details'
 
             events :
                 'click #btn-add-domain' : ->
@@ -27,12 +38,12 @@ define ['app'
             tagName : 'tr'
 
             template : '<td>Minyawns</td>
-                                                <td>Silver</td>
-                                                <td>09/21/2014</td>
-                                                <td class="center">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </td>'
+                        <td>Silver</td>
+                        <td>09/21/2014</td>
+                        <td class="center">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </td>'
 
         #Empty item view, when no domains are added
         class EmptyView extends Marionette.ItemView
@@ -41,22 +52,10 @@ define ['app'
 
             template : '<td>You have not added any domains yet</td>'
 
-        # Main view  for displaying the user domains
+        # Main view  for displaying the user domains list
         class View.DomainListView extends Marionette.CompositeView
 
-            template : '<thead>
-                                                    <tr>
-                                                        <th>Domain Name</th>
-                                                        <th>Plan</th>
-                                                        <th>Billing Due Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>'
-
-            className : 'table table-striped'
-
-            tagName : 'table'
+            template : listUserDomainTpl
 
             itemView : DomainItemView
 

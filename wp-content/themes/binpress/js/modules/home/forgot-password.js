@@ -49,7 +49,7 @@ define(['jquery', 'jquery-validate'], function() {
         });
       }
     });
-    $('#reset-password-form').validate({
+    return $('#reset-password-form').validate({
       focusInvalid: false,
       rules: {
         user_email: {
@@ -75,32 +75,6 @@ define(['jquery', 'jquery-validate'], function() {
         var parent;
         parent = $(element).parent('.input-with-icon');
         return parent.removeClass('error-control').addClass('success-control');
-      }
-    });
-    return $('#btn-reset-password').click(function() {
-      var formAction, user_email, user_passwod;
-      if ($('#reset-password-form').valid()) {
-        user_email = $('#user_email').val();
-        user_passwod = $('#user_pass').val();
-        formAction = {
-          'action': 'change-password',
-          'user_email': user_email,
-          'user_pass': user_passwod
-        };
-        return $.post(AJAXURL, formAction, function(response) {
-          var errorMsg, successMsg;
-          if (response.code === "OK") {
-            successMsg = response.msg;
-            $('#display-reset-msg').empty();
-            $('#display-reset-msg').append(successMsg);
-            $('#btn-reset-form').click();
-          }
-          if (response.code === "ERROR") {
-            errorMsg = response.msg;
-            $('#display-reset-msg').empty();
-            return $('#display-reset-msg').append(errorMsg);
-          }
-        });
       }
     });
   });
