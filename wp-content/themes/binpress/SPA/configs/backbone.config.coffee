@@ -1,4 +1,5 @@
 define ["backbone", "mustache"], (Backbone, Mustache) ->
+
     _.extend Backbone.Model::,
 
         # Extended implementation of Bacbone.Model.sync to work with wordpress ajax

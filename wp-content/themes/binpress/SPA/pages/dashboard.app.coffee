@@ -1,7 +1,7 @@
 ##
 ## The main dashboard App
 ##
-define ['marionette', 'msgbus'], (Marionette, msgbus)->
+define [ 'marionette', 'msgbus' ], ( Marionette, msgbus )->
 
     window.App = new Marionette.Application
 
@@ -24,15 +24,15 @@ define ['marionette', 'msgbus'], (Marionette, msgbus)->
         App.mainContentRegion
 
     # Registers a controller instance
-    msgbus.commands.setHandler "register:instance", (instance, id) ->
+    msgbus.commands.setHandler "register:instance", ( instance, id ) ->
         App.register instance, id
 
     # Unregisters a controller instance
-    msgbus.commands.setHandler "unregister:instance", (instance, id) ->
+    msgbus.commands.setHandler "unregister:instance", ( instance, id ) ->
         App.unregister instance, id
 
-    App.on "initialize:after", (options) ->
+    App.on "initialize:after", ( options ) ->
         App.startHistory()
-        App.navigate(@rootRoute, trigger : true) unless App.getCurrentRoute()
+        App.navigate( @rootRoute, trigger : true ) unless App.getCurrentRoute()
 
     App

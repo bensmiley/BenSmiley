@@ -1,16 +1,16 @@
 #include the files for the app
-define ['app'
-        'regioncontroller'
-        'apps/upload/upload-view'], (App, AppController, View)->
+define [ 'app'
+         'regioncontroller'
+         'apps/upload/upload-view' ], ( App, AppController, View )->
 
     #start the app module
-    App.module 'UploadApp', (UploadApp, App, Backbone, Marionette, $, _)->
+    App.module 'UploadApp', ( UploadApp, App, Backbone, Marionette, $, _ )->
 
         # Controller class for showing left nav nenu region
         class UploadApp.Controller extends AppController
 
             # initialize
-            initialize : (opts)->
+            initialize : ( opts )->
 
                 #get the logged in user model
                 @usermodel = opts.model
@@ -20,10 +20,10 @@ define ['app'
 
                 @show view
             # gets the main login view
-            _getView : (usermodel) ->
+            _getView : ( usermodel ) ->
                 new View.UploadView
                     model : usermodel
 
-        App.commands.setHandler 'start:upload:app', (options) ->
+        App.commands.setHandler 'start:upload:app', ( options ) ->
             new UploadApp.Controller options
 

@@ -1,8 +1,8 @@
 #include the files for the app
-define ['app', 'text!apps/user-domains/templates/listUserDomain.html'], (App, userDomainTpl)->
+define [ 'app', 'text!apps/user-domains/templates/listUserDomain.html' ], ( App, userDomainTpl )->
 
     #start the app module
-    App.module 'UserDomainAppView', (View, App)->
+    App.module 'UserDomainAppView', ( View, App )->
 
         # Layout for displaying the user domains
         class View.UserDomainView extends Marionette.Layout
@@ -25,12 +25,12 @@ define ['app', 'text!apps/user-domains/templates/listUserDomain.html'], (App, us
             tagName : 'tr'
 
             template : '<td>Minyawns</td>
-                                                <td>Silver</td>
-                                                <td>09/21/2014</td>
-                                                <td class="center">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </td>'
+                                                            <td>Silver</td>
+                                                            <td>09/21/2014</td>
+                                                            <td class="center">
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </td>'
 
         #Empty item view, when no domains are added
         class EmptyView extends Marionette.ItemView
@@ -43,14 +43,14 @@ define ['app', 'text!apps/user-domains/templates/listUserDomain.html'], (App, us
         class View.DomainListView extends Marionette.CompositeView
 
             template : '<thead>
-                                                    <tr>
-                                                        <th>Domain Name</th>
-                                                        <th>Plan</th>
-                                                        <th>Billing Due Date</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>'
+                                                                <tr>
+                                                                    <th>Domain Name</th>
+                                                                    <th>Plan</th>
+                                                                    <th>Billing Due Date</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>'
 
             className : 'table table-striped'
 

@@ -1,4 +1,4 @@
-define ['jquery','jqueryvalidate'],(jQuery)->
+define [ 'jquery', 'jqueryvalidate' ], ( jQuery )->
 
     # FIXME: Move jquery validate config into its own separate file
     jQuery.validator.setDefaults

@@ -1,11 +1,10 @@
-define ['backbone', 'msgbus'], (Backbone, msgbus) ->
+define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     class UserModel extends Backbone.Model
 
         name : 'user'
 
         idAttribute : 'ID'
-
 
     # This is current user model (Logged in user model)
     currentUser = new UserModel
