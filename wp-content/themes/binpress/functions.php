@@ -234,6 +234,90 @@ function send_email_through_cron() {
 
 add_action( 'CRON_SEND_EMAIL', 'send_email_through_cron' );
 
+/**
+ * Function to add a custom taxonomy :plan
+ */
+function register_plan_taxonomy() {
+
+    $labels = array(
+        'name' => _x( 'Plans', 'taxonomy general name' ),
+        'singular_name' => _x( 'Plan', 'taxonomy singular name' ),
+        'search_items' => __( 'Search Plans', 'binpress' ),
+        'popular_items' => __( 'Popular Plans', 'binpress' ),
+        'all_items' => __( 'All Plans', 'binpress' ),
+        'parent_item' => null,
+        'parent_item_colon' => null,
+        'edit_item' => __( 'Edit Plan', 'binpress' ),
+        'update_item' => __( 'Update Plan', 'binpress' ),
+        'add_new_item' => __( 'Add New Plan', 'binpress' ),
+        'new_item_name' => __( 'New Plan Name', 'binpress' ),
+        'separate_items_with_commas' => __( 'Separate plans with commas' ),
+        'add_or_remove_items' => __( 'Add or remove plans', 'binpress' ),
+        'choose_from_most_used' => __( 'Choose from the most used plans', 'binpress' ),
+        'not_found' => __( 'No plans found.', 'binpress' ),
+        'menu_name' => __( 'Plans', 'binpress' )
+    );
+
+    $args = array(
+        'hierarchical' => FALSE,
+        'labels' => $labels,
+        'show_ui' => TRUE,
+        'show_admin_column' => TRUE,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => TRUE,
+        'rewrite' => array(
+            'slug' => 'plan'
+        )
+    );
+    register_taxonomy( 'plan', 'domain', $args );
+}
+
+/**
+ * Function to add a custom post type:domain
+ */
+function register_domain_post() {
+    $labels = array(
+        'name' => 'Domains',
+        'singular_name' => 'Domain',
+        'add_new' => 'Add New',
+        'add_new_item' => 'Add New Domain',
+        'edit_item' => 'Edit Domain',
+        'new_item' => 'New Domain',
+        'all_items' => 'All Domains',
+        'view_item' => 'View Domains',
+        'search_items' => 'Search Domains',
+        'not_found' => 'No Domains found',
+        'not_found_in_trash' => 'No Domains found in Trash',
+        'parent_item_colon' => '',
+        'menu_name' => 'Domains'
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'label' => __( 'domain', "binpress" ),
+        'public' => TRUE,
+        'publicly_queryable' => TRUE,
+        'show_ui' => TRUE,
+        'show_in_menu' => TRUE,
+        'query_var' => TRUE,
+        'rewrite' => array(
+            'slug' => 'room'
+        ),
+        'capability_type' => 'post',
+        'has_archive' => TRUE,
+        'hierarchical' => FALSE,
+        'menu_position' => null,
+        'supports' => array(
+            'title',
+            'editor',
+            'author',
+            'thumbnail',
+            'custom-fields'
+        )
+    );
+
+    register_post_type( 'domain', $args );
+}
 
 /**
  * Function to insert custom terms for the taxonomy: plan
