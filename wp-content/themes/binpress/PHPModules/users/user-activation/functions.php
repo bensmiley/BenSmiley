@@ -33,22 +33,19 @@ function validate_activation_url( $get_parameters, $form_action ) {
     if (!$user_exists_check['code'])
         return $user_exists_check;
 
-    // get the user data
-    $user_data = get_user_data( $get_parameters['login'] );
-
-    $user_status_check = check_user_status( $user_data );
+    $user_status_check = check_user_status( $user_exists_check['user_data'] );
     if (!$user_status_check['code'])
         return $user_status_check;
 
-    $activation_duration_check = check_user_activation_duration( $user_data );
+    $activation_duration_check = check_user_activation_duration( $user_exists_check['user_data'] );
     if (!$activation_duration_check['code'])
         return $activation_duration_check;
 
-    $activation_key_check = validate_activation_key( $user_data );
-    if (!$activation_key_check['code'])
-        return $activation_key_check;
+    $activation_duration_check = validate_activation_key( $user_exists_check['user_data'] );
+    if (!$activation_duration_check['code'])
+        return $activation_duration_check;
 
-    return array( "code" => true, "user_data_obj" => $user_data );
+    return array( "code" => true, "user_data_obj" => $user_exists_check['user_data'] );
 }
 
 /**
@@ -89,7 +86,7 @@ function check_user_exists( $user_email ) {
 
     $user_data = email_exists( $user_email );
 
-    if ($user_data == true) {
+    if ($user_data === true) {
         $success_msg = array( "code" => true, 'user_data' => $user_data );
         return $success_msg;
 
