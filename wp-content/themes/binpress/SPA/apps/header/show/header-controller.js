@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'entities/user-entities'], function(App, AppController, Entity) {
+define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(App, AppController, CloseWarn, msgbus) {
   return App.module('HeaderApp.Show', function(Show, App, Backbone, Marionette, $, _) {
     var HeaderView, UserDisplayView;
     Show.Controller = (function(_super) {
@@ -26,7 +26,7 @@ define(['app', 'regioncontroller', 'entities/user-entities'], function(App, AppC
       };
 
       Controller.prototype.showUserDisplayView = function() {
-        this.usermodel = App.request("get:current:user:model");
+        this.usermodel = msgbus.reqres.request("get:current:user:model");
         this.userDisplayView = this.getUserDisplayView(this.usermodel);
         return this.layout.userDisplayRegion.show(this.userDisplayView);
       };
@@ -58,19 +58,21 @@ define(['app', 'regioncontroller', 'entities/user-entities'], function(App, AppC
       return HeaderView;
 
     })(Marionette.Layout);
-    return UserDisplayView = (function(_super) {
+    HeaderView;
+    UserDisplayView = (function(_super) {
       __extends(UserDisplayView, _super);
 
       function UserDisplayView() {
         return UserDisplayView.__super__.constructor.apply(this, arguments);
       }
 
-      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul> ';
+      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" data-src="{{user_photo}}" data-src-retina="{{user_photo}}" width="35" height="35"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold">{{display_name}}</span></div> &nbsp; <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li> </ul> </li> </ul>';
 
       UserDisplayView.prototype.className = 'pull-right';
 
       return UserDisplayView;
 
     })(Marionette.ItemView);
+    return UserDisplayView;
   });
 });
