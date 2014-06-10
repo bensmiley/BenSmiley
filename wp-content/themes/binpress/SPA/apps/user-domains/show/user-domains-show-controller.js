@@ -20,7 +20,8 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domain
             _this.userDomainsCollection.fetch();
             _this.domainListView = _this.getDomainListView(_this.userDomainsCollection);
             _this.layout.domainViewRegion.show(_this.domainListView);
-            return _this.listenTo(_this.domainListView, "itemview:edit:domain:clicked", _this.editDomainClick);
+            _this.listenTo(_this.domainListView, "itemview:edit:domain:clicked", _this.editDomainClick);
+            return _this.listenTo(_this.domainListView, "itemview:delete:domain:clicked", _this.deleteDomainClick);
           };
         })(this));
         this.listenTo(this.layout, "add:user:domain:clicked", function() {
@@ -45,6 +46,13 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domain
         return App.execute("add:edit:user:domain", {
           region: this.layout.domainViewRegion,
           model: model
+        });
+      };
+
+      UserDomainController.prototype.deleteDomainClick = function(iv, model) {
+        return model.destroy({
+          allData: false,
+          wait: true
         });
       };
 

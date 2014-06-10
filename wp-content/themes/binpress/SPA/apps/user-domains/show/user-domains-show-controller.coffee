@@ -27,6 +27,7 @@ define [ 'app'
 
                     #listen to click events
                     @listenTo @domainListView,"itemview:edit:domain:clicked",@editDomainClick
+                    @listenTo @domainListView,"itemview:delete:domain:clicked",@deleteDomainClick
 
 
                 @listenTo @layout, "add:user:domain:clicked", ->
@@ -45,6 +46,12 @@ define [ 'app'
                 App.execute "add:edit:user:domain",
                     region : @layout.domainViewRegion
                     model :  model
+
+            deleteDomainClick :(iv,model)->
+                model.destroy
+                    allData: false
+                    wait: true
+
 
 
 

@@ -2,7 +2,8 @@
 define [ 'app'
          'regioncontroller'
          'apps/user-domains/add-edit/user-domain-add-edit-view'
-         'msgbus'], ( App, AppController, UserDomainAddView , msgbus )->
+         'msgbus'
+         'apps/user-domains/groups/add/add-group-controller'], ( App, AppController, UserDomainAddView , msgbus )->
 
     #start the app module
     App.module "UserDomainAddEditApp", ( UserDomainAddEditApp, App, BackBone, Marionette, $, _ )->
@@ -20,6 +21,10 @@ define [ 'app'
                     @model = opts.model
                     #get edit domain layout
                     @layout = @getEditDomainLayout @model
+                    @listenTo @layout,"show",=>
+                        App.execute "add:domain:groups" ,
+                            region : @layout.addDomainGroupRegion
+                            domain_id : @model.get 'ID'
 
                 #listen to the add domain button click event
                 @listenTo @layout ,"add:edit:user:domain:clicked",@addEditUserDomain

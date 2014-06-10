@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'apps/user-domains/add-edit/user-domain-add-edit-view', 'msgbus'], function(App, AppController, UserDomainAddView, msgbus) {
+define(['app', 'regioncontroller', 'apps/user-domains/add-edit/user-domain-add-edit-view', 'msgbus', 'apps/user-domains/groups/add/add-group-controller'], function(App, AppController, UserDomainAddView, msgbus) {
   return App.module("UserDomainAddEditApp", function(UserDomainAddEditApp, App, BackBone, Marionette, $, _) {
     var UserDomainAddEditController;
     UserDomainAddEditController = (function(_super) {
@@ -21,6 +21,14 @@ define(['app', 'regioncontroller', 'apps/user-domains/add-edit/user-domain-add-e
         } else {
           this.model = opts.model;
           this.layout = this.getEditDomainLayout(this.model);
+          this.listenTo(this.layout, "show", (function(_this) {
+            return function() {
+              return App.execute("add:domain:groups", {
+                region: _this.layout.addDomainGroupRegion,
+                domain_id: _this.model.get('ID')
+              });
+            };
+          })(this));
         }
         this.listenTo(this.layout, "add:edit:user:domain:clicked", this.addEditUserDomain);
         this.listenTo(this.layout, "show:domain:list:clicked", function() {

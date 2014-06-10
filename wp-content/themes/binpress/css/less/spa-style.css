@@ -1,3 +1,7 @@
+.no-mar {
+  margin: 0px;
+  padding: 0px;
+}
 .grscale {
   margin: auto;
   -webkit-filter: grayscale(100%);

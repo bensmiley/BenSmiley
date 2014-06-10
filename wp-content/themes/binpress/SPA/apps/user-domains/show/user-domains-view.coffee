@@ -44,6 +44,10 @@ define [ 'app'
         events :
             'click #btn-edit-domain' :->
                 @trigger "edit:domain:clicked", @model
+            'click #btn-delete-domain':->
+                if confirm('Are you sure?')
+                    @trigger "delete:domain:clicked", @model
+
 
     #Empty item view, when no domains are added
     class EmptyView extends Marionette.ItemView

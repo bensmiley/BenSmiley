@@ -41,7 +41,11 @@ function ajax_update_user_domain(){
 
     update_domain_post($domain_data);
 
-    update_domain_post_meta($domain_data);
+    //update_domain_post_meta($domain_data);
+
+    $domain_data= get_user_domain_details( $domain_data['ID'] );
+
+    wp_send_json( array( 'code' => 'OK','data'=>$domain_data ) );
 
 }
 

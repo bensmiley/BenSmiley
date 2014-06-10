@@ -42,6 +42,11 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
     DomainItemView.prototype.events = {
       'click #btn-edit-domain': function() {
         return this.trigger("edit:domain:clicked", this.model);
+      },
+      'click #btn-delete-domain': function() {
+        if (confirm('Are you sure?')) {
+          return this.trigger("delete:domain:clicked", this.model);
+        }
       }
     };
 

@@ -20,6 +20,10 @@ define [ 'app'
                 @trigger "show:domain:list:clicked"
 
 
+        regions:
+            addDomainGroupRegion : '#add-domain-group'
+
+
         onShow : ->
 
             #if no model is passed: show add view
@@ -28,10 +32,11 @@ define [ 'app'
 
             else
                 @$el.find('#form-title' ).text 'Edit Domain'
+                @$el.find('#domain-groups' ).css 'display':'inline'
 
 
             #validate the add user domain form with the validation rules
-            @$el.find( '#add-user-domain-form' ).validate @validationOptions()
+            @$el.find( '#add-edit-user-domain-form' ).validate @validationOptions()
 
         onUserDomainAddUpdate : ->
 
@@ -44,7 +49,7 @@ define [ 'app'
             if _.isUndefined(@model)
                 msg = "Domain Sucessfully Added"
             else
-                msg = "Domain Updated Added"
+                msg = "Domain Updated Sucessfully"
 
             successhtml = "<div class='alert alert-success'>
                             <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
@@ -53,7 +58,7 @@ define [ 'app'
 
         validationOptions : ->
             rules :
-                domain_name :
+                post_title :
                     required : true,
 
                 domain_url :

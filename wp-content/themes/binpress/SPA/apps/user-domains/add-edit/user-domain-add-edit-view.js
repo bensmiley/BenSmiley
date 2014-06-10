@@ -28,13 +28,20 @@ define(['app', 'text!apps/user-domains/templates/AddEditUserDomain.html'], funct
       }
     };
 
+    UserDomainAddEditView.prototype.regions = {
+      addDomainGroupRegion: '#add-domain-group'
+    };
+
     UserDomainAddEditView.prototype.onShow = function() {
       if (_.isUndefined(this.model)) {
         this.$el.find('#form-title').text('Add Domain');
       } else {
         this.$el.find('#form-title').text('Edit Domain');
+        this.$el.find('#domain-groups').css({
+          'display': 'inline'
+        });
       }
-      return this.$el.find('#add-user-domain-form').validate(this.validationOptions());
+      return this.$el.find('#add-edit-user-domain-form').validate(this.validationOptions());
     };
 
     UserDomainAddEditView.prototype.onUserDomainAddUpdate = function() {
@@ -44,7 +51,7 @@ define(['app', 'text!apps/user-domains/templates/AddEditUserDomain.html'], funct
       if (_.isUndefined(this.model)) {
         msg = "Domain Sucessfully Added";
       } else {
-        msg = "Domain Updated Added";
+        msg = "Domain Updated Sucessfully";
       }
       successhtml = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button>" + msg + "<div>";
       return this.$el.find('#msg').append(successhtml);
@@ -53,7 +60,7 @@ define(['app', 'text!apps/user-domains/templates/AddEditUserDomain.html'], funct
     UserDomainAddEditView.prototype.validationOptions = function() {
       return {
         rules: {
-          domain_name: {
+          post_title: {
             required: true
           },
           domain_url: {
