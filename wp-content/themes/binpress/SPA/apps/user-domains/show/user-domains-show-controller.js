@@ -14,17 +14,21 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domain
 
       UserDomainController.prototype.initialize = function(opts) {
         this.layout = this.getLayout();
-        this.listenTo(this.layout, "show", function() {
-          var userDomainsCollection;
-          userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
-          userDomainsCollection.fetch();
-          return this.layout.domainListRegion.show(this.getDomainListView(userDomainsCollection));
-        });
-        this.listenTo(this.layout, "add:user:domain:clicked", function() {
-          return App.execute("add:user:domain", {
-            region: this.layout.domainListRegion
-          });
-        });
+        this.listenTo(this.layout, "show", (function(_this) {
+          return function() {
+            var userDomainsCollection;
+            userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
+            userDomainsCollection.fetch();
+            return _this.layout.domainListRegion.show(_this.getDomainListView(userDomainsCollection));
+          };
+        })(this));
+        this.listenTo(this.layout, "add:user:domain:clicked", (function(_this) {
+          return function() {
+            return App.execute("add:user:domain", {
+              region: _this.layout.domainListRegion
+            });
+          };
+        })(this));
         return this.show(this.layout);
       };
 

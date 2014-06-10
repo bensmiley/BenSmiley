@@ -3,7 +3,7 @@ define [ 'app'
          'regioncontroller'
          'msgbus'
          'apps/user-domains/show/user-domains-view'
-         'apps/user-domains/add/user-domain-add-controller'], ( App, AppController, msgbus, View )->
+         'apps/user-domains/add/user-domain-add-controller' ], ( App, AppController, msgbus, View )->
 
     #start the app module
     App.module "UserDomainApp", ( UserDomainApp, App, BackBone, Marionette, $, _ )->
@@ -16,12 +16,12 @@ define [ 'app'
                 #get user domain layout
                 @layout = @getLayout()
 
-                @listenTo @layout, "show", ->
+                @listenTo @layout, "show", =>
                     userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
                     userDomainsCollection.fetch()
                     @layout.domainListRegion.show @getDomainListView userDomainsCollection
 
-                @listenTo @layout, "add:user:domain:clicked", ->
+                @listenTo @layout, "add:user:domain:clicked", =>
                     App.execute "add:user:domain", region : @layout.domainListRegion
 
                 @show @layout
@@ -29,7 +29,7 @@ define [ 'app'
             getLayout : ->
                 new View.UserDomainView
 
-            getDomainListView :(userDomainsCollection) ->
+            getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView
                     collection : userDomainsCollection
 

@@ -14,6 +14,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'tests/fixtures/globals.js',
             'require.config.js',
             'tests/test-main.js',
             { pattern : '**/*.js', included : false },

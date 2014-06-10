@@ -1,4 +1,5 @@
 define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
+
     class UserModel extends Backbone.Model
 
         name : 'user'

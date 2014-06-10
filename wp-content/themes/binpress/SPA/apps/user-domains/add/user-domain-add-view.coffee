@@ -21,12 +21,12 @@ define [ 'app', 'text!apps/user-domains/templates/addUserDomain.html' ], ( App, 
             @$el.find( '#add-user-domain-form' ).validate @validationOptions()
 
         onUserDomainAdded : ->
-            @$el.find('#btn-reset-add-domain').click()
+            @$el.find( '#btn-reset-add-domain' ).click()
             @$el.find( '#msg' ).empty()
             successhtml = '<div class="alert alert-success">
-                                <button class="close" data-dismiss="alert">&times;</button>
-                                Domain Sucessfully Added
-                            </div>'
+                                                                    <button class="close" data-dismiss="alert">&times;</button>
+                                                                    Domain Sucessfully Added
+                                                                </div>'
             @$el.find( '#msg' ).append successhtml
 
         validationOptions : ->

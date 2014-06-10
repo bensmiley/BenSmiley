@@ -4,15 +4,16 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
         name : 'user-domain'
 
-        defaults: ->
-            user_id: CURRENTUSERDATA.ID
+        # TODO: Remove id as default value
+        defaults : ->
+            user_id : CURRENTUSERDATA.ID
 
     # collection
     class UserDomainCollection extends Backbone.Collection
 
-        model: UserDomainModel
+        model : UserDomainModel
 
-        url: ->
+        url : ->
             "#{AJAXURL}?action=fetch-user-domains"
 
 
@@ -25,7 +26,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
         getCurrentUserDomains : ->
             userDomainCollection
 
-        createCurrentUserDomainModel :(data) ->
+        createCurrentUserDomainModel : ( data ) ->
             userDomainModel = new UserDomainModel data
             userDomainModel
 
@@ -33,7 +34,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
     msgbus.reqres.setHandler "get:current:user:domains", ->
         API.getCurrentUserDomains()
 
-    msgbus.reqres.setHandler "create:current:user:domain:model",(data) ->
+    msgbus.reqres.setHandler "create:current:user:domain:model", ( data ) ->
         API.createCurrentUserDomainModel data
 
     UserDomainModel

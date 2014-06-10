@@ -3,7 +3,7 @@
 define [ 'app'
          'regioncontroller'
          'apps/user-domains/add/user-domain-add-view'
-         'msgbus'], ( App, AppController, UserDomainAddView , msgbus )->
+         'msgbus' ], ( App, AppController, UserDomainAddView, msgbus )->
 
     #start the app module
     App.module "UserDomainAddApp", ( UserDomainAddApp, App, BackBone, Marionette, $, _ )->
@@ -17,27 +17,25 @@ define [ 'app'
                 @layout = @getLayout()
 
                 #listen to the add domain button click event
-                @listenTo @layout ,"add:user:domain:clicked",@addNewUserDomain
+                @listenTo @layout, "add:user:domain:clicked", @addNewUserDomain
 
                 @show @layout
 
             getLayout : ->
                 new UserDomainAddView
 
-            addNewUserDomain :(domaindata)=>
-                userDomain= msgbus.reqres.request "create:current:user:domain:model", domaindata
+            addNewUserDomain : ( domaindata )=>
+                userDomain = msgbus.reqres.request "create:current:user:domain:model", domaindata
                 userDomain.save null,
-                    wait: true
-                    success: @userDomainSaved
+                    wait : true
+                    success : @userDomainSaved
 
-            userDomainSaved :(userDomain)=>
+            userDomainSaved : ( userDomain )=>
                 userDomainCollection = msgbus.reqres.request "get:current:user:domains"
                 userDomainCollection.add userDomain
                 @layout.triggerMethod "user:domain:added"
                 console.log userDomainCollection
                 console.log userDomain
-
-
 
 
         #handler for showing the user domain page : triggered from left nav region
