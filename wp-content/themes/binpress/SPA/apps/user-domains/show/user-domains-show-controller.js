@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domains-view', 'apps/user-domains/add/user-domain-add-controller'], function(App, AppController, msgbus, View) {
+define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domains-view', 'apps/user-domains/add-edit/user-domain-add-edit-controller'], function(App, AppController, msgbus, View) {
   return App.module("UserDomainApp", function(UserDomainApp, App, BackBone, Marionette, $, _) {
     var UserDomainController;
     UserDomainController = (function(_super) {
@@ -16,19 +16,19 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domain
         this.layout = this.getLayout();
         this.listenTo(this.layout, "show", (function(_this) {
           return function() {
-            var userDomainsCollection;
-            userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
-            userDomainsCollection.fetch();
-            return _this.layout.domainListRegion.show(_this.getDomainListView(userDomainsCollection));
+            _this.userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
+            _this.userDomainsCollection.fetch();
+            _this.domainListView = _this.getDomainListView(_this.userDomainsCollection);
+            _this.layout.domainViewRegion.show(_this.domainListView);
+            _this.listenTo(_this.domainListView, "itemview:edit:domain:clicked", _this.editDomainClick);
+            return _this.listenTo(_this.domainListView, "itemview:delete:domain:clicked", _this.deleteDomainClick);
           };
         })(this));
-        this.listenTo(this.layout, "add:user:domain:clicked", (function(_this) {
-          return function() {
-            return App.execute("add:user:domain", {
-              region: _this.layout.domainListRegion
-            });
-          };
-        })(this));
+        this.listenTo(this.layout, "add:user:domain:clicked", function() {
+          return App.execute("add:edit:user:domain", {
+            region: this.layout.domainViewRegion
+          });
+        });
         return this.show(this.layout);
       };
 
@@ -39,6 +39,20 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/show/user-domain
       UserDomainController.prototype.getDomainListView = function(userDomainsCollection) {
         return new View.DomainListView({
           collection: userDomainsCollection
+        });
+      };
+
+      UserDomainController.prototype.editDomainClick = function(iv, model) {
+        return App.execute("add:edit:user:domain", {
+          region: this.layout.domainViewRegion,
+          model: model
+        });
+      };
+
+      UserDomainController.prototype.deleteDomainClick = function(iv, model) {
+        return model.destroy({
+          allData: false,
+          wait: true
         });
       };
 

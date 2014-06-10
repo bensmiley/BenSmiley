@@ -13,6 +13,7 @@ requirejs.config
         plupload : 'bower_components/plupload/js/plupload.full.min'
         jqueryvalidate : 'bower_components/jquery.validation/dist/jquery.validate'
         regioncontroller : 'controllers/region-controller'
+        bootstrap : 'bower_components/bootstrap/dist/js/bootstrap.min'
     shim :
         underscore :
             exports : '_'
@@ -25,6 +26,7 @@ requirejs.config
             exports : 'Marionette'
         backbonesyphon : ['backbone']
         jqueryvalidate : ['jquery']
+        bootstrap : [ 'jquery' ]
         plupload :
             deps : ['jquery']
             exports : 'plupload'

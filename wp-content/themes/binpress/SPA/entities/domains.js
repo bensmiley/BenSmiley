@@ -13,6 +13,8 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
 
     UserDomainModel.prototype.name = 'user-domain';
 
+    UserDomainModel.prototype.idAttribute = 'ID';
+
     UserDomainModel.prototype.defaults = function() {
       return {
         user_id: CURRENTUSERDATA.ID

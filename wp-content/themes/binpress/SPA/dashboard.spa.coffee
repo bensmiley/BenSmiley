@@ -1,6 +1,7 @@
 # set all plugins for this SPA here
 define "plugins-loader", [ 'underscore'
                            'jquery'
+                           'bootstrap'
                            'backbone'
                            'marionette'
                            'backbonesyphon'
@@ -16,7 +17,8 @@ define "apps-loader", [ 'apps/leftnav/leftnav-app'
                         'apps/user-domains/show/user-domains-show-controller' ]
 
 define "entitites-loader", [ 'entities/user'
-                             'entities/domains' ]
+                             'entities/domains'
+                             'entities/groups' ]
 
 # define 'app'
 define "app", [ 'pages/dashboard.app' ], ( App ) ->

@@ -34,3 +34,19 @@ function ajax_create_user_domain() {
 }
 
 add_action( 'wp_ajax_create-user-domain', 'ajax_create_user_domain' );
+
+function ajax_update_user_domain(){
+
+    $domain_data = $_POST;
+
+    update_domain_post($domain_data);
+
+    //update_domain_post_meta($domain_data);
+
+    $domain_data= get_user_domain_details( $domain_data['ID'] );
+
+    wp_send_json( array( 'code' => 'OK','data'=>$domain_data ) );
+
+}
+
+add_action( 'wp_ajax_update-user-domain', 'ajax_update_user_domain' );

@@ -16,7 +16,7 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
     UserDomainView.prototype.template = '<!-- TABS --> <ul class="nav nav-tabs" id="tab-01"> <li class="active"><a href="#domain-details">Domain Details</a></li> <li><a href="#tab1FollowUs">Domain Plan</a></li> <li><a href="#tab1Inspire">Statistics</a></li> </ul> <div class="tab-content"> <!-- Show user domain and add new user domain region --> <div class="tab-pane active" id="domain-details"></div> <hr> </div>';
 
     UserDomainView.prototype.regions = {
-      domainListRegion: '#domain-details'
+      domainViewRegion: '#domain-details'
     };
 
     UserDomainView.prototype.events = {
@@ -37,7 +37,18 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <span class="glyphicon glyphicon-pencil"></span> <span class="glyphicon glyphicon-trash"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <span class="glyphicon glyphicon-pencil" id="btn-edit-domain"></span> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
+
+    DomainItemView.prototype.events = {
+      'click #btn-edit-domain': function() {
+        return this.trigger("edit:domain:clicked", this.model);
+      },
+      'click #btn-delete-domain': function() {
+        if (confirm('Are you sure?')) {
+          return this.trigger("delete:domain:clicked", this.model);
+        }
+      }
+    };
 
     return DomainItemView;
 

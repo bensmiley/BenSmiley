@@ -1,28 +1,28 @@
 #include the files for the app
-#TODO: remove the backbonesyphon from the file
 define [ 'app'
          'text!apps/user-domains/templates/ListUserDomain.html' ], ( App, listUserDomainTpl )->
 
-    # Layout for displaying the user domains
+    # Main Layout for user domains
     class UserDomainView extends Marionette.Layout
 
         className : 'user-domain-container'
 
         template : '<!-- TABS -->
-                            <ul class="nav nav-tabs" id="tab-01">
-                                <li class="active"><a href="#domain-details">Domain Details</a></li>
-                                <li><a href="#tab1FollowUs">Domain Plan</a></li>
-                                <li><a href="#tab1Inspire">Statistics</a></li>
-                            </ul>
+                    <ul class="nav nav-tabs" id="tab-01">
+                        <li class="active"><a href="#domain-details">Domain Details</a></li>
+                        <li><a href="#tab1FollowUs">Domain Plan</a></li>
+                        <li><a href="#tab1Inspire">Statistics</a></li>
+                    </ul>
 
-                            <div class="tab-content">
-                                <!-- Show user domain and add new user domain region -->
-                                <div class="tab-pane active" id="domain-details"></div>
-                                <hr>
-                            </div>'
+                    <div class="tab-content">
+                        <!-- Show user domain and add new user domain region -->
+                        <div class="tab-pane active" id="domain-details"></div>
+                        <hr>
+                    </div>'
 
         regions :
-            domainListRegion : '#domain-details'
+            #  define one region to load all the domain views
+            domainViewRegion : '#domain-details'
 
         events :
             'click #btn-add-domain' : ->
@@ -35,12 +35,19 @@ define [ 'app'
         tagName : 'tr'
 
         template : '<td>{{post_title}}</td>
-                                        <td>Silver</td>
-                                        <td>09/21/2014</td>
-                                        <td class="center">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </td>'
+                    <td>Silver</td>
+                    <td>09/21/2014</td>
+                    <td class="center">
+                        <span class="glyphicon glyphicon-pencil" id="btn-edit-domain"></span>
+                        <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span>
+                    </td>'
+        events :
+            'click #btn-edit-domain' :->
+                @trigger "edit:domain:clicked", @model
+            'click #btn-delete-domain':->
+                if confirm('Are you sure?')
+                    @trigger "delete:domain:clicked", @model
+
 
     #Empty item view, when no domains are added
     class EmptyView extends Marionette.ItemView
