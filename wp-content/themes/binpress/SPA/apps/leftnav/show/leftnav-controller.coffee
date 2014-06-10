@@ -42,7 +42,7 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
                                                 </a>
                                             </li>
                                              <li class="start">
-                                                <a href="javascript:void(0)" id="user-domains">
+                                                <a href="#domains" id="user-domains">
                                                     <i class="fa fa-user"></i>
                                                     <span class="title">My Domains</span>
                                                     <span class="selected"></span>

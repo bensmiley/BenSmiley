@@ -44,7 +44,7 @@ define(['app', 'regioncontroller'], function(App, RegionController) {
         return LeftNavView.__super__.constructor.apply(this, arguments);
       }
 
-      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> <li class="start"> <a href="javascript:void(0)" id="user-domains"> <i class="fa fa-user"></i> <span class="title">My Domains</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
+      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> <li class="start"> <a href="#domains" id="user-domains"> <i class="fa fa-user"></i> <span class="title">My Domains</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
 
       LeftNavView.prototype.className = 'page-sidebar';
 

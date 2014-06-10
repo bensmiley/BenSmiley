@@ -3,7 +3,7 @@ define [ 'app'
          'regioncontroller'
          'msgbus'
          'apps/user-domains/show/user-domains-view'
-         'apps/user-domains/add/user-domain-add-controller'], ( App, AppController, msgbus, View )->
+         'apps/user-domains/add-edit/user-domain-add-edit-controller'], ( App, AppController, msgbus, View )->
 
     #start the app module
     App.module "UserDomainApp", ( UserDomainApp, App, BackBone, Marionette, $, _ )->
@@ -13,16 +13,24 @@ define [ 'app'
 
             initialize : ( opts )->
 
-                #get user domain layout
+                #get user domain list layout
                 @layout = @getLayout()
 
-                @listenTo @layout, "show", ->
-                    userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
-                    userDomainsCollection.fetch()
-                    @layout.domainListRegion.show @getDomainListView userDomainsCollection
+                @listenTo @layout, "show", =>
+                    #get the user domains collection
+                    @userDomainsCollection= msgbus.reqres.request "get:current:user:domains"
+                    @userDomainsCollection.fetch()
+
+                    #get the user domain list view
+                    @domainListView = @getDomainListView @userDomainsCollection
+                    @layout.domainViewRegion.show @domainListView
+
+                    #listen to click events
+                    @listenTo @domainListView,"itemview:edit:domain:clicked",@editDomainClick
+
 
                 @listenTo @layout, "add:user:domain:clicked", ->
-                    App.execute "add:user:domain", region : @layout.domainListRegion
+                    App.execute "add:edit:user:domain", region : @layout.domainViewRegion
 
                 @show @layout
 
@@ -32,6 +40,12 @@ define [ 'app'
             getDomainListView :(userDomainsCollection) ->
                 new View.DomainListView
                     collection : userDomainsCollection
+
+            editDomainClick :(iv,model)->
+                App.execute "add:edit:user:domain",
+                    region : @layout.domainViewRegion
+                    model :  model
+
 
 
         #handler for showing the user domain page : triggered from left nav region

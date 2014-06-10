@@ -1,6 +1,7 @@
 # set all plugins for this SPA here
 define "plugins-loader", [ 'underscore'
                            'jquery'
+                           'bootstrap'
                            'backbone'
                            'marionette'
                            'backbonesyphon'

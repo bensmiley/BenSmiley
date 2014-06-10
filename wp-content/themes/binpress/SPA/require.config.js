@@ -12,7 +12,8 @@ requirejs.config({
     backbonesyphon: 'bower_components/backbone.syphon/lib/backbone.syphon',
     plupload: 'bower_components/plupload/js/plupload.full.min',
     jqueryvalidate: 'bower_components/jquery.validation/dist/jquery.validate',
-    regioncontroller: 'controllers/region-controller'
+    regioncontroller: 'controllers/region-controller',
+    bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.min'
   },
   shim: {
     underscore: {
@@ -29,6 +30,7 @@ requirejs.config({
     },
     backbonesyphon: ['backbone'],
     jqueryvalidate: ['jquery'],
+    bootstrap: ['jquery'],
     plupload: {
       deps: ['jquery'],
       exports: 'plupload'

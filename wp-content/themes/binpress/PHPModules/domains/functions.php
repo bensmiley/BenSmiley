@@ -31,7 +31,7 @@ function create_user_domain( $domain_details ) {
 
     $post_array = array( 'post_author' => $domain_details[ 'user_id' ],
         'post_type' => 'domain',
-        'post_title' => $domain_details[ 'domain_name' ] );
+        'post_title' => $domain_details[ 'post_title' ] );
 
     $post_id = wp_insert_post( $post_array );
 
@@ -55,7 +55,30 @@ function get_user_domain_details( $post_id ) {
     if ( empty( $domain_post_meta_data ) )
         return $domain_post_data;
 
-    $domain_data = wp_parse_args( $domain_post_data, $domain_post_meta_data );
+    $formatted_domain_meta_data = format_domain_post_meta_data($domain_post_meta_data);
+
+    $domain_data = wp_parse_args( $domain_post_data, $formatted_domain_meta_data );
     return $domain_data;
+
+}
+//TODO: write proper comment and make function proper for gruops
+function format_domain_post_meta_data($domain_post_meta_data){
+    foreach($domain_post_meta_data as $key => $value){
+
+       $formatted_array[$key]= $value[0];
+
+    }
+    return $formatted_array;
+}
+
+function update_domain_post($domain_data){
+
+    $domain_details= array(
+                    'ID'           => $domain_data['ID'],
+                    'post_title' => $domain_data['post_title']);
+
+    $domain_post_id = wp_update_post($domain_details);
+
+    update_post_meta($domain_post_id,'domain_url',$domain_data['domain_url']);
 
 }

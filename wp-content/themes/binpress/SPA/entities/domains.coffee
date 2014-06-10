@@ -4,6 +4,8 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
         name : 'user-domain'
 
+        idAttribute : 'ID'
+
         defaults: ->
             user_id: CURRENTUSERDATA.ID
 
