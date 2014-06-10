@@ -1,5 +1,10 @@
 # set all plugins for this SPA here
-define "plugins-loader", [ 'underscore', 'jquery', 'backbone', 'marionette', 'backbonesyphon', 'jqueryvalidate' ], ->
+define "plugins-loader", [ 'underscore'
+                           'jquery'
+                           'backbone'
+                           'marionette'
+                           'backbonesyphon'
+                           'jqueryvalidate' ], ->
 
 # set all plugin configurations for this SPA here
 define "config-loader", [ 'configs/backbone.config', 'configs/marionette.config', 'configs/jquery.config' ], ->
@@ -10,7 +15,8 @@ define "apps-loader", [ 'apps/leftnav/leftnav-app'
                         'apps/user-profile/user-profile-controller'
                         'apps/user-domains/show/user-domains-show-controller' ]
 
-define "entitites-loader", [ 'entities/user' ]
+define "entitites-loader", [ 'entities/user'
+                             'entities/domains' ]
 
 # define 'app'
 define "app", [ 'pages/dashboard.app' ], ( App ) ->

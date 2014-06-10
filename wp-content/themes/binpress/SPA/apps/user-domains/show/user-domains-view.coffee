@@ -9,17 +9,17 @@ define [ 'app'
         className : 'user-domain-container'
 
         template : '<!-- TABS -->
-                                <ul class="nav nav-tabs" id="tab-01">
-                                    <li class="active"><a href="#domain-details">Domain Details</a></li>
-                                    <li><a href="#tab1FollowUs">Domain Plan</a></li>
-                                    <li><a href="#tab1Inspire">Statistics</a></li>
-                                </ul>
+                            <ul class="nav nav-tabs" id="tab-01">
+                                <li class="active"><a href="#domain-details">Domain Details</a></li>
+                                <li><a href="#tab1FollowUs">Domain Plan</a></li>
+                                <li><a href="#tab1Inspire">Statistics</a></li>
+                            </ul>
 
-                                <div class="tab-content">
-                                    <!-- Show user domain and add new user domain region -->
-                                    <div class="tab-pane active" id="domain-details"></div>
-                                    <hr>
-                                </div>'
+                            <div class="tab-content">
+                                <!-- Show user domain and add new user domain region -->
+                                <div class="tab-pane active" id="domain-details"></div>
+                                <hr>
+                            </div>'
 
         regions :
             domainListRegion : '#domain-details'
@@ -34,14 +34,13 @@ define [ 'app'
 
         tagName : 'tr'
 
-        template : '<td>Minyawns</td>
-                                <td>Silver</td>
-                                <td>09/21/2014</td>
-                                <td class="center">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </td>'
-
+        template : '<td>{{post_title}}</td>
+                                        <td>Silver</td>
+                                        <td>09/21/2014</td>
+                                        <td class="center">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </td>'
 
     #Empty item view, when no domains are added
     class EmptyView extends Marionette.ItemView

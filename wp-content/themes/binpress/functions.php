@@ -15,6 +15,7 @@ require_once 'PHPModules/users/login/ajax.php';
 require_once 'PHPModules/users/forgot-password/ajax.php';
 require_once 'PHPModules/users/user-activation/functions.php';
 require_once 'PHPModules/users/user-profile/ajax.php';
+require_once 'PHPModules/domains/ajax.php';
 require_once 'PHPModules/cron/send-email.php';
 
 function binpress_theme_setup() {
