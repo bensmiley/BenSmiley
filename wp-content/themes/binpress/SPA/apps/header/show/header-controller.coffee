@@ -1,3 +1,4 @@
+#FIXME: check the logout section and user photo display
 #include the files for the app
 define [ 'app',
          'regioncontroller',
@@ -29,7 +30,10 @@ define [ 'app',
                 #get the user model for the current logged in user
                 @userModel = msgbus.reqres.request "get:current:user:model"
 
-                #                App.execute "when:fetched", @userModel, =>
+                #listen to the model chnage event: when user profile updated
+                @listenTo @userModel, "change", @handleUserUpdate
+
+                #App.execute "when:fetched", @userModel, =>
                 @userDisplayView = @getUserDisplayView @userModel
 
                 @layout.userDisplayRegion.show @userDisplayView
@@ -37,6 +41,9 @@ define [ 'app',
             getUserDisplayView : ( userModel ) ->
                 new UserDisplayView
                     model : userModel
+
+            handleUserUpdate : ( userModel ) =>
+                @userDisplayView.triggerMethod "update:user:display", userModel
 
         # Header main layout
         class HeaderView extends Marionette.Layout
@@ -65,12 +72,12 @@ define [ 'app',
             template : '<div class="user-profile pull-left m-t-10">
                                         <img src="{{user_photo}}" alt=""
                                         data-src="{{user_photo}}"
-                                        data-src-retina="{{user_photo}}" width="35" height="35">
+                                        data-src-retina="{{user_photo}}" width="35" height="35" id="user-photo">
                                     </div>
                                     <ul class="nav quick-section ">
                                         <li class="quicklinks">
                                             <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-                                                <div class="pull-left"> <span class="bold">{{display_name}}</span></div>
+                                                <div class="pull-left"> <span class="bold display_name">{{display_name}}</span></div>
                                                 &nbsp;
                                                 <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                                             </a>
@@ -81,6 +88,13 @@ define [ 'app',
                                     </ul>'
 
             className : 'pull-right'
+
+            onUpdateUserDisplay : ( userModel )->
+                displayName = userModel.get 'display_name'
+                userPhoto = userModel.get 'user_photo'
+                @$el.find( '.display_name' ).text displayName
+                @$el.find( '#user-photo' ).text userPhoto
+
 
         # return theuser display view instance
         UserDisplayView

@@ -1,3 +1,4 @@
+#FIXME: on change password logout the user
 #include the files for the app
 define [ 'app'
          'msgbus'

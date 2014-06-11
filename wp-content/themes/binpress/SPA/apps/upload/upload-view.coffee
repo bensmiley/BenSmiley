@@ -1,3 +1,4 @@
+#FIXME: check the progress bar
 #include the files for the app
 define [ 'app'
          'plupload' ], ( App, plupload )->

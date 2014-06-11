@@ -30,6 +30,7 @@ function ajax_read_user() {
 
 add_action( 'wp_ajax_read-user', 'ajax_read_user' );
 
+//FIXME: check that the latest user model is returned after update
 /**
  * Function to update the user display details in the user profile page
  */
