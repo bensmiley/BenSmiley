@@ -4,6 +4,14 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
+    exec: {
+      themeJS: {
+        command: 'coffee -w -c -b ../js/'
+      },
+      SPAJS: {
+        command: 'coffee -w -c -b ../SPA/'
+      }
+    },
     lesslint: {
       options: {
         csslint: {
@@ -210,6 +218,9 @@ module.exports = function(grunt) {
     });
     return subTasks;
   };
+  grunt.registerTask("compile", "Compile coffee file watcher", function(args) {
+    return grunt.task.run("exec:" + args);
+  });
   grunt.registerTask("validate", ["lesslint", "coffeelint", "jshint", "phpcs"]);
   grunt.registerTask("runtests", ["karma", "phpunit"]);
   grunt.registerTask("optimize", ["less", "themeJSOptimize", "themeSPAOptimize"]);
