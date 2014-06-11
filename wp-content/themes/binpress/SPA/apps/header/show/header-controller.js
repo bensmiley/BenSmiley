@@ -26,14 +26,14 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
       };
 
       Controller.prototype.showUserDisplayView = function() {
-        this.usermodel = msgbus.reqres.request("get:current:user:model");
-        this.userDisplayView = this.getUserDisplayView(this.usermodel);
+        this.userModel = msgbus.reqres.request("get:current:user:model");
+        this.userDisplayView = this.getUserDisplayView(this.userModel);
         return this.layout.userDisplayRegion.show(this.userDisplayView);
       };
 
-      Controller.prototype.getUserDisplayView = function(usermodel) {
+      Controller.prototype.getUserDisplayView = function(userModel) {
         return new UserDisplayView({
-          model: usermodel
+          model: userModel
         });
       };
 
@@ -47,12 +47,12 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
         return HeaderView.__super__.constructor.apply(this, arguments);
       }
 
-      HeaderView.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="index.html"> <h3 class="p-l-20 text-white">Logo</h3></a> </div> <div id="userDisplay"></div> </div> </div>';
+      HeaderView.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="index.html"> <h3 class="p-l-20 text-white">Logo</h3></a> </div> <div id="user-display"></div> </div> </div>';
 
       HeaderView.prototype.className = 'header navbar navbar-inverse';
 
       HeaderView.prototype.regions = {
-        userDisplayRegion: '#userDisplay'
+        userDisplayRegion: '#user-display'
       };
 
       return HeaderView;

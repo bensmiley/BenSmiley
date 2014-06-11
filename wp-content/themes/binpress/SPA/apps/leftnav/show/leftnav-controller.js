@@ -16,44 +16,34 @@ define(['app', 'regioncontroller'], function(App, RegionController) {
         if (opt == null) {
           opt = {};
         }
-        this.layout = this.getLayout();
-        this.listenTo(this.layout, "user:profile:clicked", function() {
-          return App.execute("show:user:profile", {
-            region: App.mainContentRegion
-          });
-        });
-        this.listenTo(this.layout, "user:domains:clicked", function() {
+        this.view = this.getView();
+        this.listenTo(this.view, "user:domains:clicked", function() {
           return App.execute("show:user:domains", {
             region: App.mainContentRegion
           });
         });
-        return this.show(this.layout);
+        return this.show(this.view);
       };
 
-      Controller.prototype.getLayout = function() {
+      Controller.prototype.getView = function() {
         return new LeftNavView;
       };
 
       return Controller;
 
     })(RegionController);
-    return LeftNavView = (function(_super) {
+    LeftNavView = (function(_super) {
       __extends(LeftNavView, _super);
 
       function LeftNavView() {
         return LeftNavView.__super__.constructor.apply(this, arguments);
       }
 
-      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="javascript:void(0)" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> <li class="start"> <a href="#domains" id="user-domains"> <i class="fa fa-user"></i> <span class="title">My Domains</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
+      LeftNavView.prototype.template = '<div class="page-sidebar-wrapper" id="main-menu-wrapper"> <ul> <li class="start"> <a href="#profile" id="user-profile"> <i class="fa fa-user"></i> <span class="title">User Profile</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> <li class="start"> <a href="#domains" id="user-domains"> <i class="fa fa-user"></i> <span class="title">My Domains</span> <span class="selected"></span> <span class="arrow"></span> </a> </li> </ul> <div class="clearfix"></div> </div>';
 
       LeftNavView.prototype.className = 'page-sidebar';
 
-      LeftNavView.prototype.id = 'main-menu';
-
       LeftNavView.prototype.events = {
-        'click #user-profile': function() {
-          return this.trigger("user:profile:clicked");
-        },
         'click #user-domains': function() {
           return this.trigger("user:domains:clicked");
         }
@@ -61,6 +51,7 @@ define(['app', 'regioncontroller'], function(App, RegionController) {
 
       return LeftNavView;
 
-    })(Marionette.Layout);
+    })(Marionette.CompositeView);
+    return LeftNavView;
   });
 });

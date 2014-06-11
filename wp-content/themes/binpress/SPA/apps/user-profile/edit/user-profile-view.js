@@ -24,7 +24,7 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(Ap
     };
 
     UserProfileView.prototype.events = {
-      'click #save-user-profile': function() {
+      'click #btn-save-user-profile': function() {
         var userdata;
         if (this.$el.valid()) {
           userdata = Backbone.Syphon.serialize(this);

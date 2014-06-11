@@ -18,15 +18,38 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
     return UserModel;
 
   })(Backbone.Model);
+  CURRENTUSERDATA['ID'] = parseInt(CURRENTUSERDATA['ID']);
   currentUser = new UserModel;
   currentUser.set(CURRENTUSERDATA);
   API = {
     getCurrentUser: function() {
       return currentUser;
+    },
+    getCurrentUserId: function() {
+      return currentUser.get('ID');
+    },
+    getUserById: function(userId) {
+      var userModel;
+      userModel = {};
+      if (currentUser.get('ID') === userId) {
+        userModel = currentUser;
+      } else {
+        userModel = new UserModel({
+          ID: userId
+        });
+        userModel.fetch();
+      }
+      return userModel;
     }
   };
   msgbus.reqres.setHandler("get:current:user:model", function() {
     return API.getCurrentUser();
+  });
+  msgbus.reqres.setHandler("get:user:model", function(userId) {
+    return API.getUserById(userId);
+  });
+  msgbus.reqres.setHandler("get:current:user:id", function() {
+    return API.getCurrentUserId();
   });
   return UserModel;
 });

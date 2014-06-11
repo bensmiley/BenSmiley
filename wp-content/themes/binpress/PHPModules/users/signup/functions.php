@@ -87,9 +87,8 @@ function create_new_user( $user_data ) {
     // create the new user
     $user_id = wp_insert_user( $user_data );
 
-    // FIXME : not required as both returns the same data on success and on error
-    if (is_wp_error( $user_id ))
-        return $user_id;
+    //add user meta for user profile pic
+    update_user_meta( $user_id, 'user_photo_id', '' );
 
     return $user_id;
 }

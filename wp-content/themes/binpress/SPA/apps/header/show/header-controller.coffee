@@ -27,59 +27,62 @@ define [ 'app',
             showUserDisplayView : ->
 
                 #get the user model for the current logged in user
-                @usermodel = msgbus.reqres.request "get:current:user:model"
+                @userModel = msgbus.reqres.request "get:current:user:model"
 
-                @userDisplayView = @getUserDisplayView @usermodel
+                #                App.execute "when:fetched", @userModel, =>
+                @userDisplayView = @getUserDisplayView @userModel
 
-                #                App.execute "when:fetched", [@usermodel], =>
                 @layout.userDisplayRegion.show @userDisplayView
 
-            getUserDisplayView : ( usermodel ) ->
+            getUserDisplayView : ( userModel ) ->
                 new UserDisplayView
-                    model : usermodel
+                    model : userModel
 
         # Header main layout
         class HeaderView extends Marionette.Layout
 
             template : '<div class="navbar-inner">
-                            <div class="">
-                                <div class="pull-left">
-                                    <a href="index.html">
-                                        <h3 class="p-l-20 text-white">Logo</h3></a>
-                                </div>
-                                <div id="userDisplay"></div>
-                            </div>
-                        </div>'
+                                        <div class="">
+                                            <div class="pull-left">
+                                                <a href="index.html">
+                                                    <h3 class="p-l-20 text-white">Logo</h3></a>
+                                            </div>
+                                            <div id="user-display"></div>
+                                        </div>
+                                    </div>'
 
             className : 'header navbar navbar-inverse'
 
             regions :
-                userDisplayRegion : '#userDisplay'
+                userDisplayRegion : '#user-display'
+
+        # return the header  layout instance
         HeaderView
 
         # View to display Logged in user name and user profile pic
         class UserDisplayView extends Marionette.ItemView
 
             template : '<div class="user-profile pull-left m-t-10">
-                            <img src="{{user_photo}}" alt=""
-                            data-src="{{user_photo}}"
-                            data-src-retina="{{user_photo}}" width="35" height="35">
-                        </div>
-                        <ul class="nav quick-section ">
-                            <li class="quicklinks">
-                                <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-                                    <div class="pull-left"> <span class="bold">{{display_name}}</span></div>
-                                    &nbsp;
-                                    <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
-                                </a>
-                                <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                                    <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
-                                </ul>
-                            </li>
-                        </ul>'
+                                        <img src="{{user_photo}}" alt=""
+                                        data-src="{{user_photo}}"
+                                        data-src-retina="{{user_photo}}" width="35" height="35">
+                                    </div>
+                                    <ul class="nav quick-section ">
+                                        <li class="quicklinks">
+                                            <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
+                                                <div class="pull-left"> <span class="bold">{{display_name}}</span></div>
+                                                &nbsp;
+                                                <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
+                                            </a>
+                                            <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
+                                                <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>'
 
             className : 'pull-right'
 
+        # return theuser display view instance
         UserDisplayView
 
 

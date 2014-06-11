@@ -17,6 +17,13 @@ define(['marionette', 'msgbus'], function(Marionette, msgbus) {
   msgbus.commands.setHandler("register:instance", function(instance, id) {
     return App.register(instance, id);
   });
+  App.commands.setHandler("when:fetched", function(entities, callback) {
+    var xhrs;
+    xhrs = _.chain([entities]).flatten().pluck("_fetch").value();
+    return $.when.apply($, xhrs).done(function() {
+      return callback();
+    });
+  });
   msgbus.commands.setHandler("unregister:instance", function(instance, id) {
     return App.unregister(instance, id);
   });

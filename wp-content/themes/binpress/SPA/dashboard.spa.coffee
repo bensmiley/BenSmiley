@@ -13,7 +13,7 @@ define "config-loader", [ 'configs/backbone.config', 'configs/marionette.config'
 define "apps-loader", [ 'apps/leftnav/leftnav-app'
                         'apps/header/header-app'
                         'apps/upload/upload-controller'
-                        'apps/user-profile/user-profile-controller'
+                        'apps/user-profile/user-profile-app'
                         'apps/user-domains/show/user-domains-show-controller' ]
 
 define "entitites-loader", [ 'entities/user'

@@ -27,6 +27,13 @@ define [ 'marionette', 'msgbus' ], ( Marionette, msgbus )->
     msgbus.commands.setHandler "register:instance", ( instance, id ) ->
         App.register instance, id
 
+    # App command to handle async request and action to be performed after that
+    # entities are the the dependencies which trigger a fetch to server.
+    App.commands.setHandler "when:fetched", (entities, callback) ->
+        xhrs = _.chain([entities]).flatten().pluck("_fetch").value()
+        $.when(xhrs...).done ->
+            callback()
+
     # Unregisters a controller instance
     msgbus.commands.setHandler "unregister:instance", ( instance, id ) ->
         App.unregister instance, id

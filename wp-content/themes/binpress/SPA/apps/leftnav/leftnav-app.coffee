@@ -3,7 +3,6 @@ define [ 'app', 'apps/leftnav/show/leftnav-controller' ], ( App )->
 
     #define the app module
     App.module 'LeftNavApp', ( LeftNavApp, App, Backbone, Marionette, $, _ )->
-
         leftnavController = null
 
         #PUBLIC API

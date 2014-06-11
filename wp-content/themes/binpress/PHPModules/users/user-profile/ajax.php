@@ -10,11 +10,8 @@
 
 require "functions.php";
 
-//TODO: write proper comment for function
 /**
  * Function to get all details about the user currently logged in the system
- *
- *
  */
 function ajax_read_user() {
 
@@ -44,16 +41,13 @@ function ajax_update_user() {
     //unset the action field
     unset( $user_data[ 'action' ] );
 
-    if ( update_user_display_details( $user_data ) ) {
+    if ( !update_user_display_details( $user_data ) )
+        wp_send_json( array( 'code' => 'OK', 'msg' => 'User profile update not successful' ) );
 
-        if ( !empty( $userdata[ 'user_pass' ] ) )
-            wp_set_password( $userdata[ 'user_pass' ], $userdata[ 'ID' ] );
+    if ( !empty( $userdata[ 'user_pass' ] ) )
+        wp_set_password( $userdata[ 'user_pass' ], $user_data[ 'ID' ] );
 
-        wp_send_json( array( 'code' => 'OK', 'data' => $userdata ) );
-
-    }
-
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'User profile update not successful' ) );
+    wp_send_json( array( 'code' => 'OK', 'data' => $user_data ) );
 }
 
 add_action( 'wp_ajax_update-user', 'ajax_update_user' );

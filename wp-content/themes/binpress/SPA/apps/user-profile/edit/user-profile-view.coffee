@@ -1,5 +1,4 @@
 #include the files for the app
-
 define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, userProfileTpl )->
 
     # View class for showing user profile
@@ -17,14 +16,13 @@ define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, us
             userPhotoRegion : '#user-photo'
 
         events :
-            'click #save-user-profile' : ->
+            'click #btn-save-user-profile' : ->
                 #check if the form is valid
                 if @$el.valid()
                     #get all serialized data from the form
                     userdata = Backbone.Syphon.serialize @
                     @trigger "save:user:profile:clicked", userdata
         onShow : ->
-
             #validate the user profile form with the validation rules
             @$el.validate @validationOptions()
 
@@ -49,6 +47,7 @@ define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, us
             @$el.find( '#form-msg' ).empty()
             @$el.find( '#form-msg' ).append "<p>Updated User profile</p>"
 
+    # return the user profile view instance
     UserProfileView
 
 
