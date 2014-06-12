@@ -56,8 +56,11 @@ function binpress_after_init() {
     // add a custom taxonomy:plan
     register_plan_taxonomy();
 
-    // add terms for taxonomy
+    // add terms for plan taxonomy
     register_terms_for_plans();
+
+    // add custom data for each of the terms of plan taxonomy
+    add_data_to_plan_taxonomy_terms();
 }
 
 add_action( 'init', 'binpress_after_init' );
@@ -208,11 +211,14 @@ function set_site_user_role() {
     // add custom role site member with no capabilities
     add_role( 'site-member', __( 'Site Member' ), array() );
 
+    // add custom capabilities to role site member
     add_capability_to_role();
 
 }
 
-//TODO: write proper comments
+/**
+ * Function to add custom capabilities to the user role : Site member
+ */
 function add_capability_to_role() {
 
     // gets the author role
@@ -327,14 +333,23 @@ function register_domain_post() {
  */
 function register_terms_for_plans(){
 
-    wp_insert_term('Free', 'plan', array(
-                                    'Title'=> 'Free plan',
-                                    'Amount' => '0'
-                                     ));
+    wp_insert_term('Free', 'plan');
 
-    wp_insert_term('Gold', 'plan', array(
-                                    'Title'=> 'Gold plan',
-                                    'Amount' => '100'
-                                     ));
+    wp_insert_term('Gold', 'plan');
+}
+/**
+ * Function to add custom data for each of the terms of plan taxonomy
+ */
+function add_data_to_plan_taxonomy_terms(){
+
+    // add extra data for term Free
+    $term_free = get_term_by( 'name', 'Free','plan' ,ARRAY_A );
+    $term_free_data = maybe_serialize(array('Title'=>'Free Plan','Amount'=>'0'));
+    add_option( $term_free['term_id'], $term_free_data);
+
+    // add extra data for term Gold
+    $term_gold = get_term_by( 'name', 'Gold','plan' ,ARRAY_A );
+    $term_gold_data = maybe_serialize(array('Title'=>'Gold Plan','Amount'=>'100'));
+    add_option( $term_gold['term_id'], $term_gold_data);
 }
 

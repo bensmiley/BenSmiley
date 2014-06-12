@@ -31,10 +31,10 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <span class="glyphicon glyphicon-pencil" id="btn-edit-domain"></span> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <a href="#domains/edit" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
 
     DomainItemView.prototype.events = {
-      'click #btn-edit-domain': function() {
+      'click .btn-edit-domain': function() {
         return this.trigger("edit:domain:clicked", this.model);
       },
       'click #btn-delete-domain': function() {

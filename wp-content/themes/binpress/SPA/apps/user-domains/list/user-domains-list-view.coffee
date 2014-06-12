@@ -8,17 +8,17 @@ define [ 'app'
         className : 'user-domain-container'
 
         template : '<!-- TABS -->
-                            <ul class="nav nav-tabs" id="tab-01">
-                                <li class="active"><a href="#domain-details">Domain Details</a></li>
-                                <li><a href="#tab1FollowUs">Domain Plan</a></li>
-                                <li><a href="#tab1Inspire">Statistics</a></li>
-                            </ul>
+                    <ul class="nav nav-tabs" id="tab-01">
+                        <li class="active"><a href="#domain-details">Domain Details</a></li>
+                        <li><a href="#tab1FollowUs">Domain Plan</a></li>
+                        <li><a href="#tab1Inspire">Statistics</a></li>
+                    </ul>
 
-                            <div class="tab-content">
-                                <!-- Show user domain and add new user domain region -->
-                                <div class="tab-pane active" id="domain-details"></div>
-                                <hr>
-                            </div>'
+                    <div class="tab-content">
+                        <!-- Show user domain and add new user domain region -->
+                        <div class="tab-pane active" id="domain-details"></div>
+                        <hr>
+                    </div>'
 
         regions :
         #  define one region to load all the domain views
@@ -30,14 +30,14 @@ define [ 'app'
         tagName : 'tr'
 
         template : '<td>{{post_title}}</td>
-                            <td>Silver</td>
-                            <td>09/21/2014</td>
-                            <td class="center">
-                                <span class="glyphicon glyphicon-pencil" id="btn-edit-domain"></span>
-                                <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span>
-                            </td>'
+                    <td>Silver</td>
+                    <td>09/21/2014</td>
+                    <td class="center">
+                        <a href="#domains/edit" class="glyphicon glyphicon-pencil btn-edit-domain"></a>
+                        <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span>
+                    </td>'
         events :
-            'click #btn-edit-domain' : ->
+            'click .btn-edit-domain' : ->
                 @trigger "edit:domain:clicked", @model
             'click #btn-delete-domain' : ->
                 if confirm( 'Are you sure?' )
@@ -50,6 +50,7 @@ define [ 'app'
         tagName : 'tr'
 
         template : '<td>You have not added any domains yet</td>'
+
 
     # Main view  for displaying the user domains list
     class DomainListView extends Marionette.CompositeView
@@ -65,6 +66,7 @@ define [ 'app'
         events :
             'click #btn-add-domain' : ->
                 @trigger "add:user:domain:clicked"
+
 
     # return the view instance
     DomainListView : DomainListView

@@ -1,7 +1,7 @@
 #include the files for the app
 define [ 'app'
-         'text!apps/user-profile/templates/userprofile.html'
-         'braintree'], ( App, userProfileTpl, BrainTree )->
+         'text!apps/payment/templates/paymentForm.html'
+         'braintree'], ( App, paymentFormTpl, BrainTree )->
 
     # Payment page main layout
     class PaymentLayout extends Marionette.Layout
@@ -39,7 +39,7 @@ define [ 'app'
                       <div class="col-md-9">
                 	<div class="modal-body">
                 	<div class="row">
-                    	  <div id="display-payment"></div>
+                    	  <div id="display-payment-form"></div>
 
                     </div>
                     </div>
@@ -66,67 +66,35 @@ define [ 'app'
                 </div>'
 
         regions :
-            displayPaymentRegion : '#display-payment'
+            displayPaymentRegion : '#display-payment-form'
 
     #payment form display
     class PaymentFormView extends Marionette.ItemView
 
-        template : '
-                    	<div class="row form-row">
-                			<div class="col-md-8">
-                			<input type="text" class="form-control" placeholder="Your Card Number"
-                             name="transaction[credit_card][number]" id="braintree_credit_card_number"
-                             value="4111111111111111" data-encrypted-name="number">
-                			</div>
-                			<div class="col-md-4">
-                			<input type="text" class="form-control" placeholder="CVV"
-                            name="transaction[credit_card][cvv]" data-encrypted-name="cvv" >
-                			</div>
-                		</div>
-
-                		<div class="row form-row">
-                			<div class="col-md-12">
-                			<input type="text" class="form-control" placeholder="Card Holders Name"
-                            name="transaction[customer][first_name]" ></div>
-                		</div>
-
-                		<div class="row form-row">
-                			<div class="col-md-6">
-                				<div class="input-append success date col-md-12 col-lg-12 no-padding">
-
-                                 <input type="text" name="transaction[credit_card][expiration_date]"
-                                 id="braintree_credit_card_exp" value="12/2015" data-encrypted-name="expiration_date">
-               					<!--<input type="text" class="form-control">
-                					<span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i>
-                					</span> -->
-                				</div>
-
-                				<button type="submit" class="btn btn-primary" id="btn-make-pay">Upgrade Plan</button>
-                				<button type="button" class="btn btn-danger">Cancel and choose another plan</button>
-                			</div>
-                		</div>
-                '
+        template : paymentFormTpl
 
         tagName : 'form'
 
         id: 'payment-form'
 
-#        events:
-#            'click #btn-make-pay':->
-#                if @$el.valid()
-#                    userdata = Backbone.Syphon.serialize @
-#                    @trigger "make:payment:click", userdata
         onShow :->
-            ajax_submit  = (e) =>
+            # The ajax submit action to be performed after braintree
+            # encrypts the payment form.Braintree addes a onSubmit
+            # handler after form encryption and attaches the ajax_submit
+            # action to the OnSubmit handler.
+            ajaxSubmit  = (e) =>
                 e.preventDefault()
                 ajaxAction = AJAXURL+'?action=make-user-payment'
                 $.post ajaxAction,@$el.serialize(),(response)->
                     console.log response
 
+            #The client side encryption key from the sandbox account of braintree
+            clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB"
+            braintree = Braintree.create(clientSideEncryptionKey);
 
-            braintree = Braintree.create("MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB");
-            braintree.onSubmitEncryptForm('payment-form', ajax_submit);
-
+            #Encrypt the form using the formId and add the ajax action
+            # after form encryption
+            braintree.onSubmitEncryptForm('payment-form', ajaxSubmit);
 
 
     # return the view instances as objects
