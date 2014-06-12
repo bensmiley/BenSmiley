@@ -20,7 +20,7 @@ define [ 'app'
                 #show the layout
                 @show @layout
 
-            getLayout : () ->
+            getLayout : ->
                 new PaymentView.PaymentLayout
 
             showPaymentForm : ->

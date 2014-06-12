@@ -15,23 +15,22 @@ define [ 'app'
                 #get plan list layout
                 @layout = @getLayout()
 
-                @listenTo @layout ,"show",@showCurrentPlan
-                @listenTo @layout ,"show",@showPlansList
+                @listenTo @layout, "show", @showCurrentPlan
+                @listenTo @layout, "show", @showPlansList
 
                 #show the layout
                 @show @layout
 
-            getLayout : () ->
+            getLayout : ->
                 new PlanListView.PlansListLayout
 
-            showCurrentPlan:->
+            showCurrentPlan : ->
                 currentPlanView = new PlanListView.CurrentPlanView
                 @layout.currentPlanRegion.show currentPlanView
 
-            showPlansList:->
+            showPlansList : ->
                 planListView = new PlanListView.PlanListView
                 @layout.plansListRegion.show planListView
-
 
 
         App.commands.setHandler "show:plans:list", ( options ) ->

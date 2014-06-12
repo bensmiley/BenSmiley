@@ -137,7 +137,8 @@ define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, us
                                                       <li>Nulla volutpat aliquam </li>
                                                   </ul>
                                               </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button" data-toggle="modal" data-target="#myModal">Active</button>
+                                              <button class="btn btn-block btn-primary ca-sub" type="button"
+                                              data-toggle="modal" data-target="#myModal">Active</button>
 
                                           </div>
                                         </a>

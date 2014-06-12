@@ -14,7 +14,7 @@ define [ 'app'
 
         #public API
         API =
-            show : ( )->
+            show : ->
                 App.execute "show:plans:list", region : App.mainContentRegion
 
         #on start of the app call the function based on the routes

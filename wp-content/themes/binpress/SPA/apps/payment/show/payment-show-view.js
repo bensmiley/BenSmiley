@@ -39,7 +39,7 @@ define(['app', 'text!apps/payment/templates/paymentForm.html', 'braintree'], fun
         return function(e) {
           var ajaxAction;
           e.preventDefault();
-          ajaxAction = AJAXURL + '?action=make-user-payment';
+          ajaxAction = "" + AJAXURL + "?action=make-user-payment";
           return $.post(ajaxAction, _this.$el.serialize(), function(response) {
             return console.log(response);
           });

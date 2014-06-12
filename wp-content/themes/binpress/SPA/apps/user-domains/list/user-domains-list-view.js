@@ -31,12 +31,9 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <a href="#domains/edit" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
 
     DomainItemView.prototype.events = {
-      'click .btn-edit-domain': function() {
-        return this.trigger("edit:domain:clicked", this.model);
-      },
       'click #btn-delete-domain': function() {
         if (confirm('Are you sure?')) {
           return this.trigger("delete:domain:clicked", this.model);
@@ -75,12 +72,6 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
     DomainListView.prototype.emptyView = EmptyView;
 
     DomainListView.prototype.itemViewContainer = 'tbody';
-
-    DomainListView.prototype.events = {
-      'click #btn-add-domain': function() {
-        return this.trigger("add:user:domain:clicked");
-      }
-    };
 
     return DomainListView;
 

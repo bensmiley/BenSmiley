@@ -1,9 +1,9 @@
 #include the files for the app
 define [ 'app'
-         'text!apps/user-domains/templates/AddEditUserDomain.html' ], ( App, addEditUserDomainTpl )->
+         'text!apps/user-domains/templates/addEditUserDomain.html' ], ( App, addEditUserDomainTpl )->
 
     # Layout for add-edit user domains
-    class UserDomainAddEditView extends Marionette.Layout
+    class DomainEditView extends Marionette.Layout
 
         className : 'add-user-domain-container'
 
@@ -26,14 +26,8 @@ define [ 'app'
 
         onShow : ->
 
-            #if no model is passed: show add view
-            if _.isUndefined( @model )
-                @$el.find( '#form-title' ).text 'Add Domain'
-
-            else
-                @$el.find( '#form-title' ).text 'Edit Domain'
-                @$el.find( '#domain-groups' ).css 'display' : 'inline'
-
+            @$el.find( '#form-title' ).text 'Edit Domain'
+            @$el.find( '#domain-groups' ).css 'display' : 'inline'
 
             #validate the add user domain form with the validation rules
             @$el.find( '#add-edit-user-domain-form' ).validate @validationOptions()
@@ -52,7 +46,7 @@ define [ 'app'
                 msg = "Domain Updated Sucessfully"
 
             successhtml = "<div class='alert alert-success'>
-                                        <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
+                                                    <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
 
             @$el.find( '#msg' ).append successhtml
 
@@ -69,7 +63,7 @@ define [ 'app'
                 domain_url : 'Enter valid url'
 
     #return the view instance
-    UserDomainAddEditView
+    DomainEditView
 
 
 

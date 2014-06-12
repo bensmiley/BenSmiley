@@ -55,7 +55,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
           }
         };
         return $.ajax(options).done(function(response) {
-          return window.location.href = response.redirect_url + '/home';
+          return window.location.href = "" + response.redirect_url + "/home";
         }).fail(function(resp) {
           return console.log('error');
         });

@@ -81,6 +81,9 @@ function get_user_domain_details( $post_id ) {
 /**
  * Function to format the domain post meta data in proper key value pair
  *
+ * Post meta data for domains:
+ * domain_url
+ *
  * @param $domain_post_meta_data
  *
  * @return formatted array of domain post meta data

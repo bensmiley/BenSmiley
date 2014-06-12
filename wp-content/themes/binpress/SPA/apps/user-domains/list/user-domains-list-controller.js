@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domains-list-view', 'apps/user-domains/add-edit/user-domain-add-edit-controller'], function(App, RegionController, msgbus, View) {
+define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domains-list-view'], function(App, RegionController, msgbus, View) {
   return App.module("UserDomainApp.List", function(List, App, BackBone, Marionette, $, _) {
     var UserDomainListController;
     UserDomainListController = (function(_super) {
@@ -20,13 +20,7 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domain
             _this.userDomainsCollection.fetch();
             _this.domainListView = _this.getDomainListView(_this.userDomainsCollection);
             _this.layout.domainViewRegion.show(_this.domainListView);
-            _this.listenTo(_this.domainListView, "itemview:edit:domain:clicked", _this.editDomainClick);
-            _this.listenTo(_this.domainListView, "itemview:delete:domain:clicked", _this.deleteDomainClick);
-            return _this.listenTo(_this.domainListView, "add:user:domain:clicked", function() {
-              return App.execute("add:edit:user:domain", {
-                region: this.layout.domainViewRegion
-              });
-            });
+            return _this.listenTo(_this.domainListView, "itemview:delete:domain:clicked", _this.deleteDomainClick);
           };
         })(this));
         return this.show(this.layout);
@@ -39,13 +33,6 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domain
       UserDomainListController.prototype.getDomainListView = function(userDomainsCollection) {
         return new View.DomainListView({
           collection: userDomainsCollection
-        });
-      };
-
-      UserDomainListController.prototype.editDomainClick = function(iv, model) {
-        return App.execute("add:edit:user:domain", {
-          region: this.layout.domainViewRegion,
-          model: model
         });
       };
 

@@ -2,34 +2,35 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-domains/templates/addUserDomain.html'], function(App, addUserDomainTpl) {
-  var UserDomainAddView;
-  UserDomainAddView = (function(_super) {
-    __extends(UserDomainAddView, _super);
+define(['app', 'text!apps/user-domains/templates/addEditUserDomain.html'], function(App, addUserDomainTpl) {
+  var DomainAddView;
+  DomainAddView = (function(_super) {
+    __extends(DomainAddView, _super);
 
-    function UserDomainAddView() {
-      return UserDomainAddView.__super__.constructor.apply(this, arguments);
+    function DomainAddView() {
+      return DomainAddView.__super__.constructor.apply(this, arguments);
     }
 
-    UserDomainAddView.prototype.className = 'add-user-domain-container';
+    DomainAddView.prototype.className = 'add-user-domain-container';
 
-    UserDomainAddView.prototype.template = addUserDomainTpl;
+    DomainAddView.prototype.template = addUserDomainTpl;
 
-    UserDomainAddView.prototype.events = {
-      'click #btn-add-user-domain': function() {
+    DomainAddView.prototype.events = {
+      'click #btn-add-edit-user-domain': function() {
         var domaindata;
-        if (this.$el.find('#add-user-domain-form').valid()) {
+        if (this.$el.find('#add-edit-user-domain-form').valid()) {
           domaindata = Backbone.Syphon.serialize(this);
           return this.trigger("add:user:domain:clicked", domaindata);
         }
       }
     };
 
-    UserDomainAddView.prototype.onShow = function() {
-      return this.$el.find('#add-user-domain-form').validate(this.validationOptions());
+    DomainAddView.prototype.onShow = function() {
+      this.$el.find('#add-edit-user-domain-form').validate(this.validationOptions());
+      return this.$el.find('#form-title').text('Add Domain');
     };
 
-    UserDomainAddView.prototype.onUserDomainAdded = function() {
+    DomainAddView.prototype.onUserDomainAdded = function() {
       var successhtml;
       this.$el.find('#btn-reset-add-domain').click();
       this.$el.find('#msg').empty();
@@ -37,10 +38,10 @@ define(['app', 'text!apps/user-domains/templates/addUserDomain.html'], function(
       return this.$el.find('#msg').append(successhtml);
     };
 
-    UserDomainAddView.prototype.validationOptions = function() {
+    DomainAddView.prototype.validationOptions = function() {
       return {
         rules: {
-          domain_name: {
+          post_title: {
             required: true
           },
           domain_url: {
@@ -54,8 +55,8 @@ define(['app', 'text!apps/user-domains/templates/addUserDomain.html'], function(
       };
     };
 
-    return UserDomainAddView;
+    return DomainAddView;
 
   })(Marionette.Layout);
-  return UserDomainAddView;
+  return DomainAddView;
 });

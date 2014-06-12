@@ -2,14 +2,14 @@
 #include the files for the app
 define [ 'app'
          'regioncontroller'
-         'apps/user-domains/add/user-domain-add-view'
-         'msgbus' ], ( App, AppController, UserDomainAddView, msgbus )->
+         'apps/user-domains/add/domain-add-view'
+         'msgbus' ], ( App, RegionController, DomainAddView, msgbus )->
 
     #start the app module
-    App.module "UserDomainAddApp", ( UserDomainAddApp, App, BackBone, Marionette, $, _ )->
+    App.module "UserDomainApp.Add", ( Add, App, BackBone, Marionette, $, _ )->
 
         # Controller class for showing user domain list
-        class UserDomainAddController extends AppController
+        class DomainAddController extends RegionController
 
             initialize : ( opts )->
 
@@ -22,7 +22,7 @@ define [ 'app'
                 @show @layout
 
             getLayout : ->
-                new UserDomainAddView
+                new DomainAddView
 
             addNewUserDomain : ( domaindata )=>
                 userDomain = msgbus.reqres.request "create:current:user:domain:model", domaindata
@@ -34,13 +34,12 @@ define [ 'app'
                 userDomainCollection = msgbus.reqres.request "get:current:user:domains"
                 userDomainCollection.add userDomain
                 @layout.triggerMethod "user:domain:added"
-                console.log userDomainCollection
-                console.log userDomain
 
 
-        #handler for showing the user domain page : triggered from left nav region
-        App.commands.setHandler "add:user:domain", ( opts ) ->
-            new UserDomainAddController opts
+        #handler for showing the user domain page,options to be passed to controller are:
+        # region :  App.mainContentRegion
+        App.commands.setHandler "add:user:domains", ( opts ) ->
+            new DomainAddController opts
 
 
 

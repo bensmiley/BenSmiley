@@ -2,8 +2,7 @@
 define [ 'app'
          'regioncontroller'
          'msgbus'
-         'apps/user-domains/list/user-domains-list-view'
-         'apps/user-domains/add-edit/user-domain-add-edit-controller' ], ( App, RegionController, msgbus, View )->
+         'apps/user-domains/list/user-domains-list-view' ], ( App, RegionController, msgbus, View )->
 
     #start the app module
     App.module "UserDomainApp.List", ( List, App, BackBone, Marionette, $, _ )->
@@ -27,10 +26,7 @@ define [ 'app'
                     @layout.domainViewRegion.show @domainListView
 
                     #listen to click events
-                    @listenTo @domainListView, "itemview:edit:domain:clicked", @editDomainClick
                     @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
-                    @listenTo @domainListView, "add:user:domain:clicked", ->
-                        App.execute "add:edit:user:domain", region : @layout.domainViewRegion
 
                 @show @layout
 
@@ -40,11 +36,6 @@ define [ 'app'
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView
                     collection : userDomainsCollection
-
-            editDomainClick : ( iv, model )->
-                App.execute "add:edit:user:domain",
-                    region : @layout.domainViewRegion
-                    model : model
 
             deleteDomainClick : ( iv, model )->
                 model.destroy

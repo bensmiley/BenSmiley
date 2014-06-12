@@ -11,7 +11,6 @@ define [ 'app'
         class UserDomainAddGroupController extends AppController
 
             initialize : ( opts )->
-
                 @domain_id = opts.domain_id
 
                 @view = @getView @domain_id
@@ -20,7 +19,7 @@ define [ 'app'
 
                 @show @view
 
-            getView :(domainid) ->
+            getView : ( domainid ) ->
                 new AddGroupView
                     domain_id : domainid
 
@@ -30,7 +29,7 @@ define [ 'app'
                     wait : true
                     success : @domainGroupAdded
 
-            domainGroupAdded:(domainGroupModel)->
+            domainGroupAdded : ( domainGroupModel )->
                 @view.triggerMethod "domain:group:added"
                 console.log domainGroupModel
 

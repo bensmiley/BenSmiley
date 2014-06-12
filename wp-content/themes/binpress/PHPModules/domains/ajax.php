@@ -24,6 +24,23 @@ function ajax_fetch_user_domains() {
 
 add_action( 'wp_ajax_fetch-user-domains', 'ajax_fetch_user_domains' );
 
+/**
+ * Function to fetch the domain data for one domain registered under
+ *
+ * the current logged in user
+ */
+function ajax_read_user_domain() {
+
+    // retreive the domain Id through GET request
+    $domain_id = $_GET['ID'];
+
+    $domain_details = get_user_domain_details( $domain_id );
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $domain_details ) );
+}
+
+add_action( 'wp_ajax_read-user-domain', 'ajax_read_user_domain' );
+
 
 function ajax_create_user_domain() {
 
