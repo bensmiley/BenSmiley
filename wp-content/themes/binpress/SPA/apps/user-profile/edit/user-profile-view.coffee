@@ -46,6 +46,10 @@ define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, us
         onUserProfileUpdated : ->
             @$el.find( '#form-msg' ).empty()
             @$el.find( '#form-msg' ).append "<p>Updated User profile</p>"
+            userPassword = @$el.find( '#user_pass' ).val()
+            if userPassword != ""
+                @$el.find( '#form-msg-logout' ).append "<p>Logout of your account</p>"
+
 
     # return the user profile view instance
     UserProfileView

@@ -30,7 +30,6 @@ function ajax_read_user() {
 
 add_action( 'wp_ajax_read-user', 'ajax_read_user' );
 
-//FIXME: check that the latest user model is returned after update
 /**
  * Function to update the user display details in the user profile page
  */
@@ -45,10 +44,13 @@ function ajax_update_user() {
     if ( !update_user_display_details( $user_data ) )
         wp_send_json( array( 'code' => 'OK', 'msg' => 'User profile update not successful' ) );
 
-    if ( !empty( $userdata[ 'user_pass' ] ) )
-        wp_set_password( $userdata[ 'user_pass' ], $user_data[ 'ID' ] );
+    if ( !empty( $user_data[ 'user_pass' ] ) )
+        wp_set_password( $user_data[ 'user_pass' ], $user_data[ 'ID' ] );
 
-    wp_send_json( array( 'code' => 'OK', 'data' => $user_data ) );
+    // get user data after update
+    $current_user_data = get_current_user_data();
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $current_user_data ) );
 }
 
 add_action( 'wp_ajax_update-user', 'ajax_update_user' );
@@ -60,7 +62,9 @@ add_action( 'wp_ajax_update-user', 'ajax_update_user' );
  */
 function get_current_user_data() {
 
-    $current_user = wp_get_current_user();
+    $user_id = get_current_user_id();
+
+    $current_user = get_userdata( $user_id );
 
     $user_photo_url = "http://1.gravatar.com/avatar/5ba2411c7d1e867264c0dcec5a160a46?s=64&d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&r=G";
 
@@ -68,7 +72,7 @@ function get_current_user_data() {
     $user_photo_id = get_user_meta( $current_user->data->ID, 'user_photo_id', true );
 
     if ( !empty( $user_photo_id ) )
-        $user_photo_url = wp_get_attachment_thumb_url( $user_photo_id );
+        $user_photo_url = wp_get_attachment_url( $user_photo_id );
 
 
     return array( 'ID' => $current_user->data->ID,

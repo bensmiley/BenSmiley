@@ -14,7 +14,9 @@ define "apps-loader", [ 'apps/leftnav/leftnav-app'
                         'apps/header/header-app'
                         'apps/upload/upload-controller'
                         'apps/user-profile/user-profile-app'
-                        'apps/user-domains/show/user-domains-show-controller' ]
+                        'apps/user-domains/user-domains-app'
+                        'apps/plans/plans-app'
+                        'apps/payment/payment-app']
 
 define "entitites-loader", [ 'entities/user'
                              'entities/domains'

@@ -8,5 +8,8 @@
             "name": "Team Ajency",
             "email": "team@ajency.in"
         }
-    ]
+    ],
+    "require" : {
+        "braintree/braintree_php" : "2.27.2"
+    }
 }

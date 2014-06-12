@@ -13,7 +13,8 @@ requirejs.config({
     plupload: 'bower_components/plupload/js/plupload.full.min',
     jqueryvalidate: 'bower_components/jquery.validation/dist/jquery.validate',
     regioncontroller: 'controllers/region-controller',
-    bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.min'
+    bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.min',
+    braintree: 'https://js.braintreegateway.com/v1/braintree'
   },
   shim: {
     underscore: {
@@ -23,6 +24,10 @@ requirejs.config({
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
+    },
+    braintree: {
+      deps: ['jquery'],
+      exports: 'Braintree'
     },
     marionette: {
       deps: ['backbone'],

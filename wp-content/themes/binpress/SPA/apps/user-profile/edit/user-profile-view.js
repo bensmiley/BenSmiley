@@ -61,8 +61,13 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(Ap
     };
 
     UserProfileView.prototype.onUserProfileUpdated = function() {
+      var userPassword;
       this.$el.find('#form-msg').empty();
-      return this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+      this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+      userPassword = this.$el.find('#user_pass').val();
+      if (userPassword !== "") {
+        return this.$el.find('#form-msg-logout').append("<p>Logout of your account</p>");
+      }
     };
 
     return UserProfileView;

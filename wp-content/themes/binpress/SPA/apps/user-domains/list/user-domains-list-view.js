@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function(App, listUserDomainTpl) {
+define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function(App, listUserDomainTpl) {
   var DomainItemView, DomainListView, EmptyView, UserDomainView;
   UserDomainView = (function(_super) {
     __extends(UserDomainView, _super);
@@ -17,12 +17,6 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
 
     UserDomainView.prototype.regions = {
       domainViewRegion: '#domain-details'
-    };
-
-    UserDomainView.prototype.events = {
-      'click #btn-add-domain': function() {
-        return this.trigger("add:user:domain:clicked");
-      }
     };
 
     return UserDomainView;
@@ -81,6 +75,12 @@ define(['app', 'text!apps/user-domains/templates/ListUserDomain.html'], function
     DomainListView.prototype.emptyView = EmptyView;
 
     DomainListView.prototype.itemViewContainer = 'tbody';
+
+    DomainListView.prototype.events = {
+      'click #btn-add-domain': function() {
+        return this.trigger("add:user:domain:clicked");
+      }
+    };
 
     return DomainListView;
 

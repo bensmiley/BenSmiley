@@ -4,16 +4,26 @@
  * User: Mahima
  * Date: 6/9/14
  * Time: 4:01 PM
+ *
+ * File Description :  Contains list of functions for user-domains
  */
 
 
-//TODO: wtite rpoper comments
+/**
+ * Function to get all the domains registered under the current user
+ *
+ * @param $current_user_id
+ * @return array containing all the domains data registered under the user
+ */
 function get_current_user_domains( $current_user_id ) {
 
     global $wpdb;
+
+    // get all post with custom post type:domain and current user as author
     $sql = "SELECT ID FROM wp_posts WHERE post_type= %s AND post_author = %d ";
 
     $query = $wpdb->prepare( $sql, 'domain', $current_user_id );
+
     $post_ids = $wpdb->get_results( $query, ARRAY_A );
 
     foreach ( $post_ids as $post_id ):
@@ -23,7 +33,6 @@ function get_current_user_domains( $current_user_id ) {
     endforeach;
 
     return $domains_data;
-
 
 }
 
@@ -43,6 +52,12 @@ function create_user_domain( $domain_details ) {
     return $domain_data;
 }
 
+/**
+ * Function to get the post and post meta data for each domain
+ *
+ * @param $post_id
+ * @return array|null|WP_Post
+ */
 function get_user_domain_details( $post_id ) {
 
     $domain_post_data = get_post( $post_id );
@@ -58,11 +73,20 @@ function get_user_domain_details( $post_id ) {
     $formatted_domain_meta_data = format_domain_post_meta_data($domain_post_meta_data);
 
     $domain_data = wp_parse_args( $domain_post_data, $formatted_domain_meta_data );
+
     return $domain_data;
 
 }
-//TODO: write proper comment and make function proper for gruops
+//TODO: make function proper for gruops
+/**
+ * Function to format the domain post meta data in proper key value pair
+ *
+ * @param $domain_post_meta_data
+ *
+ * @return formatted array of domain post meta data
+ */
 function format_domain_post_meta_data($domain_post_meta_data){
+
     foreach($domain_post_meta_data as $key => $value){
 
        $formatted_array[$key]= $value[0];

@@ -18,6 +18,7 @@ require_once 'PHPModules/users/user-profile/ajax.php';
 require_once 'PHPModules/domains/ajax.php';
 require_once 'PHPModules/groups/ajax.php';
 require_once 'PHPModules/cron/send-email.php';
+require_once 'PHPModules/payment/ajax.php';
 
 function binpress_theme_setup() {
 

@@ -1,4 +1,4 @@
-#FIXME: check the logout section and user photo display
+#FIXME: check the  user photo display
 #include the files for the app
 define [ 'app',
          'regioncontroller',
@@ -23,7 +23,7 @@ define [ 'app',
                 @show @layout
 
             getLayout : ->
-                new HeaderView
+                new HeaderLayout
 
             showUserDisplayView : ->
 
@@ -38,6 +38,8 @@ define [ 'app',
 
                 @layout.userDisplayRegion.show @userDisplayView
 
+                @listenTo @userDisplayView, "logout:clicked", @logoutUser
+
             getUserDisplayView : ( userModel ) ->
                 new UserDisplayView
                     model : userModel
@@ -45,8 +47,21 @@ define [ 'app',
             handleUserUpdate : ( userModel ) =>
                 @userDisplayView.triggerMethod "update:user:display", userModel
 
+            logoutUser:->
+                options =
+                    url: AJAXURL,
+                    method: 'POST',
+                    data:
+                        action: 'user-logout'
+
+                $.ajax(options).done (response)->
+                    window.location.href = response.redirect_url+'/home'
+                .fail (resp)->
+                        console.log 'error'
+
+
         # Header main layout
-        class HeaderView extends Marionette.Layout
+        class HeaderLayout extends Marionette.Layout
 
             template : '<div class="navbar-inner">
                                         <div class="">
@@ -64,36 +79,45 @@ define [ 'app',
                 userDisplayRegion : '#user-display'
 
         # return the header  layout instance
-        HeaderView
+        HeaderLayout
 
         # View to display Logged in user name and user profile pic
         class UserDisplayView extends Marionette.ItemView
 
             template : '<div class="user-profile pull-left m-t-10">
-                                        <img src="{{user_photo}}" alt=""
-                                        data-src="{{user_photo}}"
-                                        data-src-retina="{{user_photo}}" width="35" height="35" id="user-photo">
+                            <img src="{{user_photo}}" alt="" width="35" height="35" id="user-photo">
+                        </div>
+                        <ul class="nav quick-section ">
+                            <li class="quicklinks">
+                                <a data-toggle="dropdown" class="dropdown-toggle  pull-right "
+                                    href="#" id="user-options">
+                                    <div class="pull-left">
+                                         <span class="bold display_name">{{display_name}}</span>
                                     </div>
-                                    <ul class="nav quick-section ">
-                                        <li class="quicklinks">
-                                            <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-                                                <div class="pull-left"> <span class="bold display_name">{{display_name}}</span></div>
-                                                &nbsp;
-                                                <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
-                                            </a>
-                                            <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                                                <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>'
+                                    &nbsp;
+                                    <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
+                                </a>
+                                <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
+                                    <li>
+                                        <a href="#logout" id="logout">
+                                        <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>'
 
             className : 'pull-right'
+
+            events:
+                'click #logout':->
+                    @trigger "logout:clicked"
 
             onUpdateUserDisplay : ( userModel )->
                 displayName = userModel.get 'display_name'
                 userPhoto = userModel.get 'user_photo'
                 @$el.find( '.display_name' ).text displayName
-                @$el.find( '#user-photo' ).text userPhoto
+                @$el.find( '#user-photo' ).attr "src" : userPhoto
 
 
         # return theuser display view instance
