@@ -16,6 +16,14 @@ Braintree_Configuration::privateKey('5b8284e277f8c86552dcd6598e86e77c');
 
 function ajax_make_payment(){
 
+    $result = Braintree_Subscription::update('hz2cyw', array(
+        'planId' => 'plan3',
+        'options' => array('prorateCharges' => true)
+    ));
+    if ($result->success) {
+        echo '<pre>';
+        print_r($result);
+    }
 
 //    $result = Braintree_Transaction::sale(array(
 //        "amount" => "100.00",
@@ -52,27 +60,27 @@ function ajax_make_payment(){
 //        if ($result2->success) {
 //            echo "Success! Customer ID: " . $result2->customer->id;
 
-            try {
-                $customer_id = 11;
-                $customer = Braintree_Customer::find($customer_id);
-                $payment_method_token = $customer->creditCards[0]->token;
-
-                $result = Braintree_Subscription::create(array(
-                    'paymentMethodToken' => $payment_method_token,
-                    'planId' => 'plan2'
-                ));
-
-                if ($result->success) {
-                    echo("Success! Subscription " . $result->subscription->id . " is " . $result->subscription->status);
-                } else {
-                    echo("Validation errors:<br/>");
-                    foreach (($result->errors->deepAll()) as $error) {
-                        echo("- " . $error->message . "<br/>");
-                    }
-                }
-            } catch (Braintree_Exception_NotFound $e) {
-                echo("Failure: no customer found with ID " . $_GET["customer_id"]);
-            }
+//            try {
+//                $customer_id = 11;
+//                $customer = Braintree_Customer::find($customer_id);
+//                $payment_method_token = $customer->creditCards[0]->token;
+//
+//                $result = Braintree_Subscription::create(array(
+//                    'paymentMethodToken' => $payment_method_token,
+//                    'planId' => 'plan2'
+//                ));
+//
+//                if ($result->success) {
+//                    echo("Success! Subscription " . $result->subscription->id . " is " . $result->subscription->status);
+//                } else {
+//                    echo("Validation errors:<br/>");
+//                    foreach (($result->errors->deepAll()) as $error) {
+//                        echo("- " . $error->message . "<br/>");
+//                    }
+//                }
+//            } catch (Braintree_Exception_NotFound $e) {
+//                echo("Failure: no customer found with ID " . $_GET["customer_id"]);
+//            }
 
 
 
