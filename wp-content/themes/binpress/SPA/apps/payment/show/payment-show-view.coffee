@@ -1,7 +1,7 @@
 #include the files for the app
-define [ 'app'
+define [ 'marionette'
          'text!apps/payment/templates/paymentForm.html'
-         'braintree' ], ( App, paymentFormTpl, BrainTree )->
+         'braintree' ], ( Marionette, paymentFormTpl, BrainTree )->
 
     # Payment page main layout
     class PaymentLayout extends Marionette.Layout

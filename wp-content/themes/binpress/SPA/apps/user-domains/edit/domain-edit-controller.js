@@ -17,7 +17,9 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       DomainEditController.prototype.initialize = function(opts) {
         var domainModel;
         domainModel = msgbus.reqres.request("get:domain:model:by:id", opts.domainId);
-        return domainModel.fetch().done(this.showEditView);
+        return domainModel.fetch({
+          success: this.showEditView
+        });
       };
 
       DomainEditController.prototype.showEditView = function(domainModel) {

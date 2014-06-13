@@ -92,6 +92,7 @@ if ( is_development_environment() ) {
         wp_enqueue_script( "$module-script",
             get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
+
         create_local_scripts( "requirejs" );
 
 

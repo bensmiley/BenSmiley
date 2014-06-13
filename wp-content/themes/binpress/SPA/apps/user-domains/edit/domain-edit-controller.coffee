@@ -13,7 +13,8 @@ define [ 'app'
 
             initialize : ( opts )->
                 domainModel = msgbus.reqres.request "get:domain:model:by:id", opts.domainId
-                domainModel.fetch().done @showEditView
+                domainModel.fetch
+                            success : @showEditView
 
             showEditView:( domainModel )=>
                 console.log domainModel
