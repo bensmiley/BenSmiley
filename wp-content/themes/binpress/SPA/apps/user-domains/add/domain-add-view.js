@@ -20,8 +20,11 @@ define(['app', 'text!apps/user-domains/templates/addEditUserDomain.html'], funct
         var domaindata;
         if (this.$el.find('#add-edit-user-domain-form').valid()) {
           domaindata = Backbone.Syphon.serialize(this);
-          return this.trigger("add:user:domain:clicked", domaindata);
+          return this.trigger("add:domain:clicked", domaindata);
         }
+      },
+      'click #show-domain-list': function() {
+        return this.trigger("show:domain:list:clicked");
       }
     };
 
@@ -57,6 +60,6 @@ define(['app', 'text!apps/user-domains/templates/addEditUserDomain.html'], funct
 
     return DomainAddView;
 
-  })(Marionette.Layout);
+  })(Marionette.ItemView);
   return DomainAddView;
 });

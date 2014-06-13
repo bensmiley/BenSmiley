@@ -137,7 +137,7 @@ function get_user_data( $user_email ) {
  *
  * @param $user_email
  *
- * @return the row from the table cron_module_meta in array format
+ * @return the user data in array format
  */
 function get_user_data_for_admin_mail( $mail_id ) {
 
@@ -146,7 +146,10 @@ function get_user_data_for_admin_mail( $mail_id ) {
     //get all the rows from table where cron_module_ID = mail Id passed to function
     $query = "SELECT * FROM cron_module_meta WHERE cron_module_ID = " . $mail_id;
 
-    $user_data = $wpdb->get_results( $query, ARRAY_A );
+    $user_email = $wpdb->get_results( $query, ARRAY_A );
+
+    // get the user data based the email id present in $user_email[ 'meta_value' ]
+    $user_data = get_user_data( $user_email[ 'meta_value' ] );
 
     return $user_data;
 }

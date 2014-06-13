@@ -16,14 +16,14 @@ Braintree_Configuration::privateKey('5b8284e277f8c86552dcd6598e86e77c');
 
 function ajax_make_payment(){
 
-    $result = Braintree_Subscription::update('hz2cyw', array(
-        'planId' => 'plan3',
-        'options' => array('prorateCharges' => true)
-    ));
-    if ($result->success) {
-        echo '<pre>';
-        print_r($result);
-    }
+//    $result = Braintree_Subscription::update('hz2cyw', array(
+//        'planId' => 'plan3',
+//        'options' => array('prorateCharges' => true)
+//    ));
+//    if ($result->success) {
+//        echo '<pre>';
+//        print_r($result);
+//    }
 
 //    $result = Braintree_Transaction::sale(array(
 //        "amount" => "100.00",

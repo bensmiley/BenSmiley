@@ -212,7 +212,7 @@ function activate_user( $user_email ) {
     $user_data = get_user_data( $user_email );
 
     // create a user in brain tree vault
-    create_customer_in_braintree( $user_data );
+    braintree_create_customer( $user_data );
 
 }
 
@@ -222,14 +222,15 @@ function activate_user( $user_email ) {
  *
  * @param $user_data: WP User object
  */
-function create_customer_in_braintree( $user_data ) {
+function braintree_create_customer( $user_data ) {
 
     // get user first and last name
-    $user_name[ 'first_name' ] = strip_user_first_name( $user_data->display_name );
-    $user_name[ 'last_name' ] = strip_user_last_name( $user_data->display_name );
+    $user_info[ 'first_name' ] = strip_user_first_name( $user_data->display_name );
+    $user_info[ 'last_name' ] = strip_user_last_name( $user_data->display_name );
+    $user_info[ 'email' ] = $user_data->user_email;
 
     // call the braintree method to create a user in braintree vault
-    $braintree_customer = create_customer( $user_name );
+    $braintree_customer = create_customer( $user_info );
 
     if ( $braintree_customer[ 'success' ] )
         update_user_meta( $user_data->ID, 'braintree_customer_id', $braintree_customer[ 'customer_id' ] );

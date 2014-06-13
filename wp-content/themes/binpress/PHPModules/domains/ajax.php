@@ -41,17 +41,28 @@ function ajax_read_user_domain() {
 
 add_action( 'wp_ajax_read-user-domain', 'ajax_read_user_domain' );
 
-
+/**
+ * Function to create a new domain under the current user
+ *
+ * accepts the POST data as arguments
+ */
 function ajax_create_user_domain() {
 
     $domain_details = $_POST;
 
     $domain_data = create_user_domain( $domain_details );
 
+    // create a free subscription for the domain
+    create_free_subscription($domain_data);
+
     wp_send_json( array( 'code' => 'OK', 'data' => $domain_data ) );
 }
 
 add_action( 'wp_ajax_create-user-domain', 'ajax_create_user_domain' );
+
+function create_free_subscription(){
+
+}
 
 function ajax_update_user_domain() {
 

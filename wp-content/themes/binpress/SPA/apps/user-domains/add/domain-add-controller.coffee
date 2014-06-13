@@ -8,24 +8,26 @@ define [ 'app'
     #start the app module
     App.module "UserDomainApp.Add", ( Add, App, BackBone, Marionette, $, _ )->
 
-        # Controller class for showing user domain list
+        # Controller class for adding a domain
         class DomainAddController extends RegionController
 
             initialize : ( opts )->
 
                 #get user domain layout
-                @layout = @getLayout()
+                @view = @getView()
 
                 #listen to the add domain button click event
-                @listenTo @layout, "add:user:domain:clicked", @addNewUserDomain
+                @listenTo @view, "add:domain:clicked", @addNewUserDomain
+                @listenTo @view, "show:domain:list:clicked", ->
+                    App.execute "list:user:domains", region : App.mainContentRegion
 
-                @show @layout
+                @show @view
 
-            getLayout : ->
+            getView : ->
                 new DomainAddView
 
             addNewUserDomain : ( domaindata )=>
-                userDomain = msgbus.reqres.request "create:current:user:domain:model", domaindata
+                userDomain = msgbus.reqres.request "create:domain:model", domaindata
                 userDomain.save null,
                     wait : true
                     success : @userDomainSaved

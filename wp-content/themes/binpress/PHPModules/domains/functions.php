@@ -28,7 +28,7 @@ function get_current_user_domains( $current_user_id ) {
 
     foreach ( $post_ids as $post_id ):
 
-     $domains_data[] = get_user_domain_details($post_id['ID']);
+        $domains_data[ ] = get_user_domain_details( $post_id[ 'ID' ] );
 
     endforeach;
 
@@ -36,6 +36,13 @@ function get_current_user_domains( $current_user_id ) {
 
 }
 
+/**
+ * Function to create a new domain.
+ *
+ * @param $domain_details posted from the add domain form
+ *
+ * @return array of domain data on success or 0 on unsuccessful post insert
+ */
 function create_user_domain( $domain_details ) {
 
     $post_array = array( 'post_author' => $domain_details[ 'user_id' ],
@@ -48,7 +55,9 @@ function create_user_domain( $domain_details ) {
         return $post_id;
 
     update_post_meta( $post_id, 'domain_url', $domain_details[ 'domain_url' ] );
+
     $domain_data = get_user_domain_details( $post_id );
+
     return $domain_data;
 }
 
@@ -70,13 +79,14 @@ function get_user_domain_details( $post_id ) {
     if ( empty( $domain_post_meta_data ) )
         return $domain_post_data;
 
-    $formatted_domain_meta_data = format_domain_post_meta_data($domain_post_meta_data);
+    $formatted_domain_meta_data = format_domain_post_meta_data( $domain_post_meta_data );
 
     $domain_data = wp_parse_args( $domain_post_data, $formatted_domain_meta_data );
 
     return $domain_data;
 
 }
+
 //TODO: make function proper for gruops
 /**
  * Function to format the domain post meta data in proper key value pair
@@ -88,24 +98,24 @@ function get_user_domain_details( $post_id ) {
  *
  * @return formatted array of domain post meta data
  */
-function format_domain_post_meta_data($domain_post_meta_data){
+function format_domain_post_meta_data( $domain_post_meta_data ) {
 
-    foreach($domain_post_meta_data as $key => $value){
+    foreach ( $domain_post_meta_data as $key => $value ) {
 
-       $formatted_array[$key]= $value[0];
+        $formatted_array[ $key ] = $value[ 0 ];
 
     }
     return $formatted_array;
 }
 
-function update_domain_post($domain_data){
+function update_domain_post( $domain_data ) {
 
-    $domain_details= array(
-                    'ID'           => $domain_data['ID'],
-                    'post_title' => $domain_data['post_title']);
+    $domain_details = array(
+        'ID' => $domain_data[ 'ID' ],
+        'post_title' => $domain_data[ 'post_title' ] );
 
-    $domain_post_id = wp_update_post($domain_details);
+    $domain_post_id = wp_update_post( $domain_details );
 
-    update_post_meta($domain_post_id,'domain_url',$domain_data['domain_url']);
+    update_post_meta( $domain_post_id, 'domain_url', $domain_data[ 'domain_url' ] );
 
 }

@@ -16,18 +16,23 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msg
       }
 
       DomainAddController.prototype.initialize = function(opts) {
-        this.layout = this.getLayout();
-        this.listenTo(this.layout, "add:user:domain:clicked", this.addNewUserDomain);
-        return this.show(this.layout);
+        this.view = this.getView();
+        this.listenTo(this.view, "add:domain:clicked", this.addNewUserDomain);
+        this.listenTo(this.view, "show:domain:list:clicked", function() {
+          return App.execute("list:user:domains", {
+            region: App.mainContentRegion
+          });
+        });
+        return this.show(this.view);
       };
 
-      DomainAddController.prototype.getLayout = function() {
+      DomainAddController.prototype.getView = function() {
         return new DomainAddView;
       };
 
       DomainAddController.prototype.addNewUserDomain = function(domaindata) {
         var userDomain;
-        userDomain = msgbus.reqres.request("create:current:user:domain:model", domaindata);
+        userDomain = msgbus.reqres.request("create:domain:model", domaindata);
         return userDomain.save(null, {
           wait: true,
           success: this.userDomainSaved

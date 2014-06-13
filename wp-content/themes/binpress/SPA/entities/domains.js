@@ -64,7 +64,7 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
   msgbus.reqres.setHandler("get:domain:model:by:id", function(domainId) {
     return API.getDomainById(domainId);
   });
-  msgbus.reqres.setHandler("create:current:user:domain:model", function(data) {
+  msgbus.reqres.setHandler("create:domain:model", function(data) {
     return API.createCurrentUserDomainModel(data);
   });
   return UserDomainModel;
