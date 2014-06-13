@@ -92,13 +92,8 @@ if ( is_development_environment() ) {
         wp_enqueue_script( "$module-script",
             get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
+        create_local_scripts( "requirejs" );
 
-        // localized variables
-        wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
-        wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
-        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce( 'media-form' ) );
-        if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
-            wp_localize_script( "requirejs", "CURRENTUSERDATA", get_current_user_data() );
 
     }
 
@@ -122,7 +117,7 @@ if ( !is_development_environment() ) {
         $module = get_module_name();
         $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
-        if ( is_single_page_app() )
+        if ( is_single_page_app( $module ) )
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
 
         wp_enqueue_script( "$module-script",
@@ -131,7 +126,9 @@ if ( !is_development_environment() ) {
             get_current_version(),
             TRUE );
 
+        create_local_scripts( "$module-script" );
     }
+
 
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_script' );
 
@@ -150,6 +147,14 @@ if ( !is_development_environment() ) {
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_styles' );
 }
 
+function create_local_scripts( $handle ) {
+    // localized variables
+    wp_localize_script( $handle, "AJAXURL", admin_url( "admin-ajax.php" ) );
+    wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );
+    wp_localize_script( $handle, "_WPNONCE", wp_create_nonce( 'media-form' ) );
+    if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
+        wp_localize_script( $handle, "CURRENTUSERDATA", get_current_user_data() );
+}
 
 function is_development_environment() {
 
@@ -171,11 +176,12 @@ function get_current_version() {
 
 }
 
-function is_single_page_app() {
+function is_single_page_app( $module ) {
 
     // TODO: Application logic to identify if current page is a SPA
+    $spa_pages = array('dashboard');
 
-    return FALSE;
+    return in_array( $module, $spa_pages );
 
 }
 
