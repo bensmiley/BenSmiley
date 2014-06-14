@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-domains/templates/addEditUserDomain.html'], function(App, addEditUserDomainTpl) {
+define(['marionette', 'text!apps/user-domains/templates/addEditUserDomain.html'], function(Marionette, addEditUserDomainTpl) {
   var DomainEditView;
   DomainEditView = (function(_super) {
     __extends(DomainEditView, _super);

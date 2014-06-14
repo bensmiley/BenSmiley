@@ -1,7 +1,6 @@
 #FIXME: check the progress bar
 #include the files for the app
-define [ 'app'
-         'plupload' ], ( App, plupload )->
+define [  'plupload', 'marionette' ], ( plupload, Marionette )->
 
     # view class to show the photo upload
     class UploadView extends Marionette.ItemView

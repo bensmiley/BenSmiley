@@ -1,5 +1,5 @@
 #include the files for the app
-define [ 'app', 'text!apps/user-domains/templates/addEditUserDomain.html' ], ( App, addUserDomainTpl )->
+define [ 'marionette', 'text!apps/user-domains/templates/addEditUserDomain.html' ], ( Marionette, addUserDomainTpl )->
 
     # Layout for adding the user domains
     class DomainAddView extends Marionette.ItemView

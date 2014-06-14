@@ -221,7 +221,7 @@ module.exports = (grunt) ->
                 include : [file]
                 out : file.replace originalExtension, optimizedExtension
                 findNestedDependencies : true
-            #optimize : 'none' # uncomment for testing minified JS
+                #optimize : 'none' # uncomment for testing minified JS
 
             # get the module/page name
             file = file.replace "../#{folderName}/", ""

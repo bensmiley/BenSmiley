@@ -1,6 +1,6 @@
 #include the files for the app
-define [ 'app'
-         'text!apps/user-domains/templates/listUserDomain.html' ], ( App, listUserDomainTpl )->
+define [ 'marionette'
+         'text!apps/user-domains/templates/listUserDomain.html' ], ( Marionette, listUserDomainTpl )->
 
     # Main Layout for user domains
     class UserDomainView extends Marionette.Layout

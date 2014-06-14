@@ -1,5 +1,5 @@
 #include the files for the app
-define [ 'app', 'text!apps/user-profile/templates/userprofile.html' ], ( App, userProfileTpl )->
+define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], ( Marionette, userProfileTpl )->
 
     # View class for showing user profile
     class UserProfileView extends Marionette.Layout

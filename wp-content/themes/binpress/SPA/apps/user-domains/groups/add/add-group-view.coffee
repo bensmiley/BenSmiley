@@ -1,5 +1,5 @@
 #include the files for the app
-define [ 'app' ], ( App )->
+define [ 'marionette' ], ( Marionette )->
 
     # Layout for add-edit user domains
     class AddGroupView extends Marionette.ItemView
