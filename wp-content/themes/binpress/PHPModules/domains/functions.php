@@ -69,7 +69,7 @@ function create_user_domain( $domain_details ) {
  */
 function get_user_domain_details( $post_id ) {
 
-    $domain_post_data = get_post( $post_id );
+    $domain_post_data = get_post( $post_id, ARRAY_A );
 
     if ( is_null( $domain_post_data ) )
         return $domain_post_data;
@@ -87,7 +87,7 @@ function get_user_domain_details( $post_id ) {
 
 }
 
-//TODO: make function proper for gruops
+//TODO: make function proper for gruops when addded
 /**
  * Function to format the domain post meta data in proper key value pair
  *

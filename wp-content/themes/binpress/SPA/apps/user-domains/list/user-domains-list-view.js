@@ -31,7 +31,7 @@ define(['app', 'text!apps/user-domains/templates/listUserDomain.html'], function
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Silver</td> <td>09/21/2014</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Free</td> <td>None</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
 
     DomainItemView.prototype.events = {
       'click #btn-delete-domain': function() {
