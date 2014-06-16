@@ -11,6 +11,9 @@ define [ 'app'
         class PlansListController extends RegionController
 
             initialize : ( opts )->
+                #get the plan and domain IDs
+                @planId = opts.planID
+                @domainId = opts.domainID
 
                 #get plan list layout
                 @layout = @getLayout()
@@ -24,15 +27,41 @@ define [ 'app'
             getLayout : ->
                 new PlanListView.PlansListLayout
 
-            showCurrentPlan : ->
-                currentPlanView = new PlanListView.CurrentPlanView
+            showCurrentPlan : =>
+                @planModel = msgbus.reqres.request "get:plan:by:id"
+                @planModel.fetch
+                    data :
+                        'domain_id' : @domainId
+                        'plan_id' : @planId
+                        'action' : 'read-plan'
+                    success : @showCurrentPlanView
+
+            showCurrentPlanView : =>
+                currentPlanView = @getCurrentPlanView @planModel
                 @layout.currentPlanRegion.show currentPlanView
 
-            showPlansList : ->
-                planListView = new PlanListView.PlanListView
-                @layout.plansListRegion.show planListView
+            getCurrentPlanView : ( planModel )->
+                new PlanListView.CurrentPlanView
+                    model : planModel
+
+            showPlansList : =>
+                @planCollection = msgbus.reqres.request "get:all:plans"
+                @planCollection.fetch
+                    success : @showPlanListView
+
+            showPlanListView : ( planCollection ) =>
+                @planListShowView = @getPlanListView planCollection
+                @layout.plansListRegion.show @planListShowView
+
+            getPlanListView : ( planCollection )->
+                new PlanListView.PlanListsView
+                    collection : planCollection
 
 
+        #handler for showing the plans list page,options to be passed to controller are:
+        # region :  App.mainContentRegion
+        # planID : int plan id
+        # domainID : Int domain id
         App.commands.setHandler "show:plans:list", ( options ) ->
             new PlansListController options
 

@@ -3,7 +3,7 @@ define [ 'app'
          'regioncontroller'
          'apps/user-domains/edit/domain-edit-view'
          'msgbus'
-         'apps/user-domains/groups/add/add-group-controller' ], ( App, RegionController, DomainEditView, msgbus )->
+         'apps/user-domains/groups/add/add-group-controller' ], ( App, RegionController, DomainEditLayout, msgbus )->
 
     #start the app module
     App.module "UserDomainApp.Edit", ( Edit, App, BackBone, Marionette, $, _ )->
@@ -12,69 +12,46 @@ define [ 'app'
         class DomainEditController extends RegionController
 
             initialize : ( opts )->
-                domainModel = msgbus.reqres.request "get:domain:model:by:id", opts.domainId
-                domainModel.fetch
+                @domainId = opts.domainId
+
+                @domainModel = msgbus.reqres.request "get:domain:model:by:id",@domainId
+                @domainModel.fetch
                             success : @showEditView
 
             showEditView:( domainModel )=>
-                console.log domainModel
 
                 @layout = @geEditDomainLayout domainModel
 
+                @listenTo @layout, "show", =>
+
+                    #start the add domain group app
+                    App.execute "add:domain:groups",
+                        region : @layout.addDomainGroupRegion
+                        domain_id : @domainId
+
+                    #start the list domain group app
+                    App.execute "add:domain:groups",
+                        region : @layout.listDomainGroupRegion
+                        domain_id : @domainId
+
+                #listen to edit domain click event
+                @listenTo @layout, "edit:domain:clicked",@editDomain
+
                 @show @layout
-#                #if the domain model is not passed: add domain view
-#                if _.isUndefined( opts.model )
-#                    #get add domain layout
-#                    @layout = @getAddDomainLayout()
-#                else
-#                    @model = opts.model
-#                    #get edit domain layout
-#                    @layout = @getEditDomainLayout @model
-#                    @listenTo @layout, "show", =>
-#                        App.execute "add:domain:groups",
-#                            region : @layout.addDomainGroupRegion
-#                            domain_id : @model.get 'ID'
-#
-#                #listen to the add domain button click event
-#                @listenTo @layout, "add:edit:user:domain:clicked", @addEditUserDomain
-#
-#                #listen to the show domain list click event
-#                @listenTo @layout, "show:domain:list:clicked", ->
-#                    App.execute "show:user:domains", region : App.mainContentRegion
-#
-#
 
-
-
-#
-#
-#            getAddDomainLayout : ->
-#                new UserDomainAddView
-#
             geEditDomainLayout : ( domainModel ) ->
-                new DomainEditView
+                new DomainEditLayout
                     model : domainModel
-#
-#            addEditUserDomain : ( domaindata )=>
-#                #add domain
-#                if _.isUndefined( @model )
-#                    userDomain = msgbus.reqres.request "create:current:user:domain:model", domaindata
-#                    userDomain.save null,
-#                        wait : true
-#                        success : @userDomainAddUpdate
-#                    #edit domain
-#                else
-#                    @model.set domaindata
-#                    @model.save null,
-#                        wait : true
-#                        success : @userDomainAddUpdate
-#
-#
-#            userDomainAddUpdate : ( userDomain )=>
-#                if not _.isUndefined( @model )
-#                    userDomainCollection = msgbus.reqres.request "get:current:user:domains"
-#                    userDomainCollection.add userDomain
-#                @layout.triggerMethod "user:domain:add:update"
+
+            editDomain : ( domainData )=>
+                @domainModel.set domainData
+                @domainModel.save null,
+                    wait : true
+                    success : @domainUpdated
+
+            #trigger sucess msg on successful update
+            domainUpdated : =>
+                @layout.triggerMethod "domain:updated"
 
 
         #handler for edit domain page,options to be passed to controller are:

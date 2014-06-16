@@ -20,7 +20,8 @@ define "apps-loader", [ 'apps/leftnav/leftnav-app'
 
 define "entitites-loader", [ 'entities/user'
                              'entities/domains'
-                             'entities/groups' ]
+                             'entities/groups'
+                             'entities/plans']
 
 # define 'app'
 define "app", [ 'pages/dashboard.app' ], ( App ) ->

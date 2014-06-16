@@ -12,26 +12,18 @@ define [ 'app'
 
             initialize : ( opts )->
 
-                #get user domain list layout
-                @layout = @getLayout()
+                #get the user domains collection
+                @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
+                @userDomainsCollection.fetch()
 
-                #listen to show events of the layout
-                @listenTo @layout, "show", =>
-                    #get the user domains collection
-                    @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
-                    @userDomainsCollection.fetch()
+                #get the user domain list view
+                @domainListView = @getDomainListView @userDomainsCollection
 
-                    #get the user domain list view
-                    @domainListView = @getDomainListView @userDomainsCollection
-                    @layout.domainViewRegion.show @domainListView
+                #listen to click events
+                @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
 
-                    #listen to click events
-                    @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
-
-                @show @layout
-
-            getLayout : ->
-                new View.UserDomainView
+                #show user domain list view
+                @show @domainListView
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView
@@ -42,7 +34,8 @@ define [ 'app'
                     allData : false
                     wait : true
 
-        #handler for showing the user domain list page
+        #handler for showing the user domain list page,options to be passed
+        # region :  App.mainContentRegion
         App.commands.setHandler "list:user:domains", ( opts ) ->
             new UserDomainListController opts
 

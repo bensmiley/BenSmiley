@@ -80,7 +80,7 @@ get_header();  ?>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
-                            <button class="btn btn-primary btn-cons pull-right" type="submit"
+                            <button class="btn btn-primary btn-cons pull-right" type="button"
                                     id="btn-signup">Submit
                             </button>
                             <input type="reset" id="btn-signup-form-reset" style="display: none"/>

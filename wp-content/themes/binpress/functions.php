@@ -20,6 +20,7 @@ require_once 'PHPModules/groups/ajax.php';
 require_once 'PHPModules/cron/send-email.php';
 require_once 'PHPModules/payment/ajax.php';
 require_once 'PHPModules/braintree/main-config.php';
+require_once 'PHPModules/plans/functions.php';
 
 function binpress_theme_setup() {
 
@@ -40,7 +41,7 @@ function binpress_theme_setup() {
     add_filter( 'use_default_gallery_style', '__return_false' );
 
     // set the custom user roles for the site
-    set_site_user_role();
+    //set_site_user_role();
 
 }
 
@@ -180,7 +181,7 @@ function get_current_version() {
 function is_single_page_app( $module ) {
 
     // TODO: Application logic to identify if current page is a SPA
-    $spa_pages = array('dashboard');
+    $spa_pages = array( 'dashboard' );
 
     return in_array( $module, $spa_pages );
 
@@ -223,6 +224,8 @@ function set_site_user_role() {
     add_capability_to_role();
 
 }
+
+add_action( 'admin_init', 'set_site_user_role' );
 
 /**
  * Function to add custom capabilities to the user role : Site member
@@ -339,25 +342,19 @@ function register_domain_post() {
 /**
  * Function to insert custom terms for the taxonomy: plan
  */
-function register_terms_for_plans(){
+function register_terms_for_plans() {
 
-    wp_insert_term('Free', 'plan');
-
-    wp_insert_term('Gold', 'plan');
+    wp_insert_term( 'Free', 'plan' );
 }
+
 /**
  * Function to add custom data for each of the terms of plan taxonomy
  */
-function add_data_to_plan_taxonomy_terms(){
+function add_data_to_plan_taxonomy_terms() {
 
     // add extra data for term Free
-    $term_free = get_term_by( 'name', 'Free','plan' ,ARRAY_A );
-    $term_free_data = maybe_serialize(array('Title'=>'Free Plan','Amount'=>'0'));
-    add_option( $term_free['term_id'], $term_free_data);
-
-    // add extra data for term Gold
-    $term_gold = get_term_by( 'name', 'Gold','plan' ,ARRAY_A );
-    $term_gold_data = maybe_serialize(array('Title'=>'Gold Plan','Amount'=>'100'));
-    add_option( $term_gold['term_id'], $term_gold_data);
+    $term_free = get_term_by( 'name', 'Free', 'plan', ARRAY_A );
+    $term_free_data = maybe_serialize( array( 'Title' => 'Free Plan', 'Amount' => '0' ) );
+    add_option( $term_free[ 'term_id' ], $term_free_data );
 }
 

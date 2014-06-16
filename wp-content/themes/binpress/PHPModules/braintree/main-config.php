@@ -19,3 +19,4 @@ Braintree_Configuration::privateKey(BT_PRIVATE_KEY);
 
 
 require_once 'customer.php';
+require_once 'plans.php';

@@ -1,157 +1,99 @@
 #include the files for the app
-define [ 'marionette', 'text!apps/user-profile/templates/userprofile.html' ], ( Marionette, userProfileTpl )->
+define [ 'marionette' ], ( Marionette )->
 
     # Plans list main layout
     class PlansListLayout extends Marionette.Layout
 
-        template : '<div class="page-header">
-                                            <h1 class="normaltext-center">
-                                                <span class="p-r-10">Pricing and Plans</span>
-                                            </h1>
-                                        </div>
-                                        <div id="current-plan"></div>
-                                        <br>
-                                        <div id="plans-list"></div>
-                                        <div class="clearfix"></div>'
+        template : '<!-- TABS -->
+                    <ul class="nav nav-tabs" id="tab-01">
+                        <li><a href="#domains">Domain Details</a></li>
+                        <li class="active"><a href="javascript:void(0)">Domain Plan</a></li>
+                        <li><a href="#">Statistics</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Show user domain and add new user domain region -->
+                        <div class="tab-pane active">
+                            <div class="page-title"><i class="icon-custom-left"></i>
+                                <h3>Pricing <span class="semi-bold"> and Plans</span></h3>
+                            </div>
+                            <div id="current-plan"></div>
+                            <br>
+                            <div id="plans-list"></div>
+                            <div class="clearfix"></div>
+                         </div>
+                        <hr>
+                    </div>
+                      '
 
         regions :
             currentPlanRegion : '#current-plan'
             plansListRegion : '#plans-list'
 
+    #current plan view
     class CurrentPlanView extends Marionette.ItemView
 
-        template : '         <div class="col-md-12">
-                                        <div class="tiles blue">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="tiles-body">
-                                                        <div > ACTIVE PLAN </div>
-                                                            <div class="heading">
-                                                                <span class="animate-number" >Free</span>
-                                                                <a href="#" class="white-txt">
-                                                                    <small class="tiles-title">
-                                                                    (Deactivite Plan)</small>
-                                                                </a>
-                                                           </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="tiles-body">
-                                                        <div > ACTIVE SINCE </div>
-                                                            <div class="heading">
-                                                                <span class="animate-number" >09/12/2014</span>
-                                                            </div>
-                                                    </div>
-                                                </div>
+        template : ' <div class="col-md-12">
+                        <div class="tiles blue">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="tiles-body">
+                                        <div > ACTIVE PLAN </div>
+                                            <div class="heading">
+                                                <span class="animate-number" >{{plan_name}}</span>
+                                           </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="tiles-body">
+                                        <div > ACTIVE SINCE </div>
+                                            <div class="heading">
+                                                <span class="animate-number" >{{start_time}}</span>
                                             </div>
-                                        </div>
-                                    </div>'
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>'
 
         className : 'row'
 
-    class PlanListView extends Marionette.ItemView
+    #view for each plan
+    class SinglePlanView extends Marionette.ItemView
+        template : '<a href="javascript:void(0)">
+                      <div class="grid simple">
+                         <h4 class="bold text-center">{{name}}<br>
+                         <small class="text-danger" >Rs.{{price}}/month</small></h4>
+                         <hr>
+                          <div class="grid-body no-border">
+                              <ul>
+                                  <li>{{description}} </li>
+                              </ul>
+                          </div>
+                          <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub">Subscribe</a>
+                      </div>
+                    </a>'
+        tagName : 'li'
 
-        template : ' <li class="plans">
-                                        <a href="#payment">
-                                          <div class="grid simple">
-                                             <h4 class="bold text-center">Pro<br><small class="text-danger" > US$40.00/month</small></h4>
-                                             <hr>
-                                              <div class="grid-body no-border">
-                                                  <ul>
-                                                      <li>Lorem ipsum dolor sit </li>
-                                                      <li>Consectetur adipiscing </li>
-                                                      <li>Integer molestie lorem at </li>
-                                                      <li>Facilisis in pretium nisl </li>
-                                                      <li>Nulla volutpat aliquam </li>
-                                                  </ul>
-                                              </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button>
-                                          </div>
-                                        </a>
-                                    </li>
-                                    <li class="plans ">
-                                        <a href="#">
-                                             <div class="grid simple ">
-                                             <h4 class="bold text-center">Silver<br><small class="text-danger" > US$80.00/month</small></h4>
-                                             <hr>
-                                              <div class="grid-body no-border">
-                                                  <ul>
-                                                      <li>Lorem ipsum dolor sit </li>
-                                                      <li>Consectetur adipiscing </li>
-                                                      <li>Integer molestie lorem at </li>
-                                                      <li>Facilisis in pretium nisl </li>
-                                                      <li>Nulla volutpat aliquam </li>
-                                                  </ul>
-                                              </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button>
-                                          </div>
-                                        </a>
-                                    </li>
-                                    <li class="plans">
-                                        <a href="#">
-                                           <div class="grid simple">
-                                             <h4 class="bold text-center">Gold<br><small class="text-danger" > US$110.00/month</small></h4>
-                                             <hr>
-                                              <div class="grid-body no-border">
-                                                  <ul>
-                                                      <li>Lorem ipsum dolor sit </li>
-                                                      <li>Consectetur adipiscing </li>
-                                                      <li>Integer molestie lorem at </li>
-                                                      <li>Facilisis in pretium nisl </li>
-                                                      <li>Nulla volutpat aliquam </li>
-                                                  </ul>
-                                              </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button>
-                                          </div>
-                                        </a>
-                                    </li>
-                                    <li class="plans">
-                                        <a href="#">
-                                             <div class="grid simple">
-                                             <h4 class="bold text-center">Platinum<br><small class="text-danger" > US$254.00/month</small></h4>
-                                             <hr>
-                                              <div class="grid-body no-border">
-                                                  <ul>
-                                                      <li>Lorem ipsum dolor sit </li>
-                                                      <li>Consectetur adipiscing </li>
-                                                      <li>Integer molestie lorem at </li>
-                                                      <li>Facilisis in pretium nisl </li>
-                                                      <li>Nulla volutpat aliquam </li>
-                                                  </ul>
-                                              </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button>
-                                          </div>
-                                        </a>
-                                    </li>
-                                    <li class="plans highlight">
-                                        <a href="#">
-                                            <div class="grid simple">
-                                             <h4 class="bold text-center">Free<br><small class="text-danger" > US$0.00/month</small></h4>
-                                             <hr>
-                                              <div class="grid-body no-border">
-                                                  <ul>
-                                                      <li>Lorem ipsum dolor sit </li>
-                                                      <li>Consectetur adipiscing </li>
-                                                      <li>Integer molestie lorem at </li>
-                                                      <li>Facilisis in pretium nisl </li>
-                                                      <li>Nulla volutpat aliquam </li>
-                                                  </ul>
-                                              </div>
-                                              <button class="btn btn-block btn-primary ca-sub" type="button"
-                                              data-toggle="modal" data-target="#myModal">Active</button>
+        className : 'plans'
 
-                                          </div>
-                                        </a>
-                                    </li>'
+        serializeData :->
+            data = super()
+            console.log data
+            data
 
-        className : 'ca-menu'
+    #View to display plan list
+    class PlanListsView extends Marionette.CompositeView
 
-        tagName : 'ul'
+        template : ' <ul class="ca-menu"></ul> '
+
+        itemViewContainer : '.ca-menu'
+
+        itemView : SinglePlanView
 
     # return the view instances as objects
     PlansListLayout : PlansListLayout
     CurrentPlanView : CurrentPlanView
-    PlanListView : PlanListView
+    PlanListsView : PlanListsView
 
 
 

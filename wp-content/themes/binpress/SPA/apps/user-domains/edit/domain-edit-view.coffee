@@ -3,7 +3,7 @@ define [ 'marionette'
          'text!apps/user-domains/templates/addEditUserDomain.html' ], ( Marionette, addEditUserDomainTpl )->
 
     # Layout for add-edit user domains
-    class DomainEditView extends Marionette.Layout
+    class DomainEditLayout extends Marionette.Layout
 
         className : 'add-user-domain-container'
 
@@ -14,14 +14,11 @@ define [ 'marionette'
                 if @$el.find( '#add-edit-user-domain-form' ).valid()
                     #get all serialized data from the form
                     domaindata = Backbone.Syphon.serialize @
-                    @trigger "add:edit:user:domain:clicked", domaindata
-
-            'click #show-domain-list' : ->
-                @trigger "show:domain:list:clicked"
-
+                    @trigger "edit:domain:clicked", domaindata
 
         regions :
-            addDomainGroupRegion : '#add-domain-group'
+            addDomainGroupRegion : '#add-domain-groups'
+            listDomainGroupRegion : '#list-domain-groups'
 
 
         onShow : ->
@@ -32,7 +29,7 @@ define [ 'marionette'
             #validate the add user domain form with the validation rules
             @$el.find( '#add-edit-user-domain-form' ).validate @validationOptions()
 
-        onUserDomainAddUpdate : ->
+        onDomainUpdated : ->
 
             #reset the form
             @$el.find( '#btn-reset-add-domain' ).click()
@@ -40,13 +37,9 @@ define [ 'marionette'
             #show success msg
             @$el.find( '#msg' ).empty()
 
-            if _.isUndefined( @model )
-                msg = "Domain Sucessfully Added"
-            else
-                msg = "Domain Updated Sucessfully"
-
             successhtml = "<div class='alert alert-success'>
-                                                    <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
+                           <button class='close' data-dismiss='alert'>&times;</button>
+                           Domain Updated Sucessfully<div>"
 
             @$el.find( '#msg' ).append successhtml
 
@@ -63,7 +56,7 @@ define [ 'marionette'
                 domain_url : 'Enter valid url'
 
     #return the view instance
-    DomainEditView
+    DomainEditLayout
 
 
 

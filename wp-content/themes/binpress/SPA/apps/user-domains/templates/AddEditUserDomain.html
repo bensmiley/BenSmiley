@@ -1,3 +1,11 @@
+<ul class="nav nav-tabs" id="tab-01">
+    <li class="active"><a href="#domains">Domain Details</a></li>
+    <li><a href="#tab1FollowUs">Domain Plan</a></li>
+    <li><a href="#tab1Inspire">Statistics</a></li>
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane active" >
 <!--- Success message -->
 <div id="msg"></div>
 
@@ -92,7 +100,7 @@
 
         <div class="grid simple">
             <div class="grid-body no-border">
-                <div id="add-domain-group"></div>
+                <div id="add-domain-groups"></div>
                 <!--<form id="form_traditional_validation" action="#">-->
                 <!--<div class="row">-->
 
@@ -127,6 +135,7 @@
                 <!--</form>-->
             </div>
             <hr>
+            <div id="list-domain-groups"></div>
             <!--<table class="table table-hover table-condensed" id="example">-->
             <!--<thead>-->
             <!--<tr>-->
@@ -202,19 +211,22 @@
                -->
                 <dl class="dl-horizontal dl-plan">
                     <dt>Current Plan :</dt>
-                    <dd><span class="label label-info">Silver</span></dd>
+                    <dd><span class="label label-info">{{plan_name}}</span></dd>
                     <dt>Payement :</dt>
-                    <dd>US $99.0/month</dd>
+                    <dd>{{payment}}/month</dd>
                     <dt>Billing Cycle :</dt>
-                    <dd>From 08/02/2014 To 09/02/2015</dd>
+                    <dd>{{billing_cycle}}</dd>
                 </dl>
 
 
-                <a href="#change-plan" class="btn btn-success btn-block"><i class="icon-ok"></i> Change Plan</a>
+                <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block">
+                <i class="icon-ok"></i> Change Plan</a>
 
                 <div class="clearfix"></div>
 
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>

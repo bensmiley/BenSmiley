@@ -3,25 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], function(Marionette, listUserDomainTpl) {
-  var DomainItemView, DomainListView, EmptyView, UserDomainView;
-  UserDomainView = (function(_super) {
-    __extends(UserDomainView, _super);
-
-    function UserDomainView() {
-      return UserDomainView.__super__.constructor.apply(this, arguments);
-    }
-
-    UserDomainView.prototype.className = 'user-domain-container';
-
-    UserDomainView.prototype.template = '<!-- TABS --> <ul class="nav nav-tabs" id="tab-01"> <li class="active"><a href="#domain-details">Domain Details</a></li> <li><a href="#tab1FollowUs">Domain Plan</a></li> <li><a href="#tab1Inspire">Statistics</a></li> </ul> <div class="tab-content"> <!-- Show user domain and add new user domain region --> <div class="tab-pane active" id="domain-details"></div> <hr> </div>';
-
-    UserDomainView.prototype.regions = {
-      domainViewRegion: '#domain-details'
-    };
-
-    return UserDomainView;
-
-  })(Marionette.Layout);
+  var DomainItemView, DomainListView, EmptyView;
   DomainItemView = (function(_super) {
     __extends(DomainItemView, _super);
 
@@ -31,7 +13,7 @@ define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], f
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>Free</td> <td>None</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>{{plan_name}}</td> <td>None</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a> <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span> </td>';
 
     DomainItemView.prototype.events = {
       'click #btn-delete-domain': function() {
@@ -77,7 +59,6 @@ define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], f
 
   })(Marionette.CompositeView);
   return {
-    DomainListView: DomainListView,
-    UserDomainView: UserDomainView
+    DomainListView: DomainListView
   };
 });

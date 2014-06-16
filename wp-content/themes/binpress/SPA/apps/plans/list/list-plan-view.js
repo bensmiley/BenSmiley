@@ -2,8 +2,8 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], function(Marionette, userProfileTpl) {
-  var CurrentPlanView, PlanListView, PlansListLayout;
+define(['marionette'], function(Marionette) {
+  var CurrentPlanView, PlanListsView, PlansListLayout, SinglePlanView;
   PlansListLayout = (function(_super) {
     __extends(PlansListLayout, _super);
 
@@ -11,7 +11,7 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
       return PlansListLayout.__super__.constructor.apply(this, arguments);
     }
 
-    PlansListLayout.prototype.template = '<div class="page-header"> <h1 class="normaltext-center"> <span class="p-r-10">Pricing and Plans</span> </h1> </div> <div id="current-plan"></div> <br> <div id="plans-list"></div> <div class="clearfix"></div>';
+    PlansListLayout.prototype.template = '<!-- TABS --> <ul class="nav nav-tabs" id="tab-01"> <li><a href="#domains">Domain Details</a></li> <li class="active"><a href="javascript:void(0)">Domain Plan</a></li> <li><a href="#">Statistics</a></li> </ul> <div class="tab-content"> <!-- Show user domain and add new user domain region --> <div class="tab-pane active"> <div class="page-title"><i class="icon-custom-left"></i> <h3>Pricing <span class="semi-bold"> and Plans</span></h3> </div> <div id="current-plan"></div> <br> <div id="plans-list"></div> <div class="clearfix"></div> </div> <hr> </div>';
 
     PlansListLayout.prototype.regions = {
       currentPlanRegion: '#current-plan',
@@ -28,32 +28,55 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
       return CurrentPlanView.__super__.constructor.apply(this, arguments);
     }
 
-    CurrentPlanView.prototype.template = '         <div class="col-md-12"> <div class="tiles blue"> <div class="row"> <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE PLAN </div> <div class="heading"> <span class="animate-number" >Free</span> <a href="#" class="white-txt"> <small class="tiles-title"> (Deactivite Plan)</small> </a> </div> </div> </div> <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE SINCE </div> <div class="heading"> <span class="animate-number" >09/12/2014</span> </div> </div> </div> </div> </div> </div>';
+    CurrentPlanView.prototype.template = ' <div class="col-md-12"> <div class="tiles blue"> <div class="row"> <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE PLAN </div> <div class="heading"> <span class="animate-number" >{{plan_name}}</span> </div> </div> </div> <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE SINCE </div> <div class="heading"> <span class="animate-number" >{{start_time}}</span> </div> </div> </div> </div> </div> </div>';
 
     CurrentPlanView.prototype.className = 'row';
 
     return CurrentPlanView;
 
   })(Marionette.ItemView);
-  PlanListView = (function(_super) {
-    __extends(PlanListView, _super);
+  SinglePlanView = (function(_super) {
+    __extends(SinglePlanView, _super);
 
-    function PlanListView() {
-      return PlanListView.__super__.constructor.apply(this, arguments);
+    function SinglePlanView() {
+      return SinglePlanView.__super__.constructor.apply(this, arguments);
     }
 
-    PlanListView.prototype.template = ' <li class="plans"> <a href="#payment"> <div class="grid simple"> <h4 class="bold text-center">Pro<br><small class="text-danger" > US$40.00/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>Lorem ipsum dolor sit </li> <li>Consectetur adipiscing </li> <li>Integer molestie lorem at </li> <li>Facilisis in pretium nisl </li> <li>Nulla volutpat aliquam </li> </ul> </div> <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button> </div> </a> </li> <li class="plans "> <a href="#"> <div class="grid simple "> <h4 class="bold text-center">Silver<br><small class="text-danger" > US$80.00/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>Lorem ipsum dolor sit </li> <li>Consectetur adipiscing </li> <li>Integer molestie lorem at </li> <li>Facilisis in pretium nisl </li> <li>Nulla volutpat aliquam </li> </ul> </div> <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button> </div> </a> </li> <li class="plans"> <a href="#"> <div class="grid simple"> <h4 class="bold text-center">Gold<br><small class="text-danger" > US$110.00/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>Lorem ipsum dolor sit </li> <li>Consectetur adipiscing </li> <li>Integer molestie lorem at </li> <li>Facilisis in pretium nisl </li> <li>Nulla volutpat aliquam </li> </ul> </div> <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button> </div> </a> </li> <li class="plans"> <a href="#"> <div class="grid simple"> <h4 class="bold text-center">Platinum<br><small class="text-danger" > US$254.00/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>Lorem ipsum dolor sit </li> <li>Consectetur adipiscing </li> <li>Integer molestie lorem at </li> <li>Facilisis in pretium nisl </li> <li>Nulla volutpat aliquam </li> </ul> </div> <button class="btn btn-block btn-primary ca-sub" type="button">Subscribe</button> </div> </a> </li> <li class="plans highlight"> <a href="#"> <div class="grid simple"> <h4 class="bold text-center">Free<br><small class="text-danger" > US$0.00/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>Lorem ipsum dolor sit </li> <li>Consectetur adipiscing </li> <li>Integer molestie lorem at </li> <li>Facilisis in pretium nisl </li> <li>Nulla volutpat aliquam </li> </ul> </div> <button class="btn btn-block btn-primary ca-sub" type="button" data-toggle="modal" data-target="#myModal">Active</button> </div> </a> </li>';
+    SinglePlanView.prototype.template = '<a href="javascript:void(0)"> <div class="grid simple"> <h4 class="bold text-center">{{name}}<br> <small class="text-danger" >Rs.{{price}}/month</small></h4> <hr> <div class="grid-body no-border"> <ul> <li>{{description}} </li> </ul> </div> <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub">Subscribe</a> </div> </a>';
 
-    PlanListView.prototype.className = 'ca-menu';
+    SinglePlanView.prototype.tagName = 'li';
 
-    PlanListView.prototype.tagName = 'ul';
+    SinglePlanView.prototype.className = 'plans';
 
-    return PlanListView;
+    SinglePlanView.prototype.serializeData = function() {
+      var data;
+      data = SinglePlanView.__super__.serializeData.call(this);
+      console.log(data);
+      return data;
+    };
+
+    return SinglePlanView;
 
   })(Marionette.ItemView);
+  PlanListsView = (function(_super) {
+    __extends(PlanListsView, _super);
+
+    function PlanListsView() {
+      return PlanListsView.__super__.constructor.apply(this, arguments);
+    }
+
+    PlanListsView.prototype.template = ' <ul class="ca-menu"></ul> ';
+
+    PlanListsView.prototype.itemViewContainer = '.ca-menu';
+
+    PlanListsView.prototype.itemView = SinglePlanView;
+
+    return PlanListsView;
+
+  })(Marionette.CompositeView);
   return {
     PlansListLayout: PlansListLayout,
     CurrentPlanView: CurrentPlanView,
-    PlanListView: PlanListView
+    PlanListsView: PlanListsView
   };
 });

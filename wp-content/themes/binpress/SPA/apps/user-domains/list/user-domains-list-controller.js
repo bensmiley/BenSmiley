@@ -13,21 +13,11 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domain
       }
 
       UserDomainListController.prototype.initialize = function(opts) {
-        this.layout = this.getLayout();
-        this.listenTo(this.layout, "show", (function(_this) {
-          return function() {
-            _this.userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
-            _this.userDomainsCollection.fetch();
-            _this.domainListView = _this.getDomainListView(_this.userDomainsCollection);
-            _this.layout.domainViewRegion.show(_this.domainListView);
-            return _this.listenTo(_this.domainListView, "itemview:delete:domain:clicked", _this.deleteDomainClick);
-          };
-        })(this));
-        return this.show(this.layout);
-      };
-
-      UserDomainListController.prototype.getLayout = function() {
-        return new View.UserDomainView;
+        this.userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
+        this.userDomainsCollection.fetch();
+        this.domainListView = this.getDomainListView(this.userDomainsCollection);
+        this.listenTo(this.domainListView, "itemview:delete:domain:clicked", this.deleteDomainClick);
+        return this.show(this.domainListView);
       };
 
       UserDomainListController.prototype.getDomainListView = function(userDomainsCollection) {

@@ -45,12 +45,13 @@ define(['jquery', 'jqueryvalidate', 'bootstrap'], function() {
               successMsg = response.msg;
               $('#display-login-msg').empty();
               $('#display-login-msg').append(successMsg);
+              $('#btn-login').addClass('ladda-progress');
               page = "/dashboard";
               window.location.href = response.site_url + page;
             }
             if (response.code === "ERROR") {
               errorMsg = response.msg;
-              $(' #display-login-msg').empty();
+              $('#display-login-msg').empty();
               return $('#display-login-msg').append(errorMsg);
             }
           });

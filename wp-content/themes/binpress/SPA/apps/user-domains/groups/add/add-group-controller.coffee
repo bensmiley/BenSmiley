@@ -2,15 +2,16 @@
 define [ 'app'
          'regioncontroller'
          'apps/user-domains/groups/add/add-group-view'
-         'msgbus' ], ( App, AppController, AddGroupView, msgbus )->
+         'msgbus' ], ( App, RegionController, AddGroupView, msgbus )->
 
     #start the app module
-    App.module "UserDomainAddGroupApp", ( UserDomainAddEditApp, App, BackBone, Marionette, $, _ )->
+    App.module "UserDomainApp.AddGroups", ( AddGroups, App, BackBone, Marionette, $, _ )->
 
-        # Controller class for add/edit of user domain
-        class UserDomainAddGroupController extends AppController
+        # Controller class for adding domain groups
+        class DomainAddGroupController extends RegionController
 
             initialize : ( opts )->
+
                 @domain_id = opts.domain_id
 
                 @view = @getView @domain_id
@@ -34,9 +35,13 @@ define [ 'app'
                 console.log domainGroupModel
 
 
-        #handler for showing the add-edit domain page
+        #handler for showing the add domain group section:
+        # This section is nested inside the edit domain page view
+        # options passed:
+        # region : layout.addDomainGroupRegion (from edit domain view)
+        # domain_id : int domainId
         App.commands.setHandler "add:domain:groups", ( opts ) ->
-            new UserDomainAddGroupController opts
+            new DomainAddGroupController opts
 
 
 
