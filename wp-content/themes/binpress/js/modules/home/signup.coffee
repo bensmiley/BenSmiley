@@ -44,6 +44,7 @@ define ['jquery', 'jqueryvalidate'], ->
 
         #action on form submit button click event
         $('#btn-signup').click ->
+            $('.ajax-loader-signup').show()
 
             #check if the sign up form is valid and passes the validation rules
             if($('#signup-form').valid())
@@ -66,18 +67,25 @@ define ['jquery', 'jqueryvalidate'], ->
                     $.post(AJAXURL, signUpDetails, (response)->
                         if(response.code == "OK")
                             successMsg = response.msg
+                            $('.ajax-loader').show()
                             $('#display-msg').empty()
                             $('#display-msg').append successMsg
                             $('#btn-signup-form-reset').click()
+                            $('.ajax-loader-signup').hide()
 
                         if(response.code == "ERROR")
                             errorMsg = response.msg
                             $('#display-msg').empty()
                             $('#display-msg').append errorMsg
+                            $('.ajax-loader-signup').hide()
                     )
             else
                 $('#display-msg').empty()
-                $('#display-msg').append "<div class='alert alert-error'><button class='close' data-dismiss='alert'></button>Please Fill the require fields </div>"
+                $('.ajax-loader-signup').hide()
+                msg= "<div class='alert alert-error'>
+                       <button class='close' data-dismiss='alert'></button>
+                       Please Fill the require fields </div>"
+                $('#display-msg').append msg
 
         #converts the form data array into proper key-value format
         #input: format data in array format

@@ -80,9 +80,9 @@ get_header();  ?>
                         <div class="col-md-10">
                             <button class="btn btn-primary ladda-button"
                             data-style="expand-left" id="btn-signup">
-                            <span class="ladda-label">expand-left</span>
+                            <span class="ladda-label">Submit</span>
                             </button>
-                            <span class="ajax-loader" style="display: none"></span>
+                            <span class="ajax-loader-signup" style="display: none"></span>
                             <input type="reset" id="btn-signup-form-reset" style="display: none"/>
                         </div>
                     </div>
@@ -138,6 +138,7 @@ get_header();  ?>
                             <button class="btn btn-primary btn-cons pull-right"
                                     type="submit" id="btn-login">Login
                             </button>
+                               <span class="ajax-loader-login" style="display: none"></span>
                         </div>
                     </div>
                 </form>
@@ -175,6 +176,7 @@ get_header();  ?>
                                     <button type="button" class="btn btn-primary btn-cons"
                                             id="btn-forgot-pass">Submit
                                     </button>
+
                                     <input type="reset" id="btn-forgot-form-reset" style="display: none"/>
 
                                    

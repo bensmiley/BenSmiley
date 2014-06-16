@@ -45,11 +45,12 @@ define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], (
 
         onUserProfileUpdated : ->
             @$el.find( '#form-msg' ).empty()
-            @$el.find( '#form-msg' ).append "<p>Updated User profile</p>"
             userPassword = @$el.find( '#user_pass' ).val()
             if userPassword != ""
-                @$el.find( '#form-msg-logout' ).append "<p>Logout of your account</p>"
-
+                msg = "<p>Updated User profile</p> <p>Logout of your account</p>"
+            else
+                msg = "<p>Updated User profile</p>"
+            @$el.find( '#form-msg' ).append msg
 
     # return the user profile view instance
     UserProfileView

@@ -43,6 +43,8 @@ define(['jquery', 'jqueryvalidate'], function() {
       }
     });
     $('#btn-signup').click(function() {
+      var msg;
+      $('.ajax-loader-signup').show();
       if ($('#signup-form').valid()) {
         return $('#signup-form').submit(function() {
           var formAction, signUpDetails, signUpDetailsArray;
@@ -56,20 +58,25 @@ define(['jquery', 'jqueryvalidate'], function() {
             var errorMsg, successMsg;
             if (response.code === "OK") {
               successMsg = response.msg;
+              $('.ajax-loader').show();
               $('#display-msg').empty();
               $('#display-msg').append(successMsg);
               $('#btn-signup-form-reset').click();
+              $('.ajax-loader-signup').hide();
             }
             if (response.code === "ERROR") {
               errorMsg = response.msg;
               $('#display-msg').empty();
-              return $('#display-msg').append(errorMsg);
+              $('#display-msg').append(errorMsg);
+              return $('.ajax-loader-signup').hide();
             }
           });
         });
       } else {
         $('#display-msg').empty();
-        return $('#display-msg').append("<div class='alert alert-error'><button class='close' data-dismiss='alert'></button>Please Fill the require fields </div>");
+        $('.ajax-loader-signup').hide();
+        msg = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'></button> Please Fill the require fields </div>";
+        return $('#display-msg').append(msg);
       }
     });
     return formatSignUpData = function(serializedDataArray) {
