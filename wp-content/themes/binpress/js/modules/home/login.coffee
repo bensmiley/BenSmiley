@@ -55,7 +55,7 @@ define ['jquery', 'jqueryvalidate', 'bootstrap', 'ladda', 'spin'], ->
                         if(response.code == "OK")
                             successMsg = response.msg
                             $('#display-login-msg').empty()
-                            $('#btn-login' ).addClass ''
+                            $('.ajax-loader').show()
                             $('#display-login-msg').append successMsg
                             page = "/dashboard"
                             window.location.href = response.site_url + page

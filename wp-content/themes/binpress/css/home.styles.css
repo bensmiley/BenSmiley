@@ -7497,7 +7497,16 @@ html {
 body {
     background-color: #1B1E24;
 }
-
+.ajax-loader-login, .ajax-loader-signup {
+	background: url(../images/2.gif)no-repeat;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	margin-left: 10px;
+	margin-bottom: -8px;
+	margin-top: 20px;
+	
+}
 /***
 Page header
 ***/

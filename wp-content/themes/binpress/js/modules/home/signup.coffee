@@ -66,6 +66,7 @@ define ['jquery', 'jqueryvalidate'], ->
                     $.post(AJAXURL, signUpDetails, (response)->
                         if(response.code == "OK")
                             successMsg = response.msg
+                            $('.ajax-loader').show()
                             $('#display-msg').empty()
                             $('#display-msg').append successMsg
                             $('#btn-signup-form-reset').click()
