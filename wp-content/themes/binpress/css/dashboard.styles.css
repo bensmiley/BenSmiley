@@ -1525,6 +1525,13 @@
   color: #ffffff;
 }
 /* Pricing List End*/
+/* Home - Sign*/
+.logo {
+  margin: 0px;
+}
+.logo h1 {
+  padding-left: 10px;
+}
 
 /*!
  * Bootstrap v3.1.1 (http://getbootstrap.com)
@@ -8063,7 +8070,10 @@ blockquote small {
 }
 
 .logo {
-    margin: 18px 14px;
+    /*margin: 18px 14px;*/
+}
+.logo h1 {
+   padding-left: 10px;
 }
 
 .normal {

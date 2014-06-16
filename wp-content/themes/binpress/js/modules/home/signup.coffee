@@ -34,8 +34,8 @@ define ['jquery', 'jqueryvalidate'], ->
                     required : true
 
             errorPlacement : (label, element) ->
-                $('<span class="error"></span>').insertAfter(element).append(label)
-                parent = $(element).parent('.input-with-icon')
+                $('<span class="error"></span>').insertAfter(element.parent()).append(label)
+                parent = $(element).parent('.input-with-icon').parent()
                 parent.removeClass('success-control').addClass('error-control')
 
             success : (label, element) ->
@@ -77,7 +77,7 @@ define ['jquery', 'jqueryvalidate'], ->
                     )
             else
                 $('#display-msg').empty()
-                $('#display-msg').append "<p>not valid form</p>"
+                $('#display-msg').append "<div class='alert alert-error'><button class='close' data-dismiss='alert'></button>Please Fill the require fields </div>"
 
         #converts the form data array into proper key-value format
         #input: format data in array format

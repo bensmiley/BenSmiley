@@ -7,12 +7,14 @@ get_header();  ?>
 
     <!-- BEGIN CONTAINER -->
     <div class="container">
-        <div class="row login-container column-seperation">
+        <div class="row login-container column-seperation ">
             <div class="col-md-5 ">
                 <h2>Sign Up For Our Free Version</h2>
 
                 <p>You can upgrade to a paid plan in the backend when you need to.</p>
                 <br>
+                 <div id="display-msg"></div>
+                <!-- display error msg in div -->
                 <!-- SIGN UP FORM END -->
                 <form id="signup-form" class="login-form">
                     <div class="row">
@@ -65,11 +67,7 @@ get_header();  ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-md-10">
-                            <br>
-                        </div>
-                    </div>
+                  
                     <div class="row">
                         <div class="control-group  col-md-10">
                             <div class="checkbox checkbox check-success">
@@ -88,8 +86,7 @@ get_header();  ?>
                     </div>
                 </form>
                 <!-- SIGN UP FORM END -->
-                <div id="display-msg"></div>
-                <!-- display error msg in div -->
+               
                 <br>
             </div>
             <div class="col-md-5 col-md-offset-1">
@@ -97,6 +94,8 @@ get_header();  ?>
 
                 <p> If you've got an account with us, please login.</p>
                 <br>
+				 <div id="display-login-msg"></div>
+                <!-- display error msg in div -->
                 <!-- LOGIN FORM START -->
                 <form id="login-form" class="login-form">
                     <div class="row">
@@ -141,8 +140,7 @@ get_header();  ?>
                     </div>
                 </form>
                 <!-- LOGIN FORM END -->
-                <div id="display-login-msg"></div>
-                <!-- display error msg in div -->
+               
             </div>
             <br>
 
@@ -161,6 +159,7 @@ get_header();  ?>
                         </div>
                         <div class="tiles white padding-20">
                             <form id="forgot-password-form" class="login-form">
+							 <div id="display-forgot-msg"></div>
                                 <div class="row form-row">
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
@@ -176,7 +175,7 @@ get_header();  ?>
                                     </button>
                                     <input type="reset" id="btn-forgot-form-reset" style="display: none"/>
 
-                                    <div id="display-forgot-msg"></div>
+                                   
                                 </div>
                             </form>
                         </div>

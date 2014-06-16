@@ -28,12 +28,13 @@
     <script src="<?php echo get_template_directory_uri(); ?>/js/html5shiv.js"></script>
     <![endif]-->
     <?php wp_head(); ?>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body <?php body_class(); ?>>
 <div class="site">
 
     <header class="site-header">
-
+<div class="header navbar navbar-inverse ">
         <?php if ( '' != get_custom_header()->url ) : ?>
             <img src="<?php header_image(); ?>" class="custom-header"
                  height="<?php echo get_custom_header()->height; ?>" width="<?php echo get_custom_header()->width; ?>"
@@ -43,7 +44,7 @@
         <a class="logo" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
             <h1 class="blog-name"><?php bloginfo( 'name' ); ?></h1>
 
-            <div class="blog-description"><?php bloginfo( 'description' ); ?></div>
+          <!--  <div class="blog-description"><?php bloginfo( 'description' ); ?></div>-->
         </a>
 
         <div class="menu"><?php
@@ -59,5 +60,5 @@
             ); ?>
 
         </div>
-
+</div>
     </header>
