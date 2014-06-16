@@ -47,9 +47,9 @@ define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], (
             @$el.find( '#form-msg' ).empty()
             userPassword = @$el.find( '#user_pass' ).val()
             if userPassword != ""
-                msg = "<p>Updated User profile</p> <p>Logout of your account</p>"
+                msg = '<div class="alert alert-success"><button class="close" data-dismiss="alert"></button>Your user profile updated sucessfully please logout from the account</div>'
             else
-                msg = "<p>Updated User profile</p>"
+                msg = '<div class="alert alert-success"><button class="close" data-dismiss="alert"></button>Updated User profile</div>'
             @$el.find( '#form-msg' ).append msg
 
     # return the user profile view instance

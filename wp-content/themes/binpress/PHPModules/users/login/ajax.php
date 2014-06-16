@@ -23,7 +23,7 @@ function ajax_user_login() {
 
         $response = array( "code" => "OK",
             'site_url' => $site_url,
-            'msg' => 'User already logged in',
+            'msg' => '<div class="alert alert-info"><button class="close" data-dismiss="alert"></button>User already logged in</div>',
             'data' => $current_user->data );
 
         wp_send_json( $response );

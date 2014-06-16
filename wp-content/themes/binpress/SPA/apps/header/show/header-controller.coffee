@@ -94,8 +94,7 @@ define [ 'app',
                                                 <div class="pull-left">
                                                      <span class="bold display_name">{{display_name}}</span>
                                                 </div>
-                                                &nbsp;
-                                                <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
+                                               <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                                             </a>
                                             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
                                                 <li>
