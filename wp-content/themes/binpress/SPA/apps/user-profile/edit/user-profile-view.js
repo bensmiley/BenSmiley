@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(App, userProfileTpl) {
+define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], function(Marionette, userProfileTpl) {
   var UserProfileView;
   UserProfileView = (function(_super) {
     __extends(UserProfileView, _super);
@@ -61,8 +61,13 @@ define(['app', 'text!apps/user-profile/templates/userprofile.html'], function(Ap
     };
 
     UserProfileView.prototype.onUserProfileUpdated = function() {
+      var userPassword;
       this.$el.find('#form-msg').empty();
-      return this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+      this.$el.find('#form-msg').append("<p>Updated User profile</p>");
+      userPassword = this.$el.find('#user_pass').val();
+      if (userPassword !== "") {
+        return this.$el.find('#form-msg-logout').append("<p>Logout of your account</p>");
+      }
     };
 
     return UserProfileView;

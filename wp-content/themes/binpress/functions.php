@@ -18,6 +18,8 @@ require_once 'PHPModules/users/user-profile/ajax.php';
 require_once 'PHPModules/domains/ajax.php';
 require_once 'PHPModules/groups/ajax.php';
 require_once 'PHPModules/cron/send-email.php';
+require_once 'PHPModules/payment/ajax.php';
+require_once 'PHPModules/braintree/main-config.php';
 
 function binpress_theme_setup() {
 
@@ -55,8 +57,11 @@ function binpress_after_init() {
     // add a custom taxonomy:plan
     register_plan_taxonomy();
 
-    // add terms for taxonomy
+    // add terms for plan taxonomy
     register_terms_for_plans();
+
+    // add custom data for each of the terms of plan taxonomy
+    add_data_to_plan_taxonomy_terms();
 }
 
 add_action( 'init', 'binpress_after_init' );
@@ -88,12 +93,8 @@ if ( is_development_environment() ) {
             get_template_directory_uri() . "/{$folder_name}/{$module}.{$pattern}.js",
             array( "require-config" ) );
 
-        // localized variables
-        wp_localize_script( "requirejs", "AJAXURL", admin_url( "admin-ajax.php" ) );
-        wp_localize_script( "requirejs", "UPLOADURL", admin_url( "async-upload.php" ) );
-        wp_localize_script( "requirejs", "_WPNONCE", wp_create_nonce( 'media-form' ) );
-        if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
-            wp_localize_script( "requirejs", "CURRENTUSERDATA", get_current_user_data() );
+        create_local_scripts( "requirejs" );
+
 
     }
 
@@ -117,7 +118,7 @@ if ( !is_development_environment() ) {
         $module = get_module_name();
         $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
 
-        if ( is_single_page_app() )
+        if ( is_single_page_app( $module ) )
             $path = get_template_directory_uri() . "/production/spa/{$module}.spa.min.js";
 
         wp_enqueue_script( "$module-script",
@@ -126,7 +127,9 @@ if ( !is_development_environment() ) {
             get_current_version(),
             TRUE );
 
+        create_local_scripts( "$module-script" );
     }
+
 
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_script' );
 
@@ -145,6 +148,14 @@ if ( !is_development_environment() ) {
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_styles' );
 }
 
+function create_local_scripts( $handle ) {
+    // localized variables
+    wp_localize_script( $handle, "AJAXURL", admin_url( "admin-ajax.php" ) );
+    wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );
+    wp_localize_script( $handle, "_WPNONCE", wp_create_nonce( 'media-form' ) );
+    if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
+        wp_localize_script( $handle, "CURRENTUSERDATA", get_current_user_data() );
+}
 
 function is_development_environment() {
 
@@ -166,11 +177,12 @@ function get_current_version() {
 
 }
 
-function is_single_page_app() {
+function is_single_page_app( $module ) {
 
     // TODO: Application logic to identify if current page is a SPA
+    $spa_pages = array('dashboard');
 
-    return FALSE;
+    return in_array( $module, $spa_pages );
 
 }
 
@@ -207,11 +219,14 @@ function set_site_user_role() {
     // add custom role site member with no capabilities
     add_role( 'site-member', __( 'Site Member' ), array() );
 
+    // add custom capabilities to role site member
     add_capability_to_role();
 
 }
 
-//TODO: write proper comments
+/**
+ * Function to add custom capabilities to the user role : Site member
+ */
 function add_capability_to_role() {
 
     // gets the author role
@@ -326,14 +341,23 @@ function register_domain_post() {
  */
 function register_terms_for_plans(){
 
-    wp_insert_term('Free', 'plan', array(
-                                    'Title'=> 'Free plan',
-                                    'Amount' => '0'
-                                     ));
+    wp_insert_term('Free', 'plan');
 
-    wp_insert_term('Gold', 'plan', array(
-                                    'Title'=> 'Gold plan',
-                                    'Amount' => '100'
-                                     ));
+    wp_insert_term('Gold', 'plan');
+}
+/**
+ * Function to add custom data for each of the terms of plan taxonomy
+ */
+function add_data_to_plan_taxonomy_terms(){
+
+    // add extra data for term Free
+    $term_free = get_term_by( 'name', 'Free','plan' ,ARRAY_A );
+    $term_free_data = maybe_serialize(array('Title'=>'Free Plan','Amount'=>'0'));
+    add_option( $term_free['term_id'], $term_free_data);
+
+    // add extra data for term Gold
+    $term_gold = get_term_by( 'name', 'Gold','plan' ,ARRAY_A );
+    $term_gold_data = maybe_serialize(array('Title'=>'Gold Plan','Amount'=>'100'));
+    add_option( $term_gold['term_id'], $term_gold_data);
 }
 

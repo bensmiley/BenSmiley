@@ -3,29 +3,29 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'apps/user-domains/add/user-domain-add-view', 'msgbus'], function(App, AppController, UserDomainAddView, msgbus) {
-  return App.module("UserDomainAddApp", function(UserDomainAddApp, App, BackBone, Marionette, $, _) {
-    var UserDomainAddController;
-    UserDomainAddController = (function(_super) {
-      __extends(UserDomainAddController, _super);
+define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msgbus'], function(App, RegionController, DomainAddView, msgbus) {
+  return App.module("UserDomainApp.Add", function(Add, App, BackBone, Marionette, $, _) {
+    var DomainAddController;
+    DomainAddController = (function(_super) {
+      __extends(DomainAddController, _super);
 
-      function UserDomainAddController() {
+      function DomainAddController() {
         this.userDomainSaved = __bind(this.userDomainSaved, this);
         this.addNewUserDomain = __bind(this.addNewUserDomain, this);
-        return UserDomainAddController.__super__.constructor.apply(this, arguments);
+        return DomainAddController.__super__.constructor.apply(this, arguments);
       }
 
-      UserDomainAddController.prototype.initialize = function(opts) {
+      DomainAddController.prototype.initialize = function(opts) {
         this.layout = this.getLayout();
         this.listenTo(this.layout, "add:user:domain:clicked", this.addNewUserDomain);
         return this.show(this.layout);
       };
 
-      UserDomainAddController.prototype.getLayout = function() {
-        return new UserDomainAddView;
+      DomainAddController.prototype.getLayout = function() {
+        return new DomainAddView;
       };
 
-      UserDomainAddController.prototype.addNewUserDomain = function(domaindata) {
+      DomainAddController.prototype.addNewUserDomain = function(domaindata) {
         var userDomain;
         userDomain = msgbus.reqres.request("create:current:user:domain:model", domaindata);
         return userDomain.save(null, {
@@ -34,20 +34,18 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/user-domain-add-view',
         });
       };
 
-      UserDomainAddController.prototype.userDomainSaved = function(userDomain) {
+      DomainAddController.prototype.userDomainSaved = function(userDomain) {
         var userDomainCollection;
         userDomainCollection = msgbus.reqres.request("get:current:user:domains");
         userDomainCollection.add(userDomain);
-        this.layout.triggerMethod("user:domain:added");
-        console.log(userDomainCollection);
-        return console.log(userDomain);
+        return this.layout.triggerMethod("user:domain:added");
       };
 
-      return UserDomainAddController;
+      return DomainAddController;
 
-    })(AppController);
-    return App.commands.setHandler("add:user:domain", function(opts) {
-      return new UserDomainAddController(opts);
+    })(RegionController);
+    return App.commands.setHandler("add:user:domains", function(opts) {
+      return new DomainAddController(opts);
     });
   });
 });

@@ -13,11 +13,6 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
                 #get the view for left nav menu
                 @view = @getView()
 
-                #listen to layout click events
-                # TODO:  Handle this through routers and not with click
-                @listenTo @view, "user:domains:clicked", ->
-                    App.execute "show:user:domains", region : App.mainContentRegion
-
                 @show @view
 
             getView : ->
@@ -50,11 +45,6 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
                      </div>'
 
             className : 'page-sidebar'
-
-            events :
-                'click #user-domains' : ->
-                    #trigger user domain click event to controller
-                    @trigger "user:domains:clicked"
 
         # return the instance of the leftnav view
         LeftNavView

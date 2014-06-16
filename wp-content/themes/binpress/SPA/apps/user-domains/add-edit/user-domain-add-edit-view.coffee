@@ -16,23 +16,23 @@ define [ 'app'
                     domaindata = Backbone.Syphon.serialize @
                     @trigger "add:edit:user:domain:clicked", domaindata
 
-            'click #show-domain-list' :->
+            'click #show-domain-list' : ->
                 @trigger "show:domain:list:clicked"
 
 
-        regions:
+        regions :
             addDomainGroupRegion : '#add-domain-group'
 
 
         onShow : ->
 
             #if no model is passed: show add view
-            if _.isUndefined(@model)
-                @$el.find('#form-title' ).text 'Add Domain'
+            if _.isUndefined( @model )
+                @$el.find( '#form-title' ).text 'Add Domain'
 
             else
-                @$el.find('#form-title' ).text 'Edit Domain'
-                @$el.find('#domain-groups' ).css 'display':'inline'
+                @$el.find( '#form-title' ).text 'Edit Domain'
+                @$el.find( '#domain-groups' ).css 'display' : 'inline'
 
 
             #validate the add user domain form with the validation rules
@@ -41,18 +41,18 @@ define [ 'app'
         onUserDomainAddUpdate : ->
 
             #reset the form
-            @$el.find('#btn-reset-add-domain').click()
+            @$el.find( '#btn-reset-add-domain' ).click()
 
             #show success msg
             @$el.find( '#msg' ).empty()
 
-            if _.isUndefined(@model)
+            if _.isUndefined( @model )
                 msg = "Domain Sucessfully Added"
             else
                 msg = "Domain Updated Sucessfully"
 
             successhtml = "<div class='alert alert-success'>
-                            <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
+                                        <button class='close' data-dismiss='alert'>&times;</button>#{msg}<div>"
 
             @$el.find( '#msg' ).append successhtml
 
