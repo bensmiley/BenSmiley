@@ -135,10 +135,11 @@ get_header();  ?>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
+						<span class="ajax-loader-login pull-right" style="display: none"></span>
                             <button class="btn btn-primary btn-cons pull-right"
                                     type="submit" id="btn-login">Login
                             </button>
-                               <span class="ajax-loader-login" style="display: none"></span>
+                               
                         </div>
                     </div>
                 </form>
