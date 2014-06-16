@@ -61,13 +61,15 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
     };
 
     UserProfileView.prototype.onUserProfileUpdated = function() {
-      var userPassword;
+      var msg, userPassword;
       this.$el.find('#form-msg').empty();
-      this.$el.find('#form-msg').append("<p>Updated User profile</p>");
       userPassword = this.$el.find('#user_pass').val();
       if (userPassword !== "") {
-        return this.$el.find('#form-msg-logout').append("<p>Logout of your account</p>");
+        msg = "<p>Updated User profile</p> <p>Logout of your account</p>";
+      } else {
+        msg = "<p>Updated User profile</p>";
       }
+      return this.$el.find('#form-msg').append(msg);
     };
 
     return UserProfileView;
