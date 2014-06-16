@@ -37,14 +37,16 @@ function ajax_new_user_signup() {
     //check if the user email exists else return error
     $check_user_email = check_email_exists( $user_email );
     if (!$check_user_email)
-        wp_send_json( array( 'code' => 'ERROR', 'msg' => 'Email ID already exists' ) );
+        wp_send_json( array( 'code' => 'ERROR', 'msg' => '<div class="alert alert-error">
+                  <button class="close" data-dismiss="alert"></button>Email ID already exists</div>' ) );
 
     // pass the user data to function create_new_user and capture return data
     $user_id = create_new_user( $user_data );
 
     // check if user created, on success returns user_id : on error (int)WP_Error
     if (is_wp_error( $user_id ))
-        wp_send_json( array( 'code' => 'ERROR', 'msg' => 'User not created' ) );
+        wp_send_json( array( 'code' => 'ERROR', 'msg' => '<div class="alert alert-error">
+                  <button class="close" data-dismiss="alert"></button>User not created</div>' ) );
 
     //update the user status to 1, since user not activated
     update_user_status_in_db( $user_id );
@@ -60,7 +62,8 @@ function ajax_new_user_signup() {
 
 
     wp_send_json( array( 'code' => 'OK',
-                         'msg' => 'A email has been send to you.Please click on the link to confirm your account' ) );
+                         'msg' => '<div class="alert alert-info">
+                  <button class="close" data-dismiss="alert"></button>A email has been send to you.Please click on the link to confirm your account</div>' ) );
 
 }
 

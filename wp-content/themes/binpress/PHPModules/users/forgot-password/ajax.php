@@ -25,7 +25,7 @@ function ajax_reset_user_password() {
     //check if a user with the email exists
     if (!$user_data) {
 
-        $msg = "Email does not exists";
+        $msg = '<div class="alert alert-error"><button class="close" data-dismiss="alert"></button>Email does not exists</div>';
 
         wp_send_json( array( 'code' => 'ERROR', 'msg' => $msg ) );
     }
@@ -55,7 +55,7 @@ function ajax_reset_user_password() {
     //insert user details in db for sending password reset email through cron
     set_user_details_for_mail( array( 'user_email' => $user_email ), 'user-password-reset' );
 
-    $msg = "Check mail for resetting your password";
+    $msg = '<div class="alert alert-info"><button class="close" data-dismiss="alert"></button>Check mail for resetting your password</div>';
     wp_send_json( array( 'code' => 'OK', 'msg' => $msg ) );
 
 }
@@ -97,7 +97,7 @@ function ajax_change_password() {
 
     reset_password( $user_data, $_POST['user_pass'] );
 
-    $msg = "Password change successful";
+    $msg = '<div class="alert alert-success"><button class="close" data-dismiss="alert"></button>Password change successful</div>';
     wp_send_json( array( 'code' => 'OK', 'msg' => $msg ) );
 
 }

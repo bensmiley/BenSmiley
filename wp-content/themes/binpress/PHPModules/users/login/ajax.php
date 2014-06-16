@@ -48,17 +48,19 @@ function ajax_user_login() {
         $user_login = wp_signon( $credentials );
 
         if (is_wp_error( $user_login )) {
-            $msg = "The email / password doesn't seem right. Check if your caps is on and try again.";
+            $msg = '<div class="alert alert-error">
+                  <button class="close" data-dismiss="alert"></button>The email / password doesnt seem right. Check if your caps is on and try again.</div>';
             $response = array( 'code' => "ERROR", 'msg' => $msg );
             wp_send_json( $response );
 
         } else {
             $site_url = get_site_url();
-            $response = array( "code" => "OK", 'site_url' => $site_url, 'msg' => 'Login Success' );
+            $response = array( "code" => "OK", 'site_url' => $site_url, 'msg' => '<div class="alert alert-success">
+                  <button class="close" data-dismiss="alert"></button>Login Success</div>' );
             wp_send_json( $response );
         }
     } else {
-        $msg = "The email / password doesn't seem right. Check if your caps is on and try again.";
+        $msg = '<div class="alert alert-error"><button class="close" data-dismiss="alert"></button>The email / password doesnt seem right. Check if your caps is on and try again.</div>';
         $response = array( 'code' => "ERROR", 'msg' => $msg );
         wp_send_json( $response );
     }

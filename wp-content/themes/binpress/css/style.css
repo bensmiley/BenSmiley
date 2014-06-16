@@ -401,7 +401,10 @@ blockquote small {
 }
 
 .logo {
-    margin: 18px 14px;
+    /*margin: 18px 14px;*/
+}
+.logo h1 {
+   padding-left: 10px;
 }
 
 .normal {

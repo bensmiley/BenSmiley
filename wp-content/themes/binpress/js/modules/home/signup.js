@@ -32,8 +32,8 @@ define(['jquery', 'jqueryvalidate'], function() {
       },
       errorPlacement: function(label, element) {
         var parent;
-        $('<span class="error"></span>').insertAfter(element).append(label);
-        parent = $(element).parent('.input-with-icon');
+        $('<span class="error"></span>').insertAfter(element.parent()).append(label);
+        parent = $(element).parent('.input-with-icon').parent();
         return parent.removeClass('success-control').addClass('error-control');
       },
       success: function(label, element) {
@@ -69,7 +69,7 @@ define(['jquery', 'jqueryvalidate'], function() {
         });
       } else {
         $('#display-msg').empty();
-        return $('#display-msg').append("<p>not valid form</p>");
+        return $('#display-msg').append("<div class='alert alert-error'><button class='close' data-dismiss='alert'></button>Please Fill the require fields </div>");
       }
     });
     return formatSignUpData = function(serializedDataArray) {
