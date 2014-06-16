@@ -1,5 +1,5 @@
 #load the necessary js files for the page
-define ['jquery', 'jqueryvalidate', 'bootstrap', 'ladda', 'spin'], ->
+define ['jquery', 'jqueryvalidate', 'bootstrap'], ->
 
     #trigger all action on document load
     $(document).ready ->
@@ -32,6 +32,7 @@ define ['jquery', 'jqueryvalidate', 'bootstrap', 'ladda', 'spin'], ->
 
         #action on form submit button click event
         $('#btn-login').click ->
+            $('.ajax-loader-login').show()
 
             #check if the login form is valid and passes the validation rules
             if($('#login-form').valid())
@@ -55,19 +56,24 @@ define ['jquery', 'jqueryvalidate', 'bootstrap', 'ladda', 'spin'], ->
                         if(response.code == "OK")
                             successMsg = response.msg
                             $('#display-login-msg').empty()
-                            $('.ajax-loader').show()
                             $('#display-login-msg').append successMsg
                             page = "/dashboard"
                             window.location.href = response.site_url + page
+                            $('.ajax-loader-login').hide()
 
                         if(response.code == "ERROR")
                             errorMsg = response.msg
-                            $(' #display-login-msg').empty()
+                            $('#display-login-msg').empty()
+                            $('.ajax-loader-login').hide()
                             $('#display-login-msg').append errorMsg
                     )
             else
                 $('#display-login-msg').empty()
-                $('#display-login-msg').append "<div class='alert alert-error'><button class='close' data-dismiss='alert'></button>Please Fill the require fields </div>"
+                $('.ajax-loader-login').hide()
+                msg= "<div class='alert alert-error'>
+                       <button class='close' data-dismiss='alert'></button>
+                       Please Fill the require fields </div>"
+                $('#display-login-msg').append msg
 
         #converts the form data array into proper key-value format
         #input: format data in array format
