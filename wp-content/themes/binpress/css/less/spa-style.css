@@ -186,3 +186,10 @@
   color: #ffffff;
 }
 /* Pricing List End*/
+/* Home - Sign*/
+.logo {
+  margin: 0px;
+}
+.logo h1 {
+  padding-left: 10px;
+}

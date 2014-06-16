@@ -1,5 +1,5 @@
 #load the necessary js files for the page
-define ['jquery', 'jqueryvalidate', 'bootstrap'], ->
+define ['jquery', 'jqueryvalidate', 'bootstrap', 'ladda', 'spin'], ->
 
     #trigger all action on document load
     $(document).ready ->
@@ -55,6 +55,7 @@ define ['jquery', 'jqueryvalidate', 'bootstrap'], ->
                         if(response.code == "OK")
                             successMsg = response.msg
                             $('#display-login-msg').empty()
+                            $('#btn-login' ).addClass ''
                             $('#display-login-msg').append successMsg
                             page = "/dashboard"
                             window.location.href = response.site_url + page

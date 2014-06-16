@@ -78,9 +78,11 @@ get_header();  ?>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
-                            <button class="btn btn-primary btn-cons pull-right" type="submit"
-                                    id="btn-signup">Submit
+                            <button class="btn btn-primary ladda-button"
+                            data-style="expand-left" id="btn-signup">
+                            <span class="ladda-label">expand-left</span>
                             </button>
+                            <span class="ajax-loader" style="display: none"></span>
                             <input type="reset" id="btn-signup-form-reset" style="display: none"/>
                         </div>
                     </div>
