@@ -5,7 +5,7 @@ define("config-loader", ['configs/backbone.config', 'configs/marionette.config',
 
 define("apps-loader", ['apps/leftnav/leftnav-app', 'apps/header/header-app', 'apps/upload/upload-controller', 'apps/user-profile/user-profile-app', 'apps/user-domains/user-domains-app', 'apps/plans/plans-app', 'apps/payment/payment-app']);
 
-define("entitites-loader", ['entities/user', 'entities/domains', 'entities/groups', 'entities/plans']);
+define("entitites-loader", ['entities/user', 'entities/domains', 'entities/groups', 'entities/plans', 'entities/subscription']);
 
 define("app", ['pages/dashboard.app'], function(App) {
   return App;

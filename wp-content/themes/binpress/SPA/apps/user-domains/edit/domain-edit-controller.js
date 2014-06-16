@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'msgbus', 'apps/user-domains/groups/add/add-group-controller'], function(App, RegionController, DomainEditLayout, msgbus) {
+define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'msgbus', 'apps/user-domains/groups/add/add-group-controller'], function(App, RegionController, EditDomainView, msgbus) {
   return App.module("UserDomainApp.Edit", function(Edit, App, BackBone, Marionette, $, _) {
     var DomainEditController;
     DomainEditController = (function(_super) {
@@ -28,14 +28,18 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         this.layout = this.geEditDomainLayout(domainModel);
         this.listenTo(this.layout, "show", (function(_this) {
           return function() {
+            var subscriptionModel;
             App.execute("add:domain:groups", {
               region: _this.layout.addDomainGroupRegion,
               domain_id: _this.domainId
             });
-            return App.execute("add:domain:groups", {
+            App.execute("add:domain:groups", {
               region: _this.layout.listDomainGroupRegion,
               domain_id: _this.domainId
             });
+            subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", _this.domainId);
+            subscriptionModel.fetch();
+            return console.log(subscriptionModel);
           };
         })(this));
         this.listenTo(this.layout, "edit:domain:clicked", this.editDomain);
@@ -43,7 +47,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       };
 
       DomainEditController.prototype.geEditDomainLayout = function(domainModel) {
-        return new DomainEditLayout({
+        return new EditDomainView.DomainEditLayout({
           model: domainModel
         });
       };

@@ -9,7 +9,7 @@
 <!--- Success message -->
 <div id="msg"></div>
 
-<!--- Add Domain Section -->
+<!--- Add/Edit Domain Section -->
 <div class="row ">
     <div class="col-md-6">
         <h3 class="m-b-20"><span class="semi-bold" id="form-title"></span></h3>
@@ -90,7 +90,7 @@
     <!--</div>-->
     <div><a href="#domains" id="show-domain-list">View Domains</a></div>
 </div>
-<!--  End of Add domains section -->
+<!--  End of Add/Edit domains section -->
 
 
 <!--- Add Groups Section -->
@@ -190,42 +190,29 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="alert alert-info">
-            <h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3>
+        <div id="active-subscription"></div>
+        <!--<div class="alert alert-info">-->
+            <!--<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3>-->
 
-            <div class="grid simple">
-                <!--
-                   <form id="form_traditional_validation" action="#">
-                         <div class="form-group">
-                           <label class="form-label">Current Plan</label>
-                              <div class="input-with-icon  right">
-                                   <i class=""></i>
-                                   <input type="text" name="form1Domainname" id="form1Domainname" class="form-control" placeholder="Free" disabled>
-                               </div>
-                         </div>
+            <!--<div class="grid simple">-->
 
-                         <button type="submit" class="btn btn-success btn-block"><i class="icon-ok"></i> Change Plan</button>
-
-                    <div class="clearfix"></div>
-                   </form>
-               -->
-                <dl class="dl-horizontal dl-plan">
-                    <dt>Current Plan :</dt>
-                    <dd><span class="label label-info">{{plan_name}}</span></dd>
-                    <dt>Payement :</dt>
-                    <dd>{{payment}}/month</dd>
-                    <dt>Billing Cycle :</dt>
-                    <dd>{{billing_cycle}}</dd>
-                </dl>
+                <!--<dl class="dl-horizontal dl-plan">-->
+                    <!--<dt>Current Plan :</dt>-->
+                    <!--<dd><span class="label label-info">{{plan_name}}</span></dd>-->
+                    <!--<dt>Payement :</dt>-->
+                    <!--<dd>{{payment}}/month</dd>-->
+                    <!--<dt>Billing Cycle :</dt>-->
+                    <!--<dd>{{billing_cycle}}</dd>-->
+                <!--</dl>-->
 
 
-                <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block">
-                <i class="icon-ok"></i> Change Plan</a>
+                <!--<a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block">-->
+                <!--<i class="icon-ok"></i> Change Plan</a>-->
 
-                <div class="clearfix"></div>
+                <!--<div class="clearfix"></div>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 </div>

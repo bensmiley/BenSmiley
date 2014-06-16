@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['marionette', 'text!apps/user-domains/templates/addEditUserDomain.html'], function(Marionette, addEditUserDomainTpl) {
-  var DomainEditLayout;
+  var ActiveSubscriptionView, DomainEditLayout;
   DomainEditLayout = (function(_super) {
     __extends(DomainEditLayout, _super);
 
@@ -27,7 +27,8 @@ define(['marionette', 'text!apps/user-domains/templates/addEditUserDomain.html']
 
     DomainEditLayout.prototype.regions = {
       addDomainGroupRegion: '#add-domain-groups',
-      listDomainGroupRegion: '#list-domain-groups'
+      listDomainGroupRegion: '#list-domain-groups',
+      activeSubscriptionRegion: '#active-subscription'
     };
 
     DomainEditLayout.prototype.onShow = function() {
@@ -66,5 +67,22 @@ define(['marionette', 'text!apps/user-domains/templates/addEditUserDomain.html']
     return DomainEditLayout;
 
   })(Marionette.Layout);
-  return DomainEditLayout;
+  ActiveSubscriptionView = (function(_super) {
+    __extends(ActiveSubscriptionView, _super);
+
+    function ActiveSubscriptionView() {
+      return ActiveSubscriptionView.__super__.constructor.apply(this, arguments);
+    }
+
+    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{plan_name}}</span></dd> <dt>Payement :</dt> <dd>{{payment}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{billing_cycle}}</dd> </dl> <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> </div>';
+
+    ActiveSubscriptionView.prototype.className = 'alert alert-info';
+
+    return ActiveSubscriptionView;
+
+  })(Marionette.ItemView);
+  return {
+    DomainEditLayout: DomainEditLayout,
+    ActiveSubscriptionView: ActiveSubscriptionView
+  };
 });

@@ -19,10 +19,10 @@ define [ 'marionette'
         regions :
             addDomainGroupRegion : '#add-domain-groups'
             listDomainGroupRegion : '#list-domain-groups'
+            activeSubscriptionRegion : '#active-subscription'
 
 
         onShow : ->
-
             @$el.find( '#form-title' ).text 'Edit Domain'
             @$el.find( '#domain-groups' ).css 'display' : 'inline'
 
@@ -55,8 +55,34 @@ define [ 'marionette'
             messages :
                 domain_url : 'Enter valid url'
 
+    #view to show the active subscription plan for the domain
+    class ActiveSubscriptionView extends Marionette.ItemView
+
+        template : '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3>
+
+                    <div class="grid simple">
+
+                        <dl class="dl-horizontal dl-plan">
+                            <dt>Current Plan :</dt>
+                            <dd><span class="label label-info">{{plan_name}}</span></dd>
+                            <dt>Payement :</dt>
+                            <dd>{{payment}}/month</dd>
+                            <dt>Billing Cycle :</dt>
+                            <dd>{{billing_cycle}}</dd>
+                        </dl>
+
+                        <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block">
+                        <i class="icon-ok"></i> Change Plan</a>
+
+                        <div class="clearfix"></div>
+
+                    </div>'
+
+        className : 'alert alert-info'
+
     #return the view instance
-    DomainEditLayout
+    DomainEditLayout : DomainEditLayout
+    ActiveSubscriptionView : ActiveSubscriptionView
 
 
 

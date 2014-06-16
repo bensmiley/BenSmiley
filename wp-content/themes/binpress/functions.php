@@ -21,6 +21,7 @@ require_once 'PHPModules/cron/send-email.php';
 require_once 'PHPModules/payment/ajax.php';
 require_once 'PHPModules/braintree/main-config.php';
 require_once 'PHPModules/plans/functions.php';
+require_once 'PHPModules/subscription/ajax.php';
 
 function binpress_theme_setup() {
 
