@@ -18,12 +18,18 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
     SinglePlanView.prototype.className = 'plans';
 
     SinglePlanView.prototype.onShow = function() {
-      var activePlanName, planName;
+      var activePlanName, domainId, linkValue, newLinkValue, planName;
       activePlanName = Marionette.getOption(this, 'activePlanName');
       planName = this.model.get('name');
       if (activePlanName === planName) {
-        return this.$el.find('.plan-link').addClass('hightlighted');
+        this.$el.find('.plan-link').addClass('hightlighted');
       }
+      linkValue = this.$el.find('.plan-link').attr('href');
+      domainId = Marionette.getOption(this, 'domainId');
+      newLinkValue = "" + linkValue + "/" + domainId;
+      return this.$el.find('.plan-link').attr({
+        'href': newLinkValue
+      });
     };
 
     return SinglePlanView;
@@ -44,7 +50,8 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
 
     PlansListView.prototype.itemViewOptions = function() {
       return {
-        activePlanName: this.model.get('name')
+        activePlanName: this.model.get('name'),
+        domainId: this.model.get('domain_id')
       };
     };
 

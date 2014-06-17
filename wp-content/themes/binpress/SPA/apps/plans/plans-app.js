@@ -14,7 +14,7 @@ define(['app', 'msgbus', 'apps/plans/list/list-plans-controller', 'apps/plans/ch
 
       PlansAppRouter.prototype.appRoutes = {
         'domains/edit/:domainID/list-plan': 'show',
-        'change-plan/:domainID/:planID': 'change'
+        'change-plan/:planID/:domainID': 'change'
       };
 
       return PlansAppRouter;
@@ -27,7 +27,7 @@ define(['app', 'msgbus', 'apps/plans/list/list-plans-controller', 'apps/plans/ch
           domainID: parseInt(domainID)
         });
       },
-      change: function(domainID, planID) {
+      change: function(planID, domainID) {
         return App.execute("change:plan", {
           region: App.mainContentRegion,
           domainID: parseInt(domainID),

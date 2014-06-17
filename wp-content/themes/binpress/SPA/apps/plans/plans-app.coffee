@@ -12,7 +12,7 @@ define [ 'app'
 
             appRoutes :
                 'domains/edit/:domainID/list-plan' : 'show'
-                'change-plan/:domainID/:planID' : 'change'
+                'change-plan/:planID/:domainID' : 'change'
 
         #public API
         API =
@@ -21,7 +21,7 @@ define [ 'app'
                     region : App.mainContentRegion
                     domainID : parseInt domainID
 
-            change : ( domainID, planID ) ->
+            change : ( planID, domainID ) ->
                 App.execute "change:plan",
                     region : App.mainContentRegion
                     domainID : parseInt domainID
