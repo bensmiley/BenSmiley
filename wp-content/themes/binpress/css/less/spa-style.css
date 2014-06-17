@@ -186,10 +186,17 @@
   color: #ffffff;
 }
 /* Pricing List End*/
-/* Home - Sign*/
-.logo {
-  margin: 0px;
+/* BREADCRUMB */
+body .page-content .breadcrumb {
+  border-bottom: 1px dotted #ccc!important;
+  padding-bottom: 10px !important;
 }
-.logo h1 {
-  padding-left: 10px;
+body .page-content .breadcrumb li {
+  font-weight: 700!important;
+  font-size: 15px;
+}
+body .page-content .breadcrumb li a {
+  color: #0aa699!important;
+  font-weight: 600!important;
+  margin-left: 0px !important;
 }
