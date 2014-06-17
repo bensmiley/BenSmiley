@@ -34,7 +34,7 @@
           corners: 1,
           rotate: 9,
           direction: 1,
-          color: '#ff9e2c',
+          color: '#000000',
           speed: 1,
           trail: 60,
           shadow: false,
