@@ -34,7 +34,7 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
                                 </li>
                                  <li class="start">
                                     <a href="#domains" id="user-domains">
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-globe"></i>
                                         <span class="title">My Domains</span>
                                         <span class="selected"></span>
                                         <span class="arrow"></span>
