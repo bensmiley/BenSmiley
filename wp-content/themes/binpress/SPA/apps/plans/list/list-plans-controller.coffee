@@ -11,52 +11,29 @@ define [ 'app'
         class PlansListController extends RegionController
 
             initialize : ( opts )->
-                #get the plan and domain IDs
+                #get the domain IDs
                 @domainId = opts.domainID
 
-                #get plan list layout
-                @layout = @getLayout()
+                subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                subscriptionModel.fetch
+                    success : @getPlanCollection
 
-                @listenTo @layout, "show", @showViews
-
-                #show the layout
-                @show @layout,
-                    loading : true
-
-            getLayout : ->
-                new PlanListView.PlansListLayout
-
-            showViews : =>
-                @showActiveSubscription()
-                @showPlansList()
-
-
-            showActiveSubscription : =>
-                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-                @subscriptionModel.fetch
-                    success : @showActiveSubscriptionView
-
-            showActiveSubscriptionView : ( subscriptionModel ) =>
-                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
-                @layout.activeSubscriptionRegion.show activeSubscriptionView
-
-            getActiveSubscriptionView : ( subscriptionModel )->
-                new PlanListView.ActiveSubscriptionView
-                    model : subscriptionModel
-
-            showPlansList : =>
+            getPlanCollection : ( subscriptionModel ) =>
+                @subscriptionModel = subscriptionModel
                 @planCollection = msgbus.reqres.request "get:all:plans"
                 @planCollection.fetch
                     success : @showPlanListView
 
             showPlanListView : ( planCollection ) =>
                 planListShowView = @getPlanListView planCollection
-                @layout.plansListRegion.show planListShowView
+                #show the view
+                @show planListShowView,
+                    loading : true
 
-            getPlanListView : ( planCollection )->
-                new PlanListView.PlanListsView
+            getPlanListView :(  planCollection  ) ->
+                new PlanListView
                     collection : planCollection
-                    domainId : @domainId
+                    model : @subscriptionModel
 
 
         #handler for showing the plans list page,options to be passed to controller are:

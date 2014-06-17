@@ -2,7 +2,7 @@
 define(['backbone', 'marionette', 'jquery', 'underscore'], function(Backbone, Marionette, $, _) {
   var msgbus;
   msgbus = Backbone.Wreqr.radio.channel("global");
-  msgbus.commands.setHandler("when:read", function(entities, callback) {
+  msgbus.commands.setHandler("when:fetched", function(entities, callback) {
     var xhrs;
     xhrs = _.chain([entities]).flatten().pluck("_read").value();
     return $.when.apply($, xhrs).done(function() {

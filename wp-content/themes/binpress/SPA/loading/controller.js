@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'loading/view'], function(App, RegionController, LoadingView) {
+define(['msgbus', 'regioncontroller', 'loading/view'], function(msgbus, RegionController, LoadingView) {
   var LoadingController;
   LoadingController = (function(_super) {
     __extends(LoadingController, _super);
@@ -53,7 +53,7 @@ define(['app', 'regioncontroller', 'loading/view'], function(App, RegionControll
           }
         };
       })(this), 10);
-      return App.commands.execute("when:fetched", config.entities, callbackFn);
+      return msgbus.commands.execute("when:fetched", config.entities, callbackFn);
     };
 
     LoadingController.prototype.getEntities = function(view) {
