@@ -24,7 +24,7 @@ define [ 'app'
 
                 #show user domain list view
                 @show @domainListView,
-                    loading: true
+                    loading : true
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView

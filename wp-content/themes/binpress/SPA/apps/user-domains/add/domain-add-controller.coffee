@@ -22,7 +22,7 @@ define [ 'app'
                     App.execute "list:user:domains", region : App.mainContentRegion
 
                 @show @view,
-                    loading: true
+                    loading : true
 
             getView : ->
                 new DomainAddView

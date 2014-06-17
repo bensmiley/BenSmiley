@@ -35,7 +35,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
             planCollection = new PlanCollection
             planCollection
 
-        getCurrentPlanId :( domainID ) ->
+        getCurrentPlanId : ( domainID ) ->
             planIdModel = new PlanIdModel
 
     #Handlers

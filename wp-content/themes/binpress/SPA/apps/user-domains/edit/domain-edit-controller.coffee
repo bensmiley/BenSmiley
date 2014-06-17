@@ -4,7 +4,7 @@ define [ 'app'
          'apps/user-domains/edit/domain-edit-view'
          'msgbus'
          'apps/user-domains/groups/add/add-group-controller'
-         'apps/user-domains/groups/list/list-group-controller'], ( App, RegionController, EditDomainView, msgbus )->
+         'apps/user-domains/groups/list/list-group-controller' ], ( App, RegionController, EditDomainView, msgbus )->
 
     #start the app module
     App.module "UserDomainApp.Edit", ( Edit, App, BackBone, Marionette, $, _ )->
@@ -48,7 +48,7 @@ define [ 'app'
 
                 #show the edit domain layout
                 @show @layout,
-                    loading: true
+                    loading : true
 
             getEditDomainLayout : ( domainModel ) ->
                 new EditDomainView.DomainEditLayout
