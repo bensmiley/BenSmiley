@@ -16,7 +16,9 @@ define(['app', 'regioncontroller', 'apps/user-domains/groups/add/add-group-view'
         this.domain_id = opts.domain_id;
         this.view = this.getView(this.domain_id);
         this.listenTo(this.view, "save:domain:group:clicked", this.saveDomainGroup);
-        return this.show(this.view);
+        return this.show(this.view, {
+          loading: true
+        });
       };
 
       DomainAddGroupController.prototype.getView = function(domainid) {

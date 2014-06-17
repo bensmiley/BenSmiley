@@ -2,18 +2,18 @@ define [
     'app'
     'regioncontroller'
     'loading/view'
-], (App, RegionController, LoadingView)->
+], ( App, RegionController, LoadingView )->
     class LoadingController extends RegionController
 
-        initialize: (options) ->
+        initialize : ( options ) ->
             { view, config } = options
 
-            config = if _.isBoolean(config) then {} else config
+            config = if _.isBoolean( config ) then {} else config
 
             _.defaults config,
-                loadingType: "spinner"
-                entities: @getEntities(view)
-                debug: false
+                loadingType : "spinner"
+                entities : @getEntities( view )
+                debug : false
 
             switch config.loadingType
                 when "opacity"
@@ -22,13 +22,13 @@ define [
                     loadingView = @getLoadingView()
                     @show loadingView
                 else
-                    throw new Error("Invalid loadingType")
+                    throw new Error( "Invalid loadingType" )
 
             @showRealView view, loadingView, config
 
 
-        showRealView: (realView, loadingView, config) ->
-            callbackFn = _.debounce ()=>
+        showRealView : ( realView, loadingView, config ) ->
+            callbackFn = _.debounce =>
                 switch config.loadingType
                     when "opacity"
                         @region.currentView.$el.removeAttr "style"
@@ -44,16 +44,16 @@ define [
             App.commands.execute "when:fetched", config.entities, callbackFn
 
 
-        getEntities: (view) ->
-            _.chain(view).pick("model", "collection").toArray().compact().value()
+        getEntities : ( view ) ->
+            _.chain( view ).pick( "model", "collection" ).toArray().compact().value()
 
 
-        getLoadingView: ->
+        getLoadingView : ->
             new LoadingView
 
 
-    App.commands.setHandler "show:loading", (view, options) ->
+    App.commands.setHandler "show:loading", ( view, options ) ->
         new LoadingController
-            view: view
-            region: options.region
-            config: options.loading
+            view : view
+            region : options.region
+            config : options.loading

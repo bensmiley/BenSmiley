@@ -21,7 +21,8 @@ define [ 'app'
                 @listenTo @view, "show:domain:list:clicked", ->
                     App.execute "list:user:domains", region : App.mainContentRegion
 
-                @show @view
+                @show @view,
+                    loading : true
 
             getView : ->
                 new DomainAddView

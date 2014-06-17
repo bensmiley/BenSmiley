@@ -18,7 +18,8 @@ define [ 'app'
 
                 @listenTo @view, "save:domain:group:clicked", @saveDomainGroup
 
-                @show @view
+                @show @view,
+                    loading : true
 
             getView : ( domainid ) ->
                 new AddGroupView

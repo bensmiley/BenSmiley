@@ -23,7 +23,9 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msg
             region: App.mainContentRegion
           });
         });
-        return this.show(this.view);
+        return this.show(this.view, {
+          loading: true
+        });
       };
 
       DomainAddController.prototype.getView = function() {
