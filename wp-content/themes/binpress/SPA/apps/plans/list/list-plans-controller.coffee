@@ -50,8 +50,8 @@ define [ 'app'
                     success : @showPlanListView
 
             showPlanListView : ( planCollection ) =>
-                @planListShowView = @getPlanListView planCollection
-                @layout.plansListRegion.show @planListShowView
+                planListShowView = @getPlanListView planCollection
+                @layout.plansListRegion.show planListShowView
 
             getPlanListView : ( planCollection )->
                 new PlanListView.PlanListsView

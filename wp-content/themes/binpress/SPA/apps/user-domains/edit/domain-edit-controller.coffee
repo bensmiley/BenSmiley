@@ -40,7 +40,6 @@ define [ 'app'
                     #fetch the current subscriptionfor the domain, on sucess
                     #load the active subscription view
                     @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-#                    @showActiveSubscription @subscriptionModel
                     @subscriptionModel.fetch
                         success : @showActiveSubscription
 

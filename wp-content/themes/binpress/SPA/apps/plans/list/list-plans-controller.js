@@ -63,8 +63,9 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       };
 
       PlansListController.prototype.showPlanListView = function(planCollection) {
-        this.planListShowView = this.getPlanListView(planCollection);
-        return this.layout.plansListRegion.show(this.planListShowView);
+        var planListShowView;
+        planListShowView = this.getPlanListView(planCollection);
+        return this.layout.plansListRegion.show(planListShowView);
       };
 
       PlansListController.prototype.getPlanListView = function(planCollection) {
