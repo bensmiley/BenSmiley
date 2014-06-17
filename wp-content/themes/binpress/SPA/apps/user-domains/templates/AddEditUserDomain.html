@@ -8,14 +8,16 @@
 <div class="tab-pane active" >
 <!--- Success message -->
 <div id="msg"></div>
-
+<ol class="breadcrumb">
+  <li><a href="#domains" id="show-domain-list">View Domains</a></li>
+    <li class="active"><b  id="form-title"></b></li>
+</ol>
 <!--- Add/Edit Domain Section -->
 <div class="row ">
     <div class="col-md-6">
         <h3 class="m-b-20"><span class="semi-bold" id="form-title"></span></h3>
-
         <div class="grid simple">
-            <div class="grid-body no-border"></br></br>
+            <div class="grid-body no-border">
                 <form id="add-edit-user-domain-form">
 
                     <div class="form-group">
@@ -40,7 +42,7 @@
                         </div>
                     </div>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-success btn-cons"
+                        <button type="button" class="btn btn-primary btn-cons"
                         id="btn-add-edit-user-domain">
                             <i class="icon-ok"></i> Save
                         </button>
@@ -88,7 +90,7 @@
     <!--</form>-->
     <!--</div>-->
     <!--</div>-->
-    <div><a href="#domains" id="show-domain-list">View Domains</a></div>
+  <!--  <div><a href="#domains" id="show-domain-list">View Domains</a></div>-->
 </div>
 <!--  End of Add/Edit domains section -->
 
