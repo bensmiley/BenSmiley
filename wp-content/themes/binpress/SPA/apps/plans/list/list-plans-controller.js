@@ -11,51 +11,21 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
 
       function PlansListController() {
         this.showPlanListView = __bind(this.showPlanListView, this);
-        this.showPlansList = __bind(this.showPlansList, this);
-        this.showActiveSubscriptionView = __bind(this.showActiveSubscriptionView, this);
-        this.showActiveSubscription = __bind(this.showActiveSubscription, this);
-        this.showViews = __bind(this.showViews, this);
+        this.getPlanCollection = __bind(this.getPlanCollection, this);
         return PlansListController.__super__.constructor.apply(this, arguments);
       }
 
       PlansListController.prototype.initialize = function(opts) {
+        var subscriptionModel;
         this.domainId = opts.domainID;
-        this.layout = this.getLayout();
-        this.listenTo(this.layout, "show", this.showViews);
-        return this.show(this.layout, {
-          loading: true
+        subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
+        return subscriptionModel.fetch({
+          success: this.getPlanCollection
         });
       };
 
-      PlansListController.prototype.getLayout = function() {
-        return new PlanListView.PlansListLayout;
-      };
-
-      PlansListController.prototype.showViews = function() {
-        this.showActiveSubscription();
-        return this.showPlansList();
-      };
-
-      PlansListController.prototype.showActiveSubscription = function() {
-        this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
-        return this.subscriptionModel.fetch({
-          success: this.showActiveSubscriptionView
-        });
-      };
-
-      PlansListController.prototype.showActiveSubscriptionView = function(subscriptionModel) {
-        var activeSubscriptionView;
-        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
-        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
-      };
-
-      PlansListController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
-        return new PlanListView.ActiveSubscriptionView({
-          model: subscriptionModel
-        });
-      };
-
-      PlansListController.prototype.showPlansList = function() {
+      PlansListController.prototype.getPlanCollection = function(subscriptionModel) {
+        this.subscriptionModel = subscriptionModel;
         this.planCollection = msgbus.reqres.request("get:all:plans");
         return this.planCollection.fetch({
           success: this.showPlanListView
@@ -65,13 +35,15 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       PlansListController.prototype.showPlanListView = function(planCollection) {
         var planListShowView;
         planListShowView = this.getPlanListView(planCollection);
-        return this.layout.plansListRegion.show(planListShowView);
+        return this.show(planListShowView, {
+          loading: true
+        });
       };
 
       PlansListController.prototype.getPlanListView = function(planCollection) {
-        return new PlanListView.PlanListsView({
+        return new PlanListView({
           collection: planCollection,
-          domainId: this.domainId
+          model: this.subscriptionModel
         });
       };
 

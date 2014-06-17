@@ -1,8 +1,8 @@
 define [
-    'app'
+    'msgbus'
     'regioncontroller'
     'loading/view'
-], ( App, RegionController, LoadingView )->
+], ( msgbus, RegionController, LoadingView )->
     class LoadingController extends RegionController
 
         initialize : ( options ) ->
@@ -41,7 +41,7 @@ define [
                     realView.triggerMethod "dependencies:fetched"
             , 10
 
-            App.commands.execute "when:fetched", config.entities, callbackFn
+            msgbus.commands.execute "when:fetched", config.entities, callbackFn
 
 
         getEntities : ( view ) ->

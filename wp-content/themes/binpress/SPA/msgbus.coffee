@@ -4,7 +4,7 @@ define ['backbone','marionette', 'jquery', 'underscore'], (Backbone, Marionette,
     msgbus = Backbone.Wreqr.radio.channel "global"
 
     # TODO: Apply DRY principle
-    msgbus.commands.setHandler "when:read", (entities, callback) ->
+    msgbus.commands.setHandler "when:fetched", (entities, callback) ->
         xhrs = _.chain([entities]).flatten().pluck("_read").value()
         $.when(xhrs...).done ->
             callback()
