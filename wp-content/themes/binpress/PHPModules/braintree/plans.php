@@ -14,13 +14,24 @@ function get_all_plans() {
 
     foreach ( $plans as $key => $plan ) {
 
-        $braintree_plan[$key][ 'ID' ] = $key;
-        $braintree_plan[$key][ 'plan_id' ] = $plan->id;
-        $braintree_plan[$key][ 'name' ] = $plan->name;
-        $braintree_plan[$key][ 'description' ] = $plan->description;
-        $braintree_plan[$key][ 'price' ] = $plan->price;
+        $braintree_plan[ $key ][ 'ID' ] = $key;
+        $braintree_plan[ $key ][ 'plan_id' ] = $plan->id;
+        $braintree_plan[ $key ][ 'name' ] = $plan->name;
+        $braintree_plan[ $key ][ 'description' ] = $plan->description;
+        $braintree_plan[ $key ][ 'price' ] = $plan->price;
 
     }
 
     return $braintree_plan;
+}
+
+function get_plan_name_by_id( $plan_id ) {
+
+    $plans = Braintree_Plan::all();
+
+    foreach ( $plans as $plan ) {
+        if($plan->id == $plan_id ){
+            return $plan->name;
+        }
+    }
 }

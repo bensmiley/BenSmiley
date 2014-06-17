@@ -30,7 +30,6 @@ define [ 'marionette'
             @$el.find( '#add-edit-user-domain-form' ).validate @validationOptions()
 
         onDomainUpdated : ->
-
             #reset the form
             @$el.find( '#btn-reset-add-domain' ).click()
 
@@ -64,14 +63,14 @@ define [ 'marionette'
 
                         <dl class="dl-horizontal dl-plan">
                             <dt>Current Plan :</dt>
-                            <dd><span class="label label-info">{{plan_name}}</span></dd>
+                            <dd><span class="label label-info">{{name}}</span></dd>
                             <dt>Payement :</dt>
-                            <dd>{{payment}}/month</dd>
+                            <dd>{{price}}/month</dd>
                             <dt>Billing Cycle :</dt>
-                            <dd>{{billing_cycle}}</dd>
+                            <dd>{{bill_start}} To {{bill_end}}</dd>
                         </dl>
 
-                        <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block">
+                        <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block">
                         <i class="icon-ok"></i> Change Plan</a>
 
                         <div class="clearfix"></div>

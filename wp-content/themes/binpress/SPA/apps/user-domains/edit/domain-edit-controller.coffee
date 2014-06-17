@@ -12,15 +12,17 @@ define [ 'app'
         class DomainEditController extends RegionController
 
             initialize : ( opts )->
+                #get domainId from controller options
                 @domainId = opts.domainId
 
-                @domainModel = msgbus.reqres.request "get:domain:model:by:id",@domainId
+                #fetch the domain model and on success show the edit domain view
+                @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
                 @domainModel.fetch
-                            success : @showEditView
+                    success : @showEditView
 
-            showEditView:( domainModel )=>
-
-                @layout = @geEditDomainLayout domainModel
+            showEditView : ( domainModel )=>
+                #get the edit domain layout
+                @layout = @getEditDomainLayout domainModel
 
                 @listenTo @layout, "show", =>
 
@@ -34,19 +36,29 @@ define [ 'app'
                         region : @layout.listDomainGroupRegion
                         domain_id : @domainId
 
-                    subscriptionModel = msgbus.reqres.request "get:subscription:for:domain",@domainId
-                    subscriptionModel.fetch()
-                    console.log subscriptionModel
-
+                    #fetch the current subscriptionfor the domain, on sucess
+                    #load the active subscription view
+                    subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                    subscriptionModel.fetch
+                        success : @showActiveSubscription
 
                 #listen to edit domain click event
-                @listenTo @layout, "edit:domain:clicked",@editDomain
+                @listenTo @layout, "edit:domain:clicked", @editDomain
 
+                #show the edit domain layout
                 @show @layout
 
-            geEditDomainLayout : ( domainModel ) ->
+            getEditDomainLayout : ( domainModel ) ->
                 new EditDomainView.DomainEditLayout
                     model : domainModel
+
+            getActiveSubscriptionView : ( subscriptionModel ) ->
+                new EditDomainView.ActiveSubscriptionView
+                    model : subscriptionModel
+
+            showActiveSubscription : ( subscriptionModel )=>
+                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+                @layout.activeSubscriptionRegion.show activeSubscriptionView
 
             editDomain : ( domainData )=>
                 @domainModel.set domainData
