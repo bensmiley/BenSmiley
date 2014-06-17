@@ -41,8 +41,8 @@
           hwaccel: true,
           className: 'spinner',
           zIndex: 1030,
-          top: 'auto',
-          left: 'auto'
+          top: '40%',
+          left: '50%'
         };
       };
 

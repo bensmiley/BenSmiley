@@ -11,7 +11,7 @@ define [ 'marionette'
                     <td>{{plan_name}}</td>
                     <td>None</td>
                     <td class="center">
-                        <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a>
+                        <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a>&nbsp;&nbsp;&nbsp;
                         <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span>
                     </td>'
         events :
