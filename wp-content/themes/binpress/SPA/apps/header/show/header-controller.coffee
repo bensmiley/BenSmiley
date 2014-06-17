@@ -67,7 +67,7 @@ define [ 'app',
                             <div class="">
                                 <div class="pull-left">
                                     <a href="index.html">
-                                        <h3 class="p-l-20 text-white">Logo</h3></a>
+                                        <h3 class="p-l-30 ">Bensmiley</h3></a>
                                 </div>
                                 <div id="user-display"></div>
                             </div>

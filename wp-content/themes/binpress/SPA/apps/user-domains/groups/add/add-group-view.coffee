@@ -8,12 +8,7 @@ define [ 'marionette' ], ( Marionette )->
 
         template : ' <div class="row">
 
-                            <div class="col-md-3">
-                                <img src="../wp-content/themes/binpress/images/default.png" class=" image-responsive-width"/>
-                                <br><br>
-                                <button type="submit" class="btn btn-primary btn-block"><i class="icon-ok"></i> Edit Group Image</button>
-                            </div>
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Group Name</label>
                                     <span class="help">e.g. "xyz"</span>
@@ -33,7 +28,7 @@ define [ 'marionette' ], ( Marionette )->
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-success btn-cons"
+                                    <button type="button" class="btn btn-primary btn-cons"
                                     id="btn-save-domain-group">
                                     <i class="icon-ok"></i> Save</button>
                                     <input type="reset" style="display: none" id="btn-reset-group"/>

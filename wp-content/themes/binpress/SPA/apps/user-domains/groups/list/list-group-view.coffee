@@ -7,7 +7,6 @@ define [ 'marionette' ], ( Marionette )->
         template : '<table class="table table-hover table-condensed" id="example">
                     <thead>
                     <tr>
-                    <th style="width:10%">Group Logo</th>
                     <th style="width:15%" >Group Name</th>
                     <th style="width:30%" data-hide="phone,tablet">Description</th>
                     <th style="width:10%">Action</th>
@@ -15,7 +14,6 @@ define [ 'marionette' ], ( Marionette )->
                     </thead>
                     <tbody>
                     <tr >
-                    <td class="v-align-middle"><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class="image-responsive-width grscale" width="60px"/></td>
                     <td class="v-align-middle"><span class="muted">Group 1</span></td>
                     <td><span class="muted">frequently involving research or design</span></td>
                     <td class="v-align-middle">
@@ -24,7 +22,6 @@ define [ 'marionette' ], ( Marionette )->
                     </td>
                     </tr>
                     <tr>
-                    <td><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class=" image-responsive-width grscale" width="60px"/></td>
                     <td><span class="muted">Group 2</span></td>
                     <td><span class="muted">Something goes here</span></td>
                     <td>
@@ -33,7 +30,6 @@ define [ 'marionette' ], ( Marionette )->
                     </td>
                     </tr>
                     <tr>
-                    <td><img src="../wp-content/themes/binpress/images/livefyre-logo.png" class=" image-responsive-width grscale" width="60px"/></td>
                     <td class="v-align-middle"><span class="muted">Group 3</span></td>
                     <td><span class="muted">Redesign project template</span></td>
                     <td>
@@ -42,8 +38,6 @@ define [ 'marionette' ], ( Marionette )->
                     </td>
                     </tr>
                     <tr>
-                    <td><img src="../wp-content/themes/binpress/images/livefyre-logo.png"
-                    class="grscale image-responsive-width" width="60px"/></td>
                     <td class="v-align-middle"><span class="muted">Group 4</span></td>
                     <td><span class="muted">A project in business and science is typically defined</span></td>
                     <td>
