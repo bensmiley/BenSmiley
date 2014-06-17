@@ -15,18 +15,22 @@ define [ 'app'
 
                 @layout = @getLayout()
 
-                @show @layout
+                @show @layout,
+                    loading : true
 
-                planIdModel = msgbus.reqres.request "get:current:plan:id", @domainId
-                planIdModel.fetch
-                    data :
-                        'domain_id' : @domainId
-                        'action' : 'get-current-domain-plan-id'
-                    success : @planIDModelFetched
+                #fetch the current subscriptionfor the domain, on sucess
+                #load the active subscription view
+                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                @subscriptionModel.fetch
+                    success : @showActiveSubscription
 
-            planIDModelFetched : ( planIdModel )=>
-                #get change plan  layout
-                @layout = @getLayout planIdModel
+            getActiveSubscriptionView : ( subscriptionModel ) ->
+                new ChangePlanView.ActiveSubscriptionView
+                    model : subscriptionModel
+
+            showActiveSubscription : ( subscriptionModel )=>
+                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+                @layout.activeSubscriptionRegion.show activeSubscriptionView
 
 
             getLayout : ->

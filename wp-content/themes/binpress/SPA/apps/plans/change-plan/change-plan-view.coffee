@@ -10,9 +10,9 @@ define [ 'marionette'
 
         regions :
             displayPaymentRegion : '#display-payment-form'
-            activePlanRegion : '#show-active-plan'
+            activeSubscriptionRegion : '#show-active-subscription'
 
-    class ActivePlanView extends Marionette.ItemView
+    class ActiveSubscriptionView extends Marionette.ItemView
         template : ' <div class="col-md-3">
                             <div class="tiles-body">
                                 <div > ACTIVE PLAN </div>
@@ -63,6 +63,7 @@ define [ 'marionette'
 
     # return the view instances as objects
     ChangePlanLayout : ChangePlanLayout
+    ActiveSubscriptionView : ActiveSubscriptionView
 #    PaymentFormView : PaymentFormView
 
 

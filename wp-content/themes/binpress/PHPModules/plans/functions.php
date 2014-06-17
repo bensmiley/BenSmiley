@@ -8,7 +8,8 @@
 
 
 /**
- * Function to return the plan name and id for the domain
+ * required
+ * Function to return the plan name and id for the domain in case of free plan
  *
  * @param $post_id
  * @return mixed|null|WP_Error
@@ -71,14 +72,7 @@ function get_plan_by_id( $plan_id , $domain_id ){
 
 }
 
-function ajax_fetch_all_plans() {
 
-    $braintree_plans = get_all_plans();
-
-    wp_send_json( array( 'code' => 'OK', 'data' => $braintree_plans ) );
-}
-
-add_action( 'wp_ajax_fetch-all-plans', 'ajax_fetch_all_plans' );
 
 function ajax_get_current_domain_plan_id() {
 

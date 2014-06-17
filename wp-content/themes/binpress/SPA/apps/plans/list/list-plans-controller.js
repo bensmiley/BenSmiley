@@ -12,45 +12,46 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       function PlansListController() {
         this.showPlanListView = __bind(this.showPlanListView, this);
         this.showPlansList = __bind(this.showPlansList, this);
-        this.showCurrentPlanView = __bind(this.showCurrentPlanView, this);
-        this.showCurrentPlan = __bind(this.showCurrentPlan, this);
+        this.showActiveSubscriptionView = __bind(this.showActiveSubscriptionView, this);
+        this.showActiveSubscription = __bind(this.showActiveSubscription, this);
+        this.showViews = __bind(this.showViews, this);
         return PlansListController.__super__.constructor.apply(this, arguments);
       }
 
       PlansListController.prototype.initialize = function(opts) {
-        this.planId = opts.planID;
         this.domainId = opts.domainID;
         this.layout = this.getLayout();
-        this.listenTo(this.layout, "show", this.showCurrentPlan);
-        this.listenTo(this.layout, "show", this.showPlansList);
-        return this.show(this.layout);
+        this.listenTo(this.layout, "show", this.showViews);
+        return this.show(this.layout, {
+          loading: true
+        });
       };
 
       PlansListController.prototype.getLayout = function() {
         return new PlanListView.PlansListLayout;
       };
 
-      PlansListController.prototype.showCurrentPlan = function() {
-        this.planModel = msgbus.reqres.request("get:plan:by:id");
-        return this.planModel.fetch({
-          data: {
-            'domain_id': this.domainId,
-            'plan_id': this.planId,
-            'action': 'read-plan'
-          },
-          success: this.showCurrentPlanView
+      PlansListController.prototype.showViews = function() {
+        this.showActiveSubscription();
+        return this.showPlansList();
+      };
+
+      PlansListController.prototype.showActiveSubscription = function() {
+        this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
+        return this.subscriptionModel.fetch({
+          success: this.showActiveSubscriptionView
         });
       };
 
-      PlansListController.prototype.showCurrentPlanView = function() {
-        var currentPlanView;
-        currentPlanView = this.getCurrentPlanView(this.planModel);
-        return this.layout.currentPlanRegion.show(currentPlanView);
+      PlansListController.prototype.showActiveSubscriptionView = function(subscriptionModel) {
+        var activeSubscriptionView;
+        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
+        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
       };
 
-      PlansListController.prototype.getCurrentPlanView = function(planModel) {
-        return new PlanListView.CurrentPlanView({
-          model: planModel
+      PlansListController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
+        return new PlanListView.ActiveSubscriptionView({
+          model: subscriptionModel
         });
       };
 
@@ -68,7 +69,8 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
 
       PlansListController.prototype.getPlanListView = function(planCollection) {
         return new PlanListView.PlanListsView({
-          collection: planCollection
+          collection: planCollection,
+          domainId: this.domainId
         });
       };
 

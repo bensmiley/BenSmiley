@@ -13,19 +13,18 @@ define(['app', 'msgbus', 'apps/plans/list/list-plans-controller', 'apps/plans/ch
       }
 
       PlansAppRouter.prototype.appRoutes = {
-        'domains/edit/:domainID/list-plan/:planID': 'show',
-        'domains/edit/:domainID/change-plan/:planID': 'change'
+        'domains/edit/:domainID/list-plan': 'show',
+        'change-plan/:domainID/:planID': 'change'
       };
 
       return PlansAppRouter;
 
     })(Marionette.AppRouter);
     API = {
-      show: function(domainID, planID) {
+      show: function(domainID) {
         return App.execute("show:plans:list", {
           region: App.mainContentRegion,
-          domainID: parseInt(domainID),
-          planID: parseInt(planID)
+          domainID: parseInt(domainID)
         });
       },
       change: function(domainID, planID) {

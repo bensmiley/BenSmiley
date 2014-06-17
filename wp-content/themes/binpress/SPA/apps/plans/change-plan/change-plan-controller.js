@@ -10,27 +10,32 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       __extends(ChangePlanController, _super);
 
       function ChangePlanController() {
-        this.planIDModelFetched = __bind(this.planIDModelFetched, this);
+        this.showActiveSubscription = __bind(this.showActiveSubscription, this);
         return ChangePlanController.__super__.constructor.apply(this, arguments);
       }
 
       ChangePlanController.prototype.initialize = function(opts) {
-        var planIdModel;
         this.domainId = opts.domainID;
         this.layout = this.getLayout();
-        this.show(this.layout);
-        planIdModel = msgbus.reqres.request("get:current:plan:id", this.domainId);
-        return planIdModel.fetch({
-          data: {
-            'domain_id': this.domainId,
-            'action': 'get-current-domain-plan-id'
-          },
-          success: this.planIDModelFetched
+        this.show(this.layout, {
+          loading: true
+        });
+        this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
+        return this.subscriptionModel.fetch({
+          success: this.showActiveSubscription
         });
       };
 
-      ChangePlanController.prototype.planIDModelFetched = function(planIdModel) {
-        return this.layout = this.getLayout(planIdModel);
+      ChangePlanController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
+        return new ChangePlanView.ActiveSubscriptionView({
+          model: subscriptionModel
+        });
+      };
+
+      ChangePlanController.prototype.showActiveSubscription = function(subscriptionModel) {
+        var activeSubscriptionView;
+        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
+        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
       };
 
       ChangePlanController.prototype.getLayout = function() {
