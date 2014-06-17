@@ -17,6 +17,8 @@ requirejs.config
         regioncontroller : 'controllers/region-controller'
         bootstrap : 'bower_components/bootstrap/dist/js/bootstrap.min'
         braintree : 'bower_components/braintree/braintree'
+        spin : 'bower_components/spin.js/spin'
+        jqueryspin : 'bower_components/spin.js/jquery.spin'
     shim :
         jquery : [ 'underscore' ]
         backbone : [ 'jquery', 'underscore' ]
@@ -27,6 +29,7 @@ requirejs.config
         backbonesyphon : [ 'backbone' ]
         jqueryvalidate : [ 'jquery' ]
         bootstrap : [ 'jquery' ]
+        jqueryspin : [ 'spin' ]
         plupload :
             deps : [ 'jquery' ]
             exports : 'plupload'

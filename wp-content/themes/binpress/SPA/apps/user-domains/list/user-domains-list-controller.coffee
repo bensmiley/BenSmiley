@@ -23,7 +23,8 @@ define [ 'app'
                 @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
 
                 #show user domain list view
-                @show @domainListView
+                @show @domainListView,
+                    loading: true
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView

@@ -11,6 +11,6 @@ define("app", ['pages/dashboard.app'], function(App) {
   return App;
 });
 
-require(['plugins-loader', 'config-loader', 'app', 'entitites-loader', 'apps-loader'], function(p, c, App) {
+require(['plugins-loader', 'config-loader', 'app', 'entitites-loader', 'apps-loader', 'loading/controller'], function(p, c, App) {
   return App.start();
 });
