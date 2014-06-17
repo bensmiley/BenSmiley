@@ -12,37 +12,37 @@ define [ 'app'
 
             initialize : ( opts )->
                 #get the plan and domain IDs
-                @planId = opts.planID
                 @domainId = opts.domainID
 
                 #get plan list layout
                 @layout = @getLayout()
 
-                @listenTo @layout, "show", @showCurrentPlan
-                @listenTo @layout, "show", @showPlansList
+                @listenTo @layout, "show", @showViews
 
                 #show the layout
-                @show @layout
+                @show @layout,
+                    loading : true
 
             getLayout : ->
                 new PlanListView.PlansListLayout
 
-            showCurrentPlan : =>
-                @planModel = msgbus.reqres.request "get:plan:by:id"
-                @planModel.fetch
-                    data :
-                        'domain_id' : @domainId
-                        'plan_id' : @planId
-                        'action' : 'read-plan'
-                    success : @showCurrentPlanView
+            showViews : =>
+                @showActiveSubscription()
+                @showPlansList()
 
-            showCurrentPlanView : =>
-                currentPlanView = @getCurrentPlanView @planModel
-                @layout.currentPlanRegion.show currentPlanView
 
-            getCurrentPlanView : ( planModel )->
-                new PlanListView.CurrentPlanView
-                    model : planModel
+            showActiveSubscription : =>
+                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                @subscriptionModel.fetch
+                    success : @showActiveSubscriptionView
+
+            showActiveSubscriptionView : ( subscriptionModel ) =>
+                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+                @layout.activeSubscriptionRegion.show activeSubscriptionView
+
+            getActiveSubscriptionView : ( subscriptionModel )->
+                new PlanListView.ActiveSubscriptionView
+                    model : subscriptionModel
 
             showPlansList : =>
                 @planCollection = msgbus.reqres.request "get:all:plans"
@@ -56,11 +56,11 @@ define [ 'app'
             getPlanListView : ( planCollection )->
                 new PlanListView.PlanListsView
                     collection : planCollection
+                    domainId : @domainId
 
 
         #handler for showing the plans list page,options to be passed to controller are:
         # region :  App.mainContentRegion
-        # planID : int plan id
         # domainID : Int domain id
         App.commands.setHandler "show:plans:list", ( options ) ->
             new PlansListController options

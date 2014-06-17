@@ -45,7 +45,8 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         })(this));
         this.listenTo(this.layout, "edit:domain:clicked", this.editDomain);
         return this.show(this.layout, {
-          loading: true
+          loading: true,
+          entities: this.subscriptionModel
         });
       };
 

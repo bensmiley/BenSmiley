@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['backbone', 'msgbus'], function(Backbone, msgbus) {
-  var API, PlanCollection, PlanIdModel, PlanModel;
+  var API, PlanCollection, PlanModel;
   PlanModel = (function(_super) {
     __extends(PlanModel, _super);
 
@@ -13,21 +13,9 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
 
     PlanModel.prototype.name = 'plan';
 
-    PlanModel.prototype.idAttribute = 'ID';
+    PlanModel.prototype.idAttribute = 'plan_id';
 
     return PlanModel;
-
-  })(Backbone.Model);
-  PlanIdModel = (function(_super) {
-    __extends(PlanIdModel, _super);
-
-    function PlanIdModel() {
-      return PlanIdModel.__super__.constructor.apply(this, arguments);
-    }
-
-    PlanIdModel.prototype.name = 'planId';
-
-    return PlanIdModel;
 
   })(Backbone.Model);
   PlanCollection = (function(_super) {
@@ -47,29 +35,17 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
 
   })(Backbone.Collection);
   API = {
-    getPlanById: function() {
-      var planModel;
-      planModel = new PlanModel;
-      return planModel;
-    },
     getAllPlans: function() {
       var planCollection;
       planCollection = new PlanCollection;
       return planCollection;
-    },
-    getCurrentPlanId: function(domainID) {
-      var planIdModel;
-      return planIdModel = new PlanIdModel;
     }
   };
-  msgbus.reqres.setHandler("get:plan:by:id", function() {
-    return API.getPlanById();
-  });
   msgbus.reqres.setHandler("get:all:plans", function() {
     return API.getAllPlans();
   });
-  msgbus.reqres.setHandler("get:current:plan:id", function(domainID) {
-    return API.getCurrentPlanId(domainID);
-  });
-  return PlanModel;
+  return {
+    PlanModel: PlanModel,
+    PlanCollection: PlanCollection
+  };
 });

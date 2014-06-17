@@ -39,10 +39,11 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
     msgbus.reqres.setHandler "get:current:user:domains", ->
         API.getCurrentUserDomains()
 
-    msgbus.reqres.setHandler "get:domain:model:by:id",( domainId ) ->
+    msgbus.reqres.setHandler "get:domain:model:by:id", ( domainId ) ->
         API.getDomainById domainId
 
     msgbus.reqres.setHandler "create:domain:model", ( data ) ->
         API.createCurrentUserDomainModel data
 
-    UserDomainModel
+    UserDomainModel : UserDomainModel
+    UserDomainCollection : UserDomainCollection

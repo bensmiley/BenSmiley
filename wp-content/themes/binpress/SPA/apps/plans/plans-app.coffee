@@ -11,16 +11,15 @@ define [ 'app'
         class PlansAppRouter extends Marionette.AppRouter
 
             appRoutes :
-                'domains/edit/:domainID/list-plan/:planID' : 'show'
-                'domains/edit/:domainID/change-plan/:planID' : 'change'
+                'domains/edit/:domainID/list-plan' : 'show'
+                'change-plan/:domainID/:planID' : 'change'
 
         #public API
         API =
-            show : ( domainID, planID ) ->
+            show : ( domainID ) ->
                 App.execute "show:plans:list",
                     region : App.mainContentRegion
                     domainID : parseInt domainID
-                    planID : parseInt planID
 
             change : ( domainID, planID ) ->
                 App.execute "change:plan",
