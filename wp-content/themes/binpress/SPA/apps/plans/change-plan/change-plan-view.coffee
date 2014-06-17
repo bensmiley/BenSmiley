@@ -4,34 +4,33 @@ define [ 'marionette'
          'braintree' ], ( Marionette, changePlanTpl, BrainTree )->
 
     # Payment page main layout
-    class ChangePlanLayout extends Marionette.Layout
+    class ChangePlanView extends Marionette.CompositeView
 
         template : changePlanTpl
 
-        regions :
-            displayPaymentRegion : '#display-payment-form'
-            activeSubscriptionRegion : '#show-active-subscription'
+        onShow :->
+            console.log @model
 
-    class ActiveSubscriptionView extends Marionette.ItemView
-        template : ' <div class="col-md-3">
-                            <div class="tiles-body">
-                                <div > ACTIVE PLAN </div>
-                                <div class="heading">
-                                    <span class="animate-number" >Free</span>
-                                    <a href="#" class="white-txt"><small class="tiles-title"> (Deactivite Plan)</small></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="tiles-body">
-                                <div > ACTIVE SINCE </div>
-                                <div class="heading">
-                                    <span class="animate-number" >09/12/2014</span>
-                                </div>
-                            </div>
-                        </div>'
-
-        className : 'row'
+#    class ActiveSubscriptionView extends Marionette.ItemView
+#        template : ' <div class="col-md-3">
+#                            <div class="tiles-body">
+#                                <div > ACTIVE PLAN </div>
+#                                <div class="heading">
+#                                    <span class="animate-number" >Free</span>
+#                                    <a href="#" class="white-txt"><small class="tiles-title"> (Deactivite Plan)</small></a>
+#                                </div>
+#                            </div>
+#                        </div>
+#                        <div class="col-md-3">
+#                            <div class="tiles-body">
+#                                <div > ACTIVE SINCE </div>
+#                                <div class="heading">
+#                                    <span class="animate-number" >09/12/2014</span>
+#                                </div>
+#                            </div>
+#                        </div>'
+#
+#        className : 'row'
     #payment form display
     #    class PaymentFormView extends Marionette.ItemView
     #
@@ -62,9 +61,7 @@ define [ 'marionette'
 
 
     # return the view instances as objects
-    ChangePlanLayout : ChangePlanLayout
-    ActiveSubscriptionView : ActiveSubscriptionView
-#    PaymentFormView : PaymentFormView
+    ChangePlanView
 
 
 

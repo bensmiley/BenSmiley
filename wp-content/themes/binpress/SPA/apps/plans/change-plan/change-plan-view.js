@@ -3,40 +3,22 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'braintree'], function(Marionette, changePlanTpl, BrainTree) {
-  var ActiveSubscriptionView, ChangePlanLayout;
-  ChangePlanLayout = (function(_super) {
-    __extends(ChangePlanLayout, _super);
+  var ChangePlanView;
+  ChangePlanView = (function(_super) {
+    __extends(ChangePlanView, _super);
 
-    function ChangePlanLayout() {
-      return ChangePlanLayout.__super__.constructor.apply(this, arguments);
+    function ChangePlanView() {
+      return ChangePlanView.__super__.constructor.apply(this, arguments);
     }
 
-    ChangePlanLayout.prototype.template = changePlanTpl;
+    ChangePlanView.prototype.template = changePlanTpl;
 
-    ChangePlanLayout.prototype.regions = {
-      displayPaymentRegion: '#display-payment-form',
-      activeSubscriptionRegion: '#show-active-subscription'
+    ChangePlanView.prototype.onShow = function() {
+      return console.log(this.model);
     };
 
-    return ChangePlanLayout;
+    return ChangePlanView;
 
-  })(Marionette.Layout);
-  ActiveSubscriptionView = (function(_super) {
-    __extends(ActiveSubscriptionView, _super);
-
-    function ActiveSubscriptionView() {
-      return ActiveSubscriptionView.__super__.constructor.apply(this, arguments);
-    }
-
-    ActiveSubscriptionView.prototype.template = ' <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE PLAN </div> <div class="heading"> <span class="animate-number" >Free</span> <a href="#" class="white-txt"><small class="tiles-title"> (Deactivite Plan)</small></a> </div> </div> </div> <div class="col-md-3"> <div class="tiles-body"> <div > ACTIVE SINCE </div> <div class="heading"> <span class="animate-number" >09/12/2014</span> </div> </div> </div>';
-
-    ActiveSubscriptionView.prototype.className = 'row';
-
-    return ActiveSubscriptionView;
-
-  })(Marionette.ItemView);
-  return {
-    ChangePlanLayout: ChangePlanLayout,
-    ActiveSubscriptionView: ActiveSubscriptionView
-  };
+  })(Marionette.CompositeView);
+  return ChangePlanView;
 });

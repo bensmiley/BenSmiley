@@ -63,9 +63,8 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       };
 
       DomainEditController.prototype.showActiveSubscription = function(subscriptionModel) {
-        var activeSubscriptionView;
-        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
-        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
+        this.activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
+        return this.layout.activeSubscriptionRegion.show(this.activeSubscriptionView);
       };
 
       DomainEditController.prototype.editDomain = function(domainData) {

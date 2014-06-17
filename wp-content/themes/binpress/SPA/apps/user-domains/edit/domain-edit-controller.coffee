@@ -60,8 +60,8 @@ define [ 'app'
                     model : subscriptionModel
 
             showActiveSubscription : ( subscriptionModel )=>
-                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
-                @layout.activeSubscriptionRegion.show activeSubscriptionView
+                @activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+                @layout.activeSubscriptionRegion.show @activeSubscriptionView
 
             editDomain : ( domainData )=>
                 @domainModel.set domainData

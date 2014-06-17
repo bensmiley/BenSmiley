@@ -13,28 +13,37 @@ define [ 'app'
             initialize : ( opts )->
                 @domainId = opts.domainID
 
-                @layout = @getLayout()
+                subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                subscriptionModel.fetch
+                    success : @changePlan
 
-                @show @layout,
+#                @layout = @getLayout()
+#
+#                @show @layout,
+#                    loading : true
+#
+#                #fetch the current subscriptionfor the domain, on sucess
+#                #load the active subscription view
+#                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+#                @subscriptionModel.fetch
+#                    success : @showActiveSubscription
+
+#            getActiveSubscriptionView : ( subscriptionModel ) ->
+#                new ChangePlanView.ActiveSubscriptionView
+#                    model : subscriptionModel
+#
+#            showActiveSubscription : ( subscriptionModel )=>
+#                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+#                @layout.activeSubscriptionRegion.show activeSubscriptionView
+
+            changePlan : ( subscriptionModel ) =>
+                changePlanView = @getChangePlanView subscriptionModel
+                @show changePlanView,
                     loading : true
 
-                #fetch the current subscriptionfor the domain, on sucess
-                #load the active subscription view
-                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-                @subscriptionModel.fetch
-                    success : @showActiveSubscription
-
-            getActiveSubscriptionView : ( subscriptionModel ) ->
-                new ChangePlanView.ActiveSubscriptionView
+            getChangePlanView : ( subscriptionModel ) ->
+                new ChangePlanView
                     model : subscriptionModel
-
-            showActiveSubscription : ( subscriptionModel )=>
-                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
-                @layout.activeSubscriptionRegion.show activeSubscriptionView
-
-
-            getLayout : ->
-                new ChangePlanView.ChangePlanLayout
 
 
         #handler for changing the domain plan,options to be passed to controller are:

@@ -10,36 +10,31 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       __extends(ChangePlanController, _super);
 
       function ChangePlanController() {
-        this.showActiveSubscription = __bind(this.showActiveSubscription, this);
+        this.changePlan = __bind(this.changePlan, this);
         return ChangePlanController.__super__.constructor.apply(this, arguments);
       }
 
       ChangePlanController.prototype.initialize = function(opts) {
+        var subscriptionModel;
         this.domainId = opts.domainID;
-        this.layout = this.getLayout();
-        this.show(this.layout, {
+        subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
+        return subscriptionModel.fetch({
+          success: this.changePlan
+        });
+      };
+
+      ChangePlanController.prototype.changePlan = function(subscriptionModel) {
+        var changePlanView;
+        changePlanView = this.getChangePlanView(subscriptionModel);
+        return this.show(changePlanView, {
           loading: true
         });
-        this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
-        return this.subscriptionModel.fetch({
-          success: this.showActiveSubscription
-        });
       };
 
-      ChangePlanController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
-        return new ChangePlanView.ActiveSubscriptionView({
+      ChangePlanController.prototype.getChangePlanView = function(subscriptionModel) {
+        return new ChangePlanView({
           model: subscriptionModel
         });
-      };
-
-      ChangePlanController.prototype.showActiveSubscription = function(subscriptionModel) {
-        var activeSubscriptionView;
-        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
-        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
-      };
-
-      ChangePlanController.prototype.getLayout = function() {
-        return new ChangePlanView.ChangePlanLayout;
       };
 
       return ChangePlanController;
