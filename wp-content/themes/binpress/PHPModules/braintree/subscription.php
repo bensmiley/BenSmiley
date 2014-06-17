@@ -14,9 +14,9 @@ function get_subscription_details( $subscription_id ) {
 
     $subscription_data[ 'name' ] = $plan_name;
     $subscription_data[ 'price' ] = $subscription->price;
-    $subscription_data[ 'start_date' ] = $subscription->firstBillingDate;
-    $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate;
-    $subscription_data[ 'bill_end' ] = $subscription->billingPeriodEndDate;
+    $subscription_data[ 'start_date' ] = $subscription->firstBillingDate->format('d/m/Y');
+    $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format('d/m/Y');
+    $subscription_data[ 'bill_end' ] = $subscription->billingPeriodEndDate->format('d/m/Y');
 
     return $subscription_data;
 }
