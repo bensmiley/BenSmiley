@@ -24,7 +24,7 @@ define [ 'marionette'
 
         tagName : 'tr'
 
-        template : '<td>You have not added any domains yet</td>'
+        template : '<td colspan="4" align="center">You have not added any domains yet</td>'
 
 
     # Main view  for displaying the user domains list
