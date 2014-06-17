@@ -33,5 +33,6 @@ require [ 'plugins-loader'
           'config-loader'
           'app'
           'entitites-loader'
-          'apps-loader' ], ( p, c, App ) ->
+          'apps-loader'
+          'loading/controller'], ( p, c, App ) ->
     App.start()

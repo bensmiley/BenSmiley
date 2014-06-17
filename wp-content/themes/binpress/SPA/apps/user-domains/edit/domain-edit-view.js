@@ -74,7 +74,7 @@ define(['marionette', 'text!apps/user-domains/templates/addEditUserDomain.html']
       return ActiveSubscriptionView.__super__.constructor.apply(this, arguments);
     }
 
-    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{plan_name}}</span></dd> <dt>Payement :</dt> <dd>{{payment}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{billing_cycle}}</dd> </dl> <a href="#domains/edit/{{ID}}/list-plan/{{plan_id}}" class="btn btn-success btn-block"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> </div>';
+    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{name}}</span></dd> <dt>Payement :</dt> <dd>{{price}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{bill_start}} To {{bill_end}}</dd> </dl> <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> </div>';
 
     ActiveSubscriptionView.prototype.className = 'alert alert-info';
 

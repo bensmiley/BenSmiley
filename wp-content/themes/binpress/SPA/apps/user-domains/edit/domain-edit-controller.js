@@ -12,6 +12,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       function DomainEditController() {
         this.domainUpdated = __bind(this.domainUpdated, this);
         this.editDomain = __bind(this.editDomain, this);
+        this.showActiveSubscription = __bind(this.showActiveSubscription, this);
         this.showEditView = __bind(this.showEditView, this);
         return DomainEditController.__super__.constructor.apply(this, arguments);
       }
@@ -25,7 +26,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       };
 
       DomainEditController.prototype.showEditView = function(domainModel) {
-        this.layout = this.geEditDomainLayout(domainModel);
+        this.layout = this.getEditDomainLayout(domainModel);
         this.listenTo(this.layout, "show", (function(_this) {
           return function() {
             var subscriptionModel;
@@ -38,18 +39,31 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
               domain_id: _this.domainId
             });
             subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", _this.domainId);
-            subscriptionModel.fetch();
-            return console.log(subscriptionModel);
+            return subscriptionModel.fetch({
+              success: _this.showActiveSubscription
+            });
           };
         })(this));
         this.listenTo(this.layout, "edit:domain:clicked", this.editDomain);
         return this.show(this.layout);
       };
 
-      DomainEditController.prototype.geEditDomainLayout = function(domainModel) {
+      DomainEditController.prototype.getEditDomainLayout = function(domainModel) {
         return new EditDomainView.DomainEditLayout({
           model: domainModel
         });
+      };
+
+      DomainEditController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
+        return new EditDomainView.ActiveSubscriptionView({
+          model: subscriptionModel
+        });
+      };
+
+      DomainEditController.prototype.showActiveSubscription = function(subscriptionModel) {
+        var activeSubscriptionView;
+        activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
+        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
       };
 
       DomainEditController.prototype.editDomain = function(domainData) {
