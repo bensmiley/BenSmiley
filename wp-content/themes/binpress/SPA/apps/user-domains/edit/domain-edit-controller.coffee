@@ -3,7 +3,8 @@ define [ 'app'
          'regioncontroller'
          'apps/user-domains/edit/domain-edit-view'
          'msgbus'
-         'apps/user-domains/groups/add/add-group-controller' ], ( App, RegionController, EditDomainView, msgbus )->
+         'apps/user-domains/groups/add/add-group-controller'
+         'apps/user-domains/groups/list/list-group-controller'], ( App, RegionController, EditDomainView, msgbus )->
 
     #start the app module
     App.module "UserDomainApp.Edit", ( Edit, App, BackBone, Marionette, $, _ )->
@@ -32,21 +33,22 @@ define [ 'app'
                         domain_id : @domainId
 
                     #start the list domain group app
-                    App.execute "add:domain:groups",
+                    App.execute "list:domain:groups",
                         region : @layout.listDomainGroupRegion
                         domain_id : @domainId
 
                     #fetch the current subscriptionfor the domain, on sucess
                     #load the active subscription view
-                    subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-                    subscriptionModel.fetch
+                    @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                    @subscriptionModel.fetch
                         success : @showActiveSubscription
 
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain
 
                 #show the edit domain layout
-                @show @layout
+                @show @layout,
+                    loading: true
 
             getEditDomainLayout : ( domainModel ) ->
                 new EditDomainView.DomainEditLayout
