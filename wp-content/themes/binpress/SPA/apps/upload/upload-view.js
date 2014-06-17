@@ -11,7 +11,7 @@ define(['plupload', 'marionette'], function(plupload, Marionette) {
       return UploadView.__super__.constructor.apply(this, arguments);
     }
 
-    UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right"> <img class="m-b-10" width="90" height="90" alt="" src="{{user_photo}}"id="user-photo"> <div class="clearfix"></div> <a id="add-photo" class="m-t-10" href="#" data-color-format="hex">Click to add/edit Profile Photo</a> </div> <div class="upload-progress"> <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active"> <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div> <span class="sr-only">0% Complete </span> </div> </div> <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/> </div>';
+    UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right alert alert-info"> <img class="m-b-10" width="90" height="90" alt="" src="{{user_photo}}"id="user-photo"> <div class="clearfix"></div> <a id="add-photo" class="btn btn-primary btn-block" href="#" data-color-format="hex">Edit Profile Photo</a> </div> <div class="upload-progress"> <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active"> <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div> <span class="sr-only">0% Complete </span> </div> </div> <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/> </div>';
 
     UploadView.prototype.onShow = function() {
       this.uploader = new plupload.Uploader({

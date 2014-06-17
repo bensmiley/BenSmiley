@@ -6,14 +6,12 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
     class UploadView extends Marionette.ItemView
 
         template : '<div class="col-md-3 text-center">
-                    <div class="profile-wrapper pull-right">
+                    <div class="profile-wrapper pull-right alert alert-info">
                         <img class="m-b-10" width="90" height="90"
                          alt="" src="{{user_photo}}"id="user-photo">
 
                         <div class="clearfix"></div>
-                        <a id="add-photo" class="m-t-10" href="#" data-color-format="hex">Click
-                            to
-                            add/edit Profile Photo</a>
+                        <a id="add-photo" class="btn btn-primary btn-block" href="#" data-color-format="hex">Edit Profile Photo</a>
                     </div>
                     <div class="upload-progress">
                         <div id="progress" style="width: 30%; margin: 0px auto; display: none;"
