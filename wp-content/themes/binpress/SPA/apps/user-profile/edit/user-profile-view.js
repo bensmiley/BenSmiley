@@ -27,6 +27,7 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
       'click #btn-save-user-profile': function() {
         var userdata;
         if (this.$el.valid()) {
+          this.$el.find('.ajax-loader-login').show();
           userdata = Backbone.Syphon.serialize(this);
           return this.trigger("save:user:profile:clicked", userdata);
         }
@@ -62,6 +63,7 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
 
     UserProfileView.prototype.onUserProfileUpdated = function() {
       var msg, userPassword;
+      this.$el.find('.ajax-loader-login').hide();
       this.$el.find('#form-msg').empty();
       userPassword = this.$el.find('#user_pass').val();
       if (userPassword !== "") {

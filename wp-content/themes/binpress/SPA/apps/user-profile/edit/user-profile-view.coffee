@@ -19,6 +19,7 @@ define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], (
             'click #btn-save-user-profile' : ->
                 #check if the form is valid
                 if @$el.valid()
+                    @$el.find('.ajax-loader-login' ).show()
                     #get all serialized data from the form
                     userdata = Backbone.Syphon.serialize @
                     @trigger "save:user:profile:clicked", userdata
@@ -44,6 +45,7 @@ define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], (
                 user_name : 'Enter valid user name'
 
         onUserProfileUpdated : ->
+            @$el.find('.ajax-loader-login' ).hide()
             @$el.find( '#form-msg' ).empty()
             userPassword = @$el.find( '#user_pass' ).val()
             if userPassword != ""
