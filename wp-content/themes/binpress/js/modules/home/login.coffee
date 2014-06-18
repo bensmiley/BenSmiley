@@ -59,7 +59,7 @@ define [ 'jquery', 'jqueryvalidate', 'bootstrap' ], ->
                             $( '#display-login-msg' ).append successMsg
                             page = "/dashboard"
                             window.location.href = response.site_url + page
-                            $( '.ajax-loader-login' ).hide()
+
 
                         if(response.code == "ERROR")
                             errorMsg = response.msg
