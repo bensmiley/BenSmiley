@@ -1,6 +1,6 @@
 #include the files for the app
 define [ 'marionette'
-         'text!apps/user-domains/templates/addEditUserDomain.html' ], ( Marionette, addEditUserDomainTpl )->
+         'text!apps/user-domains/templates/AddEditUserDomain.html' ], ( Marionette, addEditUserDomainTpl )->
 
     # Layout for add-edit user domains
     class DomainEditLayout extends Marionette.Layout
