@@ -8,7 +8,7 @@ define [ 'marionette'
 
         template : '<div class="page-header">
                               <h1 class="normaltext-center">
-                                <span class="p-r-10">Enter Your Payament Details</span>
+                                <span class="p-r-10">Enter Your Passyament Details</span>
                               </h1>
                             </div>
                              <div class="row">
