@@ -30,7 +30,7 @@ define [ 'app'
                 @show planListShowView,
                     loading : true
 
-            getPlanListView :(  planCollection  ) ->
+            getPlanListView : ( planCollection ) ->
                 new PlanListView
                     collection : planCollection
                     model : @subscriptionModel

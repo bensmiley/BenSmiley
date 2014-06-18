@@ -16,8 +16,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     #PUBLIC API
     API =
-
-       getAllPlans : ->
+        getAllPlans : ->
             planCollection = new PlanCollection
             planCollection
 
