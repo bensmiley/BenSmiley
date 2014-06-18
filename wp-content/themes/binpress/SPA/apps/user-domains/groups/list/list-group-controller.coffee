@@ -7,12 +7,18 @@ define [ 'app'
     #start the app module
     App.module "UserDomainApp.ListGroups", ( ListGroups, App, BackBone, Marionette, $, _ )->
 
-        # Controller class for adding domain groups
+        # Controller class for listing domain groups
         class DomainListGroupController extends RegionController
 
             initialize : ( opts )->
 
-                @domain_id = opts.domain_id
+                @domainId = opts.domain_id
+
+                #get the groups for the domain
+                @groupCollection = msgbus.reqres.request "get:groups:for:domains",@domainId
+                @groupCollection.fetch
+                            data :
+                                'domain_id' : @domainId
 
                 @view = @getView @domain_id
 

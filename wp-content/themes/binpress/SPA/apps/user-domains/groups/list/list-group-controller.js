@@ -13,7 +13,13 @@ define(['app', 'regioncontroller', 'apps/user-domains/groups/list/list-group-vie
       }
 
       DomainListGroupController.prototype.initialize = function(opts) {
-        this.domain_id = opts.domain_id;
+        this.domainId = opts.domain_id;
+        this.groupCollection = msgbus.reqres.request("get:groups:for:domains", this.domainId);
+        this.groupCollection.fetch({
+          data: {
+            'domain_id': this.domainId
+          }
+        });
         this.view = this.getView(this.domain_id);
         return this.show(this.view, {
           loading: true

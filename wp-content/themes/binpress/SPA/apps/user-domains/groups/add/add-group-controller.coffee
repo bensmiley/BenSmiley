@@ -12,28 +12,27 @@ define [ 'app'
 
             initialize : ( opts )->
 
-                @domain_id = opts.domain_id
+                @domainId = opts.domain_id
 
-                @view = @getView @domain_id
+                @view = @getView @domainId
 
                 @listenTo @view, "save:domain:group:clicked", @saveDomainGroup
 
                 @show @view,
                     loading : true
 
-            getView : ( domainid ) ->
+            getView : ( domainId ) ->
                 new AddGroupView
-                    domain_id : domainid
+                    domainId : domainId
 
-            saveDomainGroup : ( groupdata )->
-                domainGroupModel = msgbus.reqres.request "create:domain:group:model", groupdata
+            saveDomainGroup : ( groupData )->
+                domainGroupModel = msgbus.reqres.request "create:domain:group:model", groupData
                 domainGroupModel.save null,
                     wait : true
                     success : @domainGroupAdded
 
-            domainGroupAdded : ( domainGroupModel )->
+            domainGroupAdded : ( domainGroupModel )=>
                 @view.triggerMethod "domain:group:added"
-                console.log domainGroupModel
 
 
         #handler for showing the add domain group section:
