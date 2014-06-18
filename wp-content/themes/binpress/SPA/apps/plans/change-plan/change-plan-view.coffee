@@ -1,6 +1,6 @@
 #include the files for the app
 define [ 'marionette'
-		 'card'
+         'card'
          'text!apps/plans/templates/changePlanLayout.html'
          'braintree' ], ( Marionette, changePlanTpl, BrainTree, card )->
 
