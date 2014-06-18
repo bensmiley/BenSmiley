@@ -1,7 +1,8 @@
 #include the files for the app
 define [ 'marionette'
+		 'card'
          'text!apps/plans/templates/changePlanLayout.html'
-         'braintree' ], ( Marionette, changePlanTpl, BrainTree )->
+         'braintree' ], ( Marionette, changePlanTpl, BrainTree, card )->
 
     # Payment page main layout
     class ChangePlanView extends Marionette.CompositeView
