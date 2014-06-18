@@ -28,7 +28,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
             activePlanName = Marionette.getOption @, 'activePlanName'
             planName =  @model.get 'name'
             if activePlanName == planName
-                @$el.find('.plan-link').addClass 'hightlighted'
+                @$el.addClass 'highlight'
 
             #append domain id to link
             linkValue = @$el.find('.plan-link').attr 'href'
