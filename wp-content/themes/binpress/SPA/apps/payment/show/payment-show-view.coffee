@@ -7,63 +7,63 @@ define [ 'marionette'
     class PaymentLayout extends Marionette.Layout
 
         template : '<div class="page-header">
-                              <h1 class="normaltext-center">
-                                <span class="p-r-10">Enter Your Payament Details</span>
-                              </h1>
-                            </div>
-                             <div class="row">
-                                <div class="col-md-12">
-                                         <div class="tiles blue">
-                                              <div class="row">
-                                                  <div class="col-md-3">
-                                                       <div class="tiles-body">
-                                                             <div > ACTIVE PLAN </div>
-                                                                  <div class="heading">
-                                                                  <span class="animate-number" >Free</span>
-                                                                  <a href="#" class="white-txt"><small class="tiles-title"> (Deactivite Plan)</small></a>
-                                                             </div>
-                                                       </div>
-                                                   </div>
-                                                  <div class="col-md-3">
-                                                         <div class="tiles-body">
-                                                             <div > ACTIVE SINCE </div>
-                                                                  <div class="heading">
-                                                                  <span class="animate-number" >09/12/2014</span>
-                                                              </div>
-                                                       </div>
-                                                  </div>
-                                              </div>
-                                         </div>
-                                   </div>
-                              </div>
-                              <div class="col-md-9">
-                        	<div class="modal-body">
-                        	<div class="row">
-                            	  <div id="display-payment-form"></div>
+                                      <h1 class="normaltext-center">
+                                        <span class="p-r-10">Enter Your Passyament Details</span>
+                                      </h1>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-md-12">
+                                                 <div class="tiles blue">
+                                                      <div class="row">
+                                                          <div class="col-md-3">
+                                                               <div class="tiles-body">
+                                                                     <div > ACTIVE PLAN </div>
+                                                                          <div class="heading">
+                                                                          <span class="animate-number" >Free</span>
+                                                                          <a href="#" class="white-txt"><small class="tiles-title"> (Deactivite Plan)</small></a>
+                                                                     </div>
+                                                               </div>
+                                                           </div>
+                                                          <div class="col-md-3">
+                                                                 <div class="tiles-body">
+                                                                     <div > ACTIVE SINCE </div>
+                                                                          <div class="heading">
+                                                                          <span class="animate-number" >09/12/2014</span>
+                                                                      </div>
+                                                               </div>
+                                                          </div>
+                                                      </div>
+                                                 </div>
+                                           </div>
+                                      </div>
+                                      <div class="col-md-9">
+                                	<div class="modal-body">
+                                	<div class="row">
+                                    	  <div id="display-payment-form"></div>
 
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                        	<div class="alert alert-info">
-                        	<p class="m-b-20">Any change of plans in the midddle of cycle will be applicable from new cycle</p>
-                        		<div class="grid simple">
-                        			<h2 class="bold text-center">Free<br><small class="text-danger" > US$0.00/month</small></h4>
-                        			<hr>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                	<div class="alert alert-info">
+                                	<p class="m-b-20">Any change of plans in the midddle of cycle will be applicable from new cycle</p>
+                                		<div class="grid simple">
+                                			<h2 class="bold text-center">Free<br><small class="text-danger" > US$0.00/month</small></h4>
+                                			<hr>
 
-                        			<ul class="list-unstyled text-center">
-                        				<li>Multiple Email Accounts </li>
-                        				<li>99.9% Uptime </li>
-                        				<li>Enterprise Level Storage </li>
-                        				<li>Fully Managed VPS</li>
-                        				<li>Reliable 24/7/365 Support</li>
-                        				<li>Enterprise Level Storage </li>
-                        				<li>Fully Managed VPS</li>
-                        				<li>Reliable 24/7/365 Support</li>
-                        			</ul>
-                        		</div>
-                        	</div>
-                        </div>'
+                                			<ul class="list-unstyled text-center">
+                                				<li>Multiple Email Accounts </li>
+                                				<li>99.9% Uptime </li>
+                                				<li>Enterprise Level Storage </li>
+                                				<li>Fully Managed VPS</li>
+                                				<li>Reliable 24/7/365 Support</li>
+                                				<li>Enterprise Level Storage </li>
+                                				<li>Fully Managed VPS</li>
+                                				<li>Reliable 24/7/365 Support</li>
+                                			</ul>
+                                		</div>
+                                	</div>
+                                </div>'
 
         regions :
             displayPaymentRegion : '#display-payment-form'

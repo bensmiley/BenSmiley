@@ -38,7 +38,6 @@
                 domain_id: _this.domainId
               });
               _this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", _this.domainId);
-              console.log("how");
               return _this.subscriptionModel.fetch({
                 success: _this.showActiveSubscription
               });

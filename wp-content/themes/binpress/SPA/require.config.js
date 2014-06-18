@@ -19,7 +19,7 @@ requirejs.config({
     braintree: 'bower_components/braintree/braintree',
     spin: 'bower_components/spin.js/spin',
     jqueryspin: 'bower_components/spin.js/jquery.spin',
-    card: 'bower_components/lib/js/card'
+    card: 'bower_components/card/lib/js/card'
   },
   shim: {
     jquery: ['underscore'],

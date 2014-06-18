@@ -16,9 +16,7 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
                     <div class="upload-progress">
                         <div id="progress" style="width: 30%; margin: 0px auto; display: none;"
                         class="progress progress-striped active">
-                            <div role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                aria-valuemax="100" class="progress-bar"></div>
-                            <span class="sr-only">0% Complete </span>
+
                         </div>
                     </div>
                     <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/>
@@ -54,18 +52,17 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
             @uploader.init()
 
             @uploader.bind "FilesAdded", ( up, files )=>
+                @$el.find( ".progress" ).show()
                 @uploader.start()
-                @$el.find( ".upload-progress" ).css "display", "inline"
 
             @uploader.bind "UploadProgress", ( up, file )=>
-                @$el.find( ".progress-bar" ).css "width", file.percent + "%"
+                @$el.find( ".progress" ).css "width", file.percent + "%"
 
             @uploader.bind "Error", ( up, err )->
                 up.refresh() # Reposition Flash/Silverlight
 
             @uploader.bind "FileUploaded", ( up, file, response )=>
-                @$el.find( ".progress-bar" ).css "width", "0%"
-                @$el.find( ".upload-progress" ).css "display", "none"
+                @$el.find( ".progress" ).css "width", "0%"
                 response = JSON.parse response.response
                 if response.success
                     @$el.find( '#user-photo-id' ).val( response.data.id )

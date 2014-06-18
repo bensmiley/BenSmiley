@@ -1,13 +1,13 @@
 #include the files for the app
 define [ 'app'
          'regioncontroller'
-         'apps/upload/upload-view' ], ( App, AppController, UploadView )->
+         'apps/upload/upload-view' ], ( App, RegionController, UploadView )->
 
     #start the app module
     App.module 'UploadApp', ( UploadApp, App, Backbone, Marionette, $, _ )->
 
         # Controller class to start the upload app
-        class UploadApp.Controller extends AppController
+        class UploadApp.Controller extends RegionController
 
             # initialize
             initialize : ( opts )->
@@ -17,7 +17,8 @@ define [ 'app'
                 #get upload view
                 view = @_getView @userModel
 
-                @show view
+                @show view,
+                    loading : true
 
             # gets the main upload view
             _getView : ( userModel ) ->

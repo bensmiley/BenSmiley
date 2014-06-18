@@ -22,7 +22,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
       activePlanName = Marionette.getOption(this, 'activePlanName');
       planName = this.model.get('name');
       if (activePlanName === planName) {
-        this.$el.find('.plan-link').addClass('hightlighted');
+        this.$el.addClass('highlight');
       }
       linkValue = this.$el.find('.plan-link').attr('href');
       domainId = Marionette.getOption(this, 'domainId');
