@@ -7,7 +7,7 @@ define [ 'marionette' ], ( Marionette )->
         tagName : 'form'
 
         template : ' <div class="row">
-
+                        <div id="success-msg"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Group Name</label>
@@ -43,7 +43,7 @@ define [ 'marionette' ], ( Marionette )->
                 if @$el.valid()
                     #get all serialized data from the form
                     groupdata = Backbone.Syphon.serialize @
-                    groupdata.domain_id = Marionette.getOption @, 'domain_id'
+                    groupdata.domain_id = Marionette.getOption @, 'domainId'
                     @trigger "save:domain:group:clicked", groupdata
 
         onShow : ->
@@ -51,8 +51,11 @@ define [ 'marionette' ], ( Marionette )->
             @$el.validate @validationOptions()
 
         onDomainGroupAdded : ->
+            msg = "<div class='alert alert-success'>
+                   <button class='close' data-dismiss='alert'>&times;</button>
+                   Group added for domain sucessfully<div>"
+            @$el.find('#success-msg').append msg
             @$el.find( '#btn-reset-group' ).click()
-
 
         validationOptions : ->
             rules :

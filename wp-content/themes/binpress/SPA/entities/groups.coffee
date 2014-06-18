@@ -1,4 +1,5 @@
 define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
+    #model
     class GroupModel extends Backbone.Model
 
         name : 'domain-group'
@@ -9,32 +10,30 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
             domain_id : 0
 
     # collection
-    #    class GroupCollection extends Backbone.Collection
-    #
-    #        model: GroupModel
-    #
-    #        url: ->
-    #            "#{AJAXURL}?action=fetch-user-domains"
-    #
-    #
-    #    # create  a  collection
-    #    userDomainCollection = new UserDomainCollection
+    class GroupCollection extends Backbone.Collection
+
+        model : GroupModel
+
+        url : ->
+            "#{AJAXURL}?action=fetch-groups"
+
 
     #PUBLIC API
     API =
-
-#        getCurrentUserDomains : ->
-#            userDomainCollection
 
         createGroupModel : ( data ) ->
             groupModel = new GroupModel data
             groupModel
 
-    #Handlers
-    #    msgbus.reqres.setHandler "get:current:user:domains", ->
-    #        API.getCurrentUserDomains()
+        getGroupsByDomainId : ( domainId ) ->
+            groupCollection = new GroupCollection
+            groupCollection
 
+    #Handlers
     msgbus.reqres.setHandler "create:domain:group:model", ( data ) ->
         API.createGroupModel data
+
+    msgbus.reqres.setHandler "get:groups:for:domains", ( domainId ) ->
+        API.getGroupsByDomainId domainId
 
     GroupModel
