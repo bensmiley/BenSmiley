@@ -17,8 +17,7 @@ define [ 'app'
                 #get upload view
                 view = @_getView @userModel
 
-                @show view,
-                    loading : true
+                @show view
 
             # gets the main upload view
             _getView : ( userModel ) ->

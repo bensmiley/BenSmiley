@@ -14,7 +14,6 @@ define [ 'app'
                 {userId} = opts
 
                 #get the user model for the current logged in user
-                #                @userModel = msgbus.reqres.request "get:user:model", userId
                 @userModel = msgbus.reqres.request "get:current:user:model"
 
                 #get user profile layout

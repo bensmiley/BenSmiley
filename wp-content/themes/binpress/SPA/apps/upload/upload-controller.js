@@ -15,9 +15,7 @@ define(['app', 'regioncontroller', 'apps/upload/upload-view'], function(App, Reg
         var view;
         this.userModel = opts.model;
         view = this._getView(this.userModel);
-        return this.show(view, {
-          loading: true
-        });
+        return this.show(view);
       };
 
       Controller.prototype._getView = function(userModel) {

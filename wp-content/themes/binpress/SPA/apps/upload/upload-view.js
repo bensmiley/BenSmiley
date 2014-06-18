@@ -11,7 +11,7 @@ define(['plupload', 'marionette'], function(plupload, Marionette) {
       return UploadView.__super__.constructor.apply(this, arguments);
     }
 
-    UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right alert alert-info"> <img class="m-b-10" width="90" height="90" alt="" src="{{user_photo}}"id="user-photo"> <div class="clearfix"></div> <a id="add-photo" class="btn btn-primary btn-block" href="#" data-color-format="hex">Edit Profile Photo</a> </div> <div class="upload-progress"> <div id="progress" style="width: 30%; margin: 0px auto; display: none;" class="progress progress-striped active"> </div> </div> <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/> </div>';
+    UploadView.prototype.template = '<div class="col-md-3 text-center"> <div class="profile-wrapper pull-right alert alert-info"> <img class="m-b-10" width="90" height="90" alt="" src="{{user_photo}}"id="user-photo"> <div class="clearfix"></div> <a id="add-photo" class="btn btn-primary btn-block" href="#" data-color-format="hex">Edit Profile Photo</a> </div> <div class="upload-progress"> <div id="progress" style="width: 10%; margin: 0px auto; display: none;" class="progress progress-striped active"> </div> <div style="display:none" class="upload-success">Upload Complete</div> </div> <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/> </div>';
 
     UploadView.prototype.onShow = function() {
       this.uploader = new plupload.Uploader({
@@ -39,6 +39,7 @@ define(['plupload', 'marionette'], function(plupload, Marionette) {
       this.uploader.init();
       this.uploader.bind("FilesAdded", (function(_this) {
         return function(up, files) {
+          _this.$el.find(".upload-success").hide();
           _this.$el.find(".progress").show();
           return _this.uploader.start();
         };
@@ -54,6 +55,7 @@ define(['plupload', 'marionette'], function(plupload, Marionette) {
       return this.uploader.bind("FileUploaded", (function(_this) {
         return function(up, file, response) {
           _this.$el.find(".progress").css("width", "0%");
+          _this.$el.find(".upload-success").show();
           response = JSON.parse(response.response);
           if (response.success) {
             _this.$el.find('#user-photo-id').val(response.data.id);
