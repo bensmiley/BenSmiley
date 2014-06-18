@@ -1,7 +1,5 @@
-<div class="page-header">
-    <h1 class="normaltext-center">
-        <span class="p-r-10">Enter Your Payment Details</span>
-    </h1>
+<div class="page-title"><i class="icon-custom-left"></i>
+    <h3>Enter Your <span class="semi-bold">Payment Details</span></h3>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -29,11 +27,86 @@
         </div>
     </div>
 </div>
-<div class="col-md-9">
-    <div class="modal-body">
-        <div class="row">
-            <div id="display-payment-form"></div>
+<div class="row">
+<div class="col-md-9 tiles white">
+    <div class=" p-t-20 p-b-20">
+	<div class="row">
+		<div class="col-md-12">
+				
+				<h3>Card <span class="semi-bold">Information</span></h3>
+			
+		</div>
+	</div>
+	<br>
+     <div class="well well-large" style="background-color: #E4E4E4;">
+	<h3><span class="semi-bold">Card Details</span></h4>
+	<div class="row">
+		<div class="col-md-3">
+		<B>Card Name</B>
+		<h3>Ramesh Singh</h3>
+		</div>
+		<div class="col-md-4">
+		<B>Card Number</B>
+		<h3>5264.2562.2323.2121</h3>
+		</div>
+			<div class="col-md-2">
+		<B>Card Expiry</B>
+		<h3>02/12</h3>
+		</div>
+			<div class="col-md-2">
+		<B>CVC</B>
+		<input placeholder="" type="text" name="name" class="m-t-5">
+		</div>
+	
+	</div>
+	
+	</div>
 
+
+	   <div class="row">
+            <div id="display-payment-form"></div>
+		
+<div class="row">
+
+<div class="col-md-5"><div class="card-wrapper"></div></div>
+<div class="col-md-6">
+
+
+        <div class="form-container active">
+            <form action="">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br>
+			<div class="row form-row">
+                      <div class="col-md-5">
+                        <input placeholder="Card number" type="text" name="number" class="form-control">
+                      </div>
+                      <div class="col-md-7">
+					  <input placeholder="Full name" type="text" name="name" class="form-control">
+                       
+                      </div>
+           </div>
+		   
+		   <div class="row form-row">
+                      <div class="col-md-3">
+						<input placeholder="MM/YY" type="text" name="expiry" class="form-control">
+                      </div>
+                      <div class="col-md-3">
+					  <input placeholder="CVC" type="text" name="cvc" class="form-control">
+					  </div>
+					  <div class="col-md-5">
+						<button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i> Submit</button>
+					  </div>
+           </div>
+		   
+           </form>
+        </div>
+</div>
+        
+    </div>
+  <script>
+        $('.active form').card({
+            container: $('.card-wrapper')
+        })
+    </script>
         </div>
     </div>
 </div>
@@ -59,4 +132,5 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
