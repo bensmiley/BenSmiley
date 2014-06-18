@@ -18,7 +18,8 @@ requirejs.config({
     bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.min',
     braintree: 'bower_components/braintree/braintree',
     spin: 'bower_components/spin.js/spin',
-    jqueryspin: 'bower_components/spin.js/jquery.spin'
+    jqueryspin: 'bower_components/spin.js/jquery.spin',
+    card: 'bower_components/lib/js/card'
   },
   shim: {
     jquery: ['underscore'],
@@ -31,6 +32,7 @@ requirejs.config({
     backbonesyphon: ['backbone'],
     jqueryvalidate: ['jquery'],
     bootstrap: ['jquery'],
+    card: ['jquery'],
     jqueryspin: ['spin'],
     plupload: {
       deps: ['jquery'],
