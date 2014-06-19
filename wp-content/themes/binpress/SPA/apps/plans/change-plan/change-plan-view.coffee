@@ -1,8 +1,8 @@
 #include the files for the app
 define [ 'marionette'
-		 'text!apps/plans/templates/changePlanLayout.html'
+         'text!apps/plans/templates/changePlanLayout.html'
          'braintree'
-		 'card' ], ( Marionette, changePlanTpl, BrainTree, card )->
+         'card' ], ( Marionette, changePlanTpl, BrainTree, card )->
 
 
     # Payment page main layout

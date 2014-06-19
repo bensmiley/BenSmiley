@@ -57,9 +57,9 @@ define [ 'app'
 
             editGroup : ( itemview, model )=>
                 @editModel = model
-                group_name =  model.get 'group_name'
-                group_description =  model.get 'group_description'
-                @view.triggerMethod "edit:group", group_name,group_description
+                group_name = model.get 'group_name'
+                group_description = model.get 'group_description'
+                @view.triggerMethod "edit:group", group_name, group_description
 
             updateDomainGroup : ( groupData )=>
                 @editModel.set groupData
@@ -67,7 +67,7 @@ define [ 'app'
                     wait : true
                     success : @groupUpdated
 
-            groupUpdated :=>
+            groupUpdated : =>
                 @view.triggerMethod "group:updated"
 
 
