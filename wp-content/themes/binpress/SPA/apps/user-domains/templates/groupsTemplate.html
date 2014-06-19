@@ -68,6 +68,9 @@
         $('#btn-new-ticket').click( function() {
 		$('#new-ticket-wrapper').slideToggle("fast","linear");
             $('#btn-new-ticket').css({'display':'none'});
+            $('#group_name').val(' ');
+            $('#group_description').val(' ');
+            $('#btn-save-domain-group').text('Save');
 
         })
 

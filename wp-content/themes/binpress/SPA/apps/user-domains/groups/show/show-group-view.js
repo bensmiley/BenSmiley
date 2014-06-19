@@ -83,8 +83,7 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
     };
 
     ShowGroupView.prototype.onShow = function() {
-      this.$el.find('#add-group-form').validate(this.validationOptions());
-      return console.log(this.collection);
+      return this.$el.find('#add-group-form').validate(this.validationOptions());
     };
 
     ShowGroupView.prototype.validationOptions = function() {

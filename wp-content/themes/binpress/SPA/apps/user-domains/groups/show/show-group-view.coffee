@@ -66,8 +66,6 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
             #validate the group form with the validation rules
             @$el.find( '#add-group-form' ).validate @validationOptions()
 
-            console.log @collection
-
         validationOptions : ->
             rules :
                 group_name :
