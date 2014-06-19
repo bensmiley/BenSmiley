@@ -85,8 +85,8 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
 
         #on click of edit group, show the edit group section
         onEditGroup : ( group_name, group_description )->
-            @$el.find( '#btn-save-domain-group' ).text 'Update'
             @$el.find( '#btn-new-ticket' ).click()
+            @$el.find( '#btn-save-domain-group' ).text 'Update'
 
             @$el.find( '#group_name' ).val group_name
             @$el.find( '#group_description' ).val group_description

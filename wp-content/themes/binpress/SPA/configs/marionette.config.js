@@ -114,7 +114,7 @@ define(['marionette', 'mustache'], function(Marionette, Mustache) {
       return LoadingView.__super__.constructor.apply(this, arguments);
     }
 
-    LoadingView.prototype.template = '<div>Loading</div>';
+    LoadingView.prototype.template = '<div>Loading <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif"> </div>';
 
     return LoadingView;
 

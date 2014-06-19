@@ -11,7 +11,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
       return SinglePlanView.__super__.constructor.apply(this, arguments);
     }
 
-    SinglePlanView.prototype.template = '<div> <div class="grid simple"> <h4 class="bold text-center plan-name">{{plan_name}}<br> <small class="text-danger" >Rs.{{price}}/month</small> </h4> <hr> <div class="grid-body no-border"> <ul> <li>{{description}} </li> </ul> </div> </div> <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a> </div>';
+    SinglePlanView.prototype.template = '<div> <div class="grid simple"> <h4 class="bold text-center plan-name">{{plan_name}}<br> <small class="text-danger" >Rs.{{price}}/month</small> </h4> <hr> <div class="grid-body no-border"> <ul> <li>{{description}} </li> </ul> </div> </div> <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a> </div> ';
 
     SinglePlanView.prototype.tagName = 'li';
 
@@ -23,6 +23,9 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
       planName = this.model.get('plan_name');
       if (activePlanName === planName) {
         this.$el.addClass('highlight');
+        this.$el.find('.plan-link').attr({
+          'href': 'javascript:void(0)'
+        });
       }
       linkValue = this.$el.find('.plan-link').attr('href');
       domainId = Marionette.getOption(this, 'domainId');
@@ -53,10 +56,6 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
         activePlanName: this.model.get('plan_name'),
         domainId: this.model.get('domain_id')
       };
-    };
-
-    PlansListView.prototype.onShow = function() {
-      return console.log(this.collection);
     };
 
     return PlansListView;

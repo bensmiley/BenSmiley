@@ -92,4 +92,6 @@ define [ 'marionette', 'mustache' ], ( Marionette, Mustache )->
         template
 
     class Marionette.LoadingView extends Marionette.ItemView
-        template : '<div>Loading</div>'
+        template : '<div>Loading
+                    <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
+                    </div>'
