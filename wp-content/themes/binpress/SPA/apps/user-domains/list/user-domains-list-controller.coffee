@@ -13,17 +13,17 @@ define [ 'app'
             initialize : ( opts )->
 
                 #get the user domains collection
-                @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
-                @userDomainsCollection.fetch()
+                userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
+                userDomainsCollection.fetch()
 
                 #get the user domain list view
-                @domainListView = @getDomainListView @userDomainsCollection
+                domainListView = @getDomainListView userDomainsCollection
 
                 #listen to click events
-                @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
+                @listenTo domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
 
                 #show user domain list view
-                @show @domainListView,
+                @show domainListView,
                     loading : true
 
             getDomainListView : ( userDomainsCollection ) ->

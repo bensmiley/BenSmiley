@@ -62,7 +62,7 @@ define [ 'marionette'
 
                         <dl class="dl-horizontal dl-plan">
                             <dt>Current Plan :</dt>
-                            <dd><span class="label label-info">{{name}}</span></dd>
+                            <dd><span class="label label-info">{{plan_name}}</span></dd>
                             <dt>Payement :</dt>
                             <dd>{{price}}/month</dd>
                             <dt>Billing Cycle :</dt>

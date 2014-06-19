@@ -41,7 +41,7 @@ function get_subscription_details_for_domain( $domain_id ) {
 function get_free_subscription_data( $subscription_details ) {
 
     $subscription_data[ 'start_date' ] = date( 'd/m/Y', strtotime( $subscription_details[ 'datetime' ] ) );
-    $subscription_data[ 'name' ] = 'Free';
+    $subscription_data[ 'plan_name' ] = 'Free';
     $subscription_data[ 'price' ] = '0';
     $subscription_data[ 'bill_start' ] = 'N/A';
     $subscription_data[ 'bill_end' ] = 'N/A';

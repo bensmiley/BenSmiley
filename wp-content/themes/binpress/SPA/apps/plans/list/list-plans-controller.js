@@ -19,32 +19,37 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
         var subscriptionModel;
         this.domainId = opts.domainID;
         subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
-        subscriptionModel.fetch({
-          success: this.getPlanCollection
-        });
+        subscriptionModel.fetch();
+        msgbus.commands.execute("when:fetched", subscriptionModel, (function(_this) {
+          return function() {
+            return _this.getPlanCollection(subscriptionModel);
+          };
+        })(this));
+        this.planCollection = msgbus.reqres.request("get:all:plans");
+        this.planCollection.fetch();
         return this.show(new Marionette.LoadingView);
       };
 
       PlansListController.prototype.getPlanCollection = function(subscriptionModel) {
-        this.subscriptionModel = subscriptionModel;
-        this.planCollection = msgbus.reqres.request("get:all:plans");
-        return this.planCollection.fetch({
-          success: this.showPlanListView
-        });
+        return msgbus.commands.execute("when:fetched", this.planCollection, (function(_this) {
+          return function() {
+            return _this.showPlanListView(subscriptionModel);
+          };
+        })(this));
       };
 
-      PlansListController.prototype.showPlanListView = function(planCollection) {
+      PlansListController.prototype.showPlanListView = function(subscriptionModel) {
         var planListShowView;
-        planListShowView = this.getPlanListView(planCollection);
+        planListShowView = this.getPlanListView(subscriptionModel);
         return this.show(planListShowView, {
           loading: true
         });
       };
 
-      PlansListController.prototype.getPlanListView = function(planCollection) {
+      PlansListController.prototype.getPlanListView = function(subscriptionModel) {
         return new PlanListView({
-          collection: planCollection,
-          model: this.subscriptionModel
+          collection: this.planCollection,
+          model: subscriptionModel
         });
       };
 

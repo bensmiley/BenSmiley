@@ -12,7 +12,7 @@ function get_subscription_details( $subscription_id ) {
 
     $plan_name = get_plan_name_by_id($subscription->planId);
 
-    $subscription_data[ 'name' ] = $plan_name;
+    $subscription_data[ 'plan_name' ] = $plan_name;
     $subscription_data[ 'price' ] = $subscription->price;
     $subscription_data[ 'start_date' ] = $subscription->firstBillingDate->format('d/m/Y');
     $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format('d/m/Y');

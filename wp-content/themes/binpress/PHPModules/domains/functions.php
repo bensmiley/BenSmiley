@@ -58,17 +58,17 @@ function create_user_domain( $domain_details ) {
 /**
  * Function to get the post and post meta data for each domain
  *
- * @param $post_id
+ * @param $domain_id
  * @return array|null|WP_Post
  */
-function get_user_domain_details( $post_id ) {
+function get_user_domain_details( $domain_id ) {
 
-    $domain_post_data = get_post( $post_id );
+    $domain_post_data = get_post( $domain_id );
 
     if ( is_null( $domain_post_data ) )
         return $domain_post_data;
 
-    $domain_post_meta_data = get_post_meta( $post_id );
+    $domain_post_meta_data = get_post_meta( $domain_id );
 
     if ( empty( $domain_post_meta_data ) )
         return $domain_post_data;
@@ -77,10 +77,9 @@ function get_user_domain_details( $post_id ) {
 
     $domain_data = wp_parse_args( $domain_post_data, $formatted_domain_meta_data );
 
-    $plan = get_plan_name_id( $post_id );
+    $plan_name = get_plan_name_for_domain( $domain_id );
 
-    $domain_data['plan_id'] = $plan['id'];
-    $domain_data['plan_name'] = $plan['name'];
+    $domain_data['plan_name'] = $plan_name;
 
     return $domain_data;
 

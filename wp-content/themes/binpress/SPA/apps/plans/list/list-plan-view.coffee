@@ -5,7 +5,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
     class SinglePlanView extends Marionette.ItemView
         template : '<div>
                              <div class="grid simple">
-                                <h4 class="bold text-center plan-name">{{name}}<br>
+                                <h4 class="bold text-center plan-name">{{plan_name}}<br>
                                 <small class="text-danger" >Rs.{{price}}/month</small>
                                 </h4>
                                 <hr>
@@ -26,7 +26,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
         onShow : ->
             #highlight active plan
             activePlanName = Marionette.getOption @, 'activePlanName'
-            planName = @model.get 'name'
+            planName = @model.get 'plan_name'
             if activePlanName == planName
                 @$el.addClass 'highlight'
 
@@ -47,8 +47,10 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
         itemView : SinglePlanView
 
         itemViewOptions : ->
-            activePlanName : @model.get 'name'
+            activePlanName : @model.get 'plan_name'
             domainId : @model.get 'domain_id'
+        onShow :->
+            console.log @collection
 
 
     # return the view instances as objects
