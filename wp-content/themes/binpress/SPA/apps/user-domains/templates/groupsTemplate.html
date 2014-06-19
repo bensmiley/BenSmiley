@@ -1,0 +1,137 @@
+<div class="row column-seperation" >
+    <div class="col-md-8">
+        <h3 class="m-b-20"><span class="semi-bold">Groups</span>
+            <div class="pull-right actions">
+                <button class="btn btn-primary btn-cons" type="button" id="btn-new-ticket">Add Group</button>
+            </div>
+        </h3>
+        <div class="grid simple">
+            <div class="grid simple transparent" id="new-ticket-wrapper" style="display:none">
+                <div class="grid-body no-border">
+                    <!--add domain groups -->
+                    <form id="add-group-form">
+                    <div class="row">
+                        <div id="success-msg"></div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Group Name</label>
+                                <span class="help">e.g. "xyz"</span>
+                                <div class="input-with-icon  right">
+                                    <i class=""></i>
+                                    <input type="text" name="group_name"
+                                           id="group_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <div class="input-with-icon  right">
+                                    <i class=""></i>
+                                    <textarea type="text" name="group_description"
+                                              id="group_description" class="form-control">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-primary btn-cons"
+                                        id="btn-save-domain-group">
+                                    <i class="icon-ok"></i> Save</button>
+                                <input type="reset" style="display: none" id="btn-reset-group"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <!-- list domain groups -->
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th style="width:15%" >Group Name</th>
+                    <th style="width:30%" data-hide="phone,tablet">Description</th>
+                    <th style="width:10%">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        /** Text Editor **/
+//$('#message').wysihtml5();
+
+        /** Events **/
+        $('#btn-new-ticket').click( function() {
+            $('#new-ticket-wrapper').slideToggle("fast","linear")
+        })
+
+        $('#btn-close-ticket').click( function() {
+            $('#new-ticket-wrapper').slideToggle("fast","linear")
+        });
+
+        $('#new-ticket-form').validate({
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                txtSubject: {
+                    minlength: 2,
+                    required: true
+                },
+                txtDept: {
+                    minlength: 2,
+                    required: true,
+                },
+                txtMessage: {
+                    required: true
+                }
+            },
+
+            invalidHandler: function (event, validator) {
+                //display error alert on form submit
+            },
+
+            errorPlacement: function (label, element) { // render error placement for each input type
+                $('<span class="error"></span>').insertAfter(element).append(label)
+                var parent = $(element).parent();
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                var parent = $(element).parent();
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+
+            },
+
+            success: function (label, element) {
+                var parent = $(element).parent();
+                parent.removeClass('error-control').addClass('success-control');
+            },
+
+            submitHandler: function(form) {
+                $('#new-ticket-wrapper').slideToggle("fast","linear");
+            }
+        });
+
+        $('.grid .actions a.remove').on('click', function () {
+            var removable = jQuery(this).parents(".grid");
+            if (removable.next().hasClass('grid') || removable.prev().hasClass('grid')) {
+                jQuery(this).parents(".grid").remove();
+            } else {
+                jQuery(this).parents(".grid").parent().remove();
+            }
+        });
+
+        $('.grid .clickable').on('click', function () {
+            var el = jQuery(this).parents(".grid").children(".grid-body");
+            el.slideToggle(200);
+        });
+    });
+</script>

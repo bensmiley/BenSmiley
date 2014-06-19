@@ -19,9 +19,10 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
         var subscriptionModel;
         this.domainId = opts.domainID;
         subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
-        return subscriptionModel.fetch({
+        subscriptionModel.fetch({
           success: this.getPlanCollection
         });
+        return this.show(new Marionette.LoadingView);
       };
 
       PlansListController.prototype.getPlanCollection = function(subscriptionModel) {

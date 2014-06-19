@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['backbone', 'msgbus'], function(Backbone, msgbus) {
-  var API, GroupCollection, GroupModel;
+  var API, GroupCollection, GroupModel, groupCollection;
   GroupModel = (function(_super) {
     __extends(GroupModel, _super);
 
@@ -40,23 +40,25 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
     return GroupCollection;
 
   })(Backbone.Collection);
+  groupCollection = new GroupCollection;
   API = {
     createGroupModel: function(data) {
       var groupModel;
       groupModel = new GroupModel(data);
       return groupModel;
     },
-    getGroupsByDomainId: function(domainId) {
-      var groupCollection;
-      groupCollection = new GroupCollection;
+    getGroupsByDomainId: function() {
       return groupCollection;
     }
   };
   msgbus.reqres.setHandler("create:domain:group:model", function(data) {
     return API.createGroupModel(data);
   });
-  msgbus.reqres.setHandler("get:groups:for:domains", function(domainId) {
-    return API.getGroupsByDomainId(domainId);
+  msgbus.reqres.setHandler("get:groups:for:domains", function() {
+    return API.getGroupsByDomainId();
   });
-  return GroupModel;
+  return {
+    GroupModel: GroupModel,
+    GroupCollection: GroupCollection
+  };
 });

@@ -90,3 +90,6 @@ define [ 'marionette', 'mustache' ], ( Marionette, Mustache )->
             throw err
 
         template
+
+    class Marionette.LoadingView extends Marionette.ItemView
+        template : '<div>Loading</div>'

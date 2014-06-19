@@ -17,6 +17,7 @@ define [ 'app'
                 subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
                 subscriptionModel.fetch
                     success : @getPlanCollection
+                @show new Marionette.LoadingView
 
             getPlanCollection : ( subscriptionModel ) =>
                 @subscriptionModel = subscriptionModel
