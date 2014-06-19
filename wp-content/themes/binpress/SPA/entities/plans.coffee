@@ -20,9 +20,16 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
             planCollection = new PlanCollection
             planCollection
 
+        getPlanByPlanId : ( planId ) ->
+            planModel = new PlanModel 'plan_id' : planId
+            planModel
+
     #Handlers
     msgbus.reqres.setHandler "get:all:plans", ->
         API.getAllPlans()
+
+    msgbus.reqres.setHandler "get:plan:by:planid",( planId ) ->
+        API.getPlanByPlanId planId
 
 
     PlanModel : PlanModel

@@ -32,3 +32,34 @@ function create_customer( $user_name ) {
         return array( 'success' => false );
     }
 }
+
+/**
+ * Function to get all details of the customer stored in the vault
+ * @param braintree $customer_id
+ */
+function get_customer_credit_card_details( $customer_id ) {
+
+    //$customer_id = '81538496';
+
+    $customer = Braintree_Customer::find( $customer_id );
+
+    $customer_credit_card_data = customer_credit_card_details( $customer->creditCards );
+
+    return $customer_credit_card_data;
+
+}
+
+function customer_credit_card_details( $credit_cards ) {
+
+    if ( empty( $credit_cards ) )
+        return array('card_exists' => false);
+
+    $credit_card_details[ 'customer_name' ] = $credit_cards[ 0 ]->cardholderName;
+    $credit_card_details[ 'card_number' ] = $credit_cards[ 0 ]->maskedNumber;
+    $credit_card_details[ 'expiration_date' ] = $credit_cards[ 0 ]->expirationDate;
+    $credit_card_details[ 'card_exists' ] = true;
+
+    return $credit_card_details;
+
+
+}

@@ -5,6 +5,12 @@
  * Date: 6/14/14
  * Time: 4:46 PM
  */
+
+/**
+ * Function to get all the plans data
+ *
+ * @return array of plans data
+ */
 function get_all_plans() {
 
     $braintree_plan = array();
@@ -23,13 +29,18 @@ function get_all_plans() {
     return $braintree_plan;
 }
 
-function get_plan_name_by_id( $plan_id ) {
+/**
+ * Function to get the plan details based on the plan id
+ * @param $plan_id
+ * @return mixed
+ */
+function get_plan_by_id( $plan_id ) {
 
     $plans = Braintree_Plan::all();
 
     foreach ( $plans as $plan ) {
         if($plan->id == $plan_id ){
-            return $plan->name;
+            return $plan;
         }
     }
 }

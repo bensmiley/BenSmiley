@@ -56,6 +56,29 @@ function create_user_domain( $domain_details ) {
 
     return $post_id;
 }
+/**
+ * Function to create a free subscription for
+ *
+ * every new domain registered by the user
+ *
+ * @param $domain_id
+ */
+function create_free_subscription( $domain_id ) {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $date_time = date( 'Y-m-d H:i:s' );
+
+    $wpdb->insert( $table_name,
+        array(
+            'domain_id' => $domain_id,
+            'subscription_id' => 'BENAJFREE',
+            'datetime' => $date_time
+        ) );
+}
+
 
 /**
  * Function to get the post and post meta data for each domain

@@ -17,6 +17,13 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
     currentUser = new UserModel
     currentUser.set CURRENTUSERDATA
 
+    #model to get the user payment details
+    class UserBillingModel extends Backbone.Model
+
+        name : 'user-payment'
+
+        idAttribute : 'ID'
+
 
     #PUBLIC API
     API =
@@ -25,6 +32,10 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
         getCurrentUserId : ->
             currentUser.get 'ID'
+
+        getUserBillingData : ->
+            userBillingModel = new UserBillingModel 'ID' : CURRENTUSERDATA.ID
+            userBillingModel
 
         getUserById : ( userId )->
             userModel = {}
@@ -40,10 +51,14 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
     msgbus.reqres.setHandler "get:current:user:model", ->
         API.getCurrentUser()
 
+    #not used
     msgbus.reqres.setHandler "get:user:model", ( userId ) ->
         API.getUserById userId
 
     msgbus.reqres.setHandler "get:current:user:id", ->
         API.getCurrentUserId()
+
+    msgbus.reqres.setHandler "get:user:billing:data", ->
+        API.getUserBillingData()
 
     UserModel

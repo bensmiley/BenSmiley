@@ -60,35 +60,13 @@ function ajax_create_user_domain() {
 add_action( 'wp_ajax_create-user-domain', 'ajax_create_user_domain' );
 
 /**
- * Function to create a free subscription for
- *
- * every new domain registered by the user
- *
- * @param $domain_id
+ * Function to update the domain details
  */
-function create_free_subscription( $domain_id ) {
-
-    global $wpdb;
-
-    $table_name = 'subscription';
-
-    $date_time = date( 'Y-m-d H:i:s' );
-
-    $wpdb->insert( $table_name,
-        array(
-            'domain_id' => $domain_id,
-            'subscription_id' => 'BENAJFREE',
-            'datetime' => $date_time
-        ) );
-}
-
 function ajax_update_user_domain() {
 
     $domain_data = $_POST;
 
     update_domain_post( $domain_data );
-
-    //update_domain_post_meta($domain_data);
 
     $domain_data = get_user_domain_details( $domain_data[ 'ID' ] );
 

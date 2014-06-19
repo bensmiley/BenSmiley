@@ -10,7 +10,9 @@ function get_subscription_details( $subscription_id ) {
 
     $subscription = Braintree_Subscription::find( $subscription_id );
 
-    $plan_name = get_plan_name_by_id($subscription->planId);
+    $plan_data = get_plan_by_id($subscription->planId);
+
+    $plan_name = $plan_data->name;
 
     $subscription_data[ 'plan_name' ] = $plan_name;
     $subscription_data[ 'price' ] = $subscription->price;

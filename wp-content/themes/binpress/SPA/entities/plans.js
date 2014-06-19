@@ -39,10 +39,20 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
       var planCollection;
       planCollection = new PlanCollection;
       return planCollection;
+    },
+    getPlanByPlanId: function(planId) {
+      var planModel;
+      planModel = new PlanModel({
+        'plan_id': planId
+      });
+      return planModel;
     }
   };
   msgbus.reqres.setHandler("get:all:plans", function() {
     return API.getAllPlans();
+  });
+  msgbus.reqres.setHandler("get:plan:by:planid", function(planId) {
+    return API.getPlanByPlanId(planId);
   });
   return {
     PlanModel: PlanModel,

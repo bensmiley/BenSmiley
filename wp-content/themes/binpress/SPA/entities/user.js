@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['backbone', 'msgbus'], function(Backbone, msgbus) {
-  var API, UserModel, currentUser;
+  var API, UserBillingModel, UserModel, currentUser;
   UserModel = (function(_super) {
     __extends(UserModel, _super);
 
@@ -21,12 +21,33 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
   CURRENTUSERDATA['ID'] = parseInt(CURRENTUSERDATA['ID']);
   currentUser = new UserModel;
   currentUser.set(CURRENTUSERDATA);
+  UserBillingModel = (function(_super) {
+    __extends(UserBillingModel, _super);
+
+    function UserBillingModel() {
+      return UserBillingModel.__super__.constructor.apply(this, arguments);
+    }
+
+    UserBillingModel.prototype.name = 'user-payment';
+
+    UserBillingModel.prototype.idAttribute = 'ID';
+
+    return UserBillingModel;
+
+  })(Backbone.Model);
   API = {
     getCurrentUser: function() {
       return currentUser;
     },
     getCurrentUserId: function() {
       return currentUser.get('ID');
+    },
+    getUserBillingData: function() {
+      var userBillingModel;
+      userBillingModel = new UserBillingModel({
+        'ID': CURRENTUSERDATA.ID
+      });
+      return userBillingModel;
     },
     getUserById: function(userId) {
       var userModel;
@@ -50,6 +71,9 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
   });
   msgbus.reqres.setHandler("get:current:user:id", function() {
     return API.getCurrentUserId();
+  });
+  msgbus.reqres.setHandler("get:user:billing:data", function() {
+    return API.getUserBillingData();
   });
   return UserModel;
 });
