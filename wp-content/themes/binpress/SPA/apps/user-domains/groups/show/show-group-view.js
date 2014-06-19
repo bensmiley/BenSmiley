@@ -104,6 +104,7 @@
 
       ShowGroupView.prototype.onEditGroup = function(group_name, group_description) {
         this.$el.find('#btn-save-domain-group').text('Update');
+        this.$el.find('#btn-new-ticket').click();
         this.$el.find('#group_name').val(group_name);
         return this.$el.find('#group_description').val(group_description);
       };

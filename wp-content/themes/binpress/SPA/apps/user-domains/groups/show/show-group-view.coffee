@@ -5,11 +5,11 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
     class SingleGroupView extends Marionette.ItemView
 
         template : '<td class="v-align-middle"><span class="muted">{{group_name}}</span></td>
-                                            <td><span class="muted">{{group_description}}</span></td>
-                                            <td class="v-align-middle">
-                                            <span class="glyphicon glyphicon-pencil edit-group"></span>  &nbsp;
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                            </td>'
+                    <td><span class="muted">{{group_description}}</span></td>
+                    <td class="v-align-middle">
+                    <span class="glyphicon glyphicon-pencil edit-group"></span>  &nbsp;
+                    <span class="glyphicon glyphicon-trash"></span>
+                    </td>'
 
         tagName : 'tr'
 
@@ -85,14 +85,16 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
         onEditGroup : ( group_name, group_description )->
             @$el.find( '#btn-save-domain-group' ).text 'Update'
 
+            @$el.find('#btn-new-ticket').click()
+
             @$el.find( '#group_name' ).val group_name
             @$el.find( '#group_description' ).val group_description
 
         onGroupUpdated : ->
             @$el.find( '#success-msg' ).empty()
             msg = "<div class='alert alert-success'>
-                                           <button class='close' data-dismiss='alert'>&times;</button>
-                                           Group updated sucessfully<div>"
+                   <button class='close' data-dismiss='alert'>&times;</button>
+                   Group updated sucessfully<div>"
             @$el.find( '#success-msg' ).append msg
 
     #return the view instance
