@@ -194,7 +194,9 @@ function get_module_name() {
     $module = "";
 
     // TODO: Handle with better logic here. Regex or something
-    if ( is_page() )
+    if(is_front_page())
+        $module = 'home';
+    else if ( is_page() )
         $module = sanitize_title( get_the_title() );
 
 

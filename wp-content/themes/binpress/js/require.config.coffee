@@ -1,6 +1,6 @@
 requirejs.config
     urlArgs : "?ver=#{Math.random()}"
-    baseUrl : '../wp-content/themes/binpress/js/'
+    baseUrl : 'http://localhost/bensmiley/wp-content/themes/binpress/js/'
     paths :
         jquery : 'bower_components/jquery/dist/jquery'
         jqueryvalidate : 'bower_components/jquery.validation/dist/jquery.validate'

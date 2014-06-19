@@ -1,7 +1,7 @@
 # load all the scripts required for SPA
 requirejs.config
     urlArgs : "?ver=#{Math.random()}"
-    baseUrl : '../wp-content/themes/binpress/SPA/'
+    baseUrl : 'http://localhost/bensmiley/wp-content/themes/binpress/SPA/'
     paths :
         jquery : 'bower_components/jquery/dist/jquery'
         backbone : 'bower_components/backbone/backbone'
