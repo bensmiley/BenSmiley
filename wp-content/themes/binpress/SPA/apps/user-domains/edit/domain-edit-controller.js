@@ -34,15 +34,13 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         this.layout = this.getEditDomainLayout(domainModel);
         this.listenTo(this.layout, "show", (function(_this) {
           return function() {
-            return App.execute("show:domain:groups", {
+            App.execute("show:domain:groups", {
               region: _this.layout.groupsRegion,
               domain_id: _this.domainId
             });
-          };
-        })(this));
-        msgbus.commands.execute("when:fetched", this.subscriptionModel, (function(_this) {
-          return function() {
-            return _this.showActiveSubscription(_this.subscriptionModel);
+            return msgbus.commands.execute("when:fetched", _this.subscriptionModel, function() {
+              return _this.showActiveSubscription(_this.subscriptionModel);
+            });
           };
         })(this));
         this.listenTo(this.layout, "edit:domain:clicked", this.editDomain);

@@ -25,6 +25,9 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             # set the templates title to add domain
             @$el.find( '#form-title' ).text 'Add Domain'
 
+            #hide the tabs
+            @$el.find( '#tabs' ).hide()
+
         onUserDomainAdded : ->
             #reset the form on submit
             @$el.find( '#btn-reset-add-domain' ).click()

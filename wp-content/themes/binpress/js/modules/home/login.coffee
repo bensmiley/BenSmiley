@@ -57,7 +57,7 @@ define [ 'jquery', 'jqueryvalidate', 'bootstrap' ], ->
                             successMsg = response.msg
                             $( '#display-login-msg' ).empty()
                             $( '#display-login-msg' ).append successMsg
-                            page = "/dashboard"
+                            page = "/dashboard/#domains"
                             window.location.href = response.site_url + page
 
 

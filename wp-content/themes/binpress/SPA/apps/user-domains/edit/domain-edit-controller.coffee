@@ -39,9 +39,9 @@ define [ 'app'
                         region : @layout.groupsRegion
                         domain_id : @domainId
 
-                #on successful fetch show the active subscription view
-                msgbus.commands.execute "when:fetched", @subscriptionModel, =>
-                    @showActiveSubscription @subscriptionModel
+                    #on successful fetch show the active subscription view
+                    msgbus.commands.execute "when:fetched", @subscriptionModel, =>
+                        @showActiveSubscription @subscriptionModel
 
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain

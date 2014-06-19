@@ -25,17 +25,17 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
             template : '<div class="page-sidebar-wrapper" id="main-menu-wrapper">
                             <ul>
                                 <li class="start">
-                                    <a href="#profile" id="user-profile">
-                                        <i class="fa fa-user"></i>
-                                        <span class="title">User Profile</span>
+                                    <a href="#domains" id="user-domains">
+                                        <i class="fa fa-globe"></i>
+                                        <span class="title">My Domains</span>
                                         <span class="selected"></span>
                                         <span class="arrow"></span>
                                     </a>
                                 </li>
-                                 <li class="start">
-                                    <a href="#domains" id="user-domains">
-                                        <i class="fa fa-globe"></i>
-                                        <span class="title">My Domains</span>
+                                <li class="start">
+                                    <a href="#profile" id="user-profile">
+                                        <i class="fa fa-user"></i>
+                                        <span class="title">User Profile</span>
                                         <span class="selected"></span>
                                         <span class="arrow"></span>
                                     </a>
