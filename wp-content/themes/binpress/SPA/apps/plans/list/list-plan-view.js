@@ -11,7 +11,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
       return SinglePlanView.__super__.constructor.apply(this, arguments);
     }
 
-    SinglePlanView.prototype.template = '<div> <div class="grid simple"> <h4 class="bold text-center plan-name">{{name}}<br> <small class="text-danger" >Rs.{{price}}/month</small> </h4> <hr> <div class="grid-body no-border"> <ul> <li>{{description}} </li> </ul> </div> </div> <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a> </div>';
+    SinglePlanView.prototype.template = '<div> <div class="grid simple"> <h4 class="bold text-center plan-name">{{plan_name}}<br> <small class="text-danger" >Rs.{{price}}/month</small> </h4> <hr> <div class="grid-body no-border"> <ul> <li>{{description}} </li> </ul> </div> </div> <a href="#change-plan/{{plan_id}}" class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a> </div>';
 
     SinglePlanView.prototype.tagName = 'li';
 
@@ -20,7 +20,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
     SinglePlanView.prototype.onShow = function() {
       var activePlanName, domainId, linkValue, newLinkValue, planName;
       activePlanName = Marionette.getOption(this, 'activePlanName');
-      planName = this.model.get('name');
+      planName = this.model.get('plan_name');
       if (activePlanName === planName) {
         this.$el.addClass('highlight');
       }
@@ -50,9 +50,13 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
 
     PlansListView.prototype.itemViewOptions = function() {
       return {
-        activePlanName: this.model.get('name'),
+        activePlanName: this.model.get('plan_name'),
         domainId: this.model.get('domain_id')
       };
+    };
+
+    PlansListView.prototype.onShow = function() {
+      return console.log(this.collection);
     };
 
     return PlansListView;
