@@ -73,8 +73,8 @@ define [ 'marionette'
                         <i class="icon-ok"></i> Change Plan</a>
 
                         <div class="clearfix"></div>
-
-                        <div>Avail more features by upgrading your plan.
+<br>
+                        <div class="text-muted">Avail more features by upgrading your plan.
                          Click change plan to view the available plans</div>
                     </div>'
 
