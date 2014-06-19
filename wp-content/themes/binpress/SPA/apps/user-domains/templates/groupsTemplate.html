@@ -1,5 +1,5 @@
 <div class="row column-seperation" >
-    <div class="col-md-8">
+   
         <h3 class="m-b-20"><span class="semi-bold">Groups</span>
             <div class="pull-right actions">
                 <button class="btn btn-primary btn-cons" type="button" id="btn-new-ticket">Add Group</button>
@@ -24,11 +24,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Description</label>
-                                <div class="input-with-icon  right">
-                                    <i class=""></i>
-                                    <textarea type="text" name="group_description"
-                                              id="group_description" class="form-control">
-                                    </textarea>
+                                <div class="input-with-icon ">
+					<textarea type="text" name="group_description" id="group_description" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="pull-right">
@@ -59,7 +56,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+  
 </div>
 
 <script>
@@ -69,8 +66,9 @@
 
         /** Events **/
         $('#btn-new-ticket').click( function() {
-            $('#new-ticket-wrapper').slideToggle("fast","linear");
+		$('#new-ticket-wrapper').slideToggle("fast","linear");
             $('#btn-new-ticket').css({'display':'none'});
+
         })
 
         $('#btn-close-ticket').click( function() {
