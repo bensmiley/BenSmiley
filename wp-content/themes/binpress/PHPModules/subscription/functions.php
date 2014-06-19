@@ -20,15 +20,17 @@ function get_subscription_details_for_domain( $domain_id ) {
 
     $query_result = $wpdb->get_results( $query, ARRAY_A );
 
-    if ( is_null( $query_result ) )
+    if ( is_null( $query_result ) ){
         return array();
+    }
+
 
     if ( $query_result[ 0 ][ 'subscription_id' ] == "BENAJFREE" ) {
         $subscription_data = get_free_subscription_data( $query_result[ 0 ] );
         return $subscription_data;
     }
 
-    $subscription_data = braintree_subscription_data( $query_result[ 0 ] );
+    $subscription_data = braintree_subscription_data( $query_result[ 0 ][ 'subscription_id' ] );
     return $subscription_data;
 
 }
