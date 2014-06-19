@@ -17,8 +17,7 @@ define [ 'marionette'
                     @trigger "edit:domain:clicked", domaindata
 
         regions :
-            addDomainGroupRegion : '#add-domain-groups'
-            listDomainGroupRegion : '#list-domain-groups'
+            groupsRegion : '#groups-region'
             activeSubscriptionRegion : '#active-subscription'
 
 

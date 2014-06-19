@@ -3,8 +3,7 @@ define [ 'app'
          'regioncontroller'
          'apps/user-domains/edit/domain-edit-view'
          'msgbus'
-         'apps/user-domains/groups/add/add-group-controller'
-         'apps/user-domains/groups/list/list-group-controller' ], ( App, RegionController, EditDomainView, msgbus )->
+         'apps/user-domains/groups/show/show-group-controller' ], ( App, RegionController, EditDomainView, msgbus )->
 
     #start the app module
     App.module "UserDomainApp.Edit", ( Edit, App, BackBone, Marionette, $, _ )->
@@ -16,10 +15,18 @@ define [ 'app'
                 #get domainId from controller options
                 @domainId = opts.domainId
 
-                #fetch the domain model and on success show the edit domain view
+                #fetch the domain model
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
-                @domainModel.fetch
-                    success : @showEditView
+                @domainModel.fetch()
+
+                #fetch the current subscription model for the domain
+                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
+                @subscriptionModel.fetch()
+
+                #on successful fetch show the edit domain layout
+                msgbus.commands.execute "when:fetched", @domainModel, =>
+                    @showEditView @domainModel
+
 
             showEditView : ( domainModel )=>
                 #get the edit domain layout
@@ -27,21 +34,14 @@ define [ 'app'
 
                 @listenTo @layout, "show", =>
 
-                    #start the add domain group app
-                    App.execute "add:domain:groups",
-                        region : @layout.addDomainGroupRegion
+                    #start the domain group app
+                    App.execute "show:domain:groups",
+                        region : @layout.groupsRegion
                         domain_id : @domainId
 
-                    #start the list domain group app
-                    App.execute "list:domain:groups",
-                        region : @layout.listDomainGroupRegion
-                        domain_id : @domainId
-
-                    #fetch the current subscriptionfor the domain, on sucess
-                    #load the active subscription view
-                    @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-                    @subscriptionModel.fetch
-                        success : @showActiveSubscription
+                #on successful fetch show the active subscription view
+                msgbus.commands.execute "when:fetched", @subscriptionModel, =>
+                    @showActiveSubscription @subscriptionModel
 
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain
@@ -49,7 +49,6 @@ define [ 'app'
                 #show the edit domain layout
                 @show @layout,
                     loading : true
-                    entities : @subscriptionModel
 
             getEditDomainLayout : ( domainModel ) ->
                 new EditDomainView.DomainEditLayout
@@ -60,8 +59,8 @@ define [ 'app'
                     model : subscriptionModel
 
             showActiveSubscription : ( subscriptionModel )=>
-                @activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
-                @layout.activeSubscriptionRegion.show @activeSubscriptionView
+                activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
+                @layout.activeSubscriptionRegion.show activeSubscriptionView
 
             editDomain : ( domainData )=>
                 @domainModel.set domainData

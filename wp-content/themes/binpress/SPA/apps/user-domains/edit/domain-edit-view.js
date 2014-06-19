@@ -26,8 +26,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
     };
 
     DomainEditLayout.prototype.regions = {
-      addDomainGroupRegion: '#add-domain-groups',
-      listDomainGroupRegion: '#list-domain-groups',
+      groupsRegion: '#groups-region',
       activeSubscriptionRegion: '#active-subscription'
     };
 

@@ -35,3 +35,31 @@ function ajax_create_domain_group() {
 }
 
 add_action( 'wp_ajax_create-domain-group', 'ajax_create_domain_group' );
+
+/**
+ * Function to fetch all the groups for a domain
+ */
+function ajax_fetch_groups() {
+
+    $domain_id = $_GET['domain_id'];
+
+    $groups  = get_groups_for_domain($domain_id);
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $groups) );
+}
+
+add_action( 'wp_ajax_fetch-groups', 'ajax_fetch_groups' );
+
+/**
+ * Function to update the group details of a domain
+ */
+function ajax_update_domain_group() {
+
+    $group_data = $_POST;
+
+    $updated_group_details  = update_group_for_domain($group_data);
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $updated_group_details) );
+}
+
+add_action( 'wp_ajax_update-domain-group', 'ajax_update_domain_group' );
