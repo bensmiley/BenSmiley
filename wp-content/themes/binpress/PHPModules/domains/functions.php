@@ -51,8 +51,10 @@ function create_user_domain( $domain_details ) {
     // add the free plan as a term for domain post
     wp_set_post_terms( $post_id, 'Free','plan' );
 
-    $domain_data = get_user_domain_details( $post_id );
-    return $domain_data;
+    // create a free subscription for the domain
+    create_free_subscription( $post_id );
+
+    return $post_id;
 }
 
 /**

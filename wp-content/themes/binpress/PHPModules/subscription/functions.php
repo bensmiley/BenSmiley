@@ -30,7 +30,7 @@ function get_subscription_details_for_domain( $domain_id ) {
         return $subscription_data;
     }
 
-    $subscription_data = braintree_subscription_data( $query_result[ 0 ][ 'subscription_id' ] );
+    $subscription_data = braintree_subscription_data( $query_result[ 0 ] );
     return $subscription_data;
 
 }

@@ -50,10 +50,9 @@ function ajax_create_user_domain() {
 
     $domain_details = $_POST;
 
-    $domain_data = create_user_domain( $domain_details );
+    $domain_id = create_user_domain( $domain_details );
 
-    // create a free subscription for the domain
-    create_free_subscription( $domain_data[ 'ID' ] );
+    $domain_data = get_user_domain_details( $domain_id );
 
     wp_send_json( array( 'code' => 'OK', 'data' => $domain_data ) );
 }
