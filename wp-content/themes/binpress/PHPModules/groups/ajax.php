@@ -5,8 +5,8 @@
  * Date: 6/10/14
  * Time: 3:05 PM
  *
- * File Description :  Contains a list of ajax functions called from the dashboard for add/edit/list
- *                      of groups
+ * File Description :  Contains a list of ajax functions called from the dashboard for
+ *                     add/edit/list/delete of groups
  */
 require "functions.php";
 
@@ -41,11 +41,11 @@ add_action( 'wp_ajax_create-domain-group', 'ajax_create_domain_group' );
  */
 function ajax_fetch_groups() {
 
-    $domain_id = $_GET['domain_id'];
+    $domain_id = $_GET[ 'domain_id' ];
 
-    $groups  = get_groups_for_domain($domain_id);
+    $groups = get_groups_for_domain( $domain_id );
 
-    wp_send_json( array( 'code' => 'OK', 'data' => $groups) );
+    wp_send_json( array( 'code' => 'OK', 'data' => $groups ) );
 }
 
 add_action( 'wp_ajax_fetch-groups', 'ajax_fetch_groups' );
@@ -57,9 +57,23 @@ function ajax_update_domain_group() {
 
     $group_data = $_POST;
 
-    $updated_group_details  = update_group_for_domain($group_data);
+    $updated_group_details = update_group_for_domain( $group_data );
 
-    wp_send_json( array( 'code' => 'OK', 'data' => $updated_group_details) );
+    wp_send_json( array( 'code' => 'OK', 'data' => $updated_group_details ) );
 }
 
 add_action( 'wp_ajax_update-domain-group', 'ajax_update_domain_group' );
+
+/**
+ * Function to delete a group
+ */
+function ajax_delete_domain_group() {
+
+    $group_data = $_POST;
+
+    $updated_group_details = delete_group_for_domain( $group_data );
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $updated_group_details ) );
+}
+
+add_action( 'wp_ajax_delete-domain-group', 'ajax_delete_domain_group' );

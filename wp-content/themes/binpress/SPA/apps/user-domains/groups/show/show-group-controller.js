@@ -37,6 +37,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/groups/show/show-group-vie
       ShowGroupController.prototype.onGroupCollectionFetched = function(groupCollection) {
         this.view = this.getView(groupCollection);
         this.listenTo(this.view, "itemview:edit:group:clicked", this.editGroup);
+        this.listenTo(this.view, "itemview:delete:group:clicked", this.deleteGroup);
         this.listenTo(this.view, "save:domain:group:clicked", this.saveDomainGroup);
         this.listenTo(this.view, "update:domain:group:clicked", this.updateDomainGroup);
         return this.show(this.view, {
@@ -83,6 +84,16 @@ define(['app', 'regioncontroller', 'apps/user-domains/groups/show/show-group-vie
 
       ShowGroupController.prototype.groupUpdated = function() {
         return this.view.triggerMethod("group:updated");
+      };
+
+      ShowGroupController.prototype.deleteGroup = function(itemview, model) {
+        model.set({
+          'domain_id': this.domainId
+        });
+        return model.destroy({
+          allData: true,
+          wait: true
+        });
       };
 
       return ShowGroupController;

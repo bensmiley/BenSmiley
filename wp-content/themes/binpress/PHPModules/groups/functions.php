@@ -115,3 +115,33 @@ function update_group_for_domain( $group_data ) {
 
     return $update_group;
 }
+
+/**
+ * Function to delete a group from the domain
+ *
+ * @param $group_data
+ */
+function delete_group_for_domain( $group_data ) {
+
+    $groups = get_groups_for_domain( $group_data[ 'domain_id' ] );
+
+    foreach ( $groups as $key => $group ):
+        if ( $group[ 'ID' ] != $group_data[ 'ID' ] ) {
+
+            $update_group[ $key ][ 'ID' ] = intval( $group[ 'ID' ] );
+            $update_group[ $key ][ 'group_name' ] = $group[ 'group_name' ];
+            $update_group[ $key ][ 'group_description' ] = $group[ 'group_description' ];
+
+        }
+    endforeach;
+
+    //reset the array keys
+    $update_group = array_values( $update_group );
+
+    $update_group_serialized = maybe_serialize( $update_group );
+
+    update_post_meta( $group_data[ 'domain_id' ], 'groups', $update_group_serialized );
+
+    return $update_group;
+
+}

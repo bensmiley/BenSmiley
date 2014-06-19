@@ -31,8 +31,13 @@ define [ 'app'
                 #listen to edit a group event
                 @listenTo @view, "itemview:edit:group:clicked", @editGroup
 
-                #listen to save group event
+                #listen to delete a group event
+                @listenTo @view, "itemview:delete:group:clicked", @deleteGroup
+
+                #listen to save group event for adding new group
                 @listenTo @view, "save:domain:group:clicked", @saveDomainGroup
+
+                #listen to update group event
                 @listenTo @view, "update:domain:group:clicked", @updateDomainGroup
 
                 @show @view,
@@ -70,6 +75,11 @@ define [ 'app'
             groupUpdated : =>
                 @view.triggerMethod "group:updated"
 
+            deleteGroup : ( itemview, model )->
+                model.set 'domain_id' : @domainId
+                model.destroy
+                    allData : true
+                    wait : true
 
         #handler for showing the add domain group section:
         # This section is nested inside the edit domain page view
