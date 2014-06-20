@@ -4,7 +4,6 @@ define [ 'marionette'
          'braintree'
          'card' ], ( Marionette, changePlanTpl, BrainTree, card )->
 
-
     # Payment page main layout
     class ChangePlanLayout extends Marionette.Layout
 
@@ -96,43 +95,43 @@ define [ 'marionette'
     class PaymentFormView extends Marionette.ItemView
 
         template : '<div class="col-md-5">
-                                        <div class="card-wrapper"></div>
+                        <div class="card-wrapper"></div>
+                    </div>
+                    <div class="col-md-6">
+
+
+                        <div class="form-container active">
+                            <form action="">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br>
+
+                                <div class="row form-row">
+                                    <div class="col-md-5">
+                                        <input placeholder="Card number" type="text" name="number" class="form-control">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-7">
+                                        <input placeholder="Full name" type="text" name="name" class="form-control">
 
-
-                                        <div class="form-container active">
-                                            <form action="">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br>
-
-                                                <div class="row form-row">
-                                                    <div class="col-md-5">
-                                                        <input placeholder="Card number" type="text" name="number" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <input placeholder="Full name" type="text" name="name" class="form-control">
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="row form-row">
-                                                    <div class="col-md-3">
-                                                        <input placeholder="MM/YY" type="text" name="expiry" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <input placeholder="CVC" type="text" name="cvc" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i>
-                                                            Submit
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                            </form>
-                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="row form-row">
+                                    <div class="col-md-3">
+                                        <input placeholder="MM/YY" type="text" name="expiry" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input placeholder="CVC" type="text" name="cvc" class="form-control">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i>
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
 
                                 '
         className : 'row'

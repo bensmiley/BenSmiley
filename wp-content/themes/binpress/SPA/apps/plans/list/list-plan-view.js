@@ -19,20 +19,20 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
 
     SinglePlanView.prototype.onShow = function() {
       var activePlanName, domainId, linkValue, newLinkValue, planName;
+      linkValue = this.$el.find('.plan-link').attr('href');
+      domainId = Marionette.getOption(this, 'domainId');
+      newLinkValue = "" + linkValue + "/" + domainId;
+      this.$el.find('.plan-link').attr({
+        'href': newLinkValue
+      });
       activePlanName = Marionette.getOption(this, 'activePlanName');
       planName = this.model.get('plan_name');
       if (activePlanName === planName) {
         this.$el.addClass('highlight');
-        this.$el.find('.plan-link').attr({
+        return this.$el.find('.plan-link').attr({
           'href': 'javascript:void(0)'
         });
       }
-      linkValue = this.$el.find('.plan-link').attr('href');
-      domainId = Marionette.getOption(this, 'domainId');
-      newLinkValue = "" + linkValue + "/" + domainId;
-      return this.$el.find('.plan-link').attr({
-        'href': newLinkValue
-      });
     };
 
     return SinglePlanView;

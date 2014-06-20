@@ -23,18 +23,18 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
         className : 'plans'
 
         onShow : ->
+            #append domain id to link
+            linkValue = @$el.find( '.plan-link' ).attr 'href'
+            domainId = Marionette.getOption @, 'domainId'
+            newLinkValue = "#{linkValue}/#{domainId}"
+            @$el.find( '.plan-link' ).attr 'href' : newLinkValue
+
             #highlight active plan
             activePlanName = Marionette.getOption @, 'activePlanName'
             planName = @model.get 'plan_name'
             if activePlanName == planName
                 @$el.addClass 'highlight'
                 @$el.find( '.plan-link' ).attr 'href' : 'javascript:void(0)'
-
-            #append domain id to link
-            linkValue = @$el.find( '.plan-link' ).attr 'href'
-            domainId = Marionette.getOption @, 'domainId'
-            newLinkValue = "#{linkValue}/#{domainId}"
-            @$el.find( '.plan-link' ).attr 'href' : newLinkValue
 
 
     # Plans list main view

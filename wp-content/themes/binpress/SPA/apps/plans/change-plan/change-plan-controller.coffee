@@ -18,6 +18,12 @@ define [ 'app'
                 #get the layout of change plan
                 @layout = @getLayout()
 
+                #show loaders initally in the layout regions
+                @listenTo @layout,"show",->
+                    @layout.selectedPlanRegion.show new Marionette.LoadingView
+                    @layout.activeSubscriptionRegion.show new Marionette.LoadingView
+                    @layout.paymentViewRegion.show new Marionette.LoadingView
+
                 #show the layout
                 @show @layout,
                     loading : true

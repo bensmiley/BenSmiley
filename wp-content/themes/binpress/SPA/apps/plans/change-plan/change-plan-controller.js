@@ -22,6 +22,11 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         this.domainId = opts.domainID;
         this.planId = opts.planID;
         this.layout = this.getLayout();
+        this.listenTo(this.layout, "show", function() {
+          this.layout.selectedPlanRegion.show(new Marionette.LoadingView);
+          this.layout.activeSubscriptionRegion.show(new Marionette.LoadingView);
+          return this.layout.paymentViewRegion.show(new Marionette.LoadingView);
+        });
         this.show(this.layout, {
           loading: true
         });

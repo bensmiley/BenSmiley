@@ -34,6 +34,10 @@ define [ 'app'
 
                 @listenTo @layout, "show", =>
 
+                    #show loading view till regions of layout are fetched
+                    @layout.activeSubscriptionRegion.show new Marionette.LoadingView
+                    @layout.groupsRegion.show new Marionette.LoadingView
+
                     #start the domain group app
                     App.execute "show:domain:groups",
                         region : @layout.groupsRegion
@@ -45,6 +49,7 @@ define [ 'app'
 
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain
+
 
                 #show the edit domain layout
                 @show @layout,
