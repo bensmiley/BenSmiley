@@ -43,7 +43,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'braint
       return SelectedPlanView.__super__.constructor.apply(this, arguments);
     }
 
-    SelectedPlanView.prototype.template = '<h3>Selected plan</h3> <p class="m-b-20">Any change of plans in the midddle of cycle will be applicable from new cycle</p> <div class="grid simple"> <h2 class="bold text-center">{{plan_name}}<br> <small class="text-danger"> Rs.{{price}}/month</small> </h2> <hr> <ul class="list-unstyled text-center"> <li>Multiple Email Accounts</li> <li>99.9% Uptime</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> </ul> </div>';
+    SelectedPlanView.prototype.template = '<h4 class="semi-bold">Selected plan</h3> <div class="grid simple"> <h3 class="bold text-center">{{plan_name}}<br> <small class="text-danger"> Rs.{{price}}/month</small> </h2> <hr> <ul class="list-unstyled text-center"> <li>Multiple Email Accounts</li> <li>99.9% Uptime</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> </ul> <p class="text-danger">Note:</p> <p class="text-muted">Any change of plans in the midddle of cycle will be applicable from new cycle</p> </div>';
 
     SelectedPlanView.prototype.className = 'alert alert-info';
 
@@ -69,9 +69,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'braint
       return PaymentFormView.__super__.constructor.apply(this, arguments);
     }
 
-    PaymentFormView.prototype.template = '<div class="col-md-5"> <div class="card-wrapper"></div> </div> <div class="col-md-6"> <div class="form-container active"> <form action=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br> <div class="row form-row"> <div class="col-md-5"> <input placeholder="Card number" type="text" name="number" class="form-control"> </div> <div class="col-md-7"> <input placeholder="Full name" type="text" name="name" class="form-control"> </div> </div> <div class="row form-row"> <div class="col-md-3"> <input placeholder="MM/YY" type="text" name="expiry" class="form-control"> </div> <div class="col-md-3"> <input placeholder="CVC" type="text" name="cvc" class="form-control"> </div> <div class="col-md-5"> <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i> Submit </button> </div> </div> </form> </div> </div>';
-
-    PaymentFormView.prototype.className = 'row';
+    PaymentFormView.prototype.template = '<div class="col-md-6"> <div class="card-wrapper"></div> </div> <div class="col-md-6"> <div class="form-container active"> <form action=""> Enter your card information below. You will receive a notification confirming your payment shortly in your registered email. Once the payment is processed you will get an invoice in your registered email address.<br><br> <div class="row form-row"> <div class="col-md-5"> <input placeholder="Card number" type="text" name="number" class="form-control"> </div> <div class="col-md-7"> <input placeholder="Full name" type="text" name="name" class="form-control"> </div> <div class="col-md-3"> <input placeholder="MM/YY" type="text" name="expiry" class="form-control"> </div> <div class="col-md-3"> <input placeholder="CVC" type="text" name="cvc" class="form-control"> </div> <div class="col-md-5"> <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i> Submit </button> </div> </div> </div>';
 
     PaymentFormView.prototype.onShow = function() {
       return this.$el.find('.active form').card({

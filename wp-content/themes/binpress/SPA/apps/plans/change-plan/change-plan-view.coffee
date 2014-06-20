@@ -4,6 +4,7 @@ define [ 'marionette'
          'braintree'
          'card' ], ( Marionette, changePlanTpl, BrainTree, card )->
 
+
     # Payment page main layout
     class ChangePlanLayout extends Marionette.Layout
 
@@ -17,32 +18,30 @@ define [ 'marionette'
     #view to show the active subscription
     class ActiveSubscriptionView extends Marionette.ItemView
         template : ' <div class="col-md-3">
-                                <div class="tiles-body">
-                                    <div > ACTIVE PLAN </div>
-                                    <div class="heading">
-                                        <span class="animate-number" >{{plan_name}}</span>
+                                        <div class="tiles-body">
+                                            <div > ACTIVE PLAN </div>
+                                            <div class="heading">
+                                                <span class="animate-number" >{{plan_name}}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="tiles-body">
-                                    <div > ACTIVE SINCE </div>
-                                    <div class="heading">
-                                        <span class="animate-number" >{{start_date}}</span>
-                                    </div>
-                                </div>
-                            </div>'
+                                    <div class="col-md-3">
+                                        <div class="tiles-body">
+                                            <div > ACTIVE SINCE </div>
+                                            <div class="heading">
+                                                <span class="animate-number" >{{start_date}}</span>
+                                            </div>
+                                        </div>
+                                    </div>'
 
         className : 'row'
 
     #view to show the selected plan
     class SelectedPlanView extends Marionette.ItemView
-        template : '<h3>Selected plan</h3>
-                            <p class="m-b-20">Any change of plans in the midddle of cycle
-                             will be applicable from new cycle</p>
+        template : '<h4 class="semi-bold">Selected plan</h3>
 
                             <div class="grid simple">
-                                <h2 class="bold text-center">{{plan_name}}<br>
+                                <h3 class="bold text-center">{{plan_name}}<br>
                                     <small class="text-danger"> Rs.{{price}}/month</small>
                                 </h2>
                                 <hr>
@@ -57,6 +56,9 @@ define [ 'marionette'
                                     <li>Fully Managed VPS</li>
                                     <li>Reliable 24/7/365 Support</li>
                                 </ul>
+        						<p class="text-danger">Note:</p>
+        						<p class="text-muted">Any change of plans in the midddle of cycle
+                             will be applicable from new cycle</p>
                             </div>'
 
         className : 'alert alert-info'
@@ -65,76 +67,69 @@ define [ 'marionette'
     class PaymentCardView extends Marionette.ItemView
 
         template : '<div class="well well-large" style="background-color: #E4E4E4;">
-                                <h3><span class="semi-bold">Card Details</span></h3>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <B>Card Name</B>
+                                        <h3><span class="semi-bold">Card Details</span></h3>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <B>Card Name</B>
 
-                                            <h3>{{customer_name}}</h3>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <B>Card Number</B>
+                                                    <h3>{{customer_name}}</h3>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <B>Card Number</B>
 
-                                            <h3>{{card_number}}</h3>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <B>Card Expiry</B>
+                                                    <h3>{{card_number}}</h3>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <B>Card Expiry</B>
 
-                                            <h3>{{expiration_date}}</h3>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <B>CVC</B>
-                                            <input placeholder="" type="text" name="name" class="m-t-5">
-                                        </div>
+                                                    <h3>{{expiration_date}}</h3>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <B>CVC</B>
+                                                    <input placeholder="" type="text" name="name" class="m-t-5">
+                                                </div>
 
-                                    </div>
-
-                            </div>'
+                                          </div>
+                                    </div>'
 
     #view to show for payment if not credit card info is stored for the user
     class PaymentFormView extends Marionette.ItemView
 
-        template : '<div class="col-md-5">
-                        <div class="card-wrapper"></div>
-                    </div>
-                    <div class="col-md-6">
+        template : '<div class="col-md-6">
+                            <div class="card-wrapper"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-container active">
+                                <form action="">
+                                    Enter your card information below.
+                    You will receive a notification confirming your payment
+                    shortly in your registered email. Once the payment is
+                    processed you will get an invoice in
+                    your registered email address.<br><br>
 
+                                    <div class="row form-row">
+                                        <div class="col-md-5">
+                                            <input placeholder="Card number" type="text" name="number" class="form-control">
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input placeholder="Full name" type="text" name="name" class="form-control">
 
-                        <div class="form-container active">
-                            <form action="">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br>
+                                        </div>
 
-                                <div class="row form-row">
-                                    <div class="col-md-5">
-                                        <input placeholder="Card number" type="text" name="number" class="form-control">
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input placeholder="Full name" type="text" name="name" class="form-control">
-
-                                    </div>
-                                </div>
-
-                                <div class="row form-row">
-                                    <div class="col-md-3">
-                                        <input placeholder="MM/YY" type="text" name="expiry" class="form-control">
-                                    </div>
-                                    <div class="col-md-3">
+                                         <div class="col-md-3">
+                                         <input placeholder="MM/YY" type="text" name="expiry" class="form-control">
+                                         </div>
+                                   <div class="col-md-3">
                                         <input placeholder="CVC" type="text" name="cvc" class="form-control">
                                     </div>
-                                    <div class="col-md-5">
+                                     <div class="col-md-5">
                                         <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i>
                                             Submit
                                         </button>
                                     </div>
-                                </div>
+                                    </div>
 
-                            </form>
-                        </div>
-                    </div>
-
-                                '
-        className : 'row'
+                                </div>'
 
         onShow : ->
             @$el.find( '.active form' ).card
