@@ -38,12 +38,10 @@ define [ 'marionette'
 
     #view to show the selected plan
     class SelectedPlanView extends Marionette.ItemView
-        template : '<h3>Selected plan</h3>
-                    <p class="m-b-20">Any change of plans in the midddle of cycle
-                     will be applicable from new cycle</p>
-
+        template : '<h4 class="semi-bold">Selected plan</h3>
+                    
                     <div class="grid simple">
-                        <h2 class="bold text-center">{{plan_name}}<br>
+                        <h3 class="bold text-center">{{plan_name}}<br>
                             <small class="text-danger"> Rs.{{price}}/month</small>
                         </h2>
                         <hr>
@@ -58,6 +56,9 @@ define [ 'marionette'
                             <li>Fully Managed VPS</li>
                             <li>Reliable 24/7/365 Support</li>
                         </ul>
+						<p class="text-danger">Note:</p>
+						<p class="text-muted">Any change of plans in the midddle of cycle
+                     will be applicable from new cycle</p>
                     </div>'
 
         className : 'alert alert-info'
@@ -95,7 +96,7 @@ define [ 'marionette'
     #view to show for payment if not credit card info is stored for the user
     class PaymentFormView extends Marionette.ItemView
 
-        template : '<div class="col-md-5">
+        template : '<div class="col-md-6">
                                 <div class="card-wrapper"></div>
                             </div>
                             <div class="col-md-6">
@@ -103,8 +104,11 @@ define [ 'marionette'
 
                                 <div class="form-container active">
                                     <form action="">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam<br><br>
+                                        Enter your card information below.
+                        You will receive a notification confirming your payment
+                        shortly in your registered email. Once the payment is
+                        processed you will get an invoice in
+                        your registered email address.<br><br>
 
                                         <div class="row form-row">
                                             <div class="col-md-5">

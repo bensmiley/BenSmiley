@@ -8,7 +8,7 @@ define [ 'marionette'
 
         template : '<div class="page-header">
                                       <h1 class="normaltext-center">
-                                        <span class="p-r-10">Enter Your Passyament Details</span>
+                                        <span class="p-r-10">Enter Your Payament Details</span>
                                       </h1>
                                     </div>
                                      <div class="row">
@@ -36,6 +36,7 @@ define [ 'marionette'
                                                  </div>
                                            </div>
                                       </div>
+									<div class="row">
                                       <div class="col-md-9">
                                 	<div class="modal-body">
                                 	<div class="row">
@@ -63,7 +64,7 @@ define [ 'marionette'
                                 			</ul>
                                 		</div>
                                 	</div>
-                                </div>'
+                                </div></div>'
 
         regions :
             displayPaymentRegion : '#display-payment-form'
