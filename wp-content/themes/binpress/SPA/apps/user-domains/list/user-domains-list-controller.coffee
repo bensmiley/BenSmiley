@@ -14,7 +14,7 @@ define [ 'app'
 
                 #get the user domains collection
                 userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
-                userDomainsCollection.fetch()
+#                userDomainsCollection.fetch()
 
                 #get the user domain list view
                 domainListView = @getDomainListView userDomainsCollection
