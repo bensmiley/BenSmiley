@@ -1,8 +1,9 @@
 #include the files for the app
 define [ 'marionette'
          'text!apps/plans/templates/changePlanLayout.html'
+         'text!apps/payment/templates/paymentForm.html'
          'braintree'
-         'card' ], ( Marionette, changePlanTpl, BrainTree, card )->
+         'card' ], ( Marionette, changePlanTpl, paymentFormTpl, BrainTree, card )->
 
 
     # Payment page main layout
@@ -96,73 +97,96 @@ define [ 'marionette'
     class PaymentFormView extends Marionette.ItemView
 
         template : '<div class="col-md-6">
-                            <div class="card-wrapper"></div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-container active">
-                                <form action="">
-                                    Enter your card information below.
-                    You will receive a notification confirming your payment
-                    shortly in your registered email. Once the payment is
-                    processed you will get an invoice in
-                    your registered email address.<br><br>
+                        <div class="card-wrapper"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-container active">
+                            <form id="payment-form" autocomplete="off">
+                                Enter your card information below.
+                                You will receive a notification confirming your payment
+                                shortly in your registered email. Once the payment is
+                                processed you will get an invoice in
+                                your registered email address.<br><br>
 
-                                    <div class="row form-row">
-                                        <div class="col-md-5">
-                                            <input placeholder="Card number" type="text" name="number" class="form-control">
-                                        </div>
-                                        <div class="col-md-7">
-                                            <input placeholder="Full name" type="text" name="name" class="form-control">
-
-                                        </div>
-
-                                         <div class="col-md-3">
-                                         <input placeholder="MM/YY" type="text" name="expiry" class="form-control">
-                                         </div>
-                                   <div class="col-md-3">
-                                        <input placeholder="CVC" type="text" name="cvc" class="form-control">
+                                <div class="row form-row">
+                                    <div class="col-md-5">
+                                        <input placeholder="Card number" type="text"
+                                        class="form-control" data-encrypted-name="credit_card_number"
+                                        id="credit_card_number">
                                     </div>
+
+                                    <div class="col-md-7">
+                                        <input placeholder="Full name" type="text"
+                                        data-encrypted-name="cardholder_name"
+                                        class="form-control"
+                                        id="cardholder_name">
+                                    </div>
+
+                                     <div class="col-md-3">
+                                     <input placeholder="MM/YY" type="text"
+                                     class="form-control" data-encrypted-name="expiration_date"
+                                     id="expiration_date">
+                                     </div>
+
+                                     <div class="col-md-3">
+                                        <input placeholder="CVC" type="text"
+                                        class="form-control" data-encrypted-name="credit_card_cvv"
+                                        id="credit_card_cvv">
+                                     </div>
                                      <div class="col-md-5">
-                                        <button type="submit" class="btn btn-primary btn-cons"><i class="icon-ok"></i>
+                                        <button type="button" class="btn btn-primary btn-cons" id="submit">
+                                        <i class="icon-ok"></i>
                                             Submit
                                         </button>
-                                    </div>
-                                    </div>
-
-                                </div>'
+                                     </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="success-msg"></div>
+                    </div>'
 
         onShow : ->
             @$el.find( '.active form' ).card
                 container : @$el.find( '.card-wrapper' )
 
+        #show sucess msg
+        onPaymentSucess:(response)->
+            @$el.find( '#success-msg' ).empty()
+            msgText = response.msg
+            msg ="<div class='alert alert-success'>
+            <button class='close' data-dismiss='alert'>&times;</button>
+                   #{msgText}<div>"
+            @$el.find( '#success-msg' ).append(msg)
 
-    #payment form display
-    #    class PaymentFormView extends Marionette.ItemView
-    #
-    #        template : paymentFormTpl
-    #
-    #        tagName : 'form'
-    #
-    #        id : 'payment-form'
-    #
-    #        onShow : ->
-    #            # The ajax submit action to be performed after braintree
-    #            # encrypts the payment form.Braintree addes a onSubmit
-    #            # handler after form encryption and attaches the ajax_submit
-    #            # action to the OnSubmit handler.
-    #            ajaxSubmit = ( e ) =>
-    #                e.preventDefault()
-    #                ajaxAction = "#{AJAXURL}?action=make-user-payment"
-    #                $.post ajaxAction, @$el.serialize(), ( response )->
-    #                    console.log response
-    #
-    #            #The client side encryption key from the sandbox account of braintree
-    #            clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB"
-    #            braintree = Braintree.create( clientSideEncryptionKey )
-    #
-    #            #Encrypt the form using the formId and add the ajax action
-    #            # after form encryption
-    #            braintree.onSubmitEncryptForm( 'payment-form', ajaxSubmit )
+
+        events :->
+            'click #submit' :->
+                #get all card details for encryption
+                creditCardNumber = @$el.find('#credit_card_number' ).val()
+                cardholderName= @$el.find('#cardholder_name' ).val()
+                expirationDate= @$el.find('#expiration_date' ).val()
+                creditCardCvv= @$el.find('#credit_card_cvv' ).val()
+
+                #The client side encryption key from the sandbox account of braintree
+                clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB"
+                braintree = Braintree.create( clientSideEncryptionKey )
+
+                #encrypt the card data
+                creditCardNumber = braintree.encrypt(creditCardNumber)
+                cardholderName = braintree.encrypt(cardholderName)
+                expirationDate = braintree.encrypt(expirationDate)
+                creditCardCvv = braintree.encrypt(creditCardCvv)
+
+                #card data array
+                data =
+                    'creditCardNumber' : creditCardNumber
+                    'cardholderName' : cardholderName
+                    'expirationDate' : expirationDate
+                    'creditCardCvv' : creditCardCvv
+                    'braintree_customer_id' : @model.get 'braintree_customer_id'
+
+                #send the card details to the controller for ajax event
+                @trigger "user:credit:card:details", data
 
 
     # return the view instances as objects

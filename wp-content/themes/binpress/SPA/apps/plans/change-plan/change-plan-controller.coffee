@@ -19,7 +19,7 @@ define [ 'app'
                 @layout = @getLayout()
 
                 #show loaders initally in the layout regions
-                @listenTo @layout,"show",->
+                @listenTo @layout, "show", ->
                     @layout.selectedPlanRegion.show new Marionette.LoadingView
                     @layout.activeSubscriptionRegion.show new Marionette.LoadingView
                     @layout.paymentViewRegion.show new Marionette.LoadingView
@@ -86,12 +86,29 @@ define [ 'app'
 
             #view shown if user does not have credit card info stored
             showPaymentFormView : =>
-                paymentFormView = @getPaymentFormView @userBillingModel
-                @layout.paymentViewRegion.show paymentFormView
+                @paymentFormView = @getPaymentFormView @userBillingModel
+                @layout.paymentViewRegion.show @paymentFormView
+
+                #listen to the card submit event of the view
+                @listenTo @paymentFormView, 'user:credit:card:details', @newCreditCardPayment
 
             getPaymentFormView : ( userBillingModel )->
                 new ChangePlanView.PaymentFormView
                     model : userBillingModel
+
+            #ajax action when user makes payment through card for the first time
+            newCreditCardPayment : ( creditCardData )->
+                options =
+                    url: AJAXURL
+                    method: "POST"
+                    data:
+                        action : 'user-new-payment'
+                        creditCardData : creditCardData
+                        planId : @selectedPlanModel.get 'plan_id'
+                        domainId : @subscriptionModel.get 'domain_id'
+
+                $.ajax(options).done (response)=>
+                    @paymentFormView.triggerMethod "payment:sucess",response
 
 
         #handler for changing the domain plan,options to be passed to controller are:

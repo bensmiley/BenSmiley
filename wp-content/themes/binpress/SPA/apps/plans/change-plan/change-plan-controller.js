@@ -104,15 +104,34 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       };
 
       ChangePlanController.prototype.showPaymentFormView = function() {
-        var paymentFormView;
-        paymentFormView = this.getPaymentFormView(this.userBillingModel);
-        return this.layout.paymentViewRegion.show(paymentFormView);
+        this.paymentFormView = this.getPaymentFormView(this.userBillingModel);
+        this.layout.paymentViewRegion.show(this.paymentFormView);
+        return this.listenTo(this.paymentFormView, 'user:credit:card:details', this.newCreditCardPayment);
       };
 
       ChangePlanController.prototype.getPaymentFormView = function(userBillingModel) {
         return new ChangePlanView.PaymentFormView({
           model: userBillingModel
         });
+      };
+
+      ChangePlanController.prototype.newCreditCardPayment = function(creditCardData) {
+        var options;
+        options = {
+          url: AJAXURL,
+          method: "POST",
+          data: {
+            action: 'user-new-payment',
+            creditCardData: creditCardData,
+            planId: this.selectedPlanModel.get('plan_id'),
+            domainId: this.subscriptionModel.get('domain_id')
+          }
+        };
+        return $.ajax(options).done((function(_this) {
+          return function(response) {
+            return _this.paymentFormView.triggerMethod("payment:sucess", response);
+          };
+        })(this));
       };
 
       return ChangePlanController;

@@ -14,7 +14,7 @@ Braintree_Configuration::merchantId('x8dwnhxhdmmhytj7');
 Braintree_Configuration::publicKey('msc2t6xzfj2qdw59');
 Braintree_Configuration::privateKey('5b8284e277f8c86552dcd6598e86e77c');
 
-function ajax_make_payment(){
+//function ajax_make_payment(){
 
 //    $result = Braintree_Subscription::update('hz2cyw', array(
 //        'planId' => 'plan3',
@@ -109,6 +109,6 @@ function ajax_make_payment(){
 //        }
 //    }
 
-}
+//}
 
-add_action( 'wp_ajax_make-user-payment', 'ajax_make_payment' );
+//add_action( 'wp_ajax_make-user-payment', 'ajax_make_payment' );
