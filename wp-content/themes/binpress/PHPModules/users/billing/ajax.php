@@ -35,36 +35,59 @@ add_action( 'wp_ajax_read-user-payment', 'ajax_read_user_payment' );
  * The credit card array passed to function  create_credit_card_for_customer() is n the format:
  *
  *     [creditCardData] => Array
-        (
-            [creditCardNumber] => "encrypted value"
-            [cardholderName] => "encrypted value"
-            [expirationDate] => "encrypted value"
-            [creditCardCvv] => "encrypted value"
-        )
+ * (
+ * [creditCardNumber] => "encrypted value"
+ * [cardholderName] => "encrypted value"
+ * [expirationDate] => "encrypted value"
+ * [creditCardCvv] => "encrypted value"
+ * )
  *
  */
-function ajax_user_new_payment(){
+function ajax_user_new_payment() {
 
     $credit_card_data = $_POST;
 
     $card_data = $credit_card_data[ 'creditCardData' ];
 
-    unset($credit_card_data['action']);
+    unset( $credit_card_data[ 'action' ] );
 
     $plan_id = $credit_card_data[ 'planId' ];
 
     $domain_id = $credit_card_data[ 'domainId' ];
 
-    $card_token = create_credit_card_for_customer($card_data);
-    if($card_token['code'] == 'ERROR')
-        wp_send_json( array( 'code' => 'OK', 'msg' => $card_token['msg']) );
+    $card_token = create_credit_card_for_customer( $card_data );
+    if ( $card_token[ 'code' ] == 'ERROR' )
+        wp_send_json( array( 'code' => 'OK', 'msg' => $card_token[ 'msg' ] ) );
 
-    $subscription = create_subscription_in_braintree( $card_token['credit_card_token'], $plan_id );
-    if($subscription['code'] == 'ERROR')
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription['msg']) );
+    $subscription = create_subscription_in_braintree( $card_token[ 'credit_card_token' ], $plan_id );
+    if ( $subscription[ 'code' ] == 'ERROR' )
+        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
 
-    create_subscription( $domain_id , $subscription['subscription_id'] );
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed') );
+    // make the subscription entry in the database
+    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
+    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed' ) );
 
 }
+
 add_action( 'wp_ajax_user-new-payment', 'ajax_user_new_payment' );
+
+/**
+ * Function to make a payment by the user, when credit card details are stored in vault.
+ */
+function ajax_user_make_payment() {
+
+    $credit_card_token = $_POST[ 'creditCardToken' ];
+    $plan_id = $_POST[ 'planId' ];
+    $domain_id = $_POST[ 'domainId' ];
+
+//    $subscription = create_subscription_in_braintree( $credit_card_token, $plan_id );
+//    if ( $subscription[ 'code' ] == 'ERROR' )
+//        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+//
+//    // make the subscription entry in the database
+//    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
+    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Successful' ) );
+
+}
+
+add_action( 'wp_ajax_user-make-payment', 'ajax_user_make_payment' );
