@@ -149,7 +149,7 @@ function get_user_data_for_admin_mail( $mail_id ) {
     $user_email = $wpdb->get_results( $query, ARRAY_A );
 
     // get the user data based the email id present in $user_email[ 'meta_value' ]
-    $user_data = get_user_data( $user_email[ 'meta_value' ] );
+    $user_data = get_user_data( $user_email[0][ 'meta_value' ] );
 
     return $user_data;
 }

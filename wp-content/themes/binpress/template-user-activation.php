@@ -35,7 +35,7 @@ set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
 
                 <p> Account is activated.</p>
                 <br>
-                <p>Click <a href="<?php echo home_url().'/home';?>">here</a> to sign in.</p>
+                <p>Click <a href="<?php echo home_url();?>">here</a> to sign in.</p>
                 <!-- LOGIN FORM START -->
 <!--                <form id="login-form" class="login-form">-->
 <!--                    <div class="row">-->
