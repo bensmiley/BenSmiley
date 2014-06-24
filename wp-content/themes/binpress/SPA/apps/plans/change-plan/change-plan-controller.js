@@ -31,7 +31,6 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
           loading: true
         });
         this.domainModel = msgbus.reqres.request("get:domain:model:by:id", this.domainId);
-        this.domainModel.fetch();
         msgbus.commands.execute("when:fetched", this.domainModel, (function(_this) {
           return function() {
             return _this.showDomainSubscriptionView();
@@ -105,10 +104,14 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       };
 
       ChangePlanController.prototype.showPaymentFormView = function() {
-        console.log(this.userBillingModel);
         this.paymentFormView = this.getPaymentFormView(this.userBillingModel);
         this.layout.paymentViewRegion.show(this.paymentFormView);
-        return this.listenTo(this.paymentFormView, 'user:credit:card:details', this.newCreditCardPayment);
+        this.listenTo(this.paymentFormView, 'user:credit:card:details', this.newCreditCardPayment);
+        return this.listenTo(this.paymentFormView, 'use:stored:card', this.useStoredCreditCard);
+      };
+
+      ChangePlanController.prototype.useStoredCreditCard = function() {
+        return this.showPaymentCardView();
       };
 
       ChangePlanController.prototype.getPaymentFormView = function(userBillingModel) {

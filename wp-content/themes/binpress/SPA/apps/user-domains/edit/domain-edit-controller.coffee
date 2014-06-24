@@ -15,10 +15,10 @@ define [ 'app'
                 #get domainId from controller options
                 @domainId = opts.domainId
 
-                #fetch the domain model
+                #fetch the domain model and show layout
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
                 @showEditView @domainModel
-                #@domainModel.fetch()
+#                @domainModel.fetch()
 
                 #fetch the current subscription model for the domain
                 @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId

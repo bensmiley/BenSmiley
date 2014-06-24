@@ -6,6 +6,13 @@
  * Time: 9:08 PM
  */
 
+
+/**
+ * Function to get all the subscription details based on the subscription Id
+ *
+ * @param $subscription_id
+ * @return mixed
+ */
 function get_subscription_details( $subscription_id ) {
 
     $subscription = Braintree_Subscription::find( $subscription_id );

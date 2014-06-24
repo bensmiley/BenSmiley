@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['marionette', 'mustache'], function(Marionette, Mustache) {
+define(['marionette', 'mustache', 'spin', 'jqueryspin'], function(Marionette, Mustache, spin, jqueryspin) {
   _.extend(Marionette.Application.prototype, {
     navigate: function(route, options) {
       if (options == null) {
@@ -114,7 +114,40 @@ define(['marionette', 'mustache'], function(Marionette, Mustache) {
       return LoadingView.__super__.constructor.apply(this, arguments);
     }
 
-    LoadingView.prototype.template = '<div>Loading <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif"> </div>';
+    LoadingView.prototype.template = _.template('<i></i>', {});
+
+    LoadingView.prototype.className = 'loading-container';
+
+    LoadingView.prototype.onShow = function() {
+      var opts;
+      opts = this._getOptions();
+      return this.$el.spin(opts);
+    };
+
+    LoadingView.prototype.onClose = function() {
+      return this.$el.spin(false);
+    };
+
+    LoadingView.prototype._getOptions = function() {
+      return {
+        lines: 10,
+        length: 6,
+        width: 2.5,
+        radius: 7,
+        corners: 1,
+        rotate: 9,
+        direction: 1,
+        color: '#000000',
+        speed: 1,
+        trail: 60,
+        shadow: false,
+        hwaccel: true,
+        className: 'spinner',
+        zIndex: 1030,
+        top: '40%',
+        left: '50%'
+      };
+    };
 
     return LoadingView;
 

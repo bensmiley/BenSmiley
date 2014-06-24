@@ -1,7 +1,7 @@
 ##
 ## Set backbone overrites or mixins
 ##
-define [ 'marionette', 'mustache' ], ( Marionette, Mustache )->
+define [ 'marionette', 'mustache','spin', 'jqueryspin' ], ( Marionette, Mustache, spin, jqueryspin )->
 
     # Extends the Marionette.Application to add some additional functions
     _.extend Marionette.Application::,
@@ -92,6 +92,32 @@ define [ 'marionette', 'mustache' ], ( Marionette, Mustache )->
         template
 
     class Marionette.LoadingView extends Marionette.ItemView
-        template : '<div>Loading
-                    <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
-                    </div>'
+        template : _.template( '<i></i>', {} )
+
+        className : 'loading-container'
+
+        onShow : ->
+            opts = @._getOptions()
+            @$el.spin opts
+
+        onClose : ->
+            @$el.spin false
+
+        _getOptions : ->
+            lines : 10
+            length : 6
+            width : 2.5
+            radius : 7
+            corners : 1
+            rotate : 9
+            direction : 1
+            color : '#000000'
+            speed : 1
+            trail : 60
+            shadow : false
+            hwaccel : true
+            className : 'spinner'
+            zIndex : 1030
+            top : '40%'
+            left : '50%'
+

@@ -29,7 +29,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       return DomainSubscriptionView.__super__.constructor.apply(this, arguments);
     }
 
-    DomainSubscriptionView.prototype.template = ' <div class="col-md-3"> <div class="tiles-body"> <div >Domain name </div> <div class="heading"> <span class="animate-number" >{{post_title}}</span> </div> </div> </div> <div class="col-md-3"> <div class="tiles-body"> <div > Active plan </div> <div class="heading"> <span class="animate-number" >{{plan_name}}</span> </div> </div> </div>';
+    DomainSubscriptionView.prototype.template = ' <div class="col-md-3"> <div class="tiles-body"> <div >Domain name </div> <div class="heading"> <span class="animate-number" >{{post_title}}</span> </div> </div> </div> <div class="col-md-3"> <div class="tiles-body"> <div > Active plan </div> <div class="heading"> <span class="animate-number" >{{plan_name}}</span> </div> </div> </div> <div>To ensure the plan is always active for your domain, enter valid card details below.Its easy to change your card information. Simply click on the change card button below and the current card details will be replaced by new card for the next billing cycle</div>';
 
     DomainSubscriptionView.prototype.className = 'row';
 
@@ -105,12 +105,17 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       return PaymentFormView.__super__.constructor.apply(this, arguments);
     }
 
-    PaymentFormView.prototype.template = '<div class="col-md-6"> <div class="card-wrapper"></div> </div> <div class="col-md-6"> <div class="form-container active"> <form id="payment-form" autocomplete="off"> Enter your card information below. You will receive a notification confirming your payment shortly in your registered email. Once the payment is processed you will get an invoice in your registered email address.<br><br> <div class="row form-row"> <div class="col-md-5"> <input placeholder="Card number" type="text" class="form-control" data-encrypted-name="credit_card_number" id="credit_card_number"> </div> <div class="col-md-7"> <input placeholder="Full name" type="text" data-encrypted-name="cardholder_name" class="form-control" id="cardholder_name"> </div> <div class="col-md-3"> <input placeholder="MM/YY" type="text" class="form-control" data-encrypted-name="expiration_date" id="expiration_date"> </div> <div class="col-md-3"> <input placeholder="CVC" type="text" class="form-control" data-encrypted-name="credit_card_cvv" id="credit_card_cvv"> </div> <div class="col-md-5"> <button type="button" class="btn btn-primary btn-cons" id="submit"> <i class="icon-ok"></i> Submit </button> </div> </div> </form> </div> <div id="success-msg"></div> </div>';
+    PaymentFormView.prototype.template = '<div class="col-md-6"> <div class="card-wrapper"></div> </div> <div class="col-md-6"> <div class="form-container active"> <form id="payment-form" autocomplete="off"> Enter your card information below. You will receive a notification confirming your payment shortly in your registered email. Once the payment is processed you will get an invoice in your registered email address.<br><br> <div class="row form-row"> <div class="col-md-5"> <input placeholder="Card number" type="text" class="form-control" data-encrypted-name="credit_card_number" id="credit_card_number"> </div> <div class="col-md-7"> <input placeholder="Full name" type="text" data-encrypted-name="cardholder_name" class="form-control" id="cardholder_name"> </div> <div class="col-md-3"> <input placeholder="MM/YY" type="text" class="form-control" data-encrypted-name="expiration_date" id="expiration_date"> </div> <div class="col-md-3"> <input placeholder="CVC" type="text" class="form-control" data-encrypted-name="credit_card_cvv" id="credit_card_cvv"> </div> <div class="col-md-5"> <button type="button" class="btn btn-primary btn-cons" id="submit"> <i class="icon-ok"></i> Submit </button> </div> <div class="col-md-5 cancel-card" style="display: none"> <button type="button" class="btn btn-primary btn-cons" id="cancel"> <i class="icon-ok"></i> Cancel </button> </div> </div> </form> </div> <div id="success-msg"></div> </div>';
 
     PaymentFormView.prototype.onShow = function() {
-      return this.$el.find('.active form').card({
+      var cardExists;
+      this.$el.find('.active form').card({
         container: this.$el.find('.card-wrapper')
       });
+      cardExists = this.model.get('card_exists');
+      if (cardExists) {
+        return this.$el.find('.cancel-card').show();
+      }
     };
 
     PaymentFormView.prototype.onPaymentSucess = function(response, domainId) {
@@ -154,6 +159,9 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
             'braintree_customer_id': this.model.get('braintree_customer_id')
           };
           return this.trigger("user:credit:card:details", data);
+        },
+        'click #cancel': function() {
+          return this.trigger("use:stored:card");
         }
       };
     };

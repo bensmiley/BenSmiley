@@ -30,7 +30,6 @@ define [ 'app'
 
                 #fetch the active subscription and show the view on successdul fetch
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
-                @domainModel.fetch()
                 msgbus.commands.execute "when:fetched", @domainModel, =>
                     @showDomainSubscriptionView()
 
@@ -91,12 +90,17 @@ define [ 'app'
 
             #view shown if user does not have credit card info stored
             showPaymentFormView : =>
-                console.log @userBillingModel
                 @paymentFormView = @getPaymentFormView @userBillingModel
                 @layout.paymentViewRegion.show @paymentFormView
 
-                #listen to the card submit event of the view
+                #listen to the card form view click events
                 @listenTo @paymentFormView, 'user:credit:card:details', @newCreditCardPayment
+                @listenTo @paymentFormView, 'use:stored:card', @useStoredCreditCard
+
+            #when user clicks cancel and chooses to use the stored card for payment
+            # instead of changing the card
+            useStoredCreditCard :->
+                @showPaymentCardView()
 
             getPaymentFormView : ( userBillingModel )->
                 new ChangePlanView.PaymentFormView
