@@ -18,6 +18,10 @@ Braintree_Configuration::publicKey(BT_PUBLIC_KEY);
 Braintree_Configuration::privateKey(BT_PRIVATE_KEY);
 
 
+/**
+ * Include all the custom files required for braintree transaction and API calls
+ */
 require_once 'customer.php';
 require_once 'plans.php';
 require_once 'subscription.php';
+require_once 'payment.php';

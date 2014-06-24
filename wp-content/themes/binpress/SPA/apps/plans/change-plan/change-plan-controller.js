@@ -14,7 +14,7 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         this.showPaymentCardView = __bind(this.showPaymentCardView, this);
         this.showPaymentView = __bind(this.showPaymentView, this);
         this.showSelectedPlanView = __bind(this.showSelectedPlanView, this);
-        this.showActiveSubscriptionView = __bind(this.showActiveSubscriptionView, this);
+        this.showDomainSubscriptionView = __bind(this.showDomainSubscriptionView, this);
         return ChangePlanController.__super__.constructor.apply(this, arguments);
       }
 
@@ -24,17 +24,17 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         this.layout = this.getLayout();
         this.listenTo(this.layout, "show", function() {
           this.layout.selectedPlanRegion.show(new Marionette.LoadingView);
-          this.layout.activeSubscriptionRegion.show(new Marionette.LoadingView);
+          this.layout.domainSubscriptionRegion.show(new Marionette.LoadingView);
           return this.layout.paymentViewRegion.show(new Marionette.LoadingView);
         });
         this.show(this.layout, {
           loading: true
         });
-        this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
-        this.subscriptionModel.fetch();
-        msgbus.commands.execute("when:fetched", this.subscriptionModel, (function(_this) {
+        this.domainModel = msgbus.reqres.request("get:domain:model:by:id", this.domainId);
+        this.domainModel.fetch();
+        msgbus.commands.execute("when:fetched", this.domainModel, (function(_this) {
           return function() {
-            return _this.showActiveSubscriptionView();
+            return _this.showDomainSubscriptionView();
           };
         })(this));
         this.selectedPlanModel = msgbus.reqres.request("get:plan:by:planid", this.planId);
@@ -53,16 +53,16 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         })(this));
       };
 
-      ChangePlanController.prototype.getActiveSubscriptionView = function(subscriptionModel) {
-        return new ChangePlanView.ActiveSubscriptionView({
-          model: subscriptionModel
+      ChangePlanController.prototype.getDomainSubscriptionView = function(domainModel) {
+        return new ChangePlanView.DomainSubscriptionView({
+          model: domainModel
         });
       };
 
-      ChangePlanController.prototype.showActiveSubscriptionView = function() {
-        var activeSubscriptionView;
-        activeSubscriptionView = this.getActiveSubscriptionView(this.subscriptionModel);
-        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
+      ChangePlanController.prototype.showDomainSubscriptionView = function() {
+        var domainSubscriptionView;
+        domainSubscriptionView = this.getDomainSubscriptionView(this.domainModel);
+        return this.layout.domainSubscriptionRegion.show(domainSubscriptionView);
       };
 
       ChangePlanController.prototype.getSelectedPlanViewView = function(selectedPlanModel) {
@@ -92,9 +92,10 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       };
 
       ChangePlanController.prototype.showPaymentCardView = function() {
-        var paymentCardView;
-        paymentCardView = this.getPaymentCardView(this.userBillingModel);
-        return this.layout.paymentViewRegion.show(paymentCardView);
+        this.paymentCardView = this.getPaymentCardView(this.userBillingModel);
+        this.layout.paymentViewRegion.show(this.paymentCardView);
+        this.listenTo(this.paymentCardView, 'user:card:payment', this.creditCardPayment);
+        return this.listenTo(this.paymentCardView, 'change:card:clicked', this.showPaymentFormView);
       };
 
       ChangePlanController.prototype.getPaymentCardView = function(userBillingModel) {
@@ -104,15 +105,54 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       };
 
       ChangePlanController.prototype.showPaymentFormView = function() {
-        var paymentFormView;
-        paymentFormView = this.getPaymentFormView(this.userBillingModel);
-        return this.layout.paymentViewRegion.show(paymentFormView);
+        console.log(this.userBillingModel);
+        this.paymentFormView = this.getPaymentFormView(this.userBillingModel);
+        this.layout.paymentViewRegion.show(this.paymentFormView);
+        return this.listenTo(this.paymentFormView, 'user:credit:card:details', this.newCreditCardPayment);
       };
 
       ChangePlanController.prototype.getPaymentFormView = function(userBillingModel) {
         return new ChangePlanView.PaymentFormView({
           model: userBillingModel
         });
+      };
+
+      ChangePlanController.prototype.newCreditCardPayment = function(creditCardData) {
+        var options;
+        options = {
+          url: AJAXURL,
+          method: "POST",
+          data: {
+            action: 'user-new-payment',
+            creditCardData: creditCardData,
+            planId: this.selectedPlanModel.get('plan_id'),
+            domainId: this.domainId
+          }
+        };
+        return $.ajax(options).done((function(_this) {
+          return function(response) {
+            return _this.paymentFormView.triggerMethod("payment:sucess", response, _this.domainId);
+          };
+        })(this));
+      };
+
+      ChangePlanController.prototype.creditCardPayment = function(creditCardToken) {
+        var options;
+        options = {
+          url: AJAXURL,
+          method: "POST",
+          data: {
+            action: 'user-make-payment',
+            creditCardToken: creditCardToken,
+            planId: this.selectedPlanModel.get('plan_id'),
+            domainId: this.domainId
+          }
+        };
+        return $.ajax(options).done((function(_this) {
+          return function(response) {
+            return _this.paymentCardView.triggerMethod("payment:sucess", response, _this.domainId);
+          };
+        })(this));
       };
 
       return ChangePlanController;

@@ -63,3 +63,49 @@ function braintree_subscription_data( $subscription_details ) {
     return $subscription_data;
 
 }
+
+/**
+ * Function to create a free subscription for
+ *
+ * every new domain registered by the user
+ *
+ * @param $domain_id
+ */
+function create_free_subscription( $domain_id ) {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $date_time = date( 'Y-m-d H:i:s' );
+
+    $wpdb->insert( $table_name,
+        array(
+            'domain_id' => $domain_id,
+            'subscription_id' => 'BENAJFREE',
+            'datetime' => $date_time
+        ) );
+}
+
+/**
+ * Function to create a subscription entry for
+ *
+ * a domain after a subscription has been made in braintree after payment
+ *
+ * @param $domain_id , $subscription_id
+ */
+function create_subscription( $domain_id , $subscription_id ) {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $date_time = date( 'Y-m-d H:i:s' );
+
+    $wpdb->insert( $table_name,
+        array(
+            'domain_id' => $domain_id,
+            'subscription_id' => $subscription_id,
+            'datetime' => $date_time
+        ) );
+}

@@ -17,15 +17,16 @@ define [ 'app'
 
                 #fetch the domain model
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
-                @domainModel.fetch()
+                @showEditView @domainModel
+                #@domainModel.fetch()
 
                 #fetch the current subscription model for the domain
                 @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
                 @subscriptionModel.fetch()
 
                 #on successful fetch show the edit domain layout
-                msgbus.commands.execute "when:fetched", @domainModel, =>
-                    @showEditView @domainModel
+#                msgbus.commands.execute "when:fetched", @domainModel, =>
+#                    @showEditView @domainModel
 
 
             showEditView : ( domainModel )=>

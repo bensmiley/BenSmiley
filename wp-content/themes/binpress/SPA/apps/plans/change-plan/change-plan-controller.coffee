@@ -19,9 +19,9 @@ define [ 'app'
                 @layout = @getLayout()
 
                 #show loaders initally in the layout regions
-                @listenTo @layout,"show",->
+                @listenTo @layout, "show", ->
                     @layout.selectedPlanRegion.show new Marionette.LoadingView
-                    @layout.activeSubscriptionRegion.show new Marionette.LoadingView
+                    @layout.domainSubscriptionRegion.show new Marionette.LoadingView
                     @layout.paymentViewRegion.show new Marionette.LoadingView
 
                 #show the layout
@@ -29,10 +29,10 @@ define [ 'app'
                     loading : true
 
                 #fetch the active subscription and show the view on successdul fetch
-                @subscriptionModel = msgbus.reqres.request "get:subscription:for:domain", @domainId
-                @subscriptionModel.fetch()
-                msgbus.commands.execute "when:fetched", @subscriptionModel, =>
-                    @showActiveSubscriptionView()
+                @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
+                @domainModel.fetch()
+                msgbus.commands.execute "when:fetched", @domainModel, =>
+                    @showDomainSubscriptionView()
 
                 #fetch the selected plan details and show the view on successful fetch
                 @selectedPlanModel = msgbus.reqres.request "get:plan:by:planid", @planId
@@ -47,13 +47,13 @@ define [ 'app'
                     @showPaymentView()
 
 
-            getActiveSubscriptionView : ( subscriptionModel ) ->
-                new ChangePlanView.ActiveSubscriptionView
-                    model : subscriptionModel
+            getDomainSubscriptionView : ( domainModel ) ->
+                new ChangePlanView.DomainSubscriptionView
+                    model : domainModel
 
-            showActiveSubscriptionView : =>
-                activeSubscriptionView = @getActiveSubscriptionView @subscriptionModel
-                @layout.activeSubscriptionRegion.show activeSubscriptionView
+            showDomainSubscriptionView : =>
+                domainSubscriptionView = @getDomainSubscriptionView @domainModel
+                @layout.domainSubscriptionRegion.show domainSubscriptionView
 
             getSelectedPlanViewView : ( selectedPlanModel ) ->
                 new ChangePlanView.SelectedPlanView
@@ -77,8 +77,13 @@ define [ 'app'
 
             #view shown if user has credit card info stored
             showPaymentCardView : =>
-                paymentCardView = @getPaymentCardView @userBillingModel
-                @layout.paymentViewRegion.show paymentCardView
+                @paymentCardView = @getPaymentCardView @userBillingModel
+                @layout.paymentViewRegion.show @paymentCardView
+
+                #listen to the card submit event of the view
+                @listenTo @paymentCardView, 'user:card:payment', @creditCardPayment
+                @listenTo @paymentCardView, 'change:card:clicked', @showPaymentFormView
+
 
             getPaymentCardView : ( userBillingModel )->
                 new ChangePlanView.PaymentCardView
@@ -86,12 +91,44 @@ define [ 'app'
 
             #view shown if user does not have credit card info stored
             showPaymentFormView : =>
-                paymentFormView = @getPaymentFormView @userBillingModel
-                @layout.paymentViewRegion.show paymentFormView
+                console.log @userBillingModel
+                @paymentFormView = @getPaymentFormView @userBillingModel
+                @layout.paymentViewRegion.show @paymentFormView
+
+                #listen to the card submit event of the view
+                @listenTo @paymentFormView, 'user:credit:card:details', @newCreditCardPayment
 
             getPaymentFormView : ( userBillingModel )->
                 new ChangePlanView.PaymentFormView
                     model : userBillingModel
+
+            #ajax action when user makes payment through card for the first time
+            newCreditCardPayment : ( creditCardData )->
+                options =
+                    url: AJAXURL
+                    method: "POST"
+                    data:
+                        action : 'user-new-payment'
+                        creditCardData : creditCardData
+                        planId : @selectedPlanModel.get 'plan_id'
+                        domainId : @domainId
+
+                $.ajax(options).done (response)=>
+                    @paymentFormView.triggerMethod "payment:sucess",response,@domainId
+
+            #ajax action when user makes payment through card for the first time
+            creditCardPayment : ( creditCardToken )->
+                options =
+                    url: AJAXURL
+                    method: "POST"
+                    data:
+                        action : 'user-make-payment'
+                        creditCardToken : creditCardToken
+                        planId : @selectedPlanModel.get 'plan_id'
+                        domainId : @domainId
+
+                $.ajax(options).done (response)=>
+                    @paymentCardView.triggerMethod "payment:sucess",response,@domainId
 
 
         #handler for changing the domain plan,options to be passed to controller are:

@@ -20,6 +20,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     # create  a  collection
     userDomainCollection = new UserDomainCollection
+    userDomainCollection.fetch()
 
     #PUBLIC API
     API =
@@ -33,6 +34,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
         getDomainById : ( domainId ) ->
             domainModel = new UserDomainModel 'ID' : parseInt domainId
+            domainModel.fetch()
             domainModel
 
     #Handlers
