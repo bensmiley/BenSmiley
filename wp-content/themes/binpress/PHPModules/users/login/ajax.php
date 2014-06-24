@@ -82,11 +82,9 @@ add_action( 'wp_ajax_nopriv_user-login', 'ajax_user_login' );
  * Function to logout a user from the site
  */
 function ajax_user_logout() {
-    cancel_active_subscription_in_braintree( 40 );
+    wp_logout();
 
-//    wp_logout();
-//
-//    wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
+    wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
 
 }
 
