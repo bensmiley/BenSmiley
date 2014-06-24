@@ -12,7 +12,7 @@ get_header(); ?>
     <!-- BEGIN CONTAINER -->
     <div class="container">
         <div class="row login-container column-seperation ">
-            <div class="col-md-5 ">
+            <div class="col-md-6 ">
                 <h2>Sign Up For Our Free Version</h2>
 
                 <p>You can upgrade to a paid plan in the backend when you need to.</p>
@@ -76,7 +76,7 @@ get_header(); ?>
                         <div class="control-group  col-md-10">
                             <div class="checkbox checkbox check-success">
                                 <input type="checkbox" id="agree_tc" value="1" name="agree_tc">
-                                <label for="agree_tc">I Agree to all <a>Terms & Conditions</a> </label>
+                                <label for="agree_tc">I Agree to all <a data-toggle="modal" data-target="#myModal1">Terms & Conditions</a> </label>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@ get_header(); ?>
                 <!-- LOGIN FORM START -->
                 <form id="login-form" class="login-form">
                     <div class="row">
-                        <div class="form-group col-md-10">
+                        <div class="form-group col-md-12">
                             <label class="form-label">User Email</label>
 
                             <div class="controls">
@@ -117,7 +117,7 @@ get_header(); ?>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-10">
+                        <div class="form-group col-md-12">
                             <label class="form-label">Password</label>
                             <span class="help"></span>
 
@@ -130,9 +130,9 @@ get_header(); ?>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="control-group  col-md-10">
+                        <div class="control-group  col-md-12">
                             <div class=""><a href="#" data-toggle="modal" data-target="#myModal">
-                                    Forgot Password?</a>&nbsp;&nbsp;
+                                    <p>Forgot Password?</a>&nbsp;&nbsp;</p>
                             </div>
 
                         </div>
@@ -140,7 +140,7 @@ get_header(); ?>
                     <div class="row">
                         <div class="col-md-10">
                             <span class="ajax-loader-login pull-right" style="display: none"></span>
-                            <button class="btn btn-primary btn-cons pull-right"
+                            <button class="btn btn-primary btn-cons pull-left"
                                     type="submit" id="btn-login">Login
                             </button>
 
@@ -194,6 +194,44 @@ get_header(); ?>
                 </div>
             </div>
             <!--FORGOT PASSWORD MODAL END -->
+			
+			<!--tERMS AND CONDITIONS-->
+            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog fgt_pass" style="top:25%;">
+                    <div class="modal-content">
+                        <div class="text-center padding-10">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <i class="icon-credit-card icon-7x"></i>
+                            <h4 id="myModalLabel" class="semi-bold">Terms and Condtitions</h4>
+
+                            <p class="no-margin">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        </div>
+                      <div class="tiles white padding-20">
+                            <form id="terms-conditions" class="login-form">
+                                
+                                
+                                <div class="m-t-10">
+                                    <button type="button" class="btn btn-primary btn-cons"
+                                            id="btn-terms-conditions">I Agree
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-cons pull-right"
+                                            id="terms-conditions">Cancel
+                                    </button>
+
+
+                                </div>
+                            </form>
+                        </div>
+					  </form>
+					  
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+            </div>
+            <!--TERMS AND CONDITIONS END -->
         </div>
     </div>
     <!-- END CONTAINER -->
