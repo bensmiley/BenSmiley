@@ -19,25 +19,25 @@ define [ 'marionette'
     #view to show the active subscription
     class DomainSubscriptionView extends Marionette.ItemView
         template : ' <div class="col-md-3">
-                        <div class="tiles-body">
-                            <div >Domain name </div>
-                            <div class="heading">
-                                <span class="animate-number" >{{post_title}}</span>
+                                <div class="tiles-body">
+                                    <div >Domain name </div>
+                                    <div class="heading">
+                                        <span class="animate-number" >{{post_title}}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="tiles-body">
-                            <div > Active plan </div>
-                            <div class="heading">
-                                <span class="animate-number" >{{plan_name}}</span>
+                            <div class="col-md-3">
+                                <div class="tiles-body">
+                                    <div > Active plan </div>
+                                    <div class="heading">
+                                        <span class="animate-number" >{{plan_name}}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div>To ensure the plan is always active for your domain,
-                    enter valid card details below.Its easy to change your card information.
-                    Simply click on the change card button below and the current card details
-                     will be replaced by new card for the next billing cycle</div>'
+                            <div>To ensure the plan is always active for your domain,
+                            enter valid card details below.Its easy to change your card information.
+                            Simply click on the change card button below and the current card details
+                             will be replaced by new card for the next billing cycle</div>'
 
         className : 'row'
 
@@ -45,26 +45,26 @@ define [ 'marionette'
     class SelectedPlanView extends Marionette.ItemView
         template : '<h4 class="semi-bold">Selected plan</h3>
 
-                                                    <div class="grid simple">
-                                                        <h3 class="bold text-center">{{plan_name}}<br>
-                                                            <small class="text-danger"> Rs.{{price}}/month</small>
-                                                        </h2>
-                                                        <hr>
+                                                            <div class="grid simple">
+                                                                <h3 class="bold text-center">{{plan_name}}<br>
+                                                                    <small class="text-danger"> Rs.{{price}}/month</small>
+                                                                </h2>
+                                                                <hr>
 
-                                                        <ul class="list-unstyled text-center">
-                                                            <li>Multiple Email Accounts</li>
-                                                            <li>99.9% Uptime</li>
-                                                            <li>Enterprise Level Storage</li>
-                                                            <li>Fully Managed VPS</li>
-                                                            <li>Reliable 24/7/365 Support</li>
-                                                            <li>Enterprise Level Storage</li>
-                                                            <li>Fully Managed VPS</li>
-                                                            <li>Reliable 24/7/365 Support</li>
-                                                        </ul>
-                                						<p class="text-danger">Note:</p>
-                                						<p class="text-muted">Any change of plans in the midddle of cycle
-                                                     will be applicable from new cycle</p>
-                                                    </div>'
+                                                                <ul class="list-unstyled text-center">
+                                                                    <li>Multiple Email Accounts</li>
+                                                                    <li>99.9% Uptime</li>
+                                                                    <li>Enterprise Level Storage</li>
+                                                                    <li>Fully Managed VPS</li>
+                                                                    <li>Reliable 24/7/365 Support</li>
+                                                                    <li>Enterprise Level Storage</li>
+                                                                    <li>Fully Managed VPS</li>
+                                                                    <li>Reliable 24/7/365 Support</li>
+                                                                </ul>
+                                        						<p class="text-danger">Note:</p>
+                                        						<p class="text-muted">Any change of plans in the midddle of cycle
+                                                             will be applicable from new cycle</p>
+                                                            </div>'
 
         className : 'alert alert-info'
 
@@ -72,49 +72,49 @@ define [ 'marionette'
     class PaymentCardView extends Marionette.ItemView
 
         template : '<div class="well well-large" style="background-color: #E4E4E4;">
-                                                <h3><span class="semi-bold">Card Details</span></h3>
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <B>Card Holder Name</B>
+                                                        <h3><span class="semi-bold">Card Details</span></h3>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <B>Card Holder Name</B>
 
-                                                            <h3>{{customer_name}}</h3>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <B>Card Number</B>
+                                                                    <h3>{{customer_name}}</h3>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <B>Card Number</B>
 
-                                                            <h3>{{card_number}}</h3>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <B>Card Expiry</B>
+                                                                    <h3>{{card_number}}</h3>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <B>Card Expiry</B>
 
-                                                            <h3>{{expiration_date}}</h3>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <B>CVC</B>
-                                                             <h3>***</h3>
-                                                        </div>
+                                                                    <h3>{{expiration_date}}</h3>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <B>CVC</B>
+                                                                     <h3>***</h3>
+                                                                </div>
 
-                                                  </div>
-                                                  <div class="col-md-5">
-                                                        <button type="button" class="btn btn-primary btn-cons" id="submit">
-                                                        <i class="icon-ok"></i>
-                                                            Pay
-                                                        </button>
-                                                  </div>
-                                                    <div class="col-md-5">
-                                                        <button type="button" class="btn btn-primary btn-cons"
-                                                         id="change-card">
-                                                        <i class="icon-ok"></i>
-                                                            Change Card
-                                                        </button>
-                                                  </div>
-                                                  <div class="col-md-5 loader" style="display: none">
-                                                     <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
-                                                  </div>
-                                                  <div class="col-md-5">
-                                                    <div id="success-msg"></div>
-                                                  </div>
-                                                  </div>'
+                                                          </div>
+                                                          <div class="col-md-5">
+                                                                <button type="button" class="btn btn-primary btn-cons" id="submit">
+                                                                <i class="icon-ok"></i>
+                                                                    Pay
+                                                                </button>
+                                                          </div>
+                                                            <div class="col-md-5">
+                                                                <button type="button" class="btn btn-primary btn-cons"
+                                                                 id="change-card">
+                                                                <i class="icon-ok"></i>
+                                                                    Change Card
+                                                                </button>
+                                                          </div>
+                                                          <div class="col-md-5 loader" style="display: none">
+                                                             <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
+                                                          </div>
+                                                          <div class="col-md-5">
+                                                            <div id="success-msg"></div>
+                                                          </div>
+                                                          </div>'
         events : ->
             'click #submit' : ->
                 #get all card details for encryption
@@ -143,8 +143,8 @@ define [ 'marionette'
             @$el.find( '#success-msg' ).empty()
             msgText = response.msg
             msg = "<div class='alert alert-success'>
-                    <button class='close' data-dismiss='alert'>&times;</button>
-                           #{msgText}<div>"
+                                <button class='close' data-dismiss='alert'>&times;</button>
+                                       #{msgText}<div>"
             @$el.find( '#success-msg' ).append( msg )
 
             #redirect the page to domain page
@@ -152,70 +152,69 @@ define [ 'marionette'
             redirect_url = "#{mainUrl}domains/edit/#{domainId}/list-plan"
             _.delay =>
                 @redirectPage redirect_url
-            ,2000
+            , 2000
 
         redirectPage : ( redirect_url )->
             window.location.href = redirect_url
 
 
-
-            #view to show for payment if not credit card info is stored for the user
+    #view to show for payment if not credit card info is stored for the user
     class PaymentFormView extends Marionette.ItemView
 
         template : '<div class="col-md-6">
-                        <div class="card-wrapper"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-container active">
-                            <form id="payment-form" autocomplete="off">
-                                Enter your card information below.
-                                You will receive a notification confirming your payment
-                                shortly in your registered email. Once the payment is
-                                processed you will get an invoice in
-                                your registered email address.<br><br>
+                                <div class="card-wrapper"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-container active">
+                                    <form id="payment-form" autocomplete="off">
+                                        Enter your card information below.
+                                        You will receive a notification confirming your payment
+                                        shortly in your registered email. Once the payment is
+                                        processed you will get an invoice in
+                                        your registered email address.<br><br>
 
-                                <div class="row form-row">
-                                    <div class="col-md-5">
-                                        <input placeholder="Card number" type="text"
-                                        class="form-control" data-encrypted-name="credit_card_number"
-                                        id="credit_card_number">
-                                    </div>
+                                        <div class="row form-row">
+                                            <div class="col-md-5">
+                                                <input placeholder="Card number" type="text"
+                                                class="form-control" data-encrypted-name="credit_card_number"
+                                                id="credit_card_number">
+                                            </div>
 
-                                    <div class="col-md-7">
-                                        <input placeholder="Full name" type="text"
-                                        data-encrypted-name="cardholder_name"
-                                        class="form-control"
-                                        id="cardholder_name">
-                                    </div>
+                                            <div class="col-md-7">
+                                                <input placeholder="Full name" type="text"
+                                                data-encrypted-name="cardholder_name"
+                                                class="form-control"
+                                                id="cardholder_name">
+                                            </div>
 
-                                     <div class="col-md-3">
-                                     <input placeholder="MM/YY" type="text"
-                                     class="form-control" data-encrypted-name="expiration_date"
-                                     id="expiration_date">
-                                     </div>
+                                             <div class="col-md-3">
+                                             <input placeholder="MM/YY" type="text"
+                                             class="form-control" data-encrypted-name="expiration_date"
+                                             id="expiration_date">
+                                             </div>
 
-                                     <div class="col-md-3">
-                                        <input placeholder="CVC" type="text"
-                                        class="form-control" data-encrypted-name="credit_card_cvv"
-                                        id="credit_card_cvv">
-                                     </div>
-                                     <div class="col-md-5">
-                                        <button type="button" class="btn btn-primary btn-cons" id="submit">
-                                        <i class="icon-ok"></i>
-                                            Submit
-                                        </button>
-                                     </div>
-                                    <div class="col-md-5 cancel-card" style="display: none">
-                                        <button type="button" class="btn btn-primary btn-cons" id="cancel">
-                                        <i class="icon-ok"></i>
-                                            Cancel
-                                        </button>
-                                     </div>
+                                             <div class="col-md-3">
+                                                <input placeholder="CVC" type="text"
+                                                class="form-control" data-encrypted-name="credit_card_cvv"
+                                                id="credit_card_cvv">
+                                             </div>
+                                             <div class="col-md-5">
+                                                <button type="button" class="btn btn-primary btn-cons" id="submit">
+                                                <i class="icon-ok"></i>
+                                                    Submit
+                                                </button>
+                                             </div>
+                                            <div class="col-md-5 cancel-card" style="display: none">
+                                                <button type="button" class="btn btn-primary btn-cons" id="cancel">
+                                                <i class="icon-ok"></i>
+                                                    Cancel
+                                                </button>
+                                             </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
-                        <div id="success-msg"></div>
-                                            </div>'
+                                <div id="success-msg"></div>
+                                                    </div>'
 
         onShow : ->
             @$el.find( '.active form' ).card
@@ -224,15 +223,15 @@ define [ 'marionette'
             #check if change card clicked view
             cardExists = @model.get 'card_exists'
             if cardExists
-                @$el.find('.cancel-card').show()
+                @$el.find( '.cancel-card' ).show()
 
         #show sucess msg
-        onPaymentSucess : ( response , domainId )->
+        onPaymentSucess : ( response, domainId )->
             @$el.find( '#success-msg' ).empty()
             msgText = response.msg
             msg = "<div class='alert alert-success'>
-                    <button class='close' data-dismiss='alert'>&times;</button>
-                           #{msgText}<div>"
+                                <button class='close' data-dismiss='alert'>&times;</button>
+                                       #{msgText}<div>"
             @$el.find( '#success-msg' ).append( msg )
 
             #redirect the page to domain page
@@ -240,7 +239,7 @@ define [ 'marionette'
             redirect_url = "#{mainUrl}domains/edit/#{domainId}/list-plan"
             _.delay =>
                 @redirectPage redirect_url
-            ,2000
+            , 2000
 
         redirectPage : ( redirect_url )->
             window.location.href = redirect_url
@@ -274,9 +273,8 @@ define [ 'marionette'
                 #send the card details to the controller for ajax event
                 @trigger "user:credit:card:details", data
 
-            'click #cancel':->
+            'click #cancel' : ->
                 @trigger "use:stored:card"
-
 
 
     # return the view instances as objects

@@ -99,7 +99,7 @@ define [ 'app'
 
             #when user clicks cancel and chooses to use the stored card for payment
             # instead of changing the card
-            useStoredCreditCard :->
+            useStoredCreditCard : ->
                 @showPaymentCardView()
 
             getPaymentFormView : ( userBillingModel )->
@@ -109,30 +109,30 @@ define [ 'app'
             #ajax action when user makes payment through card for the first time
             newCreditCardPayment : ( creditCardData )->
                 options =
-                    url: AJAXURL
-                    method: "POST"
-                    data:
+                    url : AJAXURL
+                    method : "POST"
+                    data :
                         action : 'user-new-payment'
                         creditCardData : creditCardData
                         planId : @selectedPlanModel.get 'plan_id'
                         domainId : @domainId
 
-                $.ajax(options).done (response)=>
-                    @paymentFormView.triggerMethod "payment:sucess",response,@domainId
+                $.ajax( options ).done ( response )=>
+                    @paymentFormView.triggerMethod "payment:sucess", response, @domainId
 
             #ajax action when user makes payment through card for the first time
             creditCardPayment : ( creditCardToken )->
                 options =
-                    url: AJAXURL
-                    method: "POST"
-                    data:
+                    url : AJAXURL
+                    method : "POST"
+                    data :
                         action : 'user-make-payment'
                         creditCardToken : creditCardToken
                         planId : @selectedPlanModel.get 'plan_id'
                         domainId : @domainId
 
-                $.ajax(options).done (response)=>
-                    @paymentCardView.triggerMethod "payment:sucess",response,@domainId
+                $.ajax( options ).done ( response )=>
+                    @paymentCardView.triggerMethod "payment:sucess", response, @domainId
 
 
         #handler for changing the domain plan,options to be passed to controller are:
