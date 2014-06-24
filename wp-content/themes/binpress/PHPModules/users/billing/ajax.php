@@ -59,13 +59,7 @@ function ajax_user_new_payment() {
     if ( $card_token[ 'code' ] == 'ERROR' )
         wp_send_json( array( 'code' => 'OK', 'msg' => $card_token[ 'msg' ] ) );
 
-    $subscription = create_subscription_in_braintree( $card_token[ 'credit_card_token' ], $plan_id );
-    if ( $subscription[ 'code' ] == 'ERROR' )
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
-
-    // make the subscription entry in the database
-    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed' ) );
+    subscription_payment( $card_token[ 'credit_card_token' ], $domain_id, $plan_id );
 
 }
 
@@ -80,14 +74,35 @@ function ajax_user_make_payment() {
     $plan_id = $_POST[ 'planId' ];
     $domain_id = $_POST[ 'domainId' ];
 
-//    $subscription = create_subscription_in_braintree( $credit_card_token, $plan_id );
-//    if ( $subscription[ 'code' ] == 'ERROR' )
-//        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
-//
-//    // make the subscription entry in the database
-//    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Successful' ) );
-
+    subscription_payment( $credit_card_token, $domain_id, $plan_id );
 }
 
 add_action( 'wp_ajax_user-make-payment', 'ajax_user_make_payment' );
+
+/**
+ * Function to create a new subscription and make a payment for it
+ *
+ * @param $card_token
+ * @param $domain_id
+ * @param $plan_id
+ */
+function subscription_payment( $card_token, $domain_id, $plan_id ) {
+
+    $subscription = create_subscription_in_braintree( $card_token, $plan_id );
+    if ( $subscription[ 'code' ] == 'ERROR' )
+        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+
+    // cancel the previous active subscription for the domain in braintree
+    $cancel_subscription = cancel_active_subscription_in_braintree( $domain_id );
+    if ( $cancel_subscription[ 'code' ] == 'ERROR' )
+        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+
+    // make the subscription entry in the database
+    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
+
+    // add the new  plan as a term for domain post
+    $plan_name = get_plan_name_for_domain( $domain_id );
+    wp_set_post_terms( $domain_id, $plan_name, 'plan' );
+
+    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed' ) );
+}

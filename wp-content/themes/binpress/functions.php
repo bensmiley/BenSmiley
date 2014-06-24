@@ -64,7 +64,7 @@ function binpress_after_init() {
     register_terms_for_plans();
 
     // add custom data for each of the terms of plan taxonomy
-    add_data_to_plan_taxonomy_terms();
+//    add_data_to_plan_taxonomy_terms();
 }
 
 add_action( 'init', 'binpress_after_init' );
@@ -349,16 +349,19 @@ function register_domain_post() {
 function register_terms_for_plans() {
 
     wp_insert_term( 'Free', 'plan' );
+    wp_insert_term( 'TestPlan1', 'plan' );
+    wp_insert_term( 'TestPlan2', 'plan' );
+    wp_insert_term( 'TestPlan3', 'plan' );
 }
 
 /**
  * Function to add custom data for each of the terms of plan taxonomy
  */
-function add_data_to_plan_taxonomy_terms() {
-
-    // add extra data for term Free
-    $term_free = get_term_by( 'name', 'Free', 'plan', ARRAY_A );
-    $term_free_data = maybe_serialize( array( 'Title' => 'Free Plan', 'Amount' => '0' ) );
-    add_option( $term_free[ 'term_id' ], $term_free_data );
-}
+//function add_data_to_plan_taxonomy_terms() {
+//
+//    // add extra data for term Free
+//    $term_free = get_term_by( 'name', 'Free', 'plan', ARRAY_A );
+//    $term_free_data = maybe_serialize( array( 'Title' => 'Free Plan', 'Amount' => '0' ) );
+//    add_option( $term_free[ 'term_id' ], $term_free_data );
+//}
 

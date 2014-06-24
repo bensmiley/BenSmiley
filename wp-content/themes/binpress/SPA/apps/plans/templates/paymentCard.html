@@ -1,0 +1,44 @@
+<div class="well well-large" style="background-color: #E4E4E4;">
+    <h3><span class="semi-bold">Card Details</span></h3>
+    <div class="row">
+        <div class="col-md-3">
+            <B>Card Holder Name</B>
+
+            <h3>{{customer_name}}</h3>
+        </div>
+        <div class="col-md-4">
+            <B>Card Number</B>
+
+            <h3>{{card_number}}</h3>
+        </div>
+        <div class="col-md-2">
+            <B>Card Expiry</B>
+
+            <h3>{{expiration_date}}</h3>
+        </div>
+        <div class="col-md-2">
+            <B>CVC</B>
+            <h3>***</h3>
+        </div>
+
+    </div>
+    <div class="col-md-5">
+        <button type="button" class="btn btn-primary btn-cons" id="submit">
+            <i class="icon-ok"></i>
+            Pay
+        </button>
+    </div>
+    <div class="col-md-5">
+        <button type="button" class="btn btn-primary btn-cons"
+                id="change-card">
+            <i class="icon-ok"></i>
+            Change Card
+        </button>
+    </div>
+    <div class="col-md-5 loader" style="display: none">
+        <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
+    </div>
+    <div class="col-md-5">
+        <div id="success-msg"></div>
+    </div>
+</div>

@@ -20,7 +20,7 @@ function get_subscription_details_for_domain( $domain_id ) {
 
     $query_result = $wpdb->get_results( $query, ARRAY_A );
 
-    if ( is_null( $query_result ) ){
+    if ( is_null( $query_result ) ) {
         return array();
     }
 
@@ -43,6 +43,7 @@ function get_subscription_details_for_domain( $domain_id ) {
 function get_free_subscription_data( $subscription_details ) {
 
     $subscription_data[ 'start_date' ] = date( 'd/m/Y', strtotime( $subscription_details[ 'datetime' ] ) );
+    $subscription_data[ 'subscription_id' ] = "BENAJFREE";
     $subscription_data[ 'plan_name' ] = 'Free';
     $subscription_data[ 'price' ] = '0';
     $subscription_data[ 'bill_start' ] = 'N/A';
@@ -83,7 +84,8 @@ function create_free_subscription( $domain_id ) {
         array(
             'domain_id' => $domain_id,
             'subscription_id' => 'BENAJFREE',
-            'datetime' => $date_time
+            'datetime' => $date_time,
+            'status' =>'active'
         ) );
 }
 
@@ -94,9 +96,14 @@ function create_free_subscription( $domain_id ) {
  *
  * @param $domain_id , $subscription_id
  */
-function create_subscription( $domain_id , $subscription_id ) {
+function create_subscription( $domain_id, $subscription_id ) {
 
     global $wpdb;
+
+    $current_subscription = get_subscription_details_for_domain( $domain_id );
+
+    // cancel the currently active subscription in the db
+    cancel_subscription( $current_subscription );
 
     $table_name = 'subscription';
 
@@ -106,6 +113,19 @@ function create_subscription( $domain_id , $subscription_id ) {
         array(
             'domain_id' => $domain_id,
             'subscription_id' => $subscription_id,
-            'datetime' => $date_time
+            'datetime' => $date_time,
+            'status' =>'active'
         ) );
+}
+
+/**
+ * Function to cancel the currently active subscription in the db
+ *
+ * @param $current_subscription
+ */
+function cancel_subscription( $current_subscription ) {
+    global $wpdb;
+
+    $wpdb->update( 'subscription', array( 'status' => 'canceled' ),
+                    array( 'ID' => $current_subscription['subscription_id'] ) );
 }

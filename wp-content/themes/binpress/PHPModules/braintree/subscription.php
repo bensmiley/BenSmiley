@@ -22,6 +22,7 @@ function get_subscription_details( $subscription_id ) {
     $plan_name = $plan_data->name;
 
     $subscription_data[ 'plan_name' ] = $plan_name;
+    $subscription_data[ 'subscription_id' ] = $subscription_id;
     $subscription_data[ 'price' ] = $subscription->price;
     $subscription_data[ 'start_date' ] = $subscription->firstBillingDate->format( 'd/m/Y' );
     $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format( 'd/m/Y' );
@@ -38,6 +39,7 @@ function get_subscription_details( $subscription_id ) {
  * @return array containing subscription id on success or error msg on failure
  */
 function create_subscription_in_braintree( $credit_card_token, $plan_id ) {
+
     $create_subscription = Braintree_Subscription::create( array(
         'paymentMethodToken' => $credit_card_token,
         'planId' => $plan_id
@@ -50,4 +52,35 @@ function create_subscription_in_braintree( $credit_card_token, $plan_id ) {
         $error_msg = array( code => 'ERROR', 'msg' => $create_subscription->message );
         return $error_msg;
     }
+}
+
+/**
+ * Function to cancel active subscription in  braintree
+ * @param $domain_id
+ * @return array
+ */
+function cancel_active_subscription_in_braintree( $domain_id ) {
+
+    $active_subscription = get_subscription_details_for_domain( $domain_id );
+
+    $subscription_id = $active_subscription[ 'subscription_id' ];
+
+    #check if a active subscription exits
+    try {
+        Braintree_Subscription::find( $subscription_id );
+
+        $cancel_subscription = Braintree_Subscription::cancel( $subscription_id );
+        if ( $cancel_subscription->success ) {
+
+            return array( 'code' => 'OK' );
+        } else {
+
+            $error_msg = array( code => 'ERROR', 'msg' => 'Active subscription not cancelled ' );
+            return $error_msg;
+        }
+    } catch ( Braintree_Exception_NotFound $e ) {
+
+        return array( 'code' => 'OK','msg'=>'No existing subscription');
+    }
+
 }

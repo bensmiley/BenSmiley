@@ -1,0 +1,58 @@
+<div class="col-md-6">
+    <div class="card-wrapper"></div>
+</div>
+<div class="col-md-6">
+    <div class="form-container active">
+        <form id="payment-form" autocomplete="off">
+            Enter your card information below.
+            You will receive a notification confirming your payment
+            shortly in your registered email. Once the payment is
+            processed you will get an invoice in
+            your registered email address.<br><br>
+
+            <div class="row form-row">
+                <div class="col-md-5">
+                    <input placeholder="Card number" type="text"
+                           class="form-control" data-encrypted-name="credit_card_number"
+                           id="credit_card_number">
+                </div>
+
+                <div class="col-md-7">
+                    <input placeholder="Full name" type="text"
+                           data-encrypted-name="cardholder_name"
+                           class="form-control"
+                           id="cardholder_name">
+                </div>
+
+                <div class="col-md-3">
+                    <input placeholder="MM/YY" type="text"
+                           class="form-control" data-encrypted-name="expiration_date"
+                           id="expiration_date">
+                </div>
+
+                <div class="col-md-3">
+                    <input placeholder="CVC" type="text"
+                           class="form-control" data-encrypted-name="credit_card_cvv"
+                           id="credit_card_cvv">
+                </div>
+                <div class="col-md-5">
+                    <button type="button" class="btn btn-primary btn-cons" id="submit">
+                        <i class="icon-ok"></i>
+                        Submit
+                    </button>
+                </div>
+                <div class="col-md-5 cancel-card" style="display: none">
+                    <button type="button" class="btn btn-primary btn-cons" id="cancel">
+                        <i class="icon-ok"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="success-msg"></div>
+
+    <div class="col-md-5 loader" style="display: none">
+        <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
+    </div>
+</div>
