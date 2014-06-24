@@ -215,8 +215,8 @@ function get_admin_newuser_mail_content( $user_data ) {
 
     $body .= __( 'A new User has registered on BenSmiley' ) . "\r\n\r\n";
     $body .= __( 'User details : ' ) . "\r\n\r\n";
-    $body .= sprintf( __( 'Name: :   %s' ), $user_data[ 'meta_key' ] ) . "\r\n\r\n";
-    $body .= sprintf( __( 'Email :   %s' ), $user_data[ 'meta_value' ] ) . "\r\n\r\n";
+    $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "\r\n\r\n";
+    $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "\r\n\r\n";
 
     $body .= __( 'Regards,' ) . "\r\n\r\n";
 
