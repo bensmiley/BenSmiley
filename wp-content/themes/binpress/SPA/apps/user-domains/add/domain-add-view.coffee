@@ -14,6 +14,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
                     #get all serialized data from the form
                     domaindata = Backbone.Syphon.serialize @
                     @trigger "add:domain:clicked", domaindata
+                    $( '.ajax-loader-login' ).show()
 
             'click #show-domain-list' : ->
                 @trigger "show:domain:list:clicked"
@@ -31,6 +32,9 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
         onUserDomainAdded : ->
             #reset the form on submit
             @$el.find( '#btn-reset-add-domain' ).click()
+
+            #hide the loader
+            $( '.ajax-loader-login' ).hide()
 
             #show success msg
             @$el.find( '#msg' ).empty()

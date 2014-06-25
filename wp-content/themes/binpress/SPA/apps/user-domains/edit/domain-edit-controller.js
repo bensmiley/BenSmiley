@@ -72,7 +72,10 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         });
       };
 
-      DomainEditController.prototype.domainUpdated = function() {
+      DomainEditController.prototype.domainUpdated = function(userDomain) {
+        var userDomainCollection;
+        userDomainCollection = msgbus.reqres.request("get:current:user:domains");
+        userDomainCollection.add(userDomain);
         return this.layout.triggerMethod("domain:updated");
       };
 

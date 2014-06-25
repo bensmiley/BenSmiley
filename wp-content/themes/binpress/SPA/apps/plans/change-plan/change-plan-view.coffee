@@ -62,65 +62,17 @@ define [ 'marionette'
                             <li>Fully Managed VPS</li>
                             <li>Reliable 24/7/365 Support</li>
                         </ul>
-						<br>
+                        <br>
                         <p class="text-danger">Note:</p>
                         <p class="text-muted">Any change of plans in the midddle of cycle
                      will be applicable from new cycle</p>
                     </div></li></ul>'
 
-        
 
     #view to show the credit card info stored for the user for billing
     class PaymentCardView extends Marionette.ItemView
 
-        template : '<div class="well well-large well-up">
-		<div class="row">
-		<div class="col-md-12">
-                                                <h3><span class="semi-bold">Card Details</span></h3>
-												<button type="button" class="btn btn-primary btn-cons pull-right" style="margin-top:-40px;"
-                                                         id="change-card">
-                                                        <i class="icon-ok"></i>
-                                                            Change Card
-                                                        </button>
-												</div></div>
-                                                    <div class="row"><br/>
-                                                        <div class="col-md-3">
-                                                            <B>Card Holder Name</B>
-
-                                                            <h3>{{customer_name}}</h3>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <B>Card Number</B>
-
-                                                            <h3>{{card_number}}</h3>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <B>Card Expiry</B>
-
-                                                            <h3>{{expiration_date}}</h3>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <B>CVC</B>
-                                                             <h3>***</h3>
-                                                        </div>
-
-                                                  </div>
-												  <div class="row"><br/>
-                                                  <div class="col-md-12">
-                                                        <button type="button" class="btn btn-primary btn-cons top" id="submit">
-                                                        <i class="icon-ok"></i>
-                                                            Pay
-                                                        </button>
-                                                  </div>
-												  </div>
-                                                    
-                                                  <div class="col-md-5 loader" style="display: none">
-                                                     <img src="http://localhost/bensmiley/wp-content/themes/binpress/images/2.gif">
-                                                  </div>
-                                                  <div class="col-md-5">
-                                                    <div id="success-msg"></div>
-                                                  </div>
-                                                  </div>'
+        template : paymentCardTpl
         events : ->
             'click #submit' : ->
                 #get all card details for encryption
@@ -174,9 +126,9 @@ define [ 'marionette'
                 container : @$el.find( '.card-wrapper' )
 
             #check if change card clicked view
-            #cardExists = @model.get 'card_exists'
-           # if cardExists
-           #@$el.find( '#cancel' ).show()
+            cardExists = @model.get 'card_exists'
+            if cardExists
+                @$el.find( '.cancel-card' ).show()
 
         #show sucess msg
         onPaymentSucess : ( response, domainId )->

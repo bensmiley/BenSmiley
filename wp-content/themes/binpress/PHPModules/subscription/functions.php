@@ -6,13 +6,13 @@
  * Time: 6:22 PM
  */
 
-//TODO: write proper coments in foiles
 /**
- * Function to get subscription deatils of the domain id passed
+ * Function to query the subscription table and return the query result
+ *
  * @param $domain_id
- * @return array
+ * @return array containing the latest subscription data for the domainId if found else empty array()
  */
-function get_subscription_details_for_domain( $domain_id ) {
+function query_subscription_table( $domain_id ) {
 
     global $wpdb;
 
@@ -20,18 +20,31 @@ function get_subscription_details_for_domain( $domain_id ) {
 
     $query_result = $wpdb->get_results( $query, ARRAY_A );
 
-    if ( is_null( $query_result ) ) {
+    if ( is_null( $query_result ) )
+        return array();
+
+    return $query_result[ 0 ];
+}
+
+/**
+ * Function to get subscription deatils of the domain id passed
+ * @param $domain_id
+ * @return array
+ */
+function get_subscription_details_for_domain( $domain_id ) {
+
+    $subscription_data = query_subscription_table( $domain_id );
+
+    if ( is_null( $subscription_data ) ) {
         return array();
     }
-
-
-    if ( $query_result[ 0 ][ 'subscription_id' ] == "BENAJFREE" ) {
-        $subscription_data = get_free_subscription_data( $query_result[ 0 ] );
-        return $subscription_data;
+    if ( $subscription_data[ 'subscription_id' ] == "BENAJFREE" ) {
+        $subscription_details = get_free_subscription_data( $subscription_data );
+        return $subscription_details;
     }
 
-    $subscription_data = braintree_subscription_data( $query_result[ 0 ] );
-    return $subscription_data;
+    $subscription_details = braintree_subscription_data( $subscription_data );
+    return $subscription_details;
 
 }
 
@@ -45,6 +58,7 @@ function get_free_subscription_data( $subscription_details ) {
     $subscription_data[ 'start_date' ] = date( 'd/m/Y', strtotime( $subscription_details[ 'datetime' ] ) );
     $subscription_data[ 'subscription_id' ] = "BENAJFREE";
     $subscription_data[ 'plan_name' ] = 'Free';
+    $subscription_data[ 'plan_id' ] = 'dm8w';
     $subscription_data[ 'price' ] = '0';
     $subscription_data[ 'bill_start' ] = 'N/A';
     $subscription_data[ 'bill_end' ] = 'N/A';
@@ -85,7 +99,7 @@ function create_free_subscription( $domain_id ) {
             'domain_id' => $domain_id,
             'subscription_id' => 'BENAJFREE',
             'datetime' => $date_time,
-            'status' =>'active'
+            'status' => 'active'
         ) );
 }
 
@@ -96,14 +110,36 @@ function create_free_subscription( $domain_id ) {
  *
  * @param $domain_id , $subscription_id
  */
-function create_subscription( $domain_id, $subscription_id ) {
+function create_subscription( $domain_id, $new_subscription_id, $old_subscription_id ) {
 
     global $wpdb;
 
-    $current_subscription = get_subscription_details_for_domain( $domain_id );
-
     // cancel the currently active subscription in the db
-    cancel_subscription( $current_subscription );
+    cancel_subscription( $old_subscription_id );
+
+    $table_name = 'subscription';
+
+    $date_time = date( 'Y-m-d H:i:s' );
+
+    $wpdb->insert( $table_name,
+        array(
+            'domain_id' => $domain_id,
+            'subscription_id' => $new_subscription_id,
+            'datetime' => $date_time,
+            'status' => 'active'
+        ) );
+}
+
+/**
+ * Function to create a subscription entry for
+ *
+ * a domain after a pending subscription has been made in braintree
+ *
+ * @param $domain_id , $subscription_id
+ */
+function create_pending_subscription( $domain_id, $subscription_id ) {
+
+    global $wpdb;
 
     $table_name = 'subscription';
 
@@ -114,7 +150,7 @@ function create_subscription( $domain_id, $subscription_id ) {
             'domain_id' => $domain_id,
             'subscription_id' => $subscription_id,
             'datetime' => $date_time,
-            'status' =>'active'
+            'status' => 'pending'
         ) );
 }
 
@@ -123,9 +159,10 @@ function create_subscription( $domain_id, $subscription_id ) {
  *
  * @param $current_subscription
  */
-function cancel_subscription( $current_subscription ) {
+function cancel_subscription( $old_subscription_id ) {
     global $wpdb;
 
     $wpdb->update( 'subscription', array( 'status' => 'canceled' ),
-                    array( 'ID' => $current_subscription['subscription_id'] ) );
+        array( 'ID' => $old_subscription_id ) );
 }
+

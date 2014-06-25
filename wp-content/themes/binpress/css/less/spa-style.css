@@ -216,4 +216,19 @@ body .page-content .breadcrumb li a {
 }
 .grow li.plans {
   width: 100% !important;
+  margin: -20px auto;
+}
+.well-up {
+  margin-top: -40px;
+  background-color: #FFFFFF !important;
+  overflow-y: auto;
+}
+.grow li.plans {
+  width: 100% !important;
+  margin: -20px auto;
+}
+.well-up {
+  margin-top: -40px;
+  background-color: #FFFFFF !important;
+  overflow-y: auto;
 }

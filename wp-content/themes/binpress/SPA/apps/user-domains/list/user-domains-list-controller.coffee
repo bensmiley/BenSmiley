@@ -13,18 +13,21 @@ define [ 'app'
             initialize : ( opts )->
 
                 #get the user domains collection
-                userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
-#                userDomainsCollection.fetch()
+                @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
 
+                #on complete of collection fetch show the view
+                msgbus.commands.execute "when:fetched", @userDomainsCollection, =>
+                    @showDomainListView()
+
+            showDomainListView:->
                 #get the user domain list view
-                domainListView = @getDomainListView userDomainsCollection
+                domainListView = @getDomainListView @userDomainsCollection
 
                 #listen to click events
                 @listenTo domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
 
                 #show user domain list view
-                @show domainListView,
-                    loading : true
+                @show domainListView
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView

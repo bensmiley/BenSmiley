@@ -20,7 +20,8 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
         var domaindata;
         if (this.$el.find('#add-edit-user-domain-form').valid()) {
           domaindata = Backbone.Syphon.serialize(this);
-          return this.trigger("add:domain:clicked", domaindata);
+          this.trigger("add:domain:clicked", domaindata);
+          return $('.ajax-loader-login').show();
         }
       },
       'click #show-domain-list': function() {
@@ -37,6 +38,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
     DomainAddView.prototype.onUserDomainAdded = function() {
       var successhtml;
       this.$el.find('#btn-reset-add-domain').click();
+      $('.ajax-loader-login').hide();
       this.$el.find('#msg').empty();
       successhtml = '<div class="alert alert-success"> <button class="close" data-dismiss="alert">&times;</button> Domain Sucessfully Added </div>';
       return this.$el.find('#msg').append(successhtml);

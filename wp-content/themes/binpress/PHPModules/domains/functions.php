@@ -33,6 +33,12 @@ function get_current_user_domains( $current_user_id ) {
 
 }
 
+/**
+ * Function to add a new domain by the user
+ *
+ * @param $domain_details
+ * @return int $domainId |WP_Error
+ */
 function create_user_domain( $domain_details ) {
 
     $post_array = array( 'post_author' => $domain_details[ 'user_id' ],
@@ -49,7 +55,7 @@ function create_user_domain( $domain_details ) {
     update_post_meta( $post_id, 'domain_url', $domain_details[ 'domain_url' ] );
 
     // add the free plan as a term for domain post
-    wp_set_post_terms( $post_id, 'Free','plan' );
+    wp_set_post_terms( $post_id, 'Free', 'plan' );
 
     // create a free subscription for the domain
     create_free_subscription( $post_id );
@@ -79,15 +85,19 @@ function get_user_domain_details( $domain_id ) {
 
     $domain_data = wp_parse_args( $domain_post_data, $formatted_domain_meta_data );
 
-    $plan_name = get_plan_name_for_domain( $domain_id );
+    // set current subscription for domain
+    $subscription_data = query_subscription_table( $domain_id );
+    $domain_data[ 'subscription_id' ] = $subscription_data[ 'subscription_id' ];
 
-    $domain_data['plan_name'] = $plan_name;
+    // set the plan details for the current domain
+    $plan_data = get_plan_details_for_domain( $domain_id );
+    $domain_data[ 'plan_name' ] = $plan_data['plan_name'];
+    $domain_data[ 'plan_id' ] = $plan_data['plan_id'];
 
     return $domain_data;
 
 }
 
-//TODO: make function proper for gruops
 /**
  * Function to format the domain post meta data in proper key value pair
  *
@@ -102,7 +112,7 @@ function format_domain_post_meta_data( $domain_post_meta_data ) {
 
     foreach ( $domain_post_meta_data as $key => $value ) {
 
-            $formatted_array[ $key ] = $value[ 0 ];
+        $formatted_array[ $key ] = $value[ 0 ];
     }
 
     return $formatted_array;

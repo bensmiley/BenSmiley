@@ -22,6 +22,7 @@ function get_subscription_details( $subscription_id ) {
     $plan_name = $plan_data->name;
 
     $subscription_data[ 'plan_name' ] = $plan_name;
+    $subscription_data[ 'plan_id' ] = $subscription->planId;
     $subscription_data[ 'subscription_id' ] = $subscription_id;
     $subscription_data[ 'price' ] = $subscription->price;
     $subscription_data[ 'start_date' ] = $subscription->firstBillingDate->format( 'd/m/Y' );
@@ -59,11 +60,7 @@ function create_subscription_in_braintree( $credit_card_token, $plan_id ) {
  * @param $domain_id
  * @return array
  */
-function cancel_active_subscription_in_braintree( $domain_id ) {
-
-    $active_subscription = get_subscription_details_for_domain( $domain_id );
-
-    $subscription_id = $active_subscription[ 'subscription_id' ];
+function cancel_active_subscription_in_braintree( $subscription_id ) {
 
     #check if a active subscription exits
     try {
@@ -80,7 +77,34 @@ function cancel_active_subscription_in_braintree( $domain_id ) {
         }
     } catch ( Braintree_Exception_NotFound $e ) {
 
-        return array( 'code' => 'OK','msg'=>'No existing subscription');
+        return array( 'code' => 'OK', 'msg' => 'No existing subscription' );
     }
 
+}
+
+/**
+ * Function to create a subscription with a future billing start date, when user goes from a
+ * higher priced plan to a lower priced plan. The subscription status in braintree will be set
+ * to pending till the user is billed
+ *
+ * @param $card_token
+ * @param $plan_id
+ * @param $new_billing_date
+ * @return array containing subscription id on success or error msg on failure
+ */
+function create_pending_subscription_in_braintree( $card_token, $plan_id, $new_billing_date ) {
+
+    $create_subscription = Braintree_Subscription::create( array(
+        'paymentMethodToken' => $card_token,
+        'planId' => $plan_id,
+        'firstBillingDate' => $new_billing_date
+    ) );
+
+    if ( $create_subscription->success ) {
+        return array( 'code' => 'OK', 'subscription_id' => $create_subscription->subscription->id );
+
+    } else {
+        $error_msg = array( code => 'ERROR', 'msg' => $create_subscription->message );
+        return $error_msg;
+    }
 }
