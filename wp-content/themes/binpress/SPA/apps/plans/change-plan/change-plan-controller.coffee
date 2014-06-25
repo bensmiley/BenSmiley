@@ -35,7 +35,6 @@ define [ 'app'
 
                 #fetch the selected plan details and show the view on successful fetch
                 @selectedPlanModel = msgbus.reqres.request "get:plan:by:planid", @planId
-                @selectedPlanModel.fetch()
                 msgbus.commands.execute "when:fetched", @selectedPlanModel, =>
                     @showSelectedPlanView()
 
@@ -59,6 +58,9 @@ define [ 'app'
                     model : selectedPlanModel
 
             showSelectedPlanView : =>
+                console.log @selectedPlanModel
+                console.log @userBillingModel
+                console.log @domainModel
                 selectedPlanView = @getSelectedPlanViewView @selectedPlanModel
                 @layout.selectedPlanRegion.show selectedPlanView
 
@@ -114,8 +116,11 @@ define [ 'app'
                     data :
                         action : 'user-new-payment'
                         creditCardData : creditCardData
-                        planId : @selectedPlanModel.get 'plan_id'
+                        selectedPlanId : @planId
+                        selectedPlanName : @selectedPlanModel.get 'plan_name'
                         domainId : @domainId
+                        activePlanId : @domainModel.get 'plan_id'
+                        subscriptionId : @domainModel.get 'subscription_id'
 
                 $.ajax( options ).done ( response )=>
                     @paymentFormView.triggerMethod "payment:sucess", response, @domainId
@@ -128,8 +133,11 @@ define [ 'app'
                     data :
                         action : 'user-make-payment'
                         creditCardToken : creditCardToken
-                        planId : @selectedPlanModel.get 'plan_id'
+                        selectedPlanId : @planId
+                        selectedPlanName : @selectedPlanModel.get 'plan_name'
                         domainId : @domainId
+                        activePlanId : @domainModel.get 'plan_id'
+                        subscriptionId : @domainModel.get 'subscription_id'
 
                 $.ajax( options ).done ( response )=>
                     @paymentCardView.triggerMethod "payment:sucess", response, @domainId

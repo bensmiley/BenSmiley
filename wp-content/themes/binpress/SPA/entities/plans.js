@@ -45,6 +45,7 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
       planModel = new PlanModel({
         'plan_id': planId
       });
+      planModel.fetch();
       return planModel;
     }
   };

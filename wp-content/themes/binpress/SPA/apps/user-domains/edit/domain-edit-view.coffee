@@ -15,6 +15,7 @@ define [ 'marionette'
                     #get all serialized data from the form
                     domaindata = Backbone.Syphon.serialize @
                     @trigger "edit:domain:clicked", domaindata
+                    $( '.ajax-loader-login' ).show()
 
         regions :
             groupsRegion : '#groups-region'
@@ -29,8 +30,8 @@ define [ 'marionette'
             @$el.find( '#add-edit-user-domain-form' ).validate @validationOptions()
 
         onDomainUpdated : ->
-            #reset the form
-            @$el.find( '#btn-reset-add-domain' ).click()
+            #hide the loader
+            $( '.ajax-loader-login' ).hide()
 
             #show success msg
             @$el.find( '#msg' ).empty()
@@ -73,7 +74,7 @@ define [ 'marionette'
                         <i class="icon-ok"></i> Change Plan</a>
 
                         <div class="clearfix"></div>
-<br>
+                        <br>
                         <div class="text-muted">Avail more features by upgrading your plan.
                          Click change plan to view the available plans</div>
                     </div>'

@@ -7,7 +7,7 @@
  *
  * File Description :  Contains a list of ajax functions for the billing of user domains
  */
-
+require "functions.php";
 /**
  * Function to the customer billing details. Makes a call to the braintree API
  * and fetches the customer credit card details
@@ -51,15 +51,38 @@ function ajax_user_new_payment() {
 
     unset( $credit_card_data[ 'action' ] );
 
-    $plan_id = $credit_card_data[ 'planId' ];
+    $selected_plan_id = $credit_card_data[ 'selectedPlanId' ];
+
+    $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
+
+    $active_plan_id = $credit_card_data[ 'activePlanId' ];
 
     $domain_id = $credit_card_data[ 'domainId' ];
 
+    $current_subscription_id = $credit_card_data[ 'subscriptionId' ];
+
+    // create the credit card for the user
     $card_token = create_credit_card_for_customer( $card_data );
     if ( $card_token[ 'code' ] == 'ERROR' )
         wp_send_json( array( 'code' => 'OK', 'msg' => $card_token[ 'msg' ] ) );
 
-    subscription_payment( $card_token[ 'credit_card_token' ], $domain_id, $plan_id );
+    // compare the price of active and current plans
+    $price_compare = compare_plan_price( $selected_plan_id, $active_plan_id );
+
+    // prepare the array to create subscriptions
+    $subscription_array = array(
+        'card_token' => $card_token[ 'credit_card_token' ],
+        'domain_id' => $domain_id,
+        'selected_plan_id' => $selected_plan_id,
+        'selected_plan_name' => $selected_plan_name,
+        'current_subscription_id' => $current_subscription_id,
+    );
+
+    // if true make a active subscription else make pending subscription
+    if ( !$price_compare )
+        make_pending_subscription( $subscription_array );
+    else
+        make_active_subscription( $subscription_array );
 
 }
 
@@ -70,39 +93,40 @@ add_action( 'wp_ajax_user-new-payment', 'ajax_user_new_payment' );
  */
 function ajax_user_make_payment() {
 
-    $credit_card_token = $_POST[ 'creditCardToken' ];
-    $plan_id = $_POST[ 'planId' ];
-    $domain_id = $_POST[ 'domainId' ];
+    $credit_card_data = $_POST;
 
-    subscription_payment( $credit_card_token, $domain_id, $plan_id );
+    unset( $credit_card_data[ 'action' ] );
+
+    $credit_card_token = $credit_card_data[ 'creditCardToken' ];
+
+    $selected_plan_id = $credit_card_data[ 'selectedPlanId' ];
+
+    $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
+
+    $active_plan_id = $credit_card_data[ 'activePlanId' ];
+
+    $domain_id = $credit_card_data[ 'domainId' ];
+
+    $current_subscription_id = $credit_card_data[ 'subscriptionId' ];
+
+    // compare the price of active and current plans
+    $price_compare = compare_plan_price( $selected_plan_id, $active_plan_id );
+
+    // prepare the array to create subscriptions
+    $subscription_array = array(
+        'card_token' => $credit_card_token,
+        'domain_id' => $domain_id,
+        'selected_plan_id' => $selected_plan_id,
+        'selected_plan_name' => $selected_plan_name,
+        'current_subscription_id' => $current_subscription_id,
+    );
+
+    // if true make a active subscription else make pending subscription
+    if ( !$price_compare )
+        make_pending_subscription( $subscription_array );
+    else
+        make_active_subscription( $subscription_array );
 }
 
 add_action( 'wp_ajax_user-make-payment', 'ajax_user_make_payment' );
 
-/**
- * Function to create a new subscription and make a payment for it
- *
- * @param $card_token
- * @param $domain_id
- * @param $plan_id
- */
-function subscription_payment( $card_token, $domain_id, $plan_id ) {
-
-    $subscription = create_subscription_in_braintree( $card_token, $plan_id );
-    if ( $subscription[ 'code' ] == 'ERROR' )
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
-
-    // cancel the previous active subscription for the domain in braintree
-    $cancel_subscription = cancel_active_subscription_in_braintree( $domain_id );
-    if ( $cancel_subscription[ 'code' ] == 'ERROR' )
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
-
-    // make the subscription entry in the database
-    create_subscription( $domain_id, $subscription[ 'subscription_id' ] );
-
-    // add the new  plan as a term for domain post
-    $plan_name = get_plan_name_for_domain( $domain_id );
-    wp_set_post_terms( $domain_id, $plan_name, 'plan' );
-
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed' ) );
-}

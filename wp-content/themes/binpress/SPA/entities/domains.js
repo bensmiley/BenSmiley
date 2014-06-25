@@ -41,9 +41,9 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
 
   })(Backbone.Collection);
   userDomainCollection = new UserDomainCollection;
-  userDomainCollection.fetch();
   API = {
     getCurrentUserDomains: function() {
+      userDomainCollection.fetch();
       return userDomainCollection;
     },
     createCurrentUserDomainModel: function(data) {

@@ -22,6 +22,7 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
         getPlanByPlanId : ( planId ) ->
             planModel = new PlanModel 'plan_id' : planId
+            planModel.fetch()
             planModel
 
     #Handlers

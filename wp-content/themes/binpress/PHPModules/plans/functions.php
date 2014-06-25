@@ -14,13 +14,16 @@
  * @param $domain_id
  * @return string plan name
  */
-function get_plan_name_for_domain( $domain_id ) {
+function get_plan_details_for_domain( $domain_id ) {
 
     $subscription_data = get_subscription_details_for_domain( $domain_id );
 
     $plan_name = $subscription_data[ 'plan_name' ];
+    $plan_id = $subscription_data[ 'plan_id' ];
 
-    return $plan_name;
+    $plan_data = array('plan_name' =>$plan_name,'plan_id' => $plan_id);
+
+    return $plan_data;
 
 }
 

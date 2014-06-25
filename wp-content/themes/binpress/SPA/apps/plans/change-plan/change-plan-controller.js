@@ -37,7 +37,6 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
           };
         })(this));
         this.selectedPlanModel = msgbus.reqres.request("get:plan:by:planid", this.planId);
-        this.selectedPlanModel.fetch();
         msgbus.commands.execute("when:fetched", this.selectedPlanModel, (function(_this) {
           return function() {
             return _this.showSelectedPlanView();
@@ -72,6 +71,9 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
 
       ChangePlanController.prototype.showSelectedPlanView = function() {
         var selectedPlanView;
+        console.log(this.selectedPlanModel);
+        console.log(this.userBillingModel);
+        console.log(this.domainModel);
         selectedPlanView = this.getSelectedPlanViewView(this.selectedPlanModel);
         return this.layout.selectedPlanRegion.show(selectedPlanView);
       };
@@ -128,8 +130,11 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
           data: {
             action: 'user-new-payment',
             creditCardData: creditCardData,
-            planId: this.selectedPlanModel.get('plan_id'),
-            domainId: this.domainId
+            selectedPlanId: this.planId,
+            selectedPlanName: this.selectedPlanModel.get('plan_name'),
+            domainId: this.domainId,
+            activePlanId: this.domainModel.get('plan_id'),
+            subscriptionId: this.domainModel.get('subscription_id')
           }
         };
         return $.ajax(options).done((function(_this) {
@@ -147,8 +152,11 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
           data: {
             action: 'user-make-payment',
             creditCardToken: creditCardToken,
-            planId: this.selectedPlanModel.get('plan_id'),
-            domainId: this.domainId
+            selectedPlanId: this.planId,
+            selectedPlanName: this.selectedPlanModel.get('plan_name'),
+            domainId: this.domainId,
+            activePlanId: this.domainModel.get('plan_id'),
+            subscriptionId: this.domainModel.get('subscription_id')
           }
         };
         return $.ajax(options).done((function(_this) {

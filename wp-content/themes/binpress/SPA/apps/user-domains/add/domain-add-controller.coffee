@@ -1,4 +1,3 @@
-#TODO: add proper comments
 #include the files for the app
 define [ 'app'
          'regioncontroller'

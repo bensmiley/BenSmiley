@@ -35,24 +35,24 @@ define [ 'marionette'
                                     </div>
                                 </div>
                             </div>
-                            <div>To ensure the plan is always active for your domain,
+                            <div class="col-md-6"><div class="tiles-body">To ensure the plan is always active for your domain,
                             enter valid card details below.Its easy to change your card information.
                             Simply click on the change card button below and the current card details
-                             will be replaced by new card for the next billing cycle</div>'
+                             will be replaced by new card for the next billing cycle</div></div>'
 
         className : 'row'
 
     #view to show the selected plan
     class SelectedPlanView extends Marionette.ItemView
-        template : '<h4 class="semi-bold">Selected plan</h3>
+        template : '<ul class="ca-menu grow"><li class="plans"><h3 class="semi-bold text-center">Selected plan</h3>
 
                     <div class="grid simple">
-                        <h3 class="bold text-center">{{plan_name}}<br>
+                        <h4 class="text-center semi-bold">{{plan_name}}<br>
                             <small class="text-danger"> Rs.{{price}}/month</small>
-                        </h2>
+                        </h4>
                         <hr>
 
-                        <ul class="list-unstyled text-center">
+                        <ul class="list-unstyled">
                             <li>Multiple Email Accounts</li>
                             <li>99.9% Uptime</li>
                             <li>Enterprise Level Storage</li>
@@ -62,12 +62,12 @@ define [ 'marionette'
                             <li>Fully Managed VPS</li>
                             <li>Reliable 24/7/365 Support</li>
                         </ul>
+                        <br>
                         <p class="text-danger">Note:</p>
                         <p class="text-muted">Any change of plans in the midddle of cycle
                      will be applicable from new cycle</p>
-                    </div>'
+                    </div></li></ul>'
 
-        className : 'alert alert-info'
 
     #view to show the credit card info stored for the user for billing
     class PaymentCardView extends Marionette.ItemView

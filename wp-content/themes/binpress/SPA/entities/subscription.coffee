@@ -14,6 +14,6 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     #Handlers
     msgbus.reqres.setHandler "get:subscription:for:domain",( domainId ) ->
-        API.getSubscriptionByDomainId( domainId )
+        API.getSubscriptionByDomainId domainId
 
     SubscriptionModel

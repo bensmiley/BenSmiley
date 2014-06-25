@@ -6,15 +6,16 @@
 
 <div class="tab-content">
 <div class="tab-pane active" >
-<!--- Success message -->
-<div id="msg"></div>
+
 <ol class="breadcrumb">
   <li><a href="#domains" id="show-domain-list">View Domains</a></li>
     <li class="active"><b  id="form-title"></b></li>
 </ol>
 <!--- Add/Edit Domain Section -->
 <div class="row ">
+    <!--- Success message -->
     <div class="col-md-6">
+        <div id="msg"></div>
         <h3 class="m-b-20"><span class="semi-bold" id="form-title"></span></h3>
         <div class="grid simple">
             <div class="grid-body no-border">
@@ -46,9 +47,10 @@
                         id="btn-add-edit-user-domain">
                             <i class="icon-ok"></i> Save
                         </button>
+                        <span class="ajax-loader-login pull-right" style="display: none"></span>
                         <input type="reset" id="btn-reset-add-domain" style="display:none">
                     </div>
-<div class="clearfix"></div>
+                    <div class="clearfix"></div>
                 </form>
             </div>
         </div>

@@ -20,12 +20,12 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
 
     # create  a  collection
     userDomainCollection = new UserDomainCollection
-    userDomainCollection.fetch()
 
     #PUBLIC API
     API =
 
         getCurrentUserDomains : ->
+            userDomainCollection.fetch()
             userDomainCollection
 
         createCurrentUserDomainModel : ( data ) ->
