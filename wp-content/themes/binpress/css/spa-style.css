@@ -229,15 +229,11 @@ body .page-content .breadcrumb li a {
   width: 100% !important;
   margin: -20px auto;
 }
-.well-up {
-  margin-top: -40px;
-  background-color: #FFFFFF !important;
-  overflow-y: auto;
-}
-.m-b-10 {
-  height: 120px;
-  width: 120px;
-}
 #msg {
   margin-top: 10px;
+}
+/* table ui */
+#main-content-region .table-striped tr:hover {
+  background: #E4E4E4 !important;
+  cursor: pointer;
 }
