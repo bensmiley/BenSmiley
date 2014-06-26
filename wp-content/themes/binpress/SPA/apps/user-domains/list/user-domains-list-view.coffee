@@ -9,11 +9,7 @@ define [ 'marionette'
 
         template : '<td>{{post_title}}</td>
                             <td>{{plan_name}}</td>
-                            <td>None</td>
-                            <td class="center">
-                                <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a>&nbsp;&nbsp;&nbsp;
-                                <span class="glyphicon glyphicon-trash btn-delete-domain"></span>
-                            </td>'
+                            <td>None</td>'
         events :
             'click .btn-delete-domain' : ->
                 if confirm( 'Are you sure?' )
