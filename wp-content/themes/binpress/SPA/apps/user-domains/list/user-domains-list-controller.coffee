@@ -10,7 +10,7 @@ define [ 'app'
         # Controller class for showing user domain list
         class UserDomainListController extends RegionController
 
-            initialize : ( opts )->
+            initialize : ->
 
                 #get the user domains collection
                 @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
@@ -39,12 +39,12 @@ define [ 'app'
                     wait : true
                     success : @domainDeleted
 
-            domainDeleted :=>
+            domainDeleted : =>
                 @domainListView.triggerMethod "domain:deleted"
 
         #handler for showing the user domain list page,options to be passed
         # region :  App.mainContentRegion
-        App.commands.setHandler "list:user:domains", ( opts ) ->
-            new UserDomainListController opts
+        App.commands.setHandler "list:user:domains", ->
+            new UserDomainListController
 
 

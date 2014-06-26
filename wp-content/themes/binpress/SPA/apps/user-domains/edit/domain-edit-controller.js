@@ -20,9 +20,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       DomainEditController.prototype.initialize = function(opts) {
         this.domainId = opts.domainId;
         this.domainModel = msgbus.reqres.request("get:domain:model:by:id", this.domainId);
-        msgbus.commands.execute("when:fetched", this.domainModel, (function(_this) {
-          return function() {};
-        })(this));
+        msgbus.commands.execute("when:fetched", this.domainModel, function() {});
         this.showEditView(this.domainModel);
         this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
         return this.subscriptionModel.fetch();

@@ -19,7 +19,7 @@ define [ 'app'
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
 
                 #on successful fetch show the edit domain layout
-                msgbus.commands.execute "when:fetched", @domainModel, =>
+                msgbus.commands.execute "when:fetched", @domainModel, ->
                 @showEditView @domainModel
 
                 #fetch the current subscription model for the domain
