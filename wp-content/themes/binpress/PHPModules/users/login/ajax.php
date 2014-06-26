@@ -78,6 +78,10 @@ function ajax_user_login() {
 add_action( 'wp_ajax_user-login', 'ajax_user_login' );
 add_action( 'wp_ajax_nopriv_user-login', 'ajax_user_login' );
 
+function response_message(){
+
+}
+
 /**
  * Function to logout a user from the site
  */
