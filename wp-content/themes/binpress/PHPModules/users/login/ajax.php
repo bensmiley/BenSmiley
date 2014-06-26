@@ -14,21 +14,15 @@
  * */
 function ajax_user_login() {
 
+    $site_url = get_site_url();
+
     // check if a user is already logged in
     if ( is_user_logged_in() ) {
 
-        $site_url = get_site_url();
+        $message =  "User already logged in";
 
-        $current_user = wp_get_current_user();
+        success_message( $message, $site_url );
 
-        $response = array( "code" => "OK",
-            'site_url' => $site_url,
-            'msg' => '<div class="alert alert-info">
-                        <button class="close" data-dismiss="alert"></button>
-                        User already logged in</div>',
-            'data' => $current_user->data );
-
-        wp_send_json( $response );
     }
 
     // clean the username and password
@@ -50,36 +44,55 @@ function ajax_user_login() {
         $user_login = wp_signon( $credentials );
 
         if ( is_wp_error( $user_login ) ) {
-            $msg = '<div class="alert alert-error">
-                  <button class="close" data-dismiss="alert"></button>
-                  The Email Id/ Password doesnt seem right.
-                  Check if your caps is on and try again.</div>';
-            $response = array( 'code' => "ERROR", 'msg' => $msg );
-            wp_send_json( $response );
+            $message = "The Email Id/ Password doesnt seem right.
+                    Check if your caps is on and try again.";
+
+            error_message( $message );
 
         } else {
-            $site_url = get_site_url();
-            $response = array( "code" => "OK", 'site_url' => $site_url,
-                'msg' => '<div class="alert alert-success">
-                            <button class="close" data-dismiss="alert"></button>
-                            Login Success</div>' );
-            wp_send_json( $response );
+
+            $message = "Login Success";
+
+            success_message( $message, $site_url );
         }
     } else {
-        $msg = '<div class="alert alert-error">
-                <button class="close" data-dismiss="alert"></button>
-                The Email Id/ Password doesnt seem right.
-                Check if your caps is on and try again.</div>';
-        $response = array( 'code' => "ERROR", 'msg' => $msg );
-        wp_send_json( $response );
+        $message = "No user exists with the email id.";
+        error_message( $message );
     }
 }
 
 add_action( 'wp_ajax_user-login', 'ajax_user_login' );
 add_action( 'wp_ajax_nopriv_user-login', 'ajax_user_login' );
 
-function response_message(){
+/**
+ * Function to return the error message as json
+ *
+ * @param $message
+ */
+function error_message( $message ) {
 
+    $msg = '<div class="alert alert-error">
+                <button class="close" data-dismiss="alert"></button>' .
+        $message . '</div>';
+
+    $response = array( 'code' => "ERROR", 'msg' => $msg );
+
+    wp_send_json( $response );
+}
+
+/**
+ * Function to return the success message as json
+ *
+ * @param $message
+ */
+function success_message( $message, $site_url ) {
+
+    $response = array( "code" => "OK", 'site_url' => $site_url,
+        'msg' => '<div class="alert alert-success">
+                  <button class="close" data-dismiss="alert"></button>' .
+            $message . '</div>' );
+
+    wp_send_json( $response );
 }
 
 /**
