@@ -52,8 +52,8 @@ function ajax_user_login() {
         if ( is_wp_error( $user_login ) ) {
             $msg = '<div class="alert alert-error">
                   <button class="close" data-dismiss="alert"></button>
-                  The email / password doesnt seem right. Check if your caps is on
-                  and try again.</div>';
+                  The Email Id/ Password doesnt seem right.
+                  Check if your caps is on and try again.</div>';
             $response = array( 'code' => "ERROR", 'msg' => $msg );
             wp_send_json( $response );
 
@@ -68,8 +68,8 @@ function ajax_user_login() {
     } else {
         $msg = '<div class="alert alert-error">
                 <button class="close" data-dismiss="alert"></button>
-                The email / password doesnt seem right. Check if your caps is on
-                and try again.</div>';
+                The Email Id/ Password doesnt seem right.
+                Check if your caps is on and try again.</div>';
         $response = array( 'code' => "ERROR", 'msg' => $msg );
         wp_send_json( $response );
     }

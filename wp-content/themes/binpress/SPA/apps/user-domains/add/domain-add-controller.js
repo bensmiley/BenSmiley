@@ -42,10 +42,11 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msg
       };
 
       DomainAddController.prototype.userDomainSaved = function(userDomain) {
-        var userDomainCollection;
+        var domainId, userDomainCollection;
         userDomainCollection = msgbus.reqres.request("get:current:user:domains");
         userDomainCollection.add(userDomain);
-        return this.view.triggerMethod("user:domain:added");
+        domainId = userDomain.get('ID');
+        return this.view.triggerMethod("user:domain:added", domainId);
       };
 
       return DomainAddController;

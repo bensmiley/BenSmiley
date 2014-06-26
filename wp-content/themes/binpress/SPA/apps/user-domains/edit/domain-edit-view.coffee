@@ -38,8 +38,8 @@ define [ 'marionette'
             @$el.find( '#msg' ).empty()
 
             successhtml = "<div class='alert alert-success'>
-                                       <button class='close' data-dismiss='alert'>&times;</button>
-                                       Domain Updated Sucessfully<div>"
+                           <button class='close' data-dismiss='alert'>&times;</button>
+                           Domain Updated Sucessfully<div>"
 
             @$el.find( '#msg' ).append successhtml
 

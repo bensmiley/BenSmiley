@@ -53,6 +53,7 @@ function create_user_domain( $domain_details ) {
 
     // add the domain url as post meta for domain post
     update_post_meta( $post_id, 'domain_url', $domain_details[ 'domain_url' ] );
+    update_post_meta( $post_id, 'plan_id', 'dm8w' );
 
     // add the free plan as a term for domain post
     wp_set_post_terms( $post_id, 'Free', 'plan' );

@@ -29,7 +29,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             #hide the tabs
             @$el.find( '#tabs' ).hide()
 
-        onUserDomainAdded : ->
+        onUserDomainAdded : ( domainId ) ->
             #reset the form on submit
             @$el.find( '#btn-reset-add-domain' ).click()
 
@@ -39,10 +39,17 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             #show success msg
             @$el.find( '#msg' ).empty()
             successhtml = '<div class="alert alert-success">
-                            <button class="close" data-dismiss="alert">&times;</button>
-                            Domain Sucessfully Added
-                        </div>'
+                                <button class="close" data-dismiss="alert">&times;</button>
+                                Domain Sucessfully Added
+                            </div>'
             @$el.find( '#msg' ).append successhtml
+
+            #redirect to edit of the domain added
+            mainUrl = window.location.href.replace Backbone.history.getFragment(), ''
+            redirect_url = "#{mainUrl}domains/edit/#{domainId}"
+            _.delay =>
+                window.location.href = redirect_url
+            , 1000
 
         validationOptions : ->
             rules :

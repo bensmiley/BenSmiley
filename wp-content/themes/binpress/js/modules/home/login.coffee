@@ -57,7 +57,7 @@ define [ 'jquery', 'jqueryvalidate', 'bootstrap' ], ->
                             successMsg = response.msg
                             $( '#display-login-msg' ).empty()
                             $( '#display-login-msg' ).append successMsg
-                            page = "/dashboard/#domains"
+                            page = "/dashboard/#profile"
                             window.location.href = response.site_url + page
 
 
@@ -72,7 +72,7 @@ define [ 'jquery', 'jqueryvalidate', 'bootstrap' ], ->
                 $( '.ajax-loader-login' ).hide()
                 msg = "<div class='alert alert-error'>
                                        <button class='close' data-dismiss='alert'></button>
-                                       Please Fill the require fields </div>"
+                                       Please fill in the required fields </div>"
                 $( '#display-login-msg' ).append msg
 
         #converts the form data array into proper key-value format

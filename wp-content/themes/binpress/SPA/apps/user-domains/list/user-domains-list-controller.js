@@ -14,7 +14,7 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domain
         return UserDomainListController.__super__.constructor.apply(this, arguments);
       }
 
-      UserDomainListController.prototype.initialize = function() {
+      UserDomainListController.prototype.initialize = function(opts) {
         this.userDomainsCollection = msgbus.reqres.request("get:current:user:domains");
         return msgbus.commands.execute("when:fetched", this.userDomainsCollection, (function(_this) {
           return function() {
@@ -50,8 +50,8 @@ define(['app', 'regioncontroller', 'msgbus', 'apps/user-domains/list/user-domain
       return UserDomainListController;
 
     })(RegionController);
-    return App.commands.setHandler("list:user:domains", function() {
-      return new UserDomainListController;
+    return App.commands.setHandler("list:user:domains", function(opts) {
+      return new UserDomainListController(opts);
     });
   });
 });

@@ -35,13 +35,20 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       return this.$el.find('#tabs').hide();
     };
 
-    DomainAddView.prototype.onUserDomainAdded = function() {
-      var successhtml;
+    DomainAddView.prototype.onUserDomainAdded = function(domainId) {
+      var mainUrl, redirect_url, successhtml;
       this.$el.find('#btn-reset-add-domain').click();
       $('.ajax-loader-login').hide();
       this.$el.find('#msg').empty();
       successhtml = '<div class="alert alert-success"> <button class="close" data-dismiss="alert">&times;</button> Domain Sucessfully Added </div>';
-      return this.$el.find('#msg').append(successhtml);
+      this.$el.find('#msg').append(successhtml);
+      mainUrl = window.location.href.replace(Backbone.history.getFragment(), '');
+      redirect_url = "" + mainUrl + "domains/edit/" + domainId;
+      return _.delay((function(_this) {
+        return function() {
+          return window.location.href = redirect_url;
+        };
+      })(this), 1000);
     };
 
     DomainAddView.prototype.validationOptions = function() {

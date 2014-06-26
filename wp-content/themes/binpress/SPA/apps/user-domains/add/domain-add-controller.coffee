@@ -35,7 +35,8 @@ define [ 'app'
             userDomainSaved : ( userDomain )=>
                 userDomainCollection = msgbus.reqres.request "get:current:user:domains"
                 userDomainCollection.add userDomain
-                @view.triggerMethod "user:domain:added"
+                domainId = userDomain.get 'ID'
+                @view.triggerMethod "user:domain:added", domainId
 
 
         #handler for showing the user domain page,options to be passed to controller are:

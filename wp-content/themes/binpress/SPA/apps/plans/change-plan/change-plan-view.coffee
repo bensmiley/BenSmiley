@@ -89,7 +89,7 @@ define [ 'marionette'
                 @trigger "user:card:payment", creditCardToken
 
                 #show the loader
-                @$el.find( '.loader' ).show()
+                @$el.find( '.ajax-loader-login' ).show()
 
             'click #change-card' : ->
                 @trigger "change:card:clicked"
@@ -179,7 +179,7 @@ define [ 'marionette'
                 @trigger "user:credit:card:details", data
 
                 #show the loader
-                @$el.find( '.loader' ).show()
+                @$el.find( '.ajax-loader-login' ).show()
 
             'click #cancel' : ->
                 @trigger "use:stored:card"

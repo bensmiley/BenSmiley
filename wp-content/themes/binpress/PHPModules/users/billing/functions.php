@@ -28,15 +28,16 @@ function make_active_subscription( $subscription_array ) {
         wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
 
     // cancel the previous active subscription for the domain in braintree
-    $cancel_subscription = cancel_active_subscription_in_braintree( $current_subscription_id );
+    $cancel_subscription = cancel_subscription_in_braintree( $current_subscription_id );
     if ( $cancel_subscription[ 'code' ] == 'ERROR' )
         wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
 
     // make the subscription entry in the database
     create_subscription( $domain_id, $subscription[ 'subscription_id' ], $current_subscription_id );
 
-    // add the new  plan as a term for domain post
+    // add the new  plan as a term for domain post and update plan id for domain
     wp_set_post_terms( $domain_id, $plan_name, 'plan' );
+    update_post_meta( $domain_id, 'plan_id', $plan_id );
 
     wp_send_json( array( 'code' => 'OK', 'msg' => 'Payment Processed' ) );
 }
@@ -83,9 +84,6 @@ function make_pending_subscription( $subscription_array ) {
  * @return bool true | false
  */
 function compare_plan_price( $selected_plan_id, $active_plan_id ) {
-
-    $selected_plan_id = "pmpro_2";
-    $active_plan_id = "pmpro_3";
 
     $selected_plan_data = get_plan_data_by_plan_id( $selected_plan_id );
     $active_plan_data = get_plan_data_by_plan_id( $active_plan_id );

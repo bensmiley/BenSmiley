@@ -32,6 +32,8 @@ define ['jquery', 'jqueryvalidate'], ->
 
                 agree_tc :
                     required : true
+            messages :
+                agree_tc : 'Please accept our Terms & Conditions to use this site'
 
             errorPlacement : (label, element) ->
                 $('<span class="error"></span>').insertAfter(element.parent()).append(label)
@@ -84,7 +86,7 @@ define ['jquery', 'jqueryvalidate'], ->
                 $('.ajax-loader-signup').hide()
                 msg= "<div class='alert alert-error'>
                        <button class='close' data-dismiss='alert'></button>
-                       Please Fill the require fields </div>"
+                       Please fill in the required fields </div>"
                 $('#display-msg').append msg
 
         #converts the form data array into proper key-value format

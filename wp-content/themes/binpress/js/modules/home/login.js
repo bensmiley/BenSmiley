@@ -47,7 +47,7 @@ define(['jquery', 'jqueryvalidate', 'bootstrap'], function() {
               successMsg = response.msg;
               $('#display-login-msg').empty();
               $('#display-login-msg').append(successMsg);
-              page = "/dashboard/#domains";
+              page = "/dashboard/#profile";
               window.location.href = response.site_url + page;
             }
             if (response.code === "ERROR") {
@@ -61,7 +61,7 @@ define(['jquery', 'jqueryvalidate', 'bootstrap'], function() {
       } else {
         $('#display-login-msg').empty();
         $('.ajax-loader-login').hide();
-        msg = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'></button> Please Fill the require fields </div>";
+        msg = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'></button> Please fill in the required fields </div>";
         return $('#display-login-msg').append(msg);
       }
     });

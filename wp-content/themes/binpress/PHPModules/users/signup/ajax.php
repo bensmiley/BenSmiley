@@ -63,7 +63,8 @@ function ajax_new_user_signup() {
 
     wp_send_json( array( 'code' => 'OK',
                          'msg' => '<div class="alert alert-info">
-                  <button class="close" data-dismiss="alert"></button>A email has been send to you.Please click on the link to confirm your account</div>' ) );
+                  <button class="close" data-dismiss="alert"></button>
+                  An email has been sent to you. Please click on the link to confirm your account</div>' ) );
 
 }
 

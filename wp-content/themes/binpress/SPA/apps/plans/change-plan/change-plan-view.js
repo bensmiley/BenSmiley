@@ -66,7 +66,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
           braintree = Braintree.create(clientSideEncryptionKey);
           creditCardToken = braintree.encrypt(creditCardToken);
           this.trigger("user:card:payment", creditCardToken);
-          return this.$el.find('.loader').show();
+          return this.$el.find('.ajax-loader-login').show();
         },
         'click #change-card': function() {
           return this.trigger("change:card:clicked");
@@ -143,7 +143,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
             'braintree_customer_id': this.model.get('braintree_customer_id')
           };
           this.trigger("user:credit:card:details", data);
-          return this.$el.find('.loader').show();
+          return this.$el.find('.ajax-loader-login').show();
         },
         'click #cancel': function() {
           return this.trigger("use:stored:card");

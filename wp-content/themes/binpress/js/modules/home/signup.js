@@ -30,6 +30,9 @@ define(['jquery', 'jqueryvalidate'], function() {
           required: true
         }
       },
+      messages: {
+        agree_tc: 'Please accept our Terms & Conditions to use this site'
+      },
       errorPlacement: function(label, element) {
         var parent;
         $('<span class="error"></span>').insertAfter(element.parent()).append(label);
@@ -75,7 +78,7 @@ define(['jquery', 'jqueryvalidate'], function() {
       } else {
         $('#display-msg').empty();
         $('.ajax-loader-signup').hide();
-        msg = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'></button> Please Fill the require fields </div>";
+        msg = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'></button> Please fill in the required fields </div>";
         return $('#display-msg').append(msg);
       }
     });
