@@ -238,3 +238,6 @@ body .page-content .breadcrumb li a {
   height: 120px;
   width: 120px;
 }
+#msg {
+  margin-top: 10px;
+}
