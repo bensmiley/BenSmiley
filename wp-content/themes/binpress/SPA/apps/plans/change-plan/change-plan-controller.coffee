@@ -58,9 +58,6 @@ define [ 'app'
                     model : selectedPlanModel
 
             showSelectedPlanView : =>
-                console.log @selectedPlanModel
-                console.log @userBillingModel
-                console.log @domainModel
                 selectedPlanView = @getSelectedPlanViewView @selectedPlanModel
                 @layout.selectedPlanRegion.show selectedPlanView
 

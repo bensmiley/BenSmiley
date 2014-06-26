@@ -71,9 +71,6 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
 
       ChangePlanController.prototype.showSelectedPlanView = function() {
         var selectedPlanView;
-        console.log(this.selectedPlanModel);
-        console.log(this.userBillingModel);
-        console.log(this.domainModel);
         selectedPlanView = this.getSelectedPlanViewView(this.selectedPlanModel);
         return this.layout.selectedPlanRegion.show(selectedPlanView);
       };

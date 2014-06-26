@@ -47,7 +47,8 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       PlansListController.prototype.getPlanListView = function(subscriptionModel) {
         return new PlanListView({
           collection: this.planCollection,
-          model: subscriptionModel
+          model: subscriptionModel,
+          domainId: this.domainId
         });
       };
 

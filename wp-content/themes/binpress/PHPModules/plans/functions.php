@@ -18,8 +18,8 @@ function get_plan_details_for_domain( $domain_id ) {
 
     $subscription_data = get_subscription_details_for_domain( $domain_id );
 
-    $plan_name = $subscription_data[ 'plan_name' ];
-    $plan_id = $subscription_data[ 'plan_id' ];
+    $plan_name = $subscription_data['active_subscription'][ 'plan_name' ];
+    $plan_id = $subscription_data['active_subscription'][ 'plan_id' ];
 
     $plan_data = array('plan_name' =>$plan_name,'plan_id' => $plan_id);
 

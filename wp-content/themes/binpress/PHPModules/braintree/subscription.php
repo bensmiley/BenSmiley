@@ -26,8 +26,14 @@ function get_subscription_details( $subscription_id ) {
     $subscription_data[ 'subscription_id' ] = $subscription_id;
     $subscription_data[ 'price' ] = $subscription->price;
     $subscription_data[ 'start_date' ] = $subscription->firstBillingDate->format( 'd/m/Y' );
-    $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format( 'd/m/Y' );
-    $subscription_data[ 'bill_end' ] = $subscription->billingPeriodEndDate->format( 'd/m/Y' );
+
+    if ( !empty( $subscription->billingPeriodStartDate ) ||
+        !empty( $subscription->billingPeriodEndDate )
+    ){
+        $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format( 'd/m/Y' );
+        $subscription_data[ 'bill_end' ] = $subscription->billingPeriodEndDate->format( 'd/m/Y' );
+    }
+
 
     return $subscription_data;
 }

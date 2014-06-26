@@ -46,9 +46,17 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
 
         itemView : SinglePlanView
 
+        serializeData :->
+            data = super()
+            data.plan_name = (@model.get 'active_subscription').plan_name
+            data.start_date = (@model.get 'active_subscription').start_date
+            data
+
         itemViewOptions : ->
-            activePlanName : @model.get 'plan_name'
-            domainId : @model.get 'domain_id'
+            planName = (@model.get 'active_subscription').plan_name
+            domainID = Marionette.getOption @, 'domainId'
+            activePlanName : planName
+            domainId : domainID
 
 
     # return the view instances as objects

@@ -6,6 +6,7 @@
  * Time: 6:22 PM
  */
 
+//TODO :  check if function can be merged with the query function below
 /**
  * Function to query the subscription table and return the query result
  *
@@ -23,8 +24,51 @@ function query_subscription_table( $domain_id ) {
     if ( is_null( $query_result ) )
         return array();
 
+    // check if the last subscription is pending or active
+    if ( $query_result[ 0 ][ 'status' ] == "pending" ) {
+        $query2 = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 1, 1";
+
+        $last_active_subscription = $wpdb->get_results( $query2, ARRAY_A );
+        return $last_active_subscription[ 0 ];
+    }
+
     return $query_result[ 0 ];
 }
+
+/**
+ * Function to query the subscription table and return the subscription id for the domain
+ *
+ * @param $domain_id
+ * @return array containing the active|pending subscription id for the domainId if found else empty array()
+ */
+function get_subscription_id_for_domain( $domain_id ) {
+
+    global $wpdb;
+
+    $query = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 0, 1";
+
+    $lastest_subscription = $wpdb->get_results( $query, ARRAY_A );
+
+    if ( is_null( $lastest_subscription ) )
+        return array();
+
+    // check if the last subscription is pending or active
+    if ( $lastest_subscription[ 0 ][ 'status' ] == "pending" ) {
+        $query2 = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 1, 1";
+
+        $last_active_subscription = $wpdb->get_results( $query2, ARRAY_A );
+        $subscription_data[ 'pending_subscription_id' ] = $lastest_subscription[ 0 ][ 'subscription_id' ];
+        $subscription_data[ 'subscription_id' ] = $last_active_subscription[ 0 ][ 'subscription_id' ];
+
+        return $subscription_data;
+    }
+
+    $subscription_data[ 'subscription_id' ] = $lastest_subscription[ 0 ][ 'subscription_id' ];
+    $subscription_data[ 'datetime' ] = $lastest_subscription[ 0 ][ 'datetime' ];
+
+    return $subscription_data;
+}
+
 
 /**
  * Function to get subscription deatils of the domain id passed
@@ -33,17 +77,21 @@ function query_subscription_table( $domain_id ) {
  */
 function get_subscription_details_for_domain( $domain_id ) {
 
-    $subscription_data = query_subscription_table( $domain_id );
+    $subscription_data = get_subscription_id_for_domain( $domain_id );
 
     if ( is_null( $subscription_data ) ) {
         return array();
     }
     if ( $subscription_data[ 'subscription_id' ] == "BENAJFREE" ) {
-        $subscription_details = get_free_subscription_data( $subscription_data );
+        $subscription_details[ 'active_subscription' ] = get_free_subscription_data( $subscription_data );
         return $subscription_details;
     }
 
-    $subscription_details = braintree_subscription_data( $subscription_data );
+    $subscription_details[ 'active_subscription' ] = get_subscription_details( $subscription_data[ 'subscription_id' ] );
+    if ( isset( $subscription_data[ 'pending_subscription_id' ] ) )
+        $subscription_details[ 'pending_subscription' ] = get_subscription_details( $subscription_data[ 'pending_subscription_id' ] );
+
+
     return $subscription_details;
 
 }
@@ -67,17 +115,17 @@ function get_free_subscription_data( $subscription_details ) {
 
 }
 
-/**
- * Function to get all details of subscription having free plan
- *
- * @param $subscription_details
- */
-function braintree_subscription_data( $subscription_details ) {
-
-    $subscription_data = get_subscription_details( $subscription_details[ 'subscription_id' ] );
-    return $subscription_data;
-
-}
+///**
+// * Function to get all details of subscription having free plan
+// *
+// * @param $subscription_details
+// */
+//function braintree_subscription_data( $subscription_details ) {
+//
+//    $subscription_data = get_subscription_details( $subscription_details[ 'subscription_id' ] );
+//    return $subscription_data;
+//
+//}
 
 /**
  * Function to create a free subscription for

@@ -41,6 +41,7 @@ define [ 'app'
                 new PlanListView
                     collection : @planCollection
                     model : subscriptionModel
+                    domainId : @domainId
 
         #handler for showing the plans list page,options to be passed to controller are:
         # region :  App.mainContentRegion

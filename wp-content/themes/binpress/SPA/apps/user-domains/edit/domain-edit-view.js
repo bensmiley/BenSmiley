@@ -74,9 +74,32 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       return ActiveSubscriptionView.__super__.constructor.apply(this, arguments);
     }
 
-    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{plan_name}}</span></dd> <dt>Billing Amount :</dt> <dd>{{price}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{bill_start}} To {{bill_end}}</dd> </dl> <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> <br> <div class="text-muted">Avail more features by upgrading your plan. Click change plan to view the available plans</div> </div>';
+    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{active_plan_name}}</span></dd> <dt>Billing Amount :</dt> <dd>{{active_plan_price}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{active_bill_start}} To {{active_bill_end}}</dd> </dl> <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block" id="change-plan"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> <br> <div id="pending-subscription" style="display: none"> <dl class="dl-horizontal dl-plan" > <dt>Future Plan :</dt> <dd><span class="label label-info">{{pending_plan_name}}</span></dd> <dt>Billing Amount :</dt> <dd>{{pending_plan_price}}/month</dd> <dt>Billing Start :</dt> <dd>{{pending_start_date}}</dd> </dl> <a href="javascript:void(0)" class="btn btn-success btn-block" id="change-plan"> <i class="icon-ok"></i> Cancel Plan</a> </div> <div class="text-muted">Avail more features by upgrading your plan. Click change plan to view the available plans</div> </div>';
 
     ActiveSubscriptionView.prototype.className = 'alert alert-info';
+
+    ActiveSubscriptionView.prototype.onShow = function() {
+      if (!_.isUndefined(this.model.get('pending_subscription'))) {
+        this.$el.find('#change-plan').hide();
+        this.$el.find('.text-muted').hide();
+        return this.$el.find('#pending-subscription').show();
+      }
+    };
+
+    ActiveSubscriptionView.prototype.serializeData = function() {
+      var data;
+      data = ActiveSubscriptionView.__super__.serializeData.call(this);
+      data.active_plan_name = (this.model.get('active_subscription')).plan_name;
+      data.active_plan_price = (this.model.get('active_subscription')).price;
+      data.active_bill_start = (this.model.get('active_subscription')).bill_start;
+      data.active_bill_end = (this.model.get('active_subscription')).bill_end;
+      if (!_.isUndefined(this.model.get('pending_subscription'))) {
+        data.pending_plan_name = (this.model.get('pending_subscription')).plan_name;
+        data.pending_plan_price = (this.model.get('pending_subscription')).price;
+        data.pending_start_date = (this.model.get('pending_subscription')).start_date;
+      }
+      return data;
+    };
 
     return ActiveSubscriptionView;
 

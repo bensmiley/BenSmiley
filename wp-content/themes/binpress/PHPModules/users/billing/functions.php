@@ -58,9 +58,9 @@ function make_pending_subscription( $subscription_array ) {
     $subscription_data = get_subscription_details( $current_subscription_id );
     $bill_end_date = $subscription_data[ 'bill_end' ];
 
-    // convert date to d-m-Y format since strtotime does not recognise d/m/Y for conversion
+    // convert date to d-m-Y format since datetime does not recognise d/m/Y for conversion
     $bill_end_date = str_replace( '/', '-', $bill_end_date );
-    $new_billing_date = date( 'd/m/Y', strtotime( '+1 day', strtotime( $bill_end_date ) ) );
+    $new_billing_date = new DateTime( $bill_end_date );
 
     $pending_subscription = create_pending_subscription_in_braintree( $card_token, $plan_id, $new_billing_date );
     if ( $pending_subscription[ 'code' ] == 'ERROR' )

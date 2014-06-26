@@ -51,10 +51,21 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
 
     PlansListView.prototype.itemView = SinglePlanView;
 
+    PlansListView.prototype.serializeData = function() {
+      var data;
+      data = PlansListView.__super__.serializeData.call(this);
+      data.plan_name = (this.model.get('active_subscription')).plan_name;
+      data.start_date = (this.model.get('active_subscription')).start_date;
+      return data;
+    };
+
     PlansListView.prototype.itemViewOptions = function() {
+      var domainID, planName;
+      planName = (this.model.get('active_subscription')).plan_name;
+      domainID = Marionette.getOption(this, 'domainId');
       return {
-        activePlanName: this.model.get('plan_name'),
-        domainId: this.model.get('domain_id')
+        activePlanName: planName,
+        domainId: domainID
       };
     };
 

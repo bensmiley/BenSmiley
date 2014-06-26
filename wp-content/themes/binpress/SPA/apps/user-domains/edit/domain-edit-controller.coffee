@@ -17,8 +17,9 @@ define [ 'app'
 
                 #fetch the domain model and show layout
                 @domainModel = msgbus.reqres.request "get:domain:model:by:id", @domainId
+
                 #on successful fetch show the edit domain layout
-#                msgbus.commands.execute "when:fetched", @domainModel, =>
+                msgbus.commands.execute "when:fetched", @domainModel, =>
                 @showEditView @domainModel
 
                 #fetch the current subscription model for the domain
@@ -62,6 +63,7 @@ define [ 'app'
                     model : subscriptionModel
 
             showActiveSubscription : ( subscriptionModel )=>
+                console.log subscriptionModel
                 activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
                 @layout.activeSubscriptionRegion.show activeSubscriptionView
 

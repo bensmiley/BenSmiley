@@ -89,10 +89,9 @@ function get_user_domain_details( $domain_id ) {
     $subscription_data = query_subscription_table( $domain_id );
     $domain_data[ 'subscription_id' ] = $subscription_data[ 'subscription_id' ];
 
-    // set the plan details for the current domain
-    $plan_data = get_plan_details_for_domain( $domain_id );
-    $domain_data[ 'plan_name' ] = $plan_data['plan_name'];
-    $domain_data[ 'plan_id' ] = $plan_data['plan_id'];
+    // get the plan details for the current domain
+    $plan_data = wp_get_post_terms( $domain_id, 'plan' );
+    $domain_data[ 'plan_name' ] = $plan_data[0]->name;
 
     return $domain_data;
 

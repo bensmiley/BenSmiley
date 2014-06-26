@@ -63,23 +63,59 @@ define [ 'marionette'
 
                         <dl class="dl-horizontal dl-plan">
                             <dt>Current Plan :</dt>
-                            <dd><span class="label label-info">{{plan_name}}</span></dd>
+                            <dd><span class="label label-info">{{active_plan_name}}</span></dd>
                             <dt>Billing Amount :</dt>
-                            <dd>{{price}}/month</dd>
+                            <dd>{{active_plan_price}}/month</dd>
                             <dt>Billing Cycle :</dt>
-                            <dd>{{bill_start}} To {{bill_end}}</dd>
+                            <dd>{{active_bill_start}} To {{active_bill_end}}</dd>
                         </dl>
 
-                        <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block">
+                        <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"
+                        id="change-plan">
                         <i class="icon-ok"></i> Change Plan</a>
 
                         <div class="clearfix"></div>
                         <br>
+                        <div id="pending-subscription" style="display: none">
+                        <dl class="dl-horizontal dl-plan" >
+                            <dt>Future Plan :</dt>
+                            <dd><span class="label label-info">{{pending_plan_name}}</span></dd>
+                            <dt>Billing Amount :</dt>
+                            <dd>{{pending_plan_price}}/month</dd>
+                            <dt>Billing Start :</dt>
+                            <dd>{{pending_start_date}}</dd>
+                        </dl>
+
+                        <a href="javascript:void(0)" class="btn btn-success btn-block"
+                        id="change-plan">
+                        <i class="icon-ok"></i> Cancel Plan</a>
+                        </div>
                         <div class="text-muted">Avail more features by upgrading your plan.
                          Click change plan to view the available plans</div>
                     </div>'
 
         className : 'alert alert-info'
+
+        onShow :->
+            if not _.isUndefined @model.get 'pending_subscription'
+                @$el.find('#change-plan').hide()
+                @$el.find('.text-muted').hide()
+                @$el.find('#pending-subscription').show()
+
+        serializeData :->
+            data = super()
+            data.active_plan_name = (@model.get 'active_subscription').plan_name
+            data.active_plan_price = (@model.get 'active_subscription').price
+            data.active_bill_start = (@model.get 'active_subscription').bill_start
+            data.active_bill_end = (@model.get 'active_subscription').bill_end
+
+            if not _.isUndefined @model.get 'pending_subscription'
+                data.pending_plan_name = (@model.get 'pending_subscription').plan_name
+                data.pending_plan_price = (@model.get 'pending_subscription').price
+                data.pending_start_date = (@model.get 'pending_subscription').start_date
+            data
+
+
 
     #return the view instance
     DomainEditLayout : DomainEditLayout

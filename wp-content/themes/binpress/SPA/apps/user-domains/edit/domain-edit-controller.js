@@ -20,6 +20,9 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       DomainEditController.prototype.initialize = function(opts) {
         this.domainId = opts.domainId;
         this.domainModel = msgbus.reqres.request("get:domain:model:by:id", this.domainId);
+        msgbus.commands.execute("when:fetched", this.domainModel, (function(_this) {
+          return function() {};
+        })(this));
         this.showEditView(this.domainModel);
         this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
         return this.subscriptionModel.fetch();
@@ -60,6 +63,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
 
       DomainEditController.prototype.showActiveSubscription = function(subscriptionModel) {
         var activeSubscriptionView;
+        console.log(subscriptionModel);
         activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
         return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
       };
