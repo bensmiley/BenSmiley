@@ -62,7 +62,7 @@ function ajax_user_login() {
             $response = array( "code" => "OK", 'site_url' => $site_url,
                 'msg' => '<div class="alert alert-success">
                             <button class="close" data-dismiss="alert"></button>
-                            Login Success</div>' );
+                            Login Success Redirecting to Dashboard</div>' );
             wp_send_json( $response );
         }
     } else {
