@@ -8,11 +8,11 @@ define [ 'marionette'
         tagName : 'tr'
 
         template : '<td>{{post_title}}</td>
-                    <td>{{plan_name}}</td>
-                    <td>None</td>'
+                            <td>{{plan_name}}</td>
+                            <td>None</td>'
 
         events :
-            'click' :->
+            'click' : ->
                 domainId = @model.get 'ID'
                 #redirect the page to edit of domain
                 mainUrl = window.location.href.replace Backbone.history.getFragment(), ''
