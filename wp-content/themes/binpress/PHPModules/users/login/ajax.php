@@ -19,7 +19,7 @@ function ajax_user_login() {
     // check if a user is already logged in
     if ( is_user_logged_in() ) {
 
-        $message =  "User already logged in";
+        $message = "User already logged in";
 
         success_message( $message, $site_url );
 
@@ -39,21 +39,13 @@ function ajax_user_login() {
     $user = get_user_by( 'email', $user_email );
 
     if ( $user ) {
-
-        //login the user using WP function
-        $user_login = wp_signon( $credentials );
-
-        if ( is_wp_error( $user_login ) ) {
-            $message = "The Email Id/ Password doesnt seem right.
-                    Check if your caps is on and try again.";
-
+        $user_status = check_user_status( $user );
+        if ( $user_status[ 'code' ] ) {
+            $message = "Activate your account.";
             error_message( $message );
-
         } else {
 
-            $message = "Login Success";
-
-            success_message( $message, $site_url );
+            login_user( $credentials, $site_url );
         }
     } else {
         $message = "No user exists with the email id.";
@@ -93,6 +85,28 @@ function success_message( $message, $site_url ) {
             $message . '</div>' );
 
     wp_send_json( $response );
+}
+
+/**
+ * Function to login a active user
+ *
+ * @param $login_credentials
+ * @param $site_url
+ */
+function login_user( $login_credentials, $site_url ) {
+
+    //login the user using WP function
+    $user_login = wp_signon( $login_credentials );
+
+    if ( is_wp_error( $user_login ) ) {
+        $message = "The Email Id/ Password doesnt seem right.
+                    Check if your caps is on and try again.";
+        error_message( $message );
+
+    } else {
+        $message = "Login Success";
+        success_message( $message, $site_url );
+    }
 }
 
 /**
