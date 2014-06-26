@@ -91,7 +91,7 @@ function get_user_domain_details( $domain_id ) {
 
     // get the plan details for the current domain
     $plan_data = wp_get_post_terms( $domain_id, 'plan' );
-    $domain_data[ 'plan_name' ] = $plan_data[0]->name;
+    $domain_data[ 'plan_name' ] = $plan_data[ 0 ]->name;
 
     return $domain_data;
 
@@ -117,6 +117,10 @@ function format_domain_post_meta_data( $domain_post_meta_data ) {
     return $formatted_array;
 }
 
+/** Function to update the domain name and url
+ *
+ * @param $domain_data
+ */
 function update_domain_post( $domain_data ) {
 
     $domain_details = array(
@@ -126,5 +130,21 @@ function update_domain_post( $domain_data ) {
     $domain_post_id = wp_update_post( $domain_details );
 
     update_post_meta( $domain_post_id, 'domain_url', $domain_data[ 'domain_url' ] );
+
+}
+
+
+/**
+ * Function to delete a user domain
+ *
+ * @param $domain_id
+ */
+function delete_domain( $domain_id ) {
+
+    //deletes the post,post meta and taxonomy terms
+    wp_delete_post( $domain_id, true );
+
+    // delete the subscription records for the domain in subscription table and braintree
+    delete_subscription_for_domain( $domain_id );
 
 }

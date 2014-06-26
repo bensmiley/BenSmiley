@@ -66,7 +66,7 @@ function create_subscription_in_braintree( $credit_card_token, $plan_id ) {
  * @param $domain_id
  * @return array
  */
-function cancel_active_subscription_in_braintree( $subscription_id ) {
+function cancel_subscription_in_braintree( $subscription_id ) {
 
     #check if a active subscription exits
     try {
@@ -78,7 +78,7 @@ function cancel_active_subscription_in_braintree( $subscription_id ) {
             return array( 'code' => 'OK' );
         } else {
 
-            $error_msg = array( code => 'ERROR', 'msg' => 'Active subscription not cancelled ' );
+            $error_msg = array( code => 'ERROR', 'msg' => 'Subscription not cancelled ' );
             return $error_msg;
         }
     } catch ( Braintree_Exception_NotFound $e ) {

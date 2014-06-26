@@ -75,3 +75,17 @@ function ajax_update_user_domain() {
 }
 
 add_action( 'wp_ajax_update-user-domain', 'ajax_update_user_domain' );
+
+/**
+ * Function to delete the domain details
+ */
+function ajax_delete_user_domain() {
+
+    $domain_id = $_POST['ID'];
+
+    delete_domain( $domain_id );
+
+    wp_send_json( array( 'code' => 'OK', 'data' => $domain_id ) );
+}
+
+add_action( 'wp_ajax_delete-user-domain', 'ajax_delete_user_domain' );

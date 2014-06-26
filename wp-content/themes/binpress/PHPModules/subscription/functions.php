@@ -214,3 +214,26 @@ function cancel_subscription( $old_subscription_id ) {
         array( 'ID' => $old_subscription_id ) );
 }
 
+/**
+ * Function to delete the subscription records for the domain in subscription table
+ *
+ * @param $domain_id
+ */
+function delete_subscription_for_domain( $domain_id ) {
+    global $wpdb;
+
+    // get the active subscription id for domain
+    $subscription_id = get_subscription_id_for_domain( $domain_id );
+
+    // cancel the active subscription on braintree
+    if ( !$subscription_id[ 'subscription_id' ] == "BENAJFREE" )
+        cancel_subscription_in_braintree( $subscription_id[ 'subscription_id' ] );
+
+    // cancel pending subscriptions if exists on braintree
+    if ( isset( $subscription_id[ 'pending_subscription_id' ] ) )
+        cancel_subscription_in_braintree( $subscription_id[ 'pending_subscription_id' ] );
+
+    // delete all subscription records for the domain
+    $wpdb->delete( 'subscription', array( 'domain_id' => $domain_id ) );
+}
+

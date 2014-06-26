@@ -15,7 +15,7 @@ define [ 'app'
                 #get the user domains collection
                 @userDomainsCollection = msgbus.reqres.request "get:current:user:domains"
 
-                #on complete of collection fetch show the view
+                #on collection fetch show the view
                 msgbus.commands.execute "when:fetched", @userDomainsCollection, =>
                     @showDomainListView()
 
