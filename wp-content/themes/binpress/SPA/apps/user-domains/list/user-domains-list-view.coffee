@@ -12,12 +12,13 @@ define [ 'marionette'
                     <td>None</td>
                     <td class="center">
                         <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a>&nbsp;&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-trash" id="btn-delete-domain"></span>
+                        <span class="glyphicon glyphicon-trash btn-delete-domain"></span>
                     </td>'
         events :
-            'click #btn-delete-domain' : ->
+            'click .btn-delete-domain' : ->
                 if confirm( 'Are you sure?' )
                     @trigger "delete:domain:clicked", @model
+
 
     #Empty item view, when no domains are added
     class EmptyView extends Marionette.ItemView
@@ -37,6 +38,16 @@ define [ 'marionette'
         emptyView : EmptyView
 
         itemViewContainer : 'tbody'
+
+        #show the loader on click of delete
+        events :
+                'click .btn-delete-domain' : ->
+                    @$el.find('.ajax-loader-login').show()
+
+        #hide the loader on succesful delete of domain
+        onDomainDeleted :->
+            @$el.find('.ajax-loader-login').hide()
+
 
     # return the view instance
     DomainListView : DomainListView

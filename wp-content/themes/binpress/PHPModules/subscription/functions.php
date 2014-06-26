@@ -226,7 +226,7 @@ function delete_subscription_for_domain( $domain_id ) {
     $subscription_id = get_subscription_id_for_domain( $domain_id );
 
     // cancel the active subscription on braintree
-    if ( !$subscription_id[ 'subscription_id' ] == "BENAJFREE" )
+    if ( $subscription_id[ 'subscription_id' ] != "BENAJFREE" )
         cancel_subscription_in_braintree( $subscription_id[ 'subscription_id' ] );
 
     // cancel pending subscriptions if exists on braintree

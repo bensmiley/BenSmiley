@@ -21,13 +21,13 @@ define [ 'app'
 
             showDomainListView : ->
                 #get the user domain list view
-                domainListView = @getDomainListView @userDomainsCollection
+                @domainListView = @getDomainListView @userDomainsCollection
 
                 #listen to click events
-                @listenTo domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
+                @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
 
                 #show user domain list view
-                @show domainListView
+                @show @domainListView
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView
@@ -37,6 +37,10 @@ define [ 'app'
                 model.destroy
                     allData : false
                     wait : true
+                    success : @domainDeleted
+
+            domainDeleted :=>
+                @domainListView.triggerMethod "domain:deleted"
 
         #handler for showing the user domain list page,options to be passed
         # region :  App.mainContentRegion
