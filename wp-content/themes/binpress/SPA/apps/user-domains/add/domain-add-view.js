@@ -44,11 +44,9 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       this.$el.find('#msg').append(successhtml);
       mainUrl = window.location.href.replace(Backbone.history.getFragment(), '');
       redirect_url = "" + mainUrl + "domains/edit/" + domainId;
-      return _.delay((function(_this) {
-        return function() {
-          return window.location.href = redirect_url;
-        };
-      })(this), 1000);
+      return _.delay(function() {
+        return window.location.href = redirect_url;
+      }, 1000);
     };
 
     DomainAddView.prototype.validationOptions = function() {

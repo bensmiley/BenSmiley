@@ -47,7 +47,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             #redirect to edit of the domain added
             mainUrl = window.location.href.replace Backbone.history.getFragment(), ''
             redirect_url = "#{mainUrl}domains/edit/#{domainId}"
-            _.delay =>
+            _.delay ->
                 window.location.href = redirect_url
             , 1000
 
