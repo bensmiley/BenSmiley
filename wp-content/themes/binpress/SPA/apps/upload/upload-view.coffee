@@ -6,7 +6,7 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
     class UploadView extends Marionette.ItemView
 
         template : '<div class="col-md-3 text-center">
-                    <div class="profile-wrapper pull-right alert alert-info">
+                    <div class="profile-wrapper alert alert-info">
                         <img class="m-b-10" width="90" height="90"
                          alt="" src="{{user_photo}}"id="user-photo">
 
