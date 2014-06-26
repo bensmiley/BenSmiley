@@ -23,9 +23,6 @@ define [ 'app'
                 #get the user domain list view
                 @domainListView = @getDomainListView @userDomainsCollection
 
-                #listen to click events
-                @listenTo @domainListView, "itemview:delete:domain:clicked", @deleteDomainClick
-
                 #show user domain list view
                 @show @domainListView
 

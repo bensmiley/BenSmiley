@@ -13,13 +13,15 @@ define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], f
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>{{plan_name}}</td> <td>None</td> <td class="center"> <a href="#domains/edit/{{ID}}" class="glyphicon glyphicon-pencil btn-edit-domain"></a>&nbsp;&nbsp;&nbsp; <span class="glyphicon glyphicon-trash btn-delete-domain"></span> </td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>{{plan_name}}</td> <td>None</td>';
 
     DomainItemView.prototype.events = {
-      'click .btn-delete-domain': function() {
-        if (confirm('Are you sure?')) {
-          return this.trigger("delete:domain:clicked", this.model);
-        }
+      'click': function() {
+        var domainId, mainUrl, redirect_url;
+        domainId = this.model.get('ID');
+        mainUrl = window.location.href.replace(Backbone.history.getFragment(), '');
+        redirect_url = "" + mainUrl + "domains/edit/" + domainId;
+        return window.location.href = redirect_url;
       }
     };
 
@@ -54,16 +56,6 @@ define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], f
     DomainListView.prototype.emptyView = EmptyView;
 
     DomainListView.prototype.itemViewContainer = 'tbody';
-
-    DomainListView.prototype.events = {
-      'click .btn-delete-domain': function() {
-        return this.$el.find('.ajax-loader-login').show();
-      }
-    };
-
-    DomainListView.prototype.onDomainDeleted = function() {
-      return this.$el.find('.ajax-loader-login').hide();
-    };
 
     return DomainListView;
 
