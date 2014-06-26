@@ -37,8 +37,8 @@ define [ 'marionette'
             @$el.find( '#msg' ).empty()
 
             successhtml = "<div class='alert alert-success'>
-                           <button class='close' data-dismiss='alert'>&times;</button>
-                           Domain Updated Sucessfully<div>"
+                                       <button class='close' data-dismiss='alert'>&times;</button>
+                                       Domain Updated Sucessfully<div>"
 
             @$el.find( '#msg' ).append successhtml
 
@@ -59,50 +59,50 @@ define [ 'marionette'
 
         template : '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3>
 
-                    <div class="grid simple">
+                            <div class="grid simple">
 
-                        <dl class="dl-horizontal dl-plan">
-                            <dt>Current Plan :</dt>
-                            <dd><span class="label label-info">{{active_plan_name}}</span></dd>
-                            <dt>Billing Amount :</dt>
-                            <dd>{{active_plan_price}}/month</dd>
-                            <dt>Billing Cycle :</dt>
-                            <dd>{{active_bill_start}} To {{active_bill_end}}</dd>
-                        </dl>
+                                <dl class="dl-horizontal dl-plan">
+                                    <dt>Current Plan :</dt>
+                                    <dd><span class="label label-info">{{active_plan_name}}</span></dd>
+                                    <dt>Billing Amount :</dt>
+                                    <dd>{{active_plan_price}}/month</dd>
+                                    <dt>Billing Cycle :</dt>
+                                    <dd>{{active_bill_start}} To {{active_bill_end}}</dd>
+                                </dl>
 
-                        <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"
-                        id="change-plan">
-                        <i class="icon-ok"></i> Change Plan</a>
+                                <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"
+                                id="change-plan">
+                                <i class="icon-ok"></i> Change Plan</a>
 
-                        <div class="clearfix"></div>
-                        <br>
-                        <div id="pending-subscription" style="display: none">
-                        <dl class="dl-horizontal dl-plan" >
-                            <dt>Future Plan :</dt>
-                            <dd><span class="label label-info">{{pending_plan_name}}</span></dd>
-                            <dt>Billing Amount :</dt>
-                            <dd>{{pending_plan_price}}/month</dd>
-                            <dt>Billing Start :</dt>
-                            <dd>{{pending_start_date}}</dd>
-                        </dl>
+                                <div class="clearfix"></div>
+                                <br>
+                                <div id="pending-subscription" style="display: none">
+                                <dl class="dl-horizontal dl-plan" >
+                                    <dt>Future Plan :</dt>
+                                    <dd><span class="label label-info">{{pending_plan_name}}</span></dd>
+                                    <dt>Billing Amount :</dt>
+                                    <dd>{{pending_plan_price}}/month</dd>
+                                    <dt>Billing Start :</dt>
+                                    <dd>{{pending_start_date}}</dd>
+                                </dl>
 
-                        <a href="javascript:void(0)" class="btn btn-success btn-block"
-                        id="change-plan">
-                        <i class="icon-ok"></i> Cancel Plan</a>
-                        </div>
-                        <div class="text-muted">Avail more features by upgrading your plan.
-                         Click change plan to view the available plans</div>
-                    </div>'
+                                <a href="javascript:void(0)" class="btn btn-success btn-block"
+                                id="change-plan">
+                                <i class="icon-ok"></i> Cancel Plan</a>
+                                </div>
+                                <div class="text-muted">Avail more features by upgrading your plan.
+                                 Click change plan to view the available plans</div>
+                            </div>'
 
         className : 'alert alert-info'
 
-        onShow :->
+        onShow : ->
             if not _.isUndefined @model.get 'pending_subscription'
-                @$el.find('#change-plan').hide()
-                @$el.find('.text-muted').hide()
-                @$el.find('#pending-subscription').show()
+                @$el.find( '#change-plan' ).hide()
+                @$el.find( '.text-muted' ).hide()
+                @$el.find( '#pending-subscription' ).show()
 
-        serializeData :->
+        serializeData : ->
             data = super()
             data.active_plan_name = (@model.get 'active_subscription').plan_name
             data.active_plan_price = (@model.get 'active_subscription').price
@@ -114,7 +114,6 @@ define [ 'marionette'
                 data.pending_plan_price = (@model.get 'pending_subscription').price
                 data.pending_start_date = (@model.get 'pending_subscription').start_date
             data
-
 
 
     #return the view instance

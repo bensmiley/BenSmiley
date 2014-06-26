@@ -63,7 +63,6 @@ define [ 'app'
                     model : subscriptionModel
 
             showActiveSubscription : ( subscriptionModel )=>
-                console.log subscriptionModel
                 activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
                 @layout.activeSubscriptionRegion.show activeSubscriptionView
 
@@ -74,7 +73,7 @@ define [ 'app'
                     success : @domainUpdated
 
             #trigger sucess msg on successful update
-            domainUpdated :( userDomain ) =>
+            domainUpdated : ( userDomain ) =>
                 userDomainCollection = msgbus.reqres.request "get:current:user:domains"
                 userDomainCollection.add userDomain
                 @layout.triggerMethod "domain:updated"

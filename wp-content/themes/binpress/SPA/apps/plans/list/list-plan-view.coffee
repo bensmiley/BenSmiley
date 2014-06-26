@@ -4,20 +4,20 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
     #view for each plan
     class SinglePlanView extends Marionette.ItemView
         template : '<div>
-                             <div class="grid simple">
-                                <h4 class="bold text-center plan-name">{{plan_name}}<br>
-                                <small class="text-danger" >Rs.{{price}}/month</small>
-                                </h4>
-                                <hr>
-                                 <div class="grid-body no-border">
-                                     <ul>
-                                        <li>{{description}} </li>
-                                     </ul>
-                                 </div>
-                             </div>
-                             <a href="#change-plan/{{plan_id}}"
-                                 class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a>
-                              </div> '
+                                     <div class="grid simple">
+                                        <h4 class="bold text-center plan-name">{{plan_name}}<br>
+                                        <small class="text-danger" >Rs.{{price}}/month</small>
+                                        </h4>
+                                        <hr>
+                                         <div class="grid-body no-border">
+                                             <ul>
+                                                <li>{{description}} </li>
+                                             </ul>
+                                         </div>
+                                     </div>
+                                     <a href="#change-plan/{{plan_id}}"
+                                         class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a>
+                                      </div> '
         tagName : 'li'
 
         className : 'plans'
@@ -46,7 +46,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
 
         itemView : SinglePlanView
 
-        serializeData :->
+        serializeData : ->
             data = super()
             data.plan_name = (@model.get 'active_subscription').plan_name
             data.start_date = (@model.get 'active_subscription').start_date

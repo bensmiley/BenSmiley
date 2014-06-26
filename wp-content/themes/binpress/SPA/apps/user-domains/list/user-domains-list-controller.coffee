@@ -19,7 +19,7 @@ define [ 'app'
                 msgbus.commands.execute "when:fetched", @userDomainsCollection, =>
                     @showDomainListView()
 
-            showDomainListView:->
+            showDomainListView : ->
                 #get the user domain list view
                 domainListView = @getDomainListView @userDomainsCollection
 
