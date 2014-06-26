@@ -28,8 +28,8 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
     class EmptyGroupView extends Marionette.ItemView
 
         template : '<td class="v-align-middle" colspan="3" align="center" style="background:#e2e8eb;">
-                                                <span class="muted">No Groups added</span></td>
-                                            </td>'
+                        <span class="muted">No Groups added</span></td>
+                    </td>'
 
         tagName : 'tr'
 
@@ -53,7 +53,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
                     groupdata = Backbone.Syphon.serialize @
                     groupdata.domain_id = Marionette.getOption @, 'domainId'
 
-                    #check if update or save action
+                    #check if edit or save action
                     buttonText = @$el.find( '#btn-save-domain-group' ).text()
                     formAction = buttonText.trim()
 

@@ -107,7 +107,6 @@ function update_group_for_domain( $group_data ) {
         }
 
     endforeach;
-//    $new_groups_meta = wp_parse_args( $update_groups, $update_group );
 
     $update_group_serialized = maybe_serialize( $update_group );
 
@@ -125,6 +124,7 @@ function delete_group_for_domain( $group_data ) {
 
     $groups = get_groups_for_domain( $group_data[ 'domain_id' ] );
 
+    // remove the group from the group array
     foreach ( $groups as $key => $group ):
         if ( $group[ 'ID' ] != $group_data[ 'ID' ] ) {
 

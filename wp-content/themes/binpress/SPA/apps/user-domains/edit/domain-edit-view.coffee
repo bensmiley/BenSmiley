@@ -1,6 +1,7 @@
 #include the files for the app
 define [ 'marionette'
-         'text!apps/user-domains/templates/AddEditUserDomain.html' ], ( Marionette, addEditUserDomainTpl )->
+         'text!apps/user-domains/templates/AddEditUserDomain.html'
+         'text!apps/user-domains/templates/activeSubscription.html' ], ( Marionette, addEditUserDomainTpl,activeSubscriptionTpl )->
 
     # Layout for add-edit user domains
     class DomainEditLayout extends Marionette.Layout
@@ -23,7 +24,7 @@ define [ 'marionette'
 
 
         onShow : ->
-            @$el.find( '#form-title' ).text 'Edit Domain'
+            @$el.find( '.form-title' ).text 'Edit Domain'
             @$el.find( '#domain-groups' ).css 'display' : 'inline'
 
             #validate the add user domain form with the validation rules
@@ -57,42 +58,7 @@ define [ 'marionette'
     #view to show the active subscription plan for the domain
     class ActiveSubscriptionView extends Marionette.ItemView
 
-        template : '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3>
-
-                            <div class="grid simple">
-
-                                <dl class="dl-horizontal dl-plan">
-                                    <dt>Current Plan :</dt>
-                                    <dd><span class="label label-info">{{active_plan_name}}</span></dd>
-                                    <dt>Billing Amount :</dt>
-                                    <dd>{{active_plan_price}}/month</dd>
-                                    <dt>Billing Cycle :</dt>
-                                    <dd>{{active_bill_start}} To {{active_bill_end}}</dd>
-                                </dl>
-
-                                <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block"
-                                id="change-plan">
-                                <i class="icon-ok"></i> Change Plan</a>
-
-                                <div class="clearfix"></div>
-                                <br>
-                                <div id="pending-subscription" style="display: none">
-                                <dl class="dl-horizontal dl-plan" >
-                                    <dt>Future Plan :</dt>
-                                    <dd><span class="label label-info">{{pending_plan_name}}</span></dd>
-                                    <dt>Billing Amount :</dt>
-                                    <dd>{{pending_plan_price}}/month</dd>
-                                    <dt>Billing Start :</dt>
-                                    <dd>{{pending_start_date}}</dd>
-                                </dl>
-
-                                <a href="javascript:void(0)" class="btn btn-success btn-block"
-                                id="change-plan">
-                                <i class="icon-ok"></i> Cancel Plan</a>
-                                </div>
-                                <div class="text-muted">Avail more features by upgrading your plan.
-                                 Click change plan to view the available plans</div>
-                            </div>'
+        template : activeSubscriptionTpl
 
         className : 'alert alert-info'
 

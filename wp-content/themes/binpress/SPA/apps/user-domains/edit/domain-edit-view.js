@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'], function(Marionette, addEditUserDomainTpl) {
+define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html', 'text!apps/user-domains/templates/activeSubscription.html'], function(Marionette, addEditUserDomainTpl, activeSubscriptionTpl) {
   var ActiveSubscriptionView, DomainEditLayout;
   DomainEditLayout = (function(_super) {
     __extends(DomainEditLayout, _super);
@@ -32,7 +32,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
     };
 
     DomainEditLayout.prototype.onShow = function() {
-      this.$el.find('#form-title').text('Edit Domain');
+      this.$el.find('.form-title').text('Edit Domain');
       this.$el.find('#domain-groups').css({
         'display': 'inline'
       });
@@ -74,7 +74,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       return ActiveSubscriptionView.__super__.constructor.apply(this, arguments);
     }
 
-    ActiveSubscriptionView.prototype.template = '<h3 class="m-b-20"><span class="semi-bold">Plans Details</span></h3> <div class="grid simple"> <dl class="dl-horizontal dl-plan"> <dt>Current Plan :</dt> <dd><span class="label label-info">{{active_plan_name}}</span></dd> <dt>Billing Amount :</dt> <dd>{{active_plan_price}}/month</dd> <dt>Billing Cycle :</dt> <dd>{{active_bill_start}} To {{active_bill_end}}</dd> </dl> <a href="#domains/edit/{{domain_id}}/list-plan" class="btn btn-success btn-block" id="change-plan"> <i class="icon-ok"></i> Change Plan</a> <div class="clearfix"></div> <br> <div id="pending-subscription" style="display: none"> <dl class="dl-horizontal dl-plan" > <dt>Future Plan :</dt> <dd><span class="label label-info">{{pending_plan_name}}</span></dd> <dt>Billing Amount :</dt> <dd>{{pending_plan_price}}/month</dd> <dt>Billing Start :</dt> <dd>{{pending_start_date}}</dd> </dl> <a href="javascript:void(0)" class="btn btn-success btn-block" id="change-plan"> <i class="icon-ok"></i> Cancel Plan</a> </div> <div class="text-muted">Avail more features by upgrading your plan. Click change plan to view the available plans</div> </div>';
+    ActiveSubscriptionView.prototype.template = activeSubscriptionTpl;
 
     ActiveSubscriptionView.prototype.className = 'alert alert-info';
 

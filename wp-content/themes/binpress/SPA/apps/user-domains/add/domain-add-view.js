@@ -31,7 +31,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
 
     DomainAddView.prototype.onShow = function() {
       this.$el.find('#add-edit-user-domain-form').validate(this.validationOptions());
-      this.$el.find('#form-title').text('Add Domain');
+      this.$el.find('.form-title').text('Add Domain');
       return this.$el.find('#tabs').hide();
     };
 
