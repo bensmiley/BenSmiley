@@ -23,7 +23,7 @@ require "functions.php";
 function ajax_new_user_signup() {
 
     //check if it is a post request else return error
-    if ('POST' !== $_SERVER ['REQUEST_METHOD'])
+    if ( 'POST' !== $_SERVER [ 'REQUEST_METHOD' ] )
         wp_send_json( array( 'code' => 'ERROR', 'msg' => 'Invalid request' ) );
 
     //store all the POST data from the form in a variable
@@ -32,11 +32,11 @@ function ajax_new_user_signup() {
     //pick the user specific fields from the POST data
     $user_data = pick_user_fields( $signup_form_data );
 
-    $user_email = $user_data['user_email'];
+    $user_email = $user_data[ 'user_email' ];
 
     //check if the user email exists else return error
-    $check_user_email = check_email_exists( $user_email );
-    if (!$check_user_email)
+    $check_user_email = email_exists( $user_email );
+    if ( $check_user_email )
         wp_send_json( array( 'code' => 'ERROR', 'msg' => '<div class="alert alert-error">
                   <button class="close" data-dismiss="alert"></button>Email ID already exists</div>' ) );
 
@@ -44,7 +44,7 @@ function ajax_new_user_signup() {
     $user_id = create_new_user( $user_data );
 
     // check if user created, on success returns user_id : on error (int)WP_Error
-    if (is_wp_error( $user_id ))
+    if ( is_wp_error( $user_id ) )
         wp_send_json( array( 'code' => 'ERROR', 'msg' => '<div class="alert alert-error">
                   <button class="close" data-dismiss="alert"></button>User not created</div>' ) );
 
@@ -62,7 +62,7 @@ function ajax_new_user_signup() {
 
 
     wp_send_json( array( 'code' => 'OK',
-                         'msg' => '<div class="alert alert-info">
+        'msg' => '<div class="alert alert-info">
                   <button class="close" data-dismiss="alert"></button>
                   An email has been sent to you. Please click on the link to confirm your account</div>' ) );
 

@@ -39,32 +39,6 @@ function pick_user_fields( $signup_form_data ) {
     return $user_data;
 }
 
-
-/**
- * The function will check if the user email exists
- *
- * returns true if email does not exists
- *
- * returns false if email does exists
- *
- * @param  array $userdata
- * @return bool true or bool false
- */
-// TODO: Redundant code logic. email_exists and this function perform same logic
-function check_email_exists( $user_email ) {
-
-    $check_email_exists = email_exists( $user_email );
-
-    if ($check_email_exists == false) {
-        // email does not exists
-        return true;
-    } else {
-        // email  exists
-        return false;
-    }
-}
-
-
 /**
  * Function to  register a new user in the system
  *
