@@ -23,6 +23,11 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
           this.trigger("edit:domain:clicked", domaindata);
           return $('.ajax-loader-login').show();
         }
+      },
+      'click #btn-delete-domain': function() {
+        if (confirm("Delete the domain?")) {
+          return this.trigger("delete:domain:clicked");
+        }
       }
     };
 

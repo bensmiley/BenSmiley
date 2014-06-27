@@ -1,7 +1,7 @@
 #include the files for the app
 define [ 'marionette'
          'text!apps/user-domains/templates/AddEditUserDomain.html'
-         'text!apps/user-domains/templates/activeSubscription.html' ], ( Marionette, addEditUserDomainTpl,activeSubscriptionTpl )->
+         'text!apps/user-domains/templates/activeSubscription.html' ], ( Marionette, addEditUserDomainTpl, activeSubscriptionTpl )->
 
     # Layout for add-edit user domains
     class DomainEditLayout extends Marionette.Layout
@@ -17,6 +17,10 @@ define [ 'marionette'
                     domaindata = Backbone.Syphon.serialize @
                     @trigger "edit:domain:clicked", domaindata
                     $( '.ajax-loader-login' ).show()
+
+            'click #btn-delete-domain' : ->
+                if confirm "Delete the domain?"
+                    @trigger "delete:domain:clicked"
 
         regions :
             groupsRegion : '#groups-region'
@@ -38,8 +42,8 @@ define [ 'marionette'
             @$el.find( '#msg' ).empty()
 
             successhtml = "<div class='alert alert-success'>
-                           <button class='close' data-dismiss='alert'>&times;</button>
-                           Domain Updated Sucessfully<div>"
+                                       <button class='close' data-dismiss='alert'>&times;</button>
+                                       Domain Updated Sucessfully<div>"
 
             @$el.find( '#msg' ).append successhtml
 

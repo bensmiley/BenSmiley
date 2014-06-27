@@ -17,13 +17,8 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
     SingleGroupView.prototype.tagName = 'tr';
 
     SingleGroupView.prototype.events = {
-      'click .edit-group': function() {
+      'click': function() {
         return this.trigger("edit:group:clicked", this.model);
-      },
-      'click .delete-group': function() {
-        if (confirm('Are you sure?')) {
-          return this.trigger("delete:group:clicked", this.model);
-        }
       }
     };
 
@@ -65,6 +60,22 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
 
     ShowGroupView.prototype.emptyView = EmptyGroupView;
 
+    ShowGroupView.prototype.initialize = function() {
+      return this.listenTo(this, "itemview:edit:group:clicked", this.editGroup);
+    };
+
+    ShowGroupView.prototype.editGroup = function(itemview, model) {
+      var group_description, group_name;
+      this.editModel = model;
+      group_name = model.get('group_name');
+      group_description = model.get('group_description');
+      this.$el.find('#btn-new-ticket').click();
+      this.$el.find('#btn-save-domain-group').text('Update');
+      this.$el.find('.btn-delete-group').show();
+      this.$el.find('#group_name').val(group_name);
+      return this.$el.find('#group_description').val(group_description);
+    };
+
     ShowGroupView.prototype.events = {
       'click #btn-save-domain-group': function() {
         var buttonText, formAction, groupdata;
@@ -76,8 +87,30 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
           if (formAction === "Save") {
             return this.trigger("save:domain:group:clicked", groupdata);
           } else {
-            return this.trigger("update:domain:group:clicked", groupdata);
+            return this.trigger("update:domain:group:clicked", groupdata, this.editModel);
           }
+        }
+      },
+      'click #btn-new-ticket': function() {
+        this.$el.find('#success-msg').empty();
+        this.$el.find('#new-ticket-wrapper').slideToggle("fast", "linear");
+        this.$el.find('#btn-new-ticket').css({
+          'display': 'none'
+        });
+        this.$el.find('#group_name').val(' ');
+        this.$el.find('#group_description').val(' ');
+        this.$el.find('#btn-save-domain-group').text('Save');
+        return this.$el.find('.btn-delete-group').hide();
+      },
+      'click #btn-close-ticket': function() {
+        this.$el.find('#new-ticket-wrapper').slideToggle("fast", "linear");
+        return this.$el.find('#btn-new-ticket').css({
+          'display': 'inline'
+        });
+      },
+      'click .btn-delete-group': function() {
+        if (confirm('Are you sure?')) {
+          return this.trigger("delete:group:clicked", this.editModel);
         }
       }
     };
@@ -109,17 +142,14 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
       return this.$el.find('#btn-reset-group').click();
     };
 
-    ShowGroupView.prototype.onEditGroup = function(group_name, group_description) {
-      this.$el.find('#btn-new-ticket').click();
-      this.$el.find('#btn-save-domain-group').text('Update');
-      this.$el.find('#group_name').val(group_name);
-      return this.$el.find('#group_description').val(group_description);
-    };
-
     ShowGroupView.prototype.onGroupUpdated = function() {
       var msg;
       msg = "Group updated sucessfully";
       return this.showSuccessMsg(msg);
+    };
+
+    ShowGroupView.prototype.onGroupDeleted = function() {
+      return this.$el.find('#btn-close-ticket').click();
     };
 
     ShowGroupView.prototype.showSuccessMsg = function(msgText) {

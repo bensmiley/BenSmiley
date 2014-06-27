@@ -17,14 +17,11 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
         url : ->
             "#{AJAXURL}?action=fetch-user-domains"
 
-
-    # create  a  collection
-    userDomainCollection = new UserDomainCollection
-
     #PUBLIC API
     API =
 
         getCurrentUserDomains : ->
+            userDomainCollection = new UserDomainCollection
             userDomainCollection.fetch()
             userDomainCollection
 

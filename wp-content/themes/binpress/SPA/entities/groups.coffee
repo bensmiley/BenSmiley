@@ -17,9 +17,6 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
         url : ->
             "#{AJAXURL}?action=fetch-groups"
 
-    # create  a  collection
-    groupCollection = new GroupCollection
-
     #PUBLIC API
     API =
 
@@ -27,7 +24,11 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
             groupModel = new GroupModel data
             groupModel
 
-        getGroupsByDomainId : ->
+        getGroupsByDomainId : ( domainId )->
+            groupCollection = new GroupCollection
+            groupCollection.fetch
+                data :
+                    domain_id : domainId
             groupCollection
 
 
@@ -35,8 +36,8 @@ define [ 'backbone', 'msgbus' ], ( Backbone, msgbus ) ->
     msgbus.reqres.setHandler "create:domain:group:model", ( data ) ->
         API.createGroupModel data
 
-    msgbus.reqres.setHandler "get:groups:for:domains", ->
-        API.getGroupsByDomainId()
+    msgbus.reqres.setHandler "get:groups:for:domains", ( domainId ) ->
+        API.getGroupsByDomainId domainId
 
     GroupModel : GroupModel
     GroupCollection : GroupCollection

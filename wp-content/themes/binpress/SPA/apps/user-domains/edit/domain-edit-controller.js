@@ -42,6 +42,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
           };
         })(this));
         this.listenTo(this.layout, "edit:domain:clicked", this.editDomain);
+        this.listenTo(this.layout, "delete:domain:clicked", this.deleteDomain);
         return this.show(this.layout, {
           loading: true
         });
@@ -78,6 +79,21 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         userDomainCollection = msgbus.reqres.request("get:current:user:domains");
         userDomainCollection.add(userDomain);
         return this.layout.triggerMethod("domain:updated");
+      };
+
+      DomainEditController.prototype.deleteDomain = function() {
+        return this.domainModel.destroy({
+          allData: false,
+          wait: true,
+          success: this.domainDeleted
+        });
+      };
+
+      DomainEditController.prototype.domainDeleted = function() {
+        var mainUrl, redirect_url;
+        mainUrl = window.location.href.replace(Backbone.history.getFragment(), '');
+        redirect_url = "" + mainUrl + "#domains";
+        return window.location.href = redirect_url;
       };
 
       return DomainEditController;

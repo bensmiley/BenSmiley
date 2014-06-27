@@ -49,6 +49,8 @@ define [ 'app'
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain
 
+                #listen to edit domain click event
+                @listenTo @layout, "delete:domain:clicked", @deleteDomain
 
                 #show the edit domain layout
                 @show @layout,
@@ -78,6 +80,17 @@ define [ 'app'
                 userDomainCollection.add userDomain
                 @layout.triggerMethod "domain:updated"
 
+            deleteDomain : ->
+                @domainModel.destroy
+                    allData : false
+                    wait : true
+                    success : @domainDeleted
+
+            domainDeleted : ->
+                #redirect the page to domain list
+                mainUrl = window.location.href.replace Backbone.history.getFragment(), ''
+                redirect_url = "#{mainUrl}#domains"
+                window.location.href = redirect_url
 
         #handler for edit domain page,options to be passed to controller are:
         # region :  App.mainContentRegion

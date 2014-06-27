@@ -24,20 +24,12 @@ define [ 'app'
                 @domainListView = @getDomainListView @userDomainsCollection
 
                 #show user domain list view
-                @show @domainListView
+                @show @domainListView,
+                    loading : true
 
             getDomainListView : ( userDomainsCollection ) ->
                 new View.DomainListView
                     collection : userDomainsCollection
-
-            deleteDomainClick : ( iv, model )->
-                model.destroy
-                    allData : false
-                    wait : true
-                    success : @domainDeleted
-
-            domainDeleted : =>
-                @domainListView.triggerMethod "domain:deleted"
 
         #handler for showing the user domain list page,options to be passed
         # region :  App.mainContentRegion

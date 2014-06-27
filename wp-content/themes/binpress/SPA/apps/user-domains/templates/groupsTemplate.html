@@ -1,8 +1,7 @@
-<h3 class="m-b-20"><span class="semi-bold">Groups</span>
-            <div class="pull-right actions">
-                <button class="btn btn-primary " type="button" id="btn-new-ticket">Add Group</button>
-            </div>
-        </h3>
+<h3 class="m-b-20"><span class="semi-bold">Groups</span></h3>
+<div class="pull-right actions">
+    <button class="btn btn-primary " type="button" id="btn-new-ticket">Add Group</button>
+</div>
         <div class="grid simple">
             <div class="grid simple transparent" id="new-ticket-wrapper" style="display:none">
                 <div class="grid-body no-border">
@@ -17,13 +16,15 @@
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
                                     <input type="text" name="group_name"
-                                           id="group_name" class="form-control">
+                                    id="group_name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Description</label>
                                 <div class="input-with-icon ">
-					<textarea type="text" name="group_description" id="group_description" class="form-control"></textarea>
+					                <textarea name="group_description"
+                                    id="group_description" class="form-control">
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="pull-right">
@@ -32,6 +33,9 @@
                                     <i class="icon-ok"></i> Save</button>
                                 <button class="btn btn-cons" type="button" id="btn-close-ticket">
                                 Close</button>
+                                <button class="btn btn-cons btn-delete-group" type="button"
+                                style="display: none">
+                                    Delete</button>
                                 <input type="reset" style="display: none" id="btn-reset-group"/>
                             </div>
                         </div>
@@ -63,20 +67,6 @@
 //$('#message').wysihtml5();
 
         /** Events **/
-        $('#btn-new-ticket').click( function() {
-            $('#success-msg').empty()
-		    $('#new-ticket-wrapper').slideToggle("fast","linear");
-            $('#btn-new-ticket').css({'display':'none'});
-            $('#group_name').val(' ');
-            $('#group_description').val(' ');
-            $('#btn-save-domain-group').text('Save');
-
-        })
-
-        $('#btn-close-ticket').click( function() {
-            $('#new-ticket-wrapper').slideToggle("fast","linear");
-            $('#btn-new-ticket').css({'display':'inline'});
-        });
 
         $('.grid .actions a.remove').on('click', function () {
             var removable = jQuery(this).parents(".grid");

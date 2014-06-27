@@ -15,10 +15,7 @@ define [ 'app'
                 @domainId = opts.domain_id
 
                 #get the groups collection for the domain
-                @groupCollection = msgbus.reqres.request "get:groups:for:domains"
-                @groupCollection.fetch
-                    data :
-                        'domain_id' : @domainId
+                @groupCollection = msgbus.reqres.request "get:groups:for:domains", @domainId
 
                 #when the collection is fetched show the view
                 msgbus.commands.execute "when:fetched", @groupCollection, =>
@@ -28,11 +25,8 @@ define [ 'app'
                 #get the groups view
                 @view = @getView groupCollection
 
-                #listen to edit a group event
-                @listenTo @view, "itemview:edit:group:clicked", @editGroup
-
                 #listen to delete a group event
-                @listenTo @view, "itemview:delete:group:clicked", @deleteGroup
+                @listenTo @view, "delete:group:clicked", @deleteGroup
 
                 #listen to save group event for adding new group
                 @listenTo @view, "save:domain:group:clicked", @saveDomainGroup
@@ -56,30 +50,28 @@ define [ 'app'
                     success : @domainGroupAdded
 
             domainGroupAdded : ( domainGroupModel )=>
-                #add the newly createdmodel to the group collection
+                #add the newly created model to the group collection
                 @groupCollection.add domainGroupModel
                 @view.triggerMethod "domain:group:added"
 
-            editGroup : ( itemview, model )=>
-                @editModel = model
-                group_name = model.get 'group_name'
-                group_description = model.get 'group_description'
-                @view.triggerMethod "edit:group", group_name, group_description
-
-            updateDomainGroup : ( groupData )=>
-                @editModel.set groupData
-                @editModel.save null,
+            updateDomainGroup : ( groupData , editModel )=>
+                editModel.set groupData
+                editModel.save null,
                     wait : true
                     success : @groupUpdated
 
             groupUpdated : =>
                 @view.triggerMethod "group:updated"
 
-            deleteGroup : ( itemview, model )->
-                model.set 'domain_id' : @domainId
-                model.destroy
+            deleteGroup : ( groupModel )->
+                groupModel.set 'domain_id' : @domainId
+                groupModel.destroy
                     allData : true
                     wait : true
+                    success : @groupDeleted
+
+            groupDeleted : =>
+                @view.triggerMethod "group:deleted"
 
         #handler for showing the add domain group section:
         # This section is nested inside the edit domain page view

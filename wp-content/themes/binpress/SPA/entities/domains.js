@@ -3,7 +3,7 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['backbone', 'msgbus'], function(Backbone, msgbus) {
-  var API, UserDomainCollection, UserDomainModel, userDomainCollection;
+  var API, UserDomainCollection, UserDomainModel;
   UserDomainModel = (function(_super) {
     __extends(UserDomainModel, _super);
 
@@ -40,9 +40,10 @@ define(['backbone', 'msgbus'], function(Backbone, msgbus) {
     return UserDomainCollection;
 
   })(Backbone.Collection);
-  userDomainCollection = new UserDomainCollection;
   API = {
     getCurrentUserDomains: function() {
+      var userDomainCollection;
+      userDomainCollection = new UserDomainCollection;
       userDomainCollection.fetch();
       return userDomainCollection;
     },
