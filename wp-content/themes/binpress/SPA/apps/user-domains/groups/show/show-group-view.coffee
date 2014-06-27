@@ -5,11 +5,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
     class SingleGroupView extends Marionette.ItemView
 
         template : '<td class="v-align-middle"><span class="muted">{{group_name}}</span></td>
-                    <td><span class="muted">{{group_description}}</span></td>
-                    <td class="v-align-middle">
-                    <span class="glyphicon glyphicon-pencil edit-group"></span>  &nbsp;
-                    <span class="glyphicon glyphicon-trash delete-group"></span>
-                    </td>'
+                    <td><span class="muted">{{group_description}}</span></td>'
 
         tagName : 'tr'
 
