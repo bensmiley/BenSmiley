@@ -183,21 +183,23 @@ function send_email( $recipient, $subject, $mail_body, $mail_id ) {
  */
 function get_user_activation_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "\r\n\r\n";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
     $body .= __( 'Thank you for creating an account with BenSmiley.
-              Please confirm your email address by following the link below:' ) . "\r\n\r\n";
+              Please confirm your email address by clicking the following:' ) . "<br>";
 
-    $body .= '<' . site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
-            "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . ">\r\n";
+    $link = site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
+            "&login=" . rawurlencode( $user_data->user_login ), 'login' );
+
+    $body .= "<a href='".$link."' target='_blank'>Click here to activate profile</a><br>";
 
     $body .= sprintf( __( "If you're not %s or didn't request verification, you can ignore this email." ),
-            $user_data->display_name ) . "\r\n\r\n";
+            $user_data->display_name ) . "<br>";
 
-    $body .= __( 'If you have any questions please feel free to contact on support@BenSmiley.com' ) . "\r\n\r\n";
+    $body .= __( 'If you have any questions please feel free to contact on support@BenSmiley.com' ) . "<br>";
 
-    $body .= __( 'Regards,' ) . "\r\n\r\n";
+    $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "\r\n\r\n";
+    $body .= __( 'BenSmiley team' ) . "<br>";
 
     return $body;
 
@@ -211,16 +213,16 @@ function get_user_activation_mail_content( $user_data ) {
  */
 function get_admin_newuser_mail_content( $user_data ) {
 
-    $body = __( 'Hi' ) . "\r\n\r\n";
+    $body = __( 'Hi' ) . "<br>";
 
-    $body .= __( 'A new User has registered on BenSmiley' ) . "\r\n\r\n";
-    $body .= __( 'User details : ' ) . "\r\n\r\n";
-    $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "\r\n\r\n";
-    $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "\r\n\r\n";
+    $body .= __( 'A new User has registered on BenSmiley' ) . "<br>";
+    $body .= __( 'User details : ' ) . "<br>";
+    $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "<br>";
+    $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "<br>";
 
-    $body .= __( 'Regards,' ) . "\r\n\r\n";
+    $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'Team' ) . "\r\n\r\n";
+    $body .= __( 'Team' ) . "<br>";
 
     return $body;
 }
@@ -233,25 +235,24 @@ function get_admin_newuser_mail_content( $user_data ) {
  */
 function get_user_welcome_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "\r\n\r\n";
-    $body .= __( 'Welcome to BenSmiley. ' ) . "\r\n\r\n";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
+    $body .= __( 'Welcome to BenSmiley. ' ) . "<br>";
 
     $body .= __( 'Your account has been successfully verified! You can
                     now login with the credentials provided by you at the time of registration
-                to start using your account.' ) . "\r\n\r\n";
+                to start using your account.' ) . "<br>";
 
-    $body .= __( 'Start by following these 3 simple steps ' ) . "\r\n\r\n";
-    $body .= __( '1. Login to your account ' ) . "\r\n\r\n";
-    $body .= __( '2. Select a plan that is best suited for you.You can choose from our range of plans ' ) . "\r\n\r\n";
-    $body .= __( '3. Start adding domains & creating groups ' ) . "\r\n\r\n";
-    $body .= __( 'You can then chat, add/edit groups anytime on the go!  ' ) . "\r\n\r\n";
-    $body .= __( 'In the meanwhile,
-                if you have any queries please feel free to contact our team on number
-                or email us at support@bensmiley.com.  ' ) . "\r\n\r\n";
+    $body .= __( 'Start by following these 3 simple steps ' ) . "<br>";
+    $body .= __( '1. Login to your account ' ) . "<br>";
+    $body .= __( '2. Select a plan that is best suited for you.You can choose from our range of plans ' ) . "<br>";
+    $body .= __( '3. Start adding domains & creating groups ' ) . "<br>";
+    $body .= __( 'You can then chat, add/edit groups anytime on the go!  ' ) . "<br>";
+    $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
+                or email us at support@bensmiley.com.  ' ) . "<br>";
 
-    $body .= __( 'Regards,' ) . "\r\n\r\n";
+    $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "\r\n\r\n";
+    $body .= __( 'BenSmiley team' ) . "<br>";
 
     return $body;
 }
@@ -264,24 +265,25 @@ function get_user_welcome_mail_content( $user_data ) {
  */
 function get_password_reset_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "\r\n\r\n";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
 
-    $body .= __( 'You have requested a new password for Bensmiley.' ) . "\r\n\r\n";
+    $body .= __( 'You have requested a new password for Bensmiley.' ) . "<br>";
 
     $body .= __( 'To change your password' );
 
-    $body .= __( ' use this link:' ) . "\r\n\r\n";
+    $body .= __( ' use this link:' ) . "<br>";
 
-    $body .= '<' . site_url( "reset-password?action=reset-password&key=" . $user_data->user_activation_key .
-            "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . ">\r\n";
+    $link = site_url( "reset-password?action=reset-password&key=" . $user_data->user_activation_key .
+            "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= __( 'The meanwhile,
-                if you have any queries please feel free to contact our team on number
-                or email us at support@bensmiley.com.  ' ) . "\r\n\r\n";
+    $body .= "<a href='".$link."' target='_blank'>Click here to activate profile</a><br>";
 
-    $body .= __( 'Regards,' ) . "\r\n\r\n";
+    $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
+                or email us at support@bensmiley.com.  ' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "\r\n\r\n";
+    $body .= __( 'Regards,' ) . "<br>";
+
+    $body .= __( 'BenSmiley team' ) . "<br>";
 
     return $body;
 }
