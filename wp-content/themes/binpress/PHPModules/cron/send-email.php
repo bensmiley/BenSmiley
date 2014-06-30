@@ -190,7 +190,7 @@ function get_user_activation_mail_content( $user_data ) {
     $link = site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
             "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= "<a href='".$link."' target='_blank'>Click here to activate profile</a><br>";
+    $body .= '<a target ="_blank" href='.$link.'>Click here to activate profile</a><br>';
 
     $body .= sprintf( __( "If you're not %s or didn't request verification, you can ignore this email." ),
             $user_data->display_name ) . "<br>";
@@ -276,7 +276,7 @@ function get_password_reset_mail_content( $user_data ) {
     $link = site_url( "reset-password?action=reset-password&key=" . $user_data->user_activation_key .
             "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= "<a href='".$link."' target='_blank'>Click here to activate profile</a><br>";
+    $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br>';
 
     $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
                 or email us at support@bensmiley.com.  ' ) . "<br>";
