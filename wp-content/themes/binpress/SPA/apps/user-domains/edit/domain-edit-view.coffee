@@ -42,8 +42,8 @@ define [ 'marionette'
             @$el.find( '#msg' ).empty()
 
             successhtml = "<div class='alert alert-success'>
-                                       <button class='close' data-dismiss='alert'>&times;</button>
-                                       Domain Updated Sucessfully<div>"
+                                                   <button class='close' data-dismiss='alert'>&times;</button>
+                                                   Domain Updated Sucessfully<div>"
 
             @$el.find( '#msg' ).append successhtml
 
@@ -67,10 +67,10 @@ define [ 'marionette'
         className : 'alert alert-info'
 
         events :
-            'click #cancel-plan' :->
+            'click #cancel-plan' : ->
                 if confirm 'Delete the subscription?'
-                    pendingSubscription =  (@model.get 'pending_subscription').subscription_id
-                    @trigger "delete:pending:subscription" , pendingSubscription
+                    pendingSubscription = (@model.get 'pending_subscription').subscription_id
+                    @trigger "delete:pending:subscription", pendingSubscription
 
         onShow : ->
             if not _.isUndefined @model.get 'pending_subscription'
