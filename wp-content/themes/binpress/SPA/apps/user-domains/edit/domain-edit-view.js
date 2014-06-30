@@ -83,6 +83,16 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
 
     ActiveSubscriptionView.prototype.className = 'alert alert-info';
 
+    ActiveSubscriptionView.prototype.events = {
+      'click #cancel-plan': function() {
+        var pendingSubscription;
+        if (confirm('Delete the subscription?')) {
+          pendingSubscription = (this.model.get('pending_subscription')).subscription_id;
+          return this.trigger("delete:pending:subscription", pendingSubscription);
+        }
+      }
+    };
+
     ActiveSubscriptionView.prototype.onShow = function() {
       if (!_.isUndefined(this.model.get('pending_subscription'))) {
         this.$el.find('#change-plan').hide();

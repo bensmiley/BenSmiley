@@ -162,9 +162,6 @@ function create_subscription( $domain_id, $new_subscription_id, $old_subscriptio
 
     global $wpdb;
 
-    // cancel the currently active subscription in the db
-    cancel_subscription( $old_subscription_id );
-
     $table_name = 'subscription';
 
     $date_time = date( 'Y-m-d H:i:s' );
@@ -202,6 +199,7 @@ function create_pending_subscription( $domain_id, $subscription_id ) {
         ) );
 }
 
+//TODO : not used
 /**
  * Function to cancel the currently active subscription in the db
  *
@@ -212,6 +210,17 @@ function cancel_subscription( $old_subscription_id ) {
 
     $wpdb->update( 'subscription', array( 'status' => 'canceled' ),
         array( 'ID' => $old_subscription_id ) );
+}
+
+/**
+ * Function to delete a subscription in the db
+ *
+ * @param $subscription_id
+ */
+function delete_subscription( $subscription_id ) {
+    global $wpdb;
+
+    $wpdb->delete( 'subscription',array( 'ID' => $subscription_id ) );
 }
 
 /**

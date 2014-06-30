@@ -11,6 +11,8 @@
 /**
  * Function to create a new active subscription and make a payment for it
  *
+ * when user moves to higher priced  plan
+ *
  * @param $card_token
  * @param $domain_id
  * @param $plan_id
@@ -20,20 +22,25 @@ function make_active_subscription( $subscription_array ) {
     $current_subscription_id = $subscription_array[ 'current_subscription_id' ];
     $plan_id = $subscription_array[ 'selected_plan_id' ];
     $plan_name = $subscription_array[ 'selected_plan_name' ];
+    $plan_price = $subscription_array[ 'selected_plan_price' ];
     $card_token = $subscription_array[ 'card_token' ];
     $domain_id = $subscription_array[ 'domain_id' ];
 
-    $subscription = create_subscription_in_braintree( $card_token, $plan_id );
-    if ( $subscription[ 'code' ] == 'ERROR' )
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+    // make a new subscription if free plan
+    if ( $current_subscription_id == "BENAJFREE" ) {
+        $subscription = create_subscription_in_braintree( $card_token, $plan_id );
+        if ( $subscription[ 'code' ] == 'ERROR' )
+            wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
 
-    // cancel the previous active subscription for the domain in braintree
-    $cancel_subscription = cancel_subscription_in_braintree( $current_subscription_id );
-    if ( $cancel_subscription[ 'code' ] == 'ERROR' )
-        wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+        // make the subscription entry in the database
+        create_subscription( $domain_id, $subscription[ 'subscription_id' ], $current_subscription_id );
 
-    // make the subscription entry in the database
-    create_subscription( $domain_id, $subscription[ 'subscription_id' ], $current_subscription_id );
+    } else {
+        $subscription = update_subscription_in_braintree( $current_subscription_id, $card_token, $plan_id, $plan_price );
+        if ( $subscription[ 'code' ] == 'ERROR' )
+            wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+
+    }
 
     // add the new  plan as a term for domain post and update plan id for domain
     wp_set_post_terms( $domain_id, $plan_name, 'plan' );

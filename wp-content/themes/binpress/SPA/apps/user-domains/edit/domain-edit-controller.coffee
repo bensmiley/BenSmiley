@@ -49,7 +49,7 @@ define [ 'app'
                 #listen to edit domain click event
                 @listenTo @layout, "edit:domain:clicked", @editDomain
 
-                #listen to edit domain click event
+                #listen to delete domain click event
                 @listenTo @layout, "delete:domain:clicked", @deleteDomain
 
                 #show the edit domain layout
@@ -67,6 +67,22 @@ define [ 'app'
             showActiveSubscription : ( subscriptionModel )=>
                 activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
                 @layout.activeSubscriptionRegion.show activeSubscriptionView
+
+                #listen to cancel pending subscription view click event
+                @listenTo activeSubscriptionView, "delete:pending:subscription", @deleteSubscription
+
+            #cancel the pending subscription and reload the view
+            deleteSubscription : ( pendingSubscriptionId )->
+                options =
+                    url : AJAXURL
+                    method : "POST"
+                    data :
+                        action : 'cancel-subscription'
+                        subscriptionId : pendingSubscriptionId
+
+                $.ajax( options ).done ( response )=>
+                    @subscriptionModel.unset 'pending_subscription'
+                    @showActiveSubscription @subscriptionModel
 
             editDomain : ( domainData )=>
                 @domainModel.set domainData

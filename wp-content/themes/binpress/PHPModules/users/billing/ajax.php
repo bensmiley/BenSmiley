@@ -55,6 +55,8 @@ function ajax_user_new_payment() {
 
     $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
 
+    $selected_plan_price = $credit_card_data[ 'selectedPlanPrice' ];
+
     $active_plan_id = $credit_card_data[ 'activePlanId' ];
 
     $domain_id = $credit_card_data[ 'domainId' ];
@@ -75,6 +77,7 @@ function ajax_user_new_payment() {
         'domain_id' => $domain_id,
         'selected_plan_id' => $selected_plan_id,
         'selected_plan_name' => $selected_plan_name,
+        'selected_plan_price' => $selected_plan_price,
         'current_subscription_id' => $current_subscription_id,
     );
 
@@ -103,6 +106,8 @@ function ajax_user_make_payment() {
 
     $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
 
+    $selected_plan_price = $credit_card_data[ 'selectedPlanPrice' ];
+
     $active_plan_id = $credit_card_data[ 'activePlanId' ];
 
     $domain_id = $credit_card_data[ 'domainId' ];
@@ -118,6 +123,7 @@ function ajax_user_make_payment() {
         'domain_id' => $domain_id,
         'selected_plan_id' => $selected_plan_id,
         'selected_plan_name' => $selected_plan_name,
+        'selected_plan_price' => $selected_plan_price,
         'current_subscription_id' => $current_subscription_id,
     );
 
@@ -129,4 +135,25 @@ function ajax_user_make_payment() {
 }
 
 add_action( 'wp_ajax_user-make-payment', 'ajax_user_make_payment' );
+
+/**
+ * Function to cancel a subscription in braintree
+ */
+function ajax_cancel_subscription() {
+
+    $pending_subscription_id = $_POST[ 'subscriptionId' ];
+
+    $cancel_subscription = cancel_subscription_in_braintree( $pending_subscription_id );
+
+    if ( $cancel_subscription[ 'code' ] ) {
+        //delete the entry for the subscription in db
+        delete_subscription( $pending_subscription_id );
+
+        wp_send_json( array( 'code' => 'OK', 'data' => 'Subscription cancelled' ) );
+    } else
+        wp_send_json( array( 'code' => 'ERROR', 'data' => $cancel_subscription[ 'msg' ] ) );
+
+}
+
+add_action( 'wp_ajax_cancel-subscription', 'ajax_cancel_subscription' );
 

@@ -29,7 +29,7 @@ function get_subscription_details( $subscription_id ) {
 
     if ( !empty( $subscription->billingPeriodStartDate ) ||
         !empty( $subscription->billingPeriodEndDate )
-    ){
+    ) {
         $subscription_data[ 'bill_start' ] = $subscription->billingPeriodStartDate->format( 'd/m/Y' );
         $subscription_data[ 'bill_end' ] = $subscription->billingPeriodEndDate->format( 'd/m/Y' );
     }
@@ -78,12 +78,12 @@ function cancel_subscription_in_braintree( $subscription_id ) {
             return array( 'code' => 'OK' );
         } else {
 
-            $error_msg = array( code => 'ERROR', 'msg' => 'Subscription not cancelled ' );
+            $error_msg = array( 'code' => 'ERROR', 'msg' => 'Subscription not cancelled ' );
             return $error_msg;
         }
     } catch ( Braintree_Exception_NotFound $e ) {
 
-        return array( 'code' => 'OK', 'msg' => 'No existing subscription' );
+        return array( 'code' => 'ERROR', 'msg' => 'No existing subscription' );
     }
 
 }
@@ -111,6 +111,33 @@ function create_pending_subscription_in_braintree( $card_token, $plan_id, $new_b
 
     } else {
         $error_msg = array( code => 'ERROR', 'msg' => $create_subscription->message );
+        return $error_msg;
+    }
+}
+
+/**
+ * Function to update a subscription when moving from lower to higher price plan
+ *
+ * @param $subscription_id
+ * @param $card_token
+ * @param $plan_id
+ * @param $plan_price
+ * @return array containing subscription id on success or error msg on failure
+ */
+function update_subscription_in_braintree( $subscription_id, $card_token, $plan_id, $plan_price ) {
+
+    $update_subscription = Braintree_Subscription::update( $subscription_id, array(
+        'paymentMethodToken' => $card_token,
+        'price' => $plan_price,
+        'planId' => $plan_id,
+        'options' => array( 'prorateCharges' => true )
+    ) );
+
+    if ( $update_subscription->success ) {
+        return array( 'code' => 'OK');
+
+    } else {
+        $error_msg = array( code => 'ERROR', 'msg' => $update_subscription->message );
         return $error_msg;
     }
 }

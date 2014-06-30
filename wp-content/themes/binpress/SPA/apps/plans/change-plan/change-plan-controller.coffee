@@ -115,6 +115,7 @@ define [ 'app'
                         creditCardData : creditCardData
                         selectedPlanId : @planId
                         selectedPlanName : @selectedPlanModel.get 'plan_name'
+                        selectedPlanPrice : @selectedPlanModel.get 'price'
                         domainId : @domainId
                         activePlanId : @domainModel.get 'plan_id'
                         subscriptionId : @domainModel.get 'subscription_id'
@@ -132,6 +133,7 @@ define [ 'app'
                         creditCardToken : creditCardToken
                         selectedPlanId : @planId
                         selectedPlanName : @selectedPlanModel.get 'plan_name'
+                        selectedPlanPrice : @selectedPlanModel.get 'price'
                         domainId : @domainId
                         activePlanId : @domainModel.get 'plan_id'
                         subscriptionId : @domainModel.get 'subscription_id'

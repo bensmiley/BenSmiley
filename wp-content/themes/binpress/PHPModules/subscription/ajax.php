@@ -8,7 +8,6 @@
 
 require_once 'functions.php';
 
-//TODO: write proper coments in foiles
 /**
  * Function to fetch the subscription details for each domain
  */

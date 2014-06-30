@@ -63,7 +63,26 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
       DomainEditController.prototype.showActiveSubscription = function(subscriptionModel) {
         var activeSubscriptionView;
         activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
-        return this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
+        this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
+        return this.listenTo(activeSubscriptionView, "delete:pending:subscription", this.deleteSubscription);
+      };
+
+      DomainEditController.prototype.deleteSubscription = function(pendingSubscriptionId) {
+        var options;
+        options = {
+          url: AJAXURL,
+          method: "POST",
+          data: {
+            action: 'cancel-subscription',
+            subscriptionId: pendingSubscriptionId
+          }
+        };
+        return $.ajax(options).done((function(_this) {
+          return function(response) {
+            _this.subscriptionModel.unset('pending_subscription');
+            return _this.showActiveSubscription(_this.subscriptionModel);
+          };
+        })(this));
       };
 
       DomainEditController.prototype.editDomain = function(domainData) {

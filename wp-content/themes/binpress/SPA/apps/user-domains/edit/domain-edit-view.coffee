@@ -66,6 +66,12 @@ define [ 'marionette'
 
         className : 'alert alert-info'
 
+        events :
+            'click #cancel-plan' :->
+                if confirm 'Delete the subscription?'
+                    pendingSubscription =  (@model.get 'pending_subscription').subscription_id
+                    @trigger "delete:pending:subscription" , pendingSubscription
+
         onShow : ->
             if not _.isUndefined @model.get 'pending_subscription'
                 @$el.find( '#change-plan' ).hide()

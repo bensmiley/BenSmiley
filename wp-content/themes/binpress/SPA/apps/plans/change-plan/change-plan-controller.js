@@ -129,6 +129,7 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
             creditCardData: creditCardData,
             selectedPlanId: this.planId,
             selectedPlanName: this.selectedPlanModel.get('plan_name'),
+            selectedPlanPrice: this.selectedPlanModel.get('price'),
             domainId: this.domainId,
             activePlanId: this.domainModel.get('plan_id'),
             subscriptionId: this.domainModel.get('subscription_id')
@@ -151,6 +152,7 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
             creditCardToken: creditCardToken,
             selectedPlanId: this.planId,
             selectedPlanName: this.selectedPlanModel.get('plan_name'),
+            selectedPlanPrice: this.selectedPlanModel.get('price'),
             domainId: this.domainId,
             activePlanId: this.domainModel.get('plan_id'),
             subscriptionId: this.domainModel.get('subscription_id')
