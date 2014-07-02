@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(App, AppController, CloseWarn, msgbus) {
+define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(App, RegionController, CloseWarn, msgbus) {
   return App.module('HeaderApp.Show', function(Show, App, Backbone, Marionette, $, _) {
     var HeaderLayout, UserDisplayView;
     Show.Controller = (function(_super) {
@@ -63,7 +63,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
 
       return Controller;
 
-    })(AppController);
+    })(RegionController);
     HeaderLayout = (function(_super) {
       __extends(HeaderLayout, _super);
 
@@ -71,7 +71,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
         return HeaderLayout.__super__.constructor.apply(this, arguments);
       }
 
-      HeaderLayout.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="index.html"> <h3 class="p-l-30 ">Bensmiley</h3></a> </div> <div id="user-display"></div> </div> </div>';
+      HeaderLayout.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="javascript:void(0)"> <h3 class="p-l-30 ">Bensmiley</h3></a> </div> <div id="user-display"></div> </div> </div>';
 
       HeaderLayout.prototype.className = 'header navbar navbar-inverse';
 
@@ -90,7 +90,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
         return UserDisplayView.__super__.constructor.apply(this, arguments);
       }
 
-      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" width="35" height="35" id="user-photo"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options"> <div class="pull-left"> <span class="bold display_name">{{display_name}}</span> </div> <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li> <a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> </li> </ul> </li> </ul>';
+      UserDisplayView.prototype.template = '<div class="user-profile pull-left m-t-10"> <img src="{{user_photo}}" alt="" width="35" height="35" id="user-photo"> </div> <ul class="nav quick-section "> <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="javascript:void(0)" id="user-options"> <div class="pull-left"> <span class="bold display_name">{{display_name}}</span> </div> <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div> </a> <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> <li> <a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> </li> </ul> </li> </ul>';
 
       UserDisplayView.prototype.className = 'pull-right';
 

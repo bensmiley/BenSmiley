@@ -1,15 +1,14 @@
-#FIXME: check the  user photo display
 #include the files for the app
 define [ 'app',
          'regioncontroller',
          'behaviors/closewarn'
-         'msgbus' ], ( App, AppController, CloseWarn, msgbus )->
+         'msgbus' ], ( App, RegionController, CloseWarn, msgbus )->
 
     #start the app module
     App.module 'HeaderApp.Show', ( Show, App, Backbone, Marionette, $, _ )->
 
         # Controller class for showing header region
-        class Show.Controller extends AppController
+        class Show.Controller extends RegionController
 
             # initialize the controller
             initialize : ( opt = {} )->
@@ -66,7 +65,7 @@ define [ 'app',
             template : '<div class="navbar-inner">
                             <div class="">
                                 <div class="pull-left">
-                                    <a href="index.html">
+                                    <a href="javascript:void(0)">
                                         <h3 class="p-l-30 ">Bensmiley</h3></a>
                                 </div>
                                 <div id="user-display"></div>
@@ -90,7 +89,7 @@ define [ 'app',
                                     <ul class="nav quick-section ">
                                         <li class="quicklinks">
                                             <a data-toggle="dropdown" class="dropdown-toggle  pull-right "
-                                                href="#" id="user-options">
+                                                href="javascript:void(0)" id="user-options">
                                                 <div class="pull-left">
                                                      <span class="bold display_name">{{display_name}}</span>
                                                 </div>
