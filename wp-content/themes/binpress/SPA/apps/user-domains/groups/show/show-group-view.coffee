@@ -86,7 +86,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
                 @$el.find( '#btn-new-ticket' ).css 'display' : 'inline'
 
         #delete the group click event
-            'click .btn-delete-group' : ->
+            'click .delete-group' : ->
                 if confirm( 'Are you sure?' )
                     @trigger "delete:group:clicked", @editModel
 

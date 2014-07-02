@@ -17,7 +17,7 @@ function create_new_group_for_domain( $group_data ) {
 
     $id = intval( rand() );
 
-    $group_details[0] = array( 'ID' => $id, 'group_name' => sanitize_text_field( $group_data[ 'group_name' ] ),
+    $group_details[ 0 ] = array( 'ID' => $id, 'group_name' => sanitize_text_field( $group_data[ 'group_name' ] ),
         'group_description' => sanitize_text_field( $group_data[ 'group_description' ] ) );
 
     $new_group = maybe_serialize( $group_details );
@@ -112,6 +112,8 @@ function update_group_for_domain( $group_data ) {
  */
 function delete_group_for_domain( $group_data ) {
 
+    $update_group = array();
+
     $groups = get_groups_for_domain( $group_data[ 'domain_id' ] );
 
     // remove the group from the group array
@@ -124,6 +126,12 @@ function delete_group_for_domain( $group_data ) {
 
         }
     endforeach;
+
+    // if only one group is present and it is deleted
+    if ( empty( $update_group ) ) {
+        delete_post_meta( $group_data[ 'domain_id' ], "groups" );
+        return $update_group;
+    }
 
     //reset the array keys
     $update_group = array_values( $update_group );

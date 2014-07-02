@@ -26,6 +26,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
       },
       'click #btn-delete-domain': function() {
         if (confirm("Delete the domain?")) {
+          $('.ajax-loader-login').show();
           return this.trigger("delete:domain:clicked");
         }
       }

@@ -108,7 +108,7 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
           'display': 'inline'
         });
       },
-      'click .btn-delete-group': function() {
+      'click .delete-group': function() {
         if (confirm('Are you sure?')) {
           return this.trigger("delete:group:clicked", this.editModel);
         }

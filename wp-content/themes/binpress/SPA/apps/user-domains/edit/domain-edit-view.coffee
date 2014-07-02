@@ -20,6 +20,7 @@ define [ 'marionette'
 
             'click #btn-delete-domain' : ->
                 if confirm "Delete the domain?"
+                    $( '.ajax-loader-login' ).show()
                     @trigger "delete:domain:clicked"
 
         regions :
