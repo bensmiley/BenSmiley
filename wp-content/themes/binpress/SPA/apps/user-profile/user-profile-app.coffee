@@ -11,18 +11,12 @@ define [ 'app'
 
             appRoutes :
                 'profile' : 'show'
-                'profile/:id' : 'show'
 
         #public API
         API =
-            show : ( id )->
+            show : ->
                 params =
                     region : App.mainContentRegion
-
-                if not _.isNull id
-                    params['userId'] = parseInt id
-                else
-                    params['userId'] = msgbus.reqres.request "get:current:user:id"
 
                 App.execute "show:user:profile", params
 

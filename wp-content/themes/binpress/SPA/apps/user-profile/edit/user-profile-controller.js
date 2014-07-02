@@ -15,8 +15,6 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/user-profile/edit/user-profil
       }
 
       UserProfileController.prototype.initialize = function(opts) {
-        var userId;
-        userId = opts.userId;
         this.userModel = msgbus.reqres.request("get:current:user:model");
         this.layout = this.getLayout(this.userModel);
         this.listenTo(this.layout, "show", (function(_this) {

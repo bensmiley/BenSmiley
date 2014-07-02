@@ -13,24 +13,18 @@ define(['app', 'msgbus', 'apps/user-profile/edit/user-profile-controller'], func
       }
 
       UserProfileAppRouter.prototype.appRoutes = {
-        'profile': 'show',
-        'profile/:id': 'show'
+        'profile': 'show'
       };
 
       return UserProfileAppRouter;
 
     })(Marionette.AppRouter);
     API = {
-      show: function(id) {
+      show: function() {
         var params;
         params = {
           region: App.mainContentRegion
         };
-        if (!_.isNull(id)) {
-          params['userId'] = parseInt(id);
-        } else {
-          params['userId'] = msgbus.reqres.request("get:current:user:id");
-        }
         return App.execute("show:user:profile", params);
       }
     };

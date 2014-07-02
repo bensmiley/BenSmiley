@@ -11,7 +11,6 @@ define [ 'app'
         class UserProfileController extends RegionController
 
             initialize : ( opts )->
-                {userId} = opts
 
                 #get the user model for the current logged in user
                 @userModel = msgbus.reqres.request "get:current:user:model"
