@@ -78,7 +78,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
                 @$el.find( '#group_name' ).val ' '
                 @$el.find( '#group_description' ).val ' '
                 @$el.find( '#btn-save-domain-group' ).text 'Save'
-                @$el.find( '.btn-delete-group' ).hide()
+                @$el.find( '.delete-group' ).hide()
 
         #events on click of close button
             'click #btn-close-ticket' : ->

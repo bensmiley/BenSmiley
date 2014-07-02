@@ -100,7 +100,7 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
         this.$el.find('#group_name').val(' ');
         this.$el.find('#group_description').val(' ');
         this.$el.find('#btn-save-domain-group').text('Save');
-        return this.$el.find('.btn-delete-group').hide();
+        return this.$el.find('.delete-group').hide();
       },
       'click #btn-close-ticket': function() {
         this.$el.find('#new-ticket-wrapper').slideToggle("fast", "linear");
