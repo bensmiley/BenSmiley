@@ -282,5 +282,5 @@ function get_key_from_API( $url ) {
     $key_generation_url = admin_url( "admin-ajax.php" ) . "?action=get-api-key&url=" . $url;
     $api_response = file_get_contents( $key_generation_url );
     $api_key = json_decode( $api_response, true );
-    return $api_key[ 'api_key' ];
+    return $api_key['api_key'];
 }
