@@ -45,9 +45,12 @@
             <?php endif; ?>
 
             <a class="logo" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-                <h1 class="blog-name"><?php echo ucfirst( bloginfo( 'name' ) ); ?></h1>
-
-                <!--  <div class="blog-description"><?php bloginfo( 'description' ); ?></div>-->
+                <h1 class="blog-name">
+                    <?php
+                        $blog_name = get_bloginfo( 'name','display' );
+                        echo ucfirst($blog_name);
+                    ?>
+                </h1>
             </a>
 
             <div class="menu"><?php
@@ -63,5 +66,29 @@
                 ); ?>
 
             </div>
+            <!-- show user name and photo display if user logged in  -->
+            <?php
+            if ( is_user_logged_in() ):
+                $userdata = get_current_user_data();
+            ?>
+            <div class="pull-right">
+                <div class="user-profile pull-left m-t-10">
+                    <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
+                </div>
+                <ul class="nav quick-section ">
+                    <li class="quicklinks">
+                        <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="javascript:void(0)" id="user-options">
+                            <div class="pull-left">
+                                <span class="bold display_name"><?php echo $userdata['display_name'];?></span>
+                            </div>
+                            <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <?php  endif;?>
+            <!-- end user name and photo display if user logged in  -->
+
+
         </div>
     </header>
