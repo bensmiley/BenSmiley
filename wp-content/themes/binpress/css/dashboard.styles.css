@@ -1576,6 +1576,27 @@ body .page-content .breadcrumb li a {
   background: #E4E4E4 !important;
   cursor: pointer;
 }
+.mtop {
+  margin-top: 34px;
+}
+.btn-grey {
+  background: grey;
+}
+.delete {
+  line-height: 2.5;
+}
+#main-content-region .table-striped tbody > tr:nth-child(2n+1) > td {
+  background: none;
+}
+#main-content-region .table-striped tr {
+  border-bottom: 1px solid #ddd;
+}
+#main-content-region .table-striped tr th {
+  background: #E4E4E4;
+}
+#main-content-region .table-striped tr:last-child {
+  border-bottom: none !important;
+}
 
 /*!
  * Bootstrap v3.1.1 (http://getbootstrap.com)

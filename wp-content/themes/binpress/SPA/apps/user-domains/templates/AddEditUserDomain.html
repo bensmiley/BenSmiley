@@ -42,14 +42,19 @@
                                    value="{{domain_url}}">
                         </div>
                     </div>
+					<a href="#" class="delete"
+                        id="btn-delete-domain">
+                          Delete
+                        </a>
                     <div class="pull-right">
+					<button type="button" class="btn"
+                        id="btn-cancel-edit-user-domain">
+                            <i class="icon-ok"></i> Cancel
+                        </button>&nbsp;
                         <button type="button" class="btn btn-primary"
                         id="btn-add-edit-user-domain">
                             <i class="icon-ok"></i> Save
-                        </button> &nbsp;<button type="button" class="btn btn-danger "
-                        id="btn-delete-domain">
-                          Delete
-                        </button>
+                        </button> 
                         <span class="ajax-loader-login pull-right" style="display: none"></span>
                         <input type="reset" id="btn-reset-add-domain" style="display:none">
                     </div>
@@ -98,7 +103,6 @@
     <!--</div>-->
   <!--  <div><a href="#domains" id="show-domain-list">View Domains</a></div>-->
 </div>
- <hr>
 <!--  End of Add/Edit domains section -->
 
 

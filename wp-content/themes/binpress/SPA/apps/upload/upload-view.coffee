@@ -7,7 +7,7 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
 
         template : '<div class="col-md-3 text-center">
                     <div class="profile-wrapper">
-                        <img class="m-b-10 img-circle" width="90" height="90"
+                        <img class="m-b-10 img-circle mtop" width="90" height="90"
                          alt="" src="{{user_photo}}"id="user-photo">
 
                         <div class="clearfix"></div>
