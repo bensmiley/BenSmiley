@@ -13,7 +13,7 @@ define(['marionette', 'text!apps/user-domains/templates/listUserDomain.html'], f
 
     DomainItemView.prototype.tagName = 'tr';
 
-    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>{{plan_name}}</td> <td>None</td>';
+    DomainItemView.prototype.template = '<td>{{post_title}}</td> <td>{{plan_name}}</td> <td>{{post_date}}</td>';
 
     DomainItemView.prototype.events = {
       'click': function() {

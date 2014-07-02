@@ -8,8 +8,8 @@ define [ 'marionette'
         tagName : 'tr'
 
         template : '<td>{{post_title}}</td>
-                            <td>{{plan_name}}</td>
-                            <td>None</td>'
+                    <td>{{plan_name}}</td>
+                    <td>{{post_date}}</td>'
 
         events :
             'click' : ->

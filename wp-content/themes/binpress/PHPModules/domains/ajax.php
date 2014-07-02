@@ -15,9 +15,7 @@ require 'functions.php';
  */
 function ajax_fetch_user_domains() {
 
-    $current_user_id = get_current_user_id();
-
-    $user_domains = get_current_user_domains( $current_user_id );
+    $user_domains = get_current_user_domains();
 
     wp_send_json( array( 'code' => 'OK', 'data' => $user_domains ) );
 }
@@ -84,7 +82,7 @@ add_action( 'wp_ajax_update-user-domain', 'ajax_update_user_domain' );
  */
 function ajax_delete_user_domain() {
 
-    $domain_id = $_POST['ID'];
+    $domain_id = $_POST[ 'ID' ];
 
     delete_domain( $domain_id );
 

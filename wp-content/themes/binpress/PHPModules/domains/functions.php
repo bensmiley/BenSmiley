@@ -12,12 +12,9 @@
 /**
  * Function to get all the domains registered under the current user
  *
- * @param $current_user_id
- * @return array containing all the domains data registered under the user
+ * @return array containing list of all domains data registered under the user
  */
-function get_current_user_domains( $current_user_id ) {
-
-    global $wpdb;
+function get_current_user_domains() {
 
     $domains = get_posts( array( 'post_type' => 'domain', 'author' => get_current_user_id() ) );
 
@@ -70,7 +67,7 @@ function create_user_domain( $domain_details ) {
 }
 
 /**
- * Function to get the post and post meta data for each domain
+ * Function to get the post and post meta data and term details for each domain
  *
  * @param $domain_id
  * @return array|null|WP_Post
@@ -81,6 +78,9 @@ function get_user_domain_details( $domain_id ) {
 
     if ( is_null( $domain_post_data ) )
         return $domain_post_data;
+
+    // format the domain registered date
+    $domain_post_data->post_date = date( 'd/m/Y', strtotime( $domain_post_data->post_date ) );
 
     $domain_post_meta_data = get_post_meta( $domain_id );
 
