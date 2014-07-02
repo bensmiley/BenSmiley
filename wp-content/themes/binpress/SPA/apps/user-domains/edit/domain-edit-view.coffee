@@ -1,7 +1,8 @@
 #include the files for the app
 define [ 'marionette'
          'text!apps/user-domains/templates/AddEditUserDomain.html'
-         'text!apps/user-domains/templates/activeSubscription.html' ], ( Marionette, addEditUserDomainTpl, activeSubscriptionTpl )->
+         'text!apps/user-domains/templates/activeSubscription.html'
+         'additionalmethods'], ( Marionette, addEditUserDomainTpl, activeSubscriptionTpl ,additionalmethods )->
 
     # Layout for add-edit user domains
     class DomainEditLayout extends Marionette.Layout
@@ -55,7 +56,7 @@ define [ 'marionette'
 
                 domain_url :
                     required : true,
-                    url : true
+                    complete_url : true
 
             messages :
                 domain_url : 'Enter valid url'
