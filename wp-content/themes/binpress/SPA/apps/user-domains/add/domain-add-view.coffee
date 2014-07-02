@@ -16,8 +16,6 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
                     @trigger "add:domain:clicked", domaindata
                     $( '.ajax-loader-login' ).show()
 
-            'click #show-domain-list' : ->
-                @trigger "show:domain:list:clicked"
         onShow : ->
 
             #validate the add user domain form with the validation rules
@@ -26,8 +24,9 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             # set the templates title to add domain
             @$el.find( '.form-title' ).text 'Add Domain'
 
-            #hide the tabs
+            #hide tabs and delete button
             @$el.find( '#tabs' ).hide()
+            @$el.find( '#btn-delete-domain' ).hide()
 
         onUserDomainAdded : ( domainId ) ->
             #reset the form on submit
