@@ -23,16 +23,14 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
           this.trigger("add:domain:clicked", domaindata);
           return $('.ajax-loader-login').show();
         }
-      },
-      'click #show-domain-list': function() {
-        return this.trigger("show:domain:list:clicked");
       }
     };
 
     DomainAddView.prototype.onShow = function() {
       this.$el.find('#add-edit-user-domain-form').validate(this.validationOptions());
       this.$el.find('.form-title').text('Add Domain');
-      return this.$el.find('#tabs').hide();
+      this.$el.find('#tabs').hide();
+      return this.$el.find('#btn-delete-domain').hide();
     };
 
     DomainAddView.prototype.onUserDomainAdded = function(domainId) {

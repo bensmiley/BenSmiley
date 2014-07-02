@@ -18,11 +18,6 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msg
       DomainAddController.prototype.initialize = function(opts) {
         this.view = this.getView();
         this.listenTo(this.view, "add:domain:clicked", this.addNewUserDomain);
-        this.listenTo(this.view, "show:domain:list:clicked", function() {
-          return App.execute("list:user:domains", {
-            region: App.mainContentRegion
-          });
-        });
         return this.show(this.view, {
           loading: true
         });

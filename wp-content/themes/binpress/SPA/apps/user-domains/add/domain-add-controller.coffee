@@ -17,8 +17,6 @@ define [ 'app'
 
                 #listen to the add domain button click event
                 @listenTo @view, "add:domain:clicked", @addNewUserDomain
-                @listenTo @view, "show:domain:list:clicked", ->
-                    App.execute "list:user:domains", region : App.mainContentRegion
 
                 @show @view,
                     loading : true
