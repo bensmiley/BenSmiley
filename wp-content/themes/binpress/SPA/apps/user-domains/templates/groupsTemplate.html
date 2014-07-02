@@ -3,7 +3,7 @@
     <button class="btn btn-primary " type="button" id="btn-new-ticket">Add Group</button>
 </div></h3>
         <div class="grid simple">
-            <div class="grid simple transparent" id="new-ticket-wrapper" style="display:none">
+            <div class="grid simple" id="new-ticket-wrapper" style="display:none">
                 <div class="grid-body no-border">
                     <!--add domain groups -->
                     <form id="add-group-form">
@@ -11,7 +11,7 @@
                         <div id="success-msg"></div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="form-label">Group Name</label>
+                                <label class="form-label">Chat Rooms</label>
                                 <span class="help">e.g. "xyz"</span>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
@@ -27,15 +27,15 @@
                                     </textarea>
                                 </div>
                             </div>
+							<a href="#" class="delete" id="">Delete</a>
                             <div class="pull-right">
+							<button class="btn " type="button" id="btn-close-ticket">
+                                Cancel</button>
                                 <button type="button" class="btn btn-primary "
                                         id="btn-save-domain-group">
                                     <i class="icon-ok"></i> Save</button>
-									 <button class="btn btn-danger btn-delete-group" type="button"
-                                style="display: none">
-                                    Delete</button>
-                                <button class="btn " type="button" id="btn-close-ticket">
-                                Close</button>
+									 
+                                
                                
                                 <input type="reset" style="display: none" id="btn-reset-group"/>
                             </div>
@@ -45,7 +45,7 @@
                     </form>
                 </div>
             </div>
-            <hr>
+            
             <!-- list domain groups -->
             <table class="table table-hover table-condensed">
                 <thead>
