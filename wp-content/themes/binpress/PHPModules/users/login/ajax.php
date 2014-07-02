@@ -113,10 +113,11 @@ function login_user( $login_credentials, $site_url ) {
  * Function to logout a user from the site
  */
 function ajax_user_logout() {
+    get_api_key();
 
-    wp_logout();
-
-    wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
+//    wp_logout();
+//
+//    wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
 
 }
 

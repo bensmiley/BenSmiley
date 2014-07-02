@@ -17,8 +17,8 @@ function create_new_group_for_domain( $group_data ) {
 
     $id = intval( rand() );
 
-    $group_details = array( 'ID' => $id, 'group_name' => $group_data[ 'group_name' ],
-        'group_description' => $group_data[ 'group_description' ] );
+    $group_details[0] = array( 'ID' => $id, 'group_name' => sanitize_text_field( $group_data[ 'group_name' ] ),
+        'group_description' => sanitize_text_field( $group_data[ 'group_description' ] ) );
 
     $new_group = maybe_serialize( $group_details );
 
@@ -36,24 +36,14 @@ function create_new_group_for_domain( $group_data ) {
  */
 function  update_existing_groups( $group_data, $groups_meta ) {
 
-    /**check if the array is multi-dimensional or flat,Used when
-     * groups created for 2 time, the maybe_unserialize() returns
-     * flat array and when groups created subsequently returns
-     * multi dimensional array
-     **/
     $existing_groups = maybe_unserialize( $groups_meta );
-
-    if ( count( $existing_groups ) == count( $existing_groups, COUNT_RECURSIVE ) )
-        $new_groups[ ] = $existing_groups;
-    else
-        $new_groups = $existing_groups;
 
     $id = intval( rand() );
 
-    $new_group_details[ ] = array( 'ID' => $id, 'group_name' => $group_data[ 'group_name' ],
-        'group_description' => $group_data[ 'group_description' ] );
+    $new_group_details[ ] = array( 'ID' => $id, 'group_name' => sanitize_text_field( $group_data[ 'group_name' ] ),
+        'group_description' => sanitize_text_field( $group_data[ 'group_description' ] ) );
 
-    $new_groups_meta = wp_parse_args( $new_groups, $new_group_details );
+    $new_groups_meta = wp_parse_args( $existing_groups, $new_group_details );
 
     $new_groups_meta_serialized = maybe_serialize( $new_groups_meta );
 

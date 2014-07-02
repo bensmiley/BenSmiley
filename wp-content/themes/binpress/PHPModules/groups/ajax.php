@@ -17,8 +17,6 @@ function ajax_create_domain_group() {
 
     $group_data = $_POST;
 
-    $new_group = '';
-
     //unset action
     unset( $group_data[ 'action' ] );
 

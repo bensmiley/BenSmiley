@@ -46,6 +46,11 @@ function create_user_domain( $domain_details ) {
         'post_title' => $domain_details[ 'post_title' ],
         'post_status' => 'publish' );
 
+//    $domain_url = validate_domain_url( $domain_details[ 'domain_url' ] );
+//
+//    if ( $domain_url[ 'code' ] == "ERROR" )
+//        wp_send_json( array( 'code' => 'ERROR', 'msg' => $domain_url[ 'msg' ] ) );
+
     $post_id = wp_insert_post( $post_array );
 
     if ( $post_id == 0 )
@@ -148,4 +153,46 @@ function delete_domain( $domain_id ) {
     // delete the subscription records for the domain in subscription table and braintree
     delete_subscription_for_domain( $domain_id );
 
+}
+
+/**
+ * Function to check and clean the url before inserting in table.
+ * The function formats the url into : http://www.example.com
+ *
+ * accepts the domain url in any format as such:
+ * abc.com
+ * www.abc.com
+ * example.abc.com
+ * http://abc.com
+ *
+ * and converts it into proper format:
+ *
+ * @param $domain_url
+ * @return array
+ */
+function validate_domain_url( $domain_url ) {
+    // SANITIZE THE URL
+    $domain_url = esc_url_raw( $domain_url );
+
+    if ( empty( $domain_url ) )
+        return array( 'code' => "ERROR", 'msg' => 'Domain url passed contains incorrect protocol' );
+
+    //CHECK IF DOMAIN URL VALID
+    $regex = "@(https|http)://(-\.)?([^\s/?\.#,!$%^&*()-]+\.?)+(/[^\s]*)?$@iS";
+
+    if ( !preg_match( $regex, $domain_url ) )
+        return array( 'code' => "ERROR", 'msg' => 'Invalid domain url passed ' );
+
+    //BUILD A VALID URL
+    $protocol = parse_url( $domain_url, PHP_URL_SCHEME );
+    $host = parse_url( $domain_url, PHP_URL_HOST );
+
+    //CHECK IF HOST NAME HAS WWW
+    if ( strripos( $host, "www" ) === FALSE ) {
+        $host = "www." . $host;
+    }
+
+    $url = $protocol . "://" . $host;
+
+    return array( 'code' => 'OK', 'url' => $url );
 }

@@ -52,6 +52,9 @@ function ajax_create_user_domain() {
 
     $domain_id = create_user_domain( $domain_details );
 
+//    if($domain_id['code'] == "ERROR")
+//        wp_send_json( array( 'code' => 'ERROR', 'msg' => $domain_id[ 'msg' ] ) );
+
     $domain_data = get_user_domain_details( $domain_id );
 
     wp_send_json( array( 'code' => 'OK', 'data' => $domain_data ) );
