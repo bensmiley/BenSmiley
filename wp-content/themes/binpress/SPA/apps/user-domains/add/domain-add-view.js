@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'], function(Marionette, addUserDomainTpl) {
+define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html', 'additionalmethods'], function(Marionette, addUserDomainTpl, additionalmethods) {
   var DomainAddView;
   DomainAddView = (function(_super) {
     __extends(DomainAddView, _super);
@@ -30,7 +30,8 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       this.$el.find('#add-edit-user-domain-form').validate(this.validationOptions());
       this.$el.find('.form-title').text('Add Domain');
       this.$el.find('#tabs').hide();
-      return this.$el.find('#btn-delete-domain').hide();
+      this.$el.find('#btn-delete-domain').hide();
+      return this.$el.find('#apikey-box').hide();
     };
 
     DomainAddView.prototype.onUserDomainAdded = function(domainId) {
@@ -47,6 +48,14 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
       }, 1000);
     };
 
+    DomainAddView.prototype.onUserDomainAddError = function(errorMsg) {
+      var successhtml;
+      $('.ajax-loader-login').hide();
+      this.$el.find('#msg').empty();
+      successhtml = "<div class='alert alert-error'> <button class='close' data-dismiss='alert'>&times;</button> " + errorMsg + " </div>";
+      return this.$el.find('#msg').append(successhtml);
+    };
+
     DomainAddView.prototype.validationOptions = function() {
       return {
         rules: {
@@ -55,7 +64,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html']
           },
           domain_url: {
             required: true,
-            url: true
+            complete_url: true
           }
         },
         messages: {

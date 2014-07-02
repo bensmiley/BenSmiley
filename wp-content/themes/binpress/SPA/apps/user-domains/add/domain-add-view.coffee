@@ -1,5 +1,7 @@
 #include the files for the app
-define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html' ], ( Marionette, addUserDomainTpl )->
+define [ 'marionette'
+         'text!apps/user-domains/templates/AddEditUserDomain.html'
+         'additionalmethods' ], ( Marionette, addUserDomainTpl, additionalmethods )->
 
     # Layout for adding the user domains
     class DomainAddView extends Marionette.ItemView
@@ -24,9 +26,10 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             # set the templates title to add domain
             @$el.find( '.form-title' ).text 'Add Domain'
 
-            #hide tabs and delete button
+            #hide tabs,delete button and api key box
             @$el.find( '#tabs' ).hide()
             @$el.find( '#btn-delete-domain' ).hide()
+            @$el.find( '#apikey-box' ).hide()
 
         onUserDomainAdded : ( domainId ) ->
             #reset the form on submit
@@ -38,9 +41,9 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
             #show success msg
             @$el.find( '#msg' ).empty()
             successhtml = '<div class="alert alert-success">
-                                <button class="close" data-dismiss="alert">&times;</button>
-                                Domain Sucessfully Added
-                            </div>'
+                                            <button class="close" data-dismiss="alert">&times;</button>
+                                            Domain Sucessfully Added
+                                        </div>'
             @$el.find( '#msg' ).append successhtml
 
             #redirect to edit of the domain added
@@ -50,6 +53,18 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
                 window.location.href = redirect_url
             , 1000
 
+        onUserDomainAddError : ( errorMsg ) ->
+            #hide the loader
+            $( '.ajax-loader-login' ).hide()
+
+            #show error msg
+            @$el.find( '#msg' ).empty()
+            successhtml = "<div class='alert alert-error'>
+                                        <button class='close' data-dismiss='alert'>&times;</button>
+                                        #{errorMsg}
+                                        </div>"
+            @$el.find( '#msg' ).append successhtml
+
         validationOptions : ->
             rules :
                 post_title :
@@ -57,7 +72,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html'
 
                 domain_url :
                     required : true,
-                    url : true
+                    complete_url : true
 
             messages :
                 domain_url : 'Enter valid url'

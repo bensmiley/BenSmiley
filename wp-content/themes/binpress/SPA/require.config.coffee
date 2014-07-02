@@ -14,6 +14,7 @@ requirejs.config
         'backbone.babysitter' : 'bower_components/backbone.babysitter/lib/backbone.babysitter'
         plupload : 'bower_components/plupload/js/plupload.full.min'
         jqueryvalidate : 'bower_components/jquery.validation/dist/jquery.validate'
+        additionalmethods : 'bower_components/jquery.validation/dist/additional-methods'
         regioncontroller : 'controllers/region-controller'
         bootstrap : 'bower_components/bootstrap/dist/js/bootstrap.min'
         braintree : 'bower_components/braintree/braintree'
@@ -29,6 +30,7 @@ requirejs.config
         marionette : [ 'backbone' ]
         backbonesyphon : [ 'backbone' ]
         jqueryvalidate : [ 'jquery' ]
+        additionalmethods : [ 'jquery' , 'jqueryvalidate' ]
         bootstrap : [ 'jquery' ]
         card : [ 'jquery' ]
         jqueryspin : [ 'spin' ]

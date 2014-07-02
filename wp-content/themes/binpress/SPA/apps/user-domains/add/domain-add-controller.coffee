@@ -30,11 +30,17 @@ define [ 'app'
                     wait : true
                     success : @userDomainSaved
 
-            userDomainSaved : ( userDomain )=>
-                userDomainCollection = msgbus.reqres.request "get:current:user:domains"
-                userDomainCollection.add userDomain
-                domainId = userDomain.get 'ID'
-                @view.triggerMethod "user:domain:added", domainId
+            userDomainSaved : ( userDomain, response )=>
+                #if error response
+                if response.code == "ERROR"
+                    @view.triggerMethod "user:domain:add:error", response.msg
+
+                #if domain addded succesfully on server
+                else if response.code == "OK"
+                    userDomainCollection = msgbus.reqres.request "get:current:user:domains"
+                    userDomainCollection.add userDomain
+                    domainId = userDomain.get 'ID'
+                    @view.triggerMethod "user:domain:added", domainId
 
 
         #handler for showing the user domain page,options to be passed to controller are:

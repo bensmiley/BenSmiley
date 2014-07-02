@@ -36,12 +36,16 @@ define(['app', 'regioncontroller', 'apps/user-domains/add/domain-add-view', 'msg
         });
       };
 
-      DomainAddController.prototype.userDomainSaved = function(userDomain) {
+      DomainAddController.prototype.userDomainSaved = function(userDomain, response) {
         var domainId, userDomainCollection;
-        userDomainCollection = msgbus.reqres.request("get:current:user:domains");
-        userDomainCollection.add(userDomain);
-        domainId = userDomain.get('ID');
-        return this.view.triggerMethod("user:domain:added", domainId);
+        if (response.code === "ERROR") {
+          return this.view.triggerMethod("user:domain:add:error", response.msg);
+        } else if (response.code === "OK") {
+          userDomainCollection = msgbus.reqres.request("get:current:user:domains");
+          userDomainCollection.add(userDomain);
+          domainId = userDomain.get('ID');
+          return this.view.triggerMethod("user:domain:added", domainId);
+        }
       };
 
       return DomainAddController;

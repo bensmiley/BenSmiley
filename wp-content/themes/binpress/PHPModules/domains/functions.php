@@ -43,18 +43,28 @@ function create_user_domain( $domain_details ) {
         'post_title' => $domain_details[ 'post_title' ],
         'post_status' => 'publish' );
 
-//    $domain_url = validate_domain_url( $domain_details[ 'domain_url' ] );
-//
-//    if ( $domain_url[ 'code' ] == "ERROR" )
-//        wp_send_json( array( 'code' => 'ERROR', 'msg' => $domain_url[ 'msg' ] ) );
+    // validate the domain url
+    $domain_url_check = validate_domain_url( $domain_details[ 'domain_url' ] );
 
+    if ( $domain_url_check[ 'code' ] == "ERROR" )
+        return array( 'code' => "ERROR", 'msg' => $domain_url_check[ 'msg' ] );
+
+    $formatted_url = $domain_url_check[ 'url' ];
+
+    // check domain url for uniqueness
+    $domain_url_unique = check_url_unique( $formatted_url );
+
+    if ( $domain_url_unique[ 'code' ] == "ERROR" )
+        return array( 'code' => "ERROR", 'msg' => $domain_url_unique[ 'msg' ] );
+
+    // insert domain details
     $post_id = wp_insert_post( $post_array );
 
     if ( $post_id == 0 )
-        return $post_id;
+        return array( 'code' => "ERROR", 'msg' => "Could not create domain" );
 
     // add the domain url as post meta for domain post
-    update_post_meta( $post_id, 'domain_url', $domain_details[ 'domain_url' ] );
+    update_post_meta( $post_id, 'domain_url', $formatted_url );
     update_post_meta( $post_id, 'plan_id', 'dm8w' );
 
     // add the free plan as a term for domain post
@@ -63,7 +73,13 @@ function create_user_domain( $domain_details ) {
     // create a free subscription for the domain
     create_free_subscription( $post_id );
 
-    return $post_id;
+    //generate api key for the domain by calling the api key generation API
+    $key = get_key_from_API( $formatted_url );
+
+    //update the domain meta with the api key
+    update_post_meta( $post_id, 'api_key', $key );
+
+    return array( 'code' => "OK", 'domain_id' => $post_id );
 }
 
 /**
@@ -157,7 +173,7 @@ function delete_domain( $domain_id ) {
 
 /**
  * Function to check and clean the url before inserting in table.
- * The function formats the url into : http://www.example.com
+ * The function formats the url into : abc.com
  *
  * accepts the domain url in any format as such:
  * abc.com
@@ -168,14 +184,14 @@ function delete_domain( $domain_id ) {
  * and converts it into proper format:
  *
  * @param $domain_url
- * @return array
+ * @return array of error msg or formatted domain url on success
  */
 function validate_domain_url( $domain_url ) {
     // SANITIZE THE URL
     $domain_url = esc_url_raw( $domain_url );
 
     if ( empty( $domain_url ) )
-        return array( 'code' => "ERROR", 'msg' => 'Domain url passed contains incorrect protocol' );
+        return array( 'code' => "ERROR", 'msg' => 'Domain url contains incorrect protocol' );
 
     //CHECK IF DOMAIN URL VALID
     $regex = "@(https|http)://(-\.)?([^\s/?\.#,!$%^&*()-]+\.?)+(/[^\s]*)?$@iS";
@@ -183,16 +199,88 @@ function validate_domain_url( $domain_url ) {
     if ( !preg_match( $regex, $domain_url ) )
         return array( 'code' => "ERROR", 'msg' => 'Invalid domain url passed ' );
 
-    //BUILD A VALID URL
-    $protocol = parse_url( $domain_url, PHP_URL_SCHEME );
+    //REMOVE HTTP IF PRESENT
     $host = parse_url( $domain_url, PHP_URL_HOST );
 
-    //CHECK IF HOST NAME HAS WWW
-    if ( strripos( $host, "www" ) === FALSE ) {
-        $host = "www." . $host;
+    //CHECK IF HOST NAME HAS WWW AND REMOVE IT
+    if ( strripos( $host, "www" ) === 0 ) {
+        $host = str_ireplace( "www.", " ", $host );
     }
 
-    $url = $protocol . "://" . $host;
+    return array( 'code' => 'OK', 'url' => $host );
+}
 
-    return array( 'code' => 'OK', 'url' => $url );
+/**
+ * Function to check if the passed url already exists in the db
+ *
+ * @param $url
+ * @return array of error and success msg
+ */
+function check_url_unique( $url ) {
+    // intialize variable to false
+    $url_exists = false;
+
+    // since the post id is not present,use wp-query to query the post meta table
+    // and check if the domain url is exists
+    $args = array(
+        'post_type' => 'domain',
+        'meta_query' => array(
+            array(
+                'value' => $url
+            )
+        )
+    );
+
+    $query = new WP_Query( $args );
+
+    if ( $query->have_posts() )
+        $url_exists = true;
+
+    wp_reset_postdata();
+
+    if ( $url_exists )
+        return array( 'code' => "ERROR", 'msg' => 'Url already exists' );
+    else
+        return array( 'code' => "OK" );
+
+}
+
+/**
+ * Function to check if url exists for a domain and if true return the domain id
+ * @param $url
+ * @return array
+ */
+function check_url_exists( $url ) {
+    $domain_id = " ";
+
+    $args = array(
+        'post_type' => 'domain',
+        'meta_query' => array(
+            array(
+                'value' => $url
+            )
+        )
+    );
+
+    $query = new WP_Query( $args );
+
+    if ( $query->have_posts() ) {
+        $query->the_post();
+        $domain_id = get_the_ID();
+    }
+    wp_reset_postdata();
+
+    if ( empty( $domain_id ) )
+        return array( 'code' => 'ERROR', 'msg' => 'Url does not exists for any domain ' );
+    else
+        return array( 'code' => 'OK', 'domain_id' => $domain_id );
+
+}
+
+function get_key_from_API( $url ) {
+
+    $key_generation_url = admin_url( "admin-ajax.php" ) . "?action=get-api-key&url=" . $url;
+    $api_response = file_get_contents( $key_generation_url );
+    $api_key = json_decode( $api_response, true );
+    return $api_key[ 'api_key' ];
 }

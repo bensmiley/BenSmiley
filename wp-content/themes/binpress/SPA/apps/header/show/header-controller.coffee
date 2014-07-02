@@ -55,8 +55,7 @@ define [ 'app',
                         action : 'user-logout'
 
                 $.ajax( options ).done ( response )->
-                    console.log response
-#                    window.location.href = response.redirect_url
+                    window.location.href = response.redirect_url
                 .fail ( resp )->
                     console.log 'error'
 
