@@ -71,7 +71,7 @@ define(['marionette', 'text!apps/user-domains/templates/groupsTemplate.html'], f
       group_description = model.get('group_description');
       this.$el.find('#btn-new-ticket').click();
       this.$el.find('#btn-save-domain-group').text('Update');
-      this.$el.find('.btn-delete-group').show();
+      this.$el.find('.delete-group').show();
       this.$el.find('#group_name').val(group_name);
       return this.$el.find('#group_description').val(group_description);
     };
