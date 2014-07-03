@@ -71,7 +71,7 @@
             if ( is_user_logged_in() ):
                 $userdata = get_current_user_data();
             ?>
-            <div class="pull-right">
+            <div class="pull-right topp">
                 <div class="user-profile pull-left m-t-10">
                     <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
                 </div>
@@ -83,6 +83,11 @@
                             </div>
                             <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                         </a>
+						<ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
+							<li> 
+								<a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> 
+							</li> 
+						</ul>
                     </li>
                 </ul>
             </div>
