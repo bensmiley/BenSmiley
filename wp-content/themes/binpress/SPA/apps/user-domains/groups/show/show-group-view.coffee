@@ -19,7 +19,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
     #View for empty groups
     class EmptyGroupView extends Marionette.ItemView
 
-        template : '<td class="v-align-middle" colspan="3" align="center" style="background:#e2e8eb;">
+        template : '<td class="v-align-middle nocol" colspan="3" align="center">
                                 <span class="muted">No Groups added</span></td>
                             </td>'
 

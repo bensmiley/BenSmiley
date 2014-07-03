@@ -71,7 +71,7 @@
             if ( is_user_logged_in() ):
                 $userdata = get_current_user_data();
             ?>
-            <div class="pull-right topp">
+            <div class="pull-right" style="margin-top:-55px;">
                 <div class="user-profile pull-left m-t-10">
                     <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
                 </div>
