@@ -3,21 +3,19 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
 
     #view for each plan
     class SinglePlanView extends Marionette.ItemView
-        template : '<div>
-                                     <div class="grid simple">
-                                        <h4 class="bold text-center plan-name">{{plan_name}}<br>
-                                        <small class="text-danger" >Rs.{{price}}/month</small>
-                                        </h4>
-                                        <hr>
-                                         <div class="grid-body no-border">
-                                             <ul>
-                                                <li>{{description}} </li>
-                                             </ul>
-                                         </div>
-                                     </div>
-                                     <a href="#change-plan/{{plan_id}}"
-                                         class="btn btn-block btn-primary ca-sub plan-link">Subscribe</a>
-                                      </div> '
+        template : '<div class="text-center">
+                                        <h4 class="title1">{{plan_name}}</h4>
+                                        <div class="content1" >
+										 <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub>
+										 </div>
+										</div>
+                                        <ul class="features1">
+                                            <li>{{description}} </li>
+                                        </ul>
+                                        <div class="pt-footer">
+										<a href="#change-plan/{{plan_id}}">Subscribe</a>
+										</div>
+                                      </div>'
         tagName : 'li'
 
         className : 'plans'
