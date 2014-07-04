@@ -13,7 +13,6 @@
         dynamic_sidebar( 'footer-sidebar' );
     endif; ?>
 </ul>
-
 </div>
 <?php wp_footer(); ?>
 </body>

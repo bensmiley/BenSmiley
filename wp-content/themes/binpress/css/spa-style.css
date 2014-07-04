@@ -300,3 +300,8 @@ body .page-content .breadcrumb li a {
 .pt-footer a:hover {
   color: #FFFFFF;
 }
+footer {
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+}

@@ -64,6 +64,9 @@
                 <div id="main-content-region"></div>
 
             </div>
+			<footer>
+		<p class="pull-right">&copy; Bensmiley <?php echo date("Y");?></p>
+		</footer>
         </div>
         <!-- BEGIN PAGE CONTAINER-->
     </div>
@@ -71,6 +74,7 @@
 
 
 </div>
+
 <?php wp_footer(); ?>
 </body>
 </html>

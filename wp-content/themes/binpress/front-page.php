@@ -233,6 +233,9 @@ get_header(); ?>
             </div>
             <!--TERMS AND CONDITIONS END -->
         </div>
+		<footer>
+		<p class="pull-right">&copy; Bensmiley <?php echo date("Y");?></p>
+		</footer>
     </div>
     <!-- END CONTAINER -->
 
