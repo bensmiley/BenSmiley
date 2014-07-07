@@ -221,9 +221,6 @@ body .page-content .breadcrumb li a {
 .mtop {
   margin-top: 34px;
 }
-.delete {
-  line-height: 2.5;
-}
 #main-content-region .table-striped tbody > tr:nth-child(2n+1) > td {
   background: none;
 }
