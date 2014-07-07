@@ -9004,3 +9004,8 @@ ul.my-friends li .profile-pic {
 .rickshaw_graph {
     overflow: hidden;
 }
+.footerfpg{
+	position:fixed;
+	bottom:0;
+	right:5%;
+}

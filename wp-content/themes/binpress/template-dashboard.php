@@ -64,14 +64,14 @@
                 <div id="main-content-region"></div>
 
             </div>
-			<footer>
-		<p class="pull-right">&copy; Bensmiley <?php echo date("Y");?></p>
-		</footer>
-        </div>
+			
         <!-- BEGIN PAGE CONTAINER-->
     </div>
     <!-- END CONTAINER -->
-
+<footer>
+		<p>&copy; Bensmiley <?php echo date("Y");?></p>
+		</footer>
+        </div>
 
 </div>
 
