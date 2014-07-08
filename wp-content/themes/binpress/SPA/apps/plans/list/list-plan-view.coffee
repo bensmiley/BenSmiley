@@ -13,7 +13,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
                                             <li>{{description}} </li>
                                         </ul>
                                         <div class="pt-footer">
-										<a href="#change-plan/{{plan_id}}">Subscribe</a>
+										<a href="#change-plan/{{plan_id}}" class="plan-link">Subscribe</a>
 										</div>
                                       </div>'
         tagName : 'li'

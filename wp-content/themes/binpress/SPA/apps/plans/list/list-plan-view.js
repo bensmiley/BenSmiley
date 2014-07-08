@@ -11,7 +11,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
       return SinglePlanView.__super__.constructor.apply(this, arguments);
     }
 
-    SinglePlanView.prototype.template = '<div class="text-center"> <h4 class="title1">{{plan_name}}</h4> <div class="content1" > <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub> </div> </div> <ul class="features1"> <li>{{description}} </li> </ul> <div class="pt-footer"> <a href="#change-plan/{{plan_id}}">Subscribe</a> </div> </div>';
+    SinglePlanView.prototype.template = '<div class="text-center"> <h4 class="title1">{{plan_name}}</h4> <div class="content1" > <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub> </div> </div> <ul class="features1"> <li>{{description}} </li> </ul> <div class="pt-footer"> <a href="#change-plan/{{plan_id}}" class="plan-link">Subscribe</a> </div> </div>';
 
     SinglePlanView.prototype.tagName = 'li';
 
