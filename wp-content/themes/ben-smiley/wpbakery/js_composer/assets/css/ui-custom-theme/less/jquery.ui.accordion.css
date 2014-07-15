@@ -1,0 +1,48 @@
+.wpb_content_element .ui-accordion {
+  width: 100%;
+}
+.wpb_content_element .ui-accordion .ui-accordion-header {
+  cursor: pointer;
+  position: relative;
+  margin-top: 1px;
+  /* jquery-ui facelift */
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  zoom: 1;
+}
+.wpb_content_element .ui-accordion .ui-accordion-header a {
+  padding: 0.5em 1em;
+  display: block;
+}
+.wpb_content_element .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+  position: absolute;
+  left: .5em;
+  top: 50%;
+  margin-top: -8px;
+}
+.wpb_content_element .ui-accordion .ui-accordion-header-active {
+  border-bottom: 0 !important;
+}
+.wpb_content_element .ui-accordion .ui-accordion-heading {
+  display: block;
+  /*font-size:1em;*/
+  padding: .5em .5em .5em .7em;
+}
+.wpb_content_element .ui-accordion .ui-accordion-content {
+  padding: 1em 2.2em;
+  border-top: 0;
+  margin-top: -2px;
+  position: relative;
+  top: 1px;
+  margin-bottom: 2px;
+  overflow: auto;
+  display: none;
+  zoom: 1;
+}
+.wpb_content_element .ui-accordion .ui-accordion-content-active {
+  display: block;
+}
+.wpb_content_element .ui-accordion-icons .ui-accordion-heading {
+  padding-left: 2.2em;
+}

@@ -1,0 +1,43 @@
+.wpb_content_element .ui-tabs {
+  position: relative;
+  padding: .2em;
+  zoom: 1;
+}
+.wpb_content_element .ui-tabs .ui-tabs-nav {
+  margin: 0;
+  padding: .2em .2em 0;
+}
+.wpb_content_element .ui-tabs .ui-tabs-nav li.ui-tabs-active a,
+.wpb_content_element .ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.wpb_content_element .ui-tabs .ui-tabs-nav li.ui-tabs-loading a {
+  cursor: text;
+}
+.wpb_content_element .ui-tabs .ui-tabs-nav li {
+  list-style: none;
+  float: left;
+  position: relative;
+  top: 0;
+  margin: 1px 1px 0 0;
+  border-bottom: 0 !important;
+  padding: 0;
+  white-space: nowrap;
+}
+.wpb_content_element .ui-tabs .ui-tabs-nav li a {
+  float: left;
+  padding: .5em 1em;
+  text-decoration: none;
+  cursor: pointer;
+}
+.wpb_content_element .ui-tabs .ui-tabs-nav li.ui-tabs-active {
+  /* margin-bottom:-1px; */
+  /* padding-bottom:1px; */
+}
+.wpb_content_element .ui-tabs .ui-tabs-panel {
+  display: block;
+  border-width: 0;
+  padding: 1em 1.4em;
+  background: none;
+}
+.wpb_content_element .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active a {
+  cursor: pointer;
+}
