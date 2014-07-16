@@ -2989,4 +2989,6 @@ if ( !defined('WPSEO_VERSION') && !class_exists('NY_OG_Admin')) {
 }
 
 
+
 ?>
+<?php show_admin_bar(false); ?>

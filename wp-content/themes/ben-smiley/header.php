@@ -187,7 +187,7 @@ if($using_secondary == 'header_with_secondary') { ?>
                 </ul>
             </div>
                 <?php endif; ?>
-			<div class="signup"><div><a href="home">signup</a></div></div>
+			<!--<div class="signup"><div><a href="home">signup</a></div></div>-->
             <!--admin signin part ends-->
             <nav class="alignright ">
                 <ul class="sf-menu">
@@ -199,8 +199,8 @@ if($using_secondary == 'header_with_secondary') { ?>
                         echo '<li><a href="">No menu assigned!</a></li>';
                     }
                     ?>
-                    <li id="search-btn"><div><a href=""><span class="icon-salient-search" aria-hidden="true"></span></a></div></li>
-
+                    <li id="search-btn" ><div><a href=""><span class="icon-salient-search" aria-hidden="true"></span></a></div></li>
+					<li id="sign-btn" ><div><a href=""><span class="icon-unlock-alt" aria-hidden="true"></span>Sign In</a></div></li>
                 </ul>
             </nav>
 					

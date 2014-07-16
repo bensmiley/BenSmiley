@@ -9209,7 +9209,7 @@ background-image: none;
 .m-l-20{
 	margin-left: 28px;
 }
- .signup a{
+ body .signup a{
 	background-color: #ff003c;
 	border: medium none;
 	border-radius: 5px;
@@ -9217,6 +9217,51 @@ background-image: none;
 	font-size: 14px;
 	position: relative;
 	margin-left: 10px;
-	padding: 8px 12px;
+	padding: 2px 12px;
 	
+}
+
+
+header#top nav ul #sign-btn {
+	margin-left: 15px!important;
+	padding-bottom: 4.5px;
+padding-top: 4.5px;
+}
+
+header#top nav ul #sign-btn > div {
+	border-left: 1px solid #e7e7e7;
+	padding-left: 19px;
+}
+
+body[data-header-color="custom"] header#top nav ul #sign-btn> div {
+	border-left: 1px solid rgba(114, 114, 114, 1);
+}
+body #header-outer header#top nav ul li#sign-btn a {
+padding-left: 23px;
+	padding: 0px 0px 0px 0px!important;
+	width: 77px;
+	height: 21px;
+	display: block;
+	background-position: right top;
+	background-repeat: no-repeat;
+    box-sizing: content-box!important;
+    -moz-box-sizing: content-box!important;
+	color:#27CCC0 !important;
+}
+
+header#top nav ul #sign-btn a span {
+	color: #a0a0a0;
+	font-size: 16px;
+	line-height: 24px!important;
+	height: 24px!important;
+	background-color: transparent!important;
+	-webkit-transition: color 0.2s linear;
+    -moz-transition: color 0.2s linear;
+    -o-transition: color 0.2s linear;
+    transition: color 0.2s linear;
+	
+}
+
+header#top nav ul #sign-btn a span:hover {
+	color: #27CCC0!important;
 }
