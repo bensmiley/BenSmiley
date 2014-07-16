@@ -13,13 +13,14 @@
 @theme_blue: #19657D;
 
 #header-outer {
-    background-color: @grey;
+    background-color: @black;
 }
 #search-btn{
 	display: none;
 }
 body #header-outer header#top nav ul li a {
     color: @white !important;
+	font-weight:bold;
     &:hover{
     	color: @white !important;
     }
@@ -288,6 +289,7 @@ body {
 }
 header#top #logo {
     color: @white !important;
+	padding-left:10px;
 }
 /*secondary nav*/
 #header-secondary-outer {
@@ -302,7 +304,7 @@ header#top #logo {
     border-right: 1px solid @tab_grey_txt;
 }
 #header-secondary-outer nav > ul > li > a:hover, #header-secondary-outer nav > ul > li.current-menu-item > a, #header-secondary-outer nav > ul > li.current-menu-ancestor > a {
-    color:  @tab_grey_txt;
+    color:  @white;
 }
 #header-secondary-outer nav ul.sf-menu {
     border-top: medium none !important;
@@ -322,5 +324,23 @@ header#top #logo {
 	color:@white !important;
 }
 .icon-arrow-right{
-font-size:10px;
+	font-size:10px;
+}
+.signup a{
+	background-color: #ff003c;
+	border: medium none;
+	border-radius: 5px;
+	color: #ffffff;
+	font-size: 18px;
+	position: relative;
+	padding-bottom:5px !important;
+	margin-left: 40px;
+}
+.user-profile img{
+	border-radius:100%;
+	height:35px !important;
+	width:35px !important;
+}
+.m-l-20{
+	margin-left:20px;
 }

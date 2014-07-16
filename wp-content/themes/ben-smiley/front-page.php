@@ -8,7 +8,7 @@
  */
 
 get_header(); ?>
-<a href="home">Sign in</a>
+
     <!-- BEGIN CONTAINER -->
     <div class="container">
         <div class="row login-container column-seperation ">

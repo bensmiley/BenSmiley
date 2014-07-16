@@ -158,9 +158,32 @@ if($using_secondary == 'header_with_secondary') { ?>
 							<a id="mobile-cart-link" href="<?php echo $woocommerce->cart->get_cart_url(); ?>"><i class="icon-salient-cart"></i></a>
 						<?php } 
 					} ?>
+						
+					<!--admin signin part start-->
 					
+        <div class="pull-right m-l-20">
+                <div class="user-profile pull-left">
+                    <img src="http://1.gravatar.com/avatar/5ba2411c7d1e867264c0dcec5a160a46?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G" alt="" width="35" height="35" id="user-photo">
+                </div>
+                <ul class="nav quick-section ">
+                    <li class="quicklinks">
+                        <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="javascript:void(0)" id="user-options">
+                            <div class="pull-left">
+                                <span class="bold display_name">admin</span>
+                            </div>
+                            <div class="iconset top-down-arrow pull-left"></div>
+                        </a>
+						<ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
+							<li> 
+								<a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> 
+							</li> 
+						</ul>
+                    </li>
+                </ul>
+            </div>
+					<!--admin signin part ends-->
 					<nav class="alignright ">
-						<ul class="sf-menu">	
+						<ul class="sf-menu">
 							<?php 
 							if(has_nav_menu('top_nav')) {
 							    wp_nav_menu( array('walker' => new Nectar_Arrow_Walker_Nav_Menu, 'theme_location' => 'top_nav', 'container' => '', 'items_wrap' => '%3$s' ) ); 
