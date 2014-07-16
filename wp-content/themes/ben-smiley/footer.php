@@ -148,7 +148,17 @@ $cta_btn_color = (!empty($options['cta-btn-color'])) ? $options['cta-btn-color']
 
 <?php wp_footer(); ?>	
 
+<script>
+(function($){
 
+    $(document).ready(function() {
+        $('#menu1').dropit();
+        $('#menu2').dropit({ action: 'hover' });
+    });
+    
+
+})(window.jQuery);
+</script>
 
 </body>
 </html>

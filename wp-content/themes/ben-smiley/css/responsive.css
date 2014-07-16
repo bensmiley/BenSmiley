@@ -1890,13 +1890,17 @@ and (min-width : 1px) and (max-width : 1000px) {
   	}
   	
   	header#top .col.span_9 {
-  		margin-left: 0px;
+  		margin-left: -30px;
   		min-height: 48px;
   		margin-bottom: 0px;
   		width: 100%!important;
   		float: none;
   		z-index: 100;
 		position: relative;
+  	}
+	.signup{
+  		margin-left: -30px;
+		margin-top:7px;
   	}
   	
 	#header-outer header#top nav > ul {

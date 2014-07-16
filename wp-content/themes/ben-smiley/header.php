@@ -161,27 +161,27 @@ if($using_secondary == 'header_with_secondary') { ?>
 						
 					<!--admin signin part start-->
 					
-        <div class="pull-right m-l-20">
+     <!--<div  class="pull-right m-l-20">
                 <div class="user-profile pull-left">
                     <img src="http://1.gravatar.com/avatar/5ba2411c7d1e867264c0dcec5a160a46?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G" alt="" width="35" height="35" id="user-photo">
                 </div>
-                <ul class="nav quick-section ">
-                    <li class="quicklinks">
+                <ul  id="menu1" class="menu nav quick-section ">
+                    <li class="quicklinks btn">
                         <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="javascript:void(0)" id="user-options">
                             <div class="pull-left">
-                                <span class="bold display_name">admin</span>
+                                <span class=" display_name">admin</span>
                             </div>
-                            <div class="iconset top-down-arrow pull-left"></div>
+                        <span class="sf-sub-indicator" style="height: 16px;"><i class="icon-angle-down"></i></span>
                         </a>
-						<ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
+						<ul id="popup" class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
 							<li> 
 								<a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> 
 							</li> 
 						</ul>
                     </li>
                 </ul>
-            </div>
-					<!--admin signin part ends-->
+            </div>-->
+					<!--admin signin part ends--><div class="signup"><div><a href="">signup</a></div></div>
 					<nav class="alignright ">
 						<ul class="sf-menu">
 							<?php 
@@ -193,8 +193,10 @@ if($using_secondary == 'header_with_secondary') { ?>
 							}
 							?>
 							<li id="search-btn"><div><a href=""><span class="icon-salient-search" aria-hidden="true"></span></a></div></li>
+							
 						</ul>
 					</nav>
+					
 					
 				</div><!--/span_9-->
 				<!--<div class="col span_3 col_last">

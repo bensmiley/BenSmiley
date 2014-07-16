@@ -46,6 +46,7 @@ function nectar_register_js() {
 		wp_register_script('blogmasonry', get_template_directory_uri() . '/js/blog-masonry.js', 'jquery', '3.15', TRUE);
 		wp_register_script('carouFredSel', get_template_directory_uri() . '/js/carouFredSel.min.js', 'jquery', '6.2', TRUE);
 		wp_register_script('nectarSlider', get_template_directory_uri() . '/js/nectar-slider.js', 'jquery', '4.1', TRUE);
+		wp_register_script('dropit', get_template_directory_uri() . '/js/dropit.js', 'jquery', '4.1', TRUE);
 		
 
 		if ( floatval(get_bloginfo('version')) < "3.6" ) {
@@ -69,6 +70,7 @@ function nectar_register_js() {
 		wp_enqueue_script('flexslider');
 		wp_enqueue_script('isotope');
 		wp_enqueue_script('imagesloaded');
+		wp_enqueue_script('dropit');
 		wp_enqueue_script('carouFredSel');
 		wp_enqueue_script('appear'); 
 		if ( floatval(get_bloginfo('version')) < "3.6" ) {

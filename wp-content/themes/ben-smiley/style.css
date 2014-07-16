@@ -54,6 +54,12 @@ input[type=submit] {
 html {
 	overflow-x: hidden;
 	max-width:   100%;
+	margin-top:0px !important;
+}
+@media screen and (max-width: 782px){
+	body {
+		margin-top: -48px !important;
+	}
 }
 
 body {
@@ -9111,4 +9117,106 @@ label span {
 }
 .textwidget #social li:first-child{
 	margin-left: 0;
+}
+
+.user-profile img{
+	width:35px !important;
+	height:35px!important;
+	border-radius:100%;
+	-moz-border-radius:100%;
+	-webkit-border-radius:100%;
+}
+.dropdown-toggle span{
+	font-weight: 800;
+	line-height: 34px;
+}
+
+.dropit {
+    list-style: none;
+	padding: 0;
+	margin: 0;
+	width:100px;
+}
+.dropit .dropit-trigger { position: relative; }
+.dropit .dropit-submenu {
+    position: absolute;
+    top: 100%;
+    left: 0; /* dropdown left or right */
+    z-index: 1000;
+    display: none;
+    min-width: 117px;
+    list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.dropit .dropit-open .dropit-submenu { display: block; }
+.menu ul {
+display: none;
+} /* Hide before plugin loads */
+.menu ul.dropit-submenu {
+background-color: #fff;
+border: 1px solid #b2b2b2;
+padding: 6px 0;
+top:40px;
+margin: 3px 0 0 1px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}
+.menu ul.dropit-submenu a {
+display: block;
+font-size: 14px;
+line-height: 25px;
+color: #7a868e;
+padding: 0 18px;
+}
+.menu .btn{
+	padding:0px !important;
+}
+.dropdown-menu::before {
+position: absolute;
+top: -7px;
+right: 9px;
+display: inline-block;
+border-right: 7px solid transparent;
+border-bottom: 7px solid #CCC;
+border-left: 7px solid transparent;
+border-bottom-color: rgba(0,0,0,.2);
+content: '';
+}
+.dropdown-menu::after {
+position: absolute;
+top: -6px;
+right: 10px;
+display: inline-block;
+border-right: 6px solid transparent;
+border-bottom: 6px solid #fff;
+border-left: 6px solid transparent;
+content: '';
+}
+.menu ul.dropit-submenu a:hover {
+color: #1b1e24;
+text-decoration: none;
+background-color: #eff2f3;
+background-image: none;
+}
+.signup{
+	float:right;
+}
+.m-l-20{
+	margin-left: 28px;
+}
+ .signup a{
+	background-color: #ff003c;
+	border: medium none;
+	border-radius: 5px;
+	color: #ffffff;
+	font-size: 14px;
+	position: relative;
+	margin-left: 10px;
+	padding: 8px 12px;
+	
 }
