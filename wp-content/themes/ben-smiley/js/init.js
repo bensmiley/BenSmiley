@@ -12,6 +12,16 @@ jQuery(document).ready(function($){
 
 
 -------------------------------------------------------------------------*/
+    $('#logout').click(function (){
+        $.ajax({
+            url : nectarLove.ajaxurl,
+            method : 'POST',
+            data :{action:'user-logout'}
+
+        }).done(function(response){
+            window.location.href = response.redirect_url
+        });
+    });
 
 
 /*-------------------------------------------------------------------------*/
