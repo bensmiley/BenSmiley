@@ -265,7 +265,7 @@ if ( !empty( $options[ 'transparent-header' ] ) && $options[ 'transparent-header
                             </li>
                             <?php if ( ! is_user_logged_in()): ?>
                                 <li id="sign-btn">
-                                    <div><a href="front-page"><span class="icon-unlock-alt" aria-hidden="true"></span>Sign In</a>
+                                    <div><a href="home"><span class="icon-unlock-alt" aria-hidden="true"></span>Sign In</a>
                                     </div>
                                 </li>
                             <?php endif; ?>
