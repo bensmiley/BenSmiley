@@ -9141,7 +9141,7 @@ margin-left: 7px;
 .dropit .dropit-submenu {
     position: absolute;
     top: 100%;
-    left: 0; /* dropdown left or right */
+    left: -47px; /* dropdown left or right */
     z-index: 1000;
     display: none;
     min-width: 117px;
