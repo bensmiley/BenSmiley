@@ -1,5 +1,5 @@
-<?php 
-/*template name: Home - Slider Only */
+<?php
+/*template name: Front Page */
 get_header(); ?>
 	
 <?php $options = get_option('salient'); ?>
