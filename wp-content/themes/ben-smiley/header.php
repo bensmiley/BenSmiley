@@ -225,16 +225,18 @@ if ( !empty( $options[ 'transparent-header' ] ) && $options[ 'transparent-header
                         <!-- show user name and photo display if user logged in  -->
 
                         <div class="pull-right m-l-20">
-                            <div class="user-profile pull-left">
+                            <div class="user-profile pull-left"><a href="<?php echo get_site_url(); ?>/dashboard">
                                 <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
-                            </div>
+								<div id="user-meta" class="pull-right">
+                                   <span  class=" display_name"><?php echo $userdata['display_name'] ?></span>
+                                </div>
+								</a>
+                            </div>  
                             <ul id="menu1" class="menu nav quick-section ">
                                 <li class="quicklinks btn">
-                                    <a data-toggle="dropdown" class="dropdown-toggle  pull-right "
+                                 
+										<a data-toggle="dropdown" class="dropdown-toggle  pull-right "
                                        href="javascript:void(0)" id="user-options">
-                                        <div class="pull-left">
-                                            <span class=" display_name"><?php echo $userdata['display_name'] ?></span>
-                                        </div>
                                         <span class="sf-sub-indicator" style="height: 16px;"><i
                                                 class="icon-angle-down"></i></span>
                                     </a>

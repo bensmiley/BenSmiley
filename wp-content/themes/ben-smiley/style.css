@@ -151,7 +151,10 @@ footer,header,hgroup,menu,nav,section {
 /*-------------------------------------------------------------------------*/
 /*	2. Globally Applied Styles
 /*-------------------------------------------------------------------------*/
-
+#user-meta{
+	margin-left:5px;
+	margin-top:5px;
+}
 
 body {
 	font-size: 12px;	
@@ -9141,7 +9144,7 @@ margin-left: 7px;
 .dropit .dropit-submenu {
     position: absolute;
     top: 100%;
-    left: -47px; /* dropdown left or right */
+   left: -87px;/* dropdown left or right */
     z-index: 1000;
     display: none;
     min-width: 117px;

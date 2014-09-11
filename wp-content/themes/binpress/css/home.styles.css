@@ -16482,6 +16482,19 @@ ul.my-friends li .profile-pic {
 	bottom:0;
 	right:5%;
 }
+.page-template-template-signup-login-php{
+background: #F3F3F3 !important;
+}
+#menu-top-menu{
+	list-style: none;
+	padding: 20px;
+}
+#menu-top-menu li{
+	display: inline-block;
+}
+.logo h1{
+	font-style:normal;
+}
 /*** Very Large Screens **/
 @media only screen
 and (min-width: 1600) {
