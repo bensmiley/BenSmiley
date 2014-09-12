@@ -1304,9 +1304,21 @@ span.iconset {
     position: fixed;
     width: 100%;
     z-index: 999;
-    min-height: 60px;
+    height:80px;
 }
-
+.header .logo h1{
+	max-width: none;
+	display: block;
+	line-height: 22px;
+	font-size: 22px;
+	letter-spacing: -1.5px;
+	color: #444444;
+	font-family: 'Open Sans' !important;
+	font-weight: 600!important;
+}
+.header .container-fluid{
+	padding-top: 13px;
+}
 .header .btn-navbar {
     margin-bottom: 0px;
     padding-right: 0px;

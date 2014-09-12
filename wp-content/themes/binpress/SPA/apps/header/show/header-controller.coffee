@@ -66,7 +66,7 @@ define [ 'app',
                             <div class="">
                                 <div class="pull-left">
                                     <a href="javascript:void(0)">
-                                        <h3 class="p-l-30 ">Bensmiley</h3></a>
+                                        <h3 class="p-l-30 ">Chatcat.io</h3></a>
                                 </div>
                                 <div id="user-display"></div>
                             </div>

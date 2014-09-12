@@ -19,7 +19,7 @@ function ajax_get_api_key() {
         $domain_url = $_REQUEST[ 'url' ];
 
     if ( empty( $domain_url ) )
-        echo wp_send_json( array( 'code' => 400, 'message' => 'Domain url not passed in the request' ) );
+        echo wp_send_json( array( 'code' => 400, 'message' => 'Domain name not passed in the request' ) );
 
 
     // VALIDATE THE URL
@@ -127,4 +127,5 @@ function ajax_get_group_details() {
     echo wp_send_json( $response );
 }
 
+add_action( 'wp_ajax_get-group-details', 'ajax_get_group_details' );
 add_action( 'wp_ajax_nopriv_get-group-details', 'ajax_get_group_details' );

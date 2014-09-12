@@ -165,14 +165,23 @@ function get_user_data_for_admin_mail( $mail_id ) {
  */
 function send_email( $recipient, $subject, $mail_body, $mail_id ) {
     global $wpdb;
-
+    add_filter( 'wp_mail_content_type', 'set_html_content_type' );
     if ( wp_mail( $recipient, $subject, $mail_body ) ) {
 
         $wpdb->update( 'cron_module', array( 'status' => 0 ), array( 'ID' => $mail_id ) );
     } else {
         echo 'no mail send';
     }
+    remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 
+}
+
+// Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
+
+
+function set_html_content_type() {
+
+    return 'text/html';
 }
 
 /**
