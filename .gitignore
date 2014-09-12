@@ -40,3 +40,7 @@ wp-content/uploads
 wp-content/upgrade
 wp-content/wp-cache-config.php
 wp-content/plugins/wpmandrill/
+wp-content/plugins/wordpress-importer/parsers.php
+wp-content/plugins/wordpress-importer/readme.txt
+wp-content/plugins/wordpress-importer/wordpress-importer.php
+wp-content/plugins/wordpress-importer/languages/wordpress-importer.pot
