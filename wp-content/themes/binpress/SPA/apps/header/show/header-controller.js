@@ -71,7 +71,7 @@ define(['app', 'regioncontroller', 'behaviors/closewarn', 'msgbus'], function(Ap
         return HeaderLayout.__super__.constructor.apply(this, arguments);
       }
 
-      HeaderLayout.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="javascript:void(0)"> <h3 class="p-l-30 ">Bensmiley</h3></a> </div> <div id="user-display"></div> </div> </div>';
+      HeaderLayout.prototype.template = '<div class="navbar-inner"> <div class=""> <div class="pull-left"> <a href="javascript:void(0)"> <h3 class="p-l-30 ">ChatCat.io</h3></a> </div> <div id="user-display"></div> </div> </div>';
 
       HeaderLayout.prototype.className = 'header navbar navbar-inverse';
 
