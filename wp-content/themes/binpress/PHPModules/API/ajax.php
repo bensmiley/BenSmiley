@@ -10,6 +10,21 @@
  *
  * @returns array containing API key and plan_id for domain
  */
+
+/**
+ * @api {get} http://chatcat.io/wp-admin/admin-ajax.php?action=get-api-key&url=:url Get API Key
+ * @apiName GetAPIkey
+ * @apiGroup API
+ *
+ * @apiParam {String} url any valid url
+ *
+ * @apiSuccess {Int} code Response code.(200)
+ * @apiSuccess {String} api_key  API key requested
+ * @apiSuccess {Int} plan_id  Plan Id
+ *
+ * @apiError {Int} code Error code
+ * @apiError {String} message Error message
+ */
 function ajax_get_api_key() {
 
     $domain_url = "";
@@ -61,6 +76,21 @@ add_action( 'wp_ajax_get-api-key', 'ajax_get_api_key' );
  * Function to get the group details.
  * Accepts the API key for a domain
  * Returns a json array of group details containing group count, title and description
+ */
+
+/**
+ * @api {get} http://chatcat.io/wp-admin/admin-ajax.php?action=get-group-details&api_key=:api_key Get group details
+ * @apiName Get group details
+ * @apiGroup API
+ *
+ * @apiParam {String} api_key API key
+ *
+ * @apiSuccess {Int} code Response code.(200)
+ * @apiSuccess {Int} groups_count  API key requested
+ * @apiSuccess {Array} details  array of groups data
+ *
+ * @apiError {Int} code Error code
+ * @apiError {String} message Error message
  */
 function ajax_get_group_details() {
     $api_key = "";

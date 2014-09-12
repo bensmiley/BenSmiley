@@ -270,7 +270,7 @@ function check_url_exists( $url ) {
     }
     wp_reset_postdata();
 
-    if ( empty( $domain_id ) )
+    if ( (int) $domain_id  === 0 )
         return array( 'code' => 'ERROR', 'msg' => 'Url does not exists for any domain ' );
     else
         return array( 'code' => 'OK', 'domain_id' => $domain_id );
