@@ -35,53 +35,7 @@ set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
 
                 <p> Account is activated.</p>
                 <br>
-                <p>Click <a href="<?php echo home_url();?>">here</a> to sign in.</p>
-                <!-- LOGIN FORM START -->
-<!--                <form id="login-form" class="login-form">-->
-<!--                    <div class="row">-->
-<!--                        <div class="form-group col-md-10">-->
-<!--                            <label class="form-label">User Email</label>-->
-<!---->
-<!--                            <div class="controls">-->
-<!--                                <div class="input-with-icon  right">-->
-<!--                                    <i class=""></i>-->
-<!--                                    <input type="text" name="user_email" id="user_email" class="form-control">-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="form-group col-md-10">-->
-<!--                            <label class="form-label">Password</label>-->
-<!--                            <span class="help"></span>-->
-<!---->
-<!--                            <div class="controls">-->
-<!--                                <div class="input-with-icon  right">-->
-<!--                                    <i class=""></i>-->
-<!--                                    <input type="password" name="user_pass" id="user_pass" class="form-control">-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="control-group  col-md-10">-->
-<!--                            <div class=""><a href="#" data-toggle="modal" data-target="#myModal">-->
-<!--                                    Forgot Password?</a>&nbsp;&nbsp;-->
-<!--                            </div>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-10">-->
-<!--                            <button class="btn btn-primary btn-cons pull-right"-->
-<!--                                    type="submit" id="btn-login">Login-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--                <!-- LOGIN FORM END -->-->
-<!--                <div id="display-login-msg"></div>-->
-<!--                <!-- display error msg in div -->-->
+                <p>Click <a href="<?php echo site_url('home');?>">here</a> to sign in.</p>
             </div>
             <br>
         </div>

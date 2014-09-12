@@ -99,10 +99,8 @@ function login_user( $login_credentials, $site_url ) {
     $user_login = wp_signon( $login_credentials );
 
     if ( is_wp_error( $user_login ) ) {
-        $message = "The Email Id/ Password doesnt seem right.
-                    Check if your caps is on and try again.";
+        $message = "Your email or password is incorrect. Please try again";
         error_message( $message );
-
     } else {
         $message = "Login Success";
         success_message( $message, $site_url );

@@ -166,8 +166,6 @@ function get_user_data_for_admin_mail( $mail_id ) {
 function send_email( $recipient, $subject, $mail_body, $mail_id ) {
     global $wpdb;
     add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-    add_filter( 'wp_mail_from', 'chatcat_wp_mail_from' );
-    add_filter( 'wp_mail_from_name', 'chatcat_wp_mail_from_name' );
     if ( wp_mail( $recipient, $subject, $mail_body ) ) {
 
         $wpdb->update( 'cron_module', array( 'status' => 0 ), array( 'ID' => $mail_id ) );
@@ -175,9 +173,6 @@ function send_email( $recipient, $subject, $mail_body, $mail_id ) {
         return 'no mail send';
     }
     remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-    remove_filter( 'wp_mail_from', 'chatcat_wp_mail_from' );
-    remove_filter( 'wp_mail_from_name', 'chatcat_wp_mail_from_name' );
-
 }
 
 function chatcat_wp_mail_from_name(){
@@ -286,21 +281,18 @@ function get_user_welcome_mail_content( $user_data ) {
  */
 function get_password_reset_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br /><br />";
 
-    $body .= __( 'You have requested a new password for Chatcat.io.' ) . "<br>";
+    $body .= __( 'You have requested a new password for Chatcat.io.' ) . "<br /></br />";
 
-    $body .= __( 'To change your password' );
-
-    $body .= __( ' use this link:' ) . "<br>";
+    $body .= __( 'To change your password use this link: ' );
 
     $link = site_url( "reset-password?action=reset-password&key=" . $user_data->user_activation_key .
             "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br>';
+    $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br /><br />';
 
-    $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
-                or email us at support@chatcat.io.  ' ) . "<br>";
+    $body .= __( 'If you have any queries please contact us at support@chatcat.io.  ' ) . "<br /></br />";
 
     $body .= __( 'Regards,' ) . "<br>";
 
