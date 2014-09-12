@@ -86,28 +86,28 @@ function send_mail_cron() {
             case "new-user-activation":
                 $user_data = get_user_data( $pending_email[ 'email_id' ] );
                 $mail_body = get_user_activation_mail_content( $user_data );
-                $subject = "Activate your Account on BenSmiley";
+                $subject = "Activate your Account on Chatcat.io";
                 send_email( $pending_email[ 'email_id' ], $subject, $mail_body, $pending_email[ 'ID' ] );
                 break;
 
             case "new-user-welcome":
                 $user_data = get_user_data( $pending_email[ 'email_id' ] );
                 $mail_body = get_user_welcome_mail_content( $user_data );
-                $subject = "Welcome to BenSmiley";
+                $subject = "Welcome to Chatcat.io";
                 send_email( $pending_email[ 'email_id' ], $subject, $mail_body, $pending_email[ 'ID' ] );
                 break;
 
             case "admin-newuser-notification":
                 $user_data = get_user_data_for_admin_mail( $pending_email[ 'ID' ] );
                 $mail_body = get_admin_newuser_mail_content( $user_data );
-                $subject = "BenSmiley - New User Registration";
+                $subject = "Chatcat.io - New User Registration";
                 send_email( $pending_email[ 'email_id' ], $subject, $mail_body, $pending_email[ 'ID' ] );
                 break;
 
             case "user-password-reset":
                 $user_data = get_user_data( $pending_email[ 'email_id' ] );
                 $mail_body = get_password_reset_mail_content( $user_data );
-                $subject = "Reset your BenSmiley password";
+                $subject = "Reset your Chatcat.io password";
                 send_email( $pending_email[ 'email_id' ], $subject, $mail_body, $pending_email[ 'ID' ] );
                 break;
         }
@@ -276,7 +276,7 @@ function get_password_reset_mail_content( $user_data ) {
 
     $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
 
-    $body .= __( 'You have requested a new password for Bensmiley.' ) . "<br>";
+    $body .= __( 'You have requested a new password for Chatcat.io.' ) . "<br>";
 
     $body .= __( 'To change your password' );
 
@@ -288,7 +288,7 @@ function get_password_reset_mail_content( $user_data ) {
     $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br>';
 
     $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
-                or email us at support@bensmiley.com.  ' ) . "<br>";
+                or email us at support@chatcat.io  ' ) . "<br>";
 
     $body .= __( 'Regards,' ) . "<br>";
 
