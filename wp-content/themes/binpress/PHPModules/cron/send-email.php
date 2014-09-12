@@ -166,14 +166,26 @@ function get_user_data_for_admin_mail( $mail_id ) {
 function send_email( $recipient, $subject, $mail_body, $mail_id ) {
     global $wpdb;
     add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+    add_filter( 'wp_mail_from', 'chatcat_wp_mail_from' );
+    add_filter( 'wp_mail_from_name', 'chatcat_wp_mail_from_name' );
     if ( wp_mail( $recipient, $subject, $mail_body ) ) {
 
         $wpdb->update( 'cron_module', array( 'status' => 0 ), array( 'ID' => $mail_id ) );
     } else {
-        echo 'no mail send';
+        return 'no mail send';
     }
     remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+    remove_filter( 'wp_mail_from', 'chatcat_wp_mail_from' );
+    remove_filter( 'wp_mail_from_name', 'chatcat_wp_mail_from_name' );
 
+}
+
+function chatcat_wp_mail_from_name(){
+    return 'Chatcat.io';
+}
+
+function chatcat_wp_mail_from(){
+    return 'support@chatcat.io';
 }
 
 // Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
@@ -193,7 +205,7 @@ function set_html_content_type() {
 function get_user_activation_mail_content( $user_data ) {
 
     $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
-    $body .= __( 'Thank you for creating an account with BenSmiley.
+    $body .= __( 'Thank you for creating an account with Chatcat.io.
               Please confirm your email address by clicking the following:' ) . "<br>";
 
     $link = site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
@@ -204,11 +216,11 @@ function get_user_activation_mail_content( $user_data ) {
     $body .= sprintf( __( "If you're not %s or didn't request verification, you can ignore this email." ),
             $user_data->display_name ) . "<br>";
 
-    $body .= __( 'If you have any questions please feel free to contact on support@BenSmiley.com' ) . "<br>";
+    $body .= __( 'If you have any questions please feel free to contact on support@chatcat.io' ) . "<br>";
 
     $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br>";
 
     return $body;
 
@@ -224,7 +236,7 @@ function get_admin_newuser_mail_content( $user_data ) {
 
     $body = __( 'Hi' ) . "<br>";
 
-    $body .= __( 'A new User has registered on BenSmiley' ) . "<br>";
+    $body .= __( 'A new User has registered on Chatcat.io' ) . "<br>";
     $body .= __( 'User details : ' ) . "<br>";
     $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "<br>";
     $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "<br>";
@@ -245,7 +257,7 @@ function get_admin_newuser_mail_content( $user_data ) {
 function get_user_welcome_mail_content( $user_data ) {
 
     $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
-    $body .= __( 'Welcome to BenSmiley. ' ) . "<br>";
+    $body .= __( 'Welcome to Chatcat.io. ' ) . "<br>";
 
     $body .= __( 'Your account has been successfully verified! You can
                     now login with the credentials provided by you at the time of registration
@@ -257,11 +269,11 @@ function get_user_welcome_mail_content( $user_data ) {
     $body .= __( '3. Start adding domains & creating groups ' ) . "<br>";
     $body .= __( 'You can then chat, add/edit groups anytime on the go!  ' ) . "<br>";
     $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
-                or email us at support@bensmiley.com.  ' ) . "<br>";
+                or email us at support@chatcat.io.  ' ) . "<br>";
 
     $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br>";
 
     return $body;
 }
@@ -288,11 +300,11 @@ function get_password_reset_mail_content( $user_data ) {
     $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br>';
 
     $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
-                or email us at support@chatcat.io  ' ) . "<br>";
+                or email us at support@chatcat.io.  ' ) . "<br>";
 
     $body .= __( 'Regards,' ) . "<br>";
 
-    $body .= __( 'BenSmiley team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br>";
 
     return $body;
 }
