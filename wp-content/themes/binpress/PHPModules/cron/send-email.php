@@ -292,7 +292,7 @@ function get_password_reset_mail_content( $user_data ) {
 
     $body .= '<a target ="_blank" href='.$link.'>Click here to reset password</a><br /><br />';
 
-    $body .= __( 'If you have any queries please contact us at support@chatcat.io.  ' ) . "<br /></br />";
+    $body .= __( 'If you have any queries please contact us at support@chatcat.io.  ' ) . "<br /><br />";
 
     $body .= __( 'Regards,' ) . "<br>";
 
