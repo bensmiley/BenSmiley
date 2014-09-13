@@ -9084,8 +9084,7 @@ background: #F3F3F3 !important;
     position: relative;
 }
 .sf-menu li a { 
-    padding-bottom: 48px;
-    padding-top: 20px;
+    padding: 20px 10px 48px;
     color: #888;
     display: block;
     font-size: 12px;
