@@ -63,7 +63,7 @@ define [ 'app',
         class HeaderLayout extends Marionette.Layout
 
             template : '<div class="navbar-inner">
-                            <div class="">
+                            <div class="logo">
                                 <div class="pull-left">
                                     <a href="{{SITEURL}}">
                                         <img class="pull-left" src="{{LOGOPATH}}" />

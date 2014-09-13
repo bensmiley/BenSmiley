@@ -1,4 +1,4 @@
-/* Font Import */
+.ca/* Font Import */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 
 :-moz-placeholder {
@@ -9069,6 +9069,10 @@ background: #F3F3F3 !important;
 #header-region nav ul li {
     float: right;
 }
+
+#header-region .logo img {
+    height: 60px;
+}
 .sf-menu li {
     float: left;
     font-size: 12px !important;
@@ -9078,6 +9082,15 @@ background: #F3F3F3 !important;
 .sf-menu li {
     float: left;
     position: relative;
+}
+.sf-menu li a { 
+    padding-bottom: 48px;
+    padding-top: 20px;
+    color: #888;
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    transition: color 0.1s linear 0s;
 }
 .sf-menu, .sf-menu * {
     list-style: none outside none;
@@ -9090,7 +9103,9 @@ background: #F3F3F3 !important;
 list-style-type: none;
 background: #FFF;
 text-align: left;
-height: 330px;
 padding: 30px 15%;
 font-size: .9rem;
+}
+.ca-menu li.plans {
+    vertical-align: top;
 }
