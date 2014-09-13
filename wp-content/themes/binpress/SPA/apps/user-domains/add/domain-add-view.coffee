@@ -72,10 +72,10 @@ define [ 'marionette'
 
                 domain_url :
                     required : true,
-                    url : true
+                    domain : true
 
             messages :
-                domain_url : 'Enter valid url'
+                domain_url : 'Invalid domain name'
 
     DomainAddView
 

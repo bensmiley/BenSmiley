@@ -61,7 +61,7 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
           },
           domain_url: {
             required: true,
-            complete_url: true
+            domain: true
           }
         },
         messages: {

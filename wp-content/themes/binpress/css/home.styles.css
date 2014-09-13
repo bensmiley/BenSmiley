@@ -1,14 +1,1 @@
-@import "bootstrap.css";
-
-@import "bootstrap-theme.css";
-
-@import "font-awesome.css";
-
-@import "style.css";
-
-@import "responsive.css";
-/* Button Color */
-.btn-primary {
-  background: #0d82b3;
-  color: #ffffff;
-}
+@import "bootstrap.css";@import "bootstrap-theme.css";@import "font-awesome.css";@import "style.css";@import "responsive.css";.btn-primary{background:#0d82b3;color:#fff}
