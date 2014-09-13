@@ -56,7 +56,7 @@ define [ 'marionette'
 
                 domain_url :
                     required : true,
-                    complete_url : true
+                    url : true  
 
             messages :
                 domain_url : 'Enter valid url'

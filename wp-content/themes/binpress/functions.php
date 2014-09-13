@@ -378,3 +378,20 @@ function register_terms_for_plans() {
 //    add_option( $term_free[ 'term_id' ], $term_free_data );
 //}
 
+function redirect_if_required(){
+
+    if(is_user_logged_in()){
+        if(is_page('user-activation') || is_page('reset-password') || is_page('home')){
+            wp_safe_redirect(site_url('dashboard/#profile'));
+            die();
+        }
+    }
+
+    if(!is_user_logged_in()){
+        if(is_page('dashboard' )){
+            wp_safe_redirect(site_url('home'));
+            die();
+        }
+    }
+}
+add_action('template_redirect', 'redirect_if_required');
