@@ -166,6 +166,8 @@ function create_local_scripts( $handle ) {
     wp_localize_script( $handle, "AJAXURL", admin_url( "admin-ajax.php" ) );
     wp_localize_script( $handle, "SITEURL", site_url() );
     wp_localize_script( $handle, "SITENAME", 'Chatcat.io' );
+    wp_localize_script( $handle, "CSEK", BT_CSEK );
+
     wp_localize_script( $handle, "LOGOPATH", 'http://placehold.it/100x40' );
     wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );
     wp_localize_script( $handle, "_WPNONCE", wp_create_nonce( 'media-form' ) );

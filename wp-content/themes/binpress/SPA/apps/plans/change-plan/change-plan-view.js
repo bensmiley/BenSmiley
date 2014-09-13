@@ -43,7 +43,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       return SelectedPlanView.__super__.constructor.apply(this, arguments);
     }
 
-    SelectedPlanView.prototype.template = '<ul class="ca-menu grow"><li class="plans"><h3 class="semi-bold text-center">Selected plan</h3> <div class="grid simple"> <h4 class="text-center semi-bold">{{plan_name}}<br> <small class="text-danger"> Rs.{{price}}/month</small> </h4> <hr> <ul class="list-unstyled"> <li>Multiple Email Accounts</li> <li>99.9% Uptime</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> <li>Enterprise Level Storage</li> <li>Fully Managed VPS</li> <li>Reliable 24/7/365 Support</li> </ul> <br> <p class="text-danger">Note:</p> <p class="text-muted">Any change of plans in the midddle of cycle will be applicable from new cycle</p> </div></li></ul>';
+    SelectedPlanView.prototype.template = '<ul class="ca-menu grow"><li class="plans"><h3 class="semi-bold text-center">Selected plan</h3> <div class="grid simple"> <h4 class="text-center semi-bold">{{plan_name}}<br> <small class="text-danger"> ${{price}}/month</small> </h4> <hr> {{{description}}} <br> <p class="text-danger">Note:</p> <p class="text-muted">Any change of plans in the midddle of cycle will be applicable from new cycle</p> </div></li></ul>';
 
     return SelectedPlanView;
 
@@ -62,7 +62,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
         'click #submit': function() {
           var braintree, clientSideEncryptionKey, creditCardToken;
           creditCardToken = this.model.get('token');
-          clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB";
+          clientSideEncryptionKey = window.CSEK;
           braintree = Braintree.create(clientSideEncryptionKey);
           creditCardToken = braintree.encrypt(creditCardToken);
           this.trigger("user:card:payment", creditCardToken);

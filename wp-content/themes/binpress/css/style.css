@@ -9085,3 +9085,12 @@ background: #F3F3F3 !important;
     padding: 0;
     z-index: 10;
 }
+
+ .features1 {
+list-style-type: none;
+background: #FFF;
+text-align: left;
+height: 330px;
+padding: 30px 15%;
+font-size: .9rem;
+}

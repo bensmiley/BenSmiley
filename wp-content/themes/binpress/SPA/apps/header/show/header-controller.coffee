@@ -66,16 +66,12 @@ define [ 'app',
                             <div class="">
                                 <div class="pull-left">
                                     <a href="{{SITEURL}}">
-                                        <h3 class="p-l-30 ">
-                                            <img class="pull-left hidden" src="{{LOGOPATH}}" />
-                                            {{SITENAME}}
-
-                                        </h3>
+                                        <img class="pull-left" src="{{LOGOPATH}}" />
                                     </a>
                                 </div>
 
                                 <div id="user-display"></div>
-                                <nav class="pull-right hidden" style="margin-right:15px;">
+                                <nav class="pull-right" style="margin-right:15px;">
                                     <ul class="sf-menu sf-js-enabled sf-arrows">
                                         <li><a href="{{SITEURL}}">Home</a></li>
                                         <li><a href="{{SITEURL}}/support">Support</a></li>
@@ -89,7 +85,7 @@ define [ 'app',
                 data  = super data
                 data.SITEURL = window.SITEURL
                 data.SITENAME = window.SITENAME
-                data.LOGOPATH = window.LOGOPATH
+                data.LOGOPATH = 'http://chatcat.io/wp-content/uploads/2014/09/unnamed.png'
                 data
 
 
