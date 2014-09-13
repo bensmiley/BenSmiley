@@ -10,12 +10,18 @@
 
 require "functions.php";
 
+function sortByPrice($a, $b) {
+    return (double)$a['price'] - (double)$b['price'];
+}
+
 /**
  * Function to fetch all the plans available for the domains
  */
 function ajax_fetch_all_plans() {
 
     $braintree_plans = get_all_plans();
+
+    usort($braintree_plans, 'sortByPrice');
 
     wp_send_json( array( 'code' => 'OK', 'data' => $braintree_plans ) );
 }

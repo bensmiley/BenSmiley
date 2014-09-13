@@ -338,7 +338,7 @@ function register_domain_post() {
         'show_in_menu' => TRUE,
         'query_var' => TRUE,
         'rewrite' => array(
-            'slug' => 'room'
+            'slug' => 'domain'
         ),
         'capability_type' => 'post',
         'has_archive' => TRUE,
@@ -393,5 +393,6 @@ function redirect_if_required(){
             die();
         }
     }
+
 }
 add_action('template_redirect', 'redirect_if_required');

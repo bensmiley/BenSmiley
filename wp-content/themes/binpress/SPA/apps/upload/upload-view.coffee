@@ -17,7 +17,7 @@ define [  'plupload', 'marionette' ], ( plupload, Marionette )->
                         <div id="progress" style="width: 10%; margin: 0px auto; display: none;"
                         class="progress progress-striped active">
                         </div>
-                        <div style="display:none" class="upload-success">Upload Complete</div>
+                        <div style="display:none" class="upload-success">Upload complete. Click save to update.</div>
                     </div>
                     <input type="text" style="display: none" id="user-photo-id" name="user_photo_id"/>
                  </div>'

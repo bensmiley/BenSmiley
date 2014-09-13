@@ -9,9 +9,7 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
 										 <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub>
 										 </div>
 										</div>
-                                        <ul class="features1">
-                                            <li>{{description}} </li>
-                                        </ul>
+                                        {{{description}}}
                                         <div class="pt-footer">
 										<a href="#change-plan/{{plan_id}}" class="plan-link">Subscribe</a>
 										</div>

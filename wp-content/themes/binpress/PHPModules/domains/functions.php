@@ -239,7 +239,7 @@ function check_url_unique( $url ) {
     wp_reset_postdata();
 
     if ( $url_exists )
-        return array( 'code' => "ERROR", 'msg' => 'Url already exists' );
+        return array( 'code' => "ERROR", 'msg' => 'Domain already exists' );
     else
         return array( 'code' => "OK" );
 
@@ -271,7 +271,7 @@ function check_url_exists( $url ) {
     wp_reset_postdata();
 
     if ( (int) $domain_id  === 0 )
-        return array( 'code' => 'ERROR', 'msg' => 'Url does not exists for any domain ' );
+        return array( 'code' => 'ERROR', 'msg' => 'domain does not exists' );
     else
         return array( 'code' => 'OK', 'domain_id' => $domain_id );
 
