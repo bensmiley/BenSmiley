@@ -9,7 +9,7 @@ get_header();
     <!-- BEGIN CONTAINER -->
     <div class="container">
         <div class="row login-container column-seperation ">
-            <div class="col-md-5 ">
+            <div class="col-md-5 col-md-offset-1">
                 <h2>Sign Up For Our Free Version</h2>
 
                 <p>You can upgrade to a paid plan in the backend when you need to.</p>
@@ -147,7 +147,6 @@ get_header();
                 <!-- LOGIN FORM END -->
 
             </div>
-            <br>
         </div>
 
         <!--FORGOT PASSWORD MODAL START -->
