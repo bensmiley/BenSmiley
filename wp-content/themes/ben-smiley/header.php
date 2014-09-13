@@ -224,7 +224,7 @@ if ( !empty( $options[ 'transparent-header' ] ) && $options[ 'transparent-header
 
                         <!-- show user name and photo display if user logged in  -->
 
-                        <div class="pull-right m-l-20">
+                        <div class="pull-right m-l-20 user-actions">
                             <div class="user-profile pull-left"><a href="<?php echo get_site_url(); ?>/dashboard">
                                 <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
 								<div id="user-meta" class="pull-right">
