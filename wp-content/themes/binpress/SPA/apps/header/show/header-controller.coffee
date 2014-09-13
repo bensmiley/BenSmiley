@@ -65,18 +65,40 @@ define [ 'app',
             template : '<div class="navbar-inner">
                             <div class="">
                                 <div class="pull-left">
-                                    <a href="javascript:void(0)">
-                                        <h3 class="p-l-30 ">Chatcat.io</h3></a>
+                                    <a href="{{SITEURL}}">
+                                        <h3 class="p-l-30 ">
+                                            <img class="pull-left hidden" src="{{LOGOPATH}}" />
+                                            {{SITENAME}}
+
+                                        </h3>
+                                    </a>
                                 </div>
+
                                 <div id="user-display"></div>
+                                <nav class="pull-right hidden" style="margin-right:15px;">
+                                    <ul class="sf-menu sf-js-enabled sf-arrows">
+                                        <li><a href="{{SITEURL}}">Home</a></li>
+                                        <li><a href="{{SITEURL}}/support">Support</a></li>
+                                        <li><a href="{{SITEURL}}/pricing">Pricing & Plans</a></li>
+                                    </ul>
+                                </nav>  
                             </div>
                         </div>'
+
+            mixinTemplateHelpers : (data) ->
+                data  = super data
+                data.SITEURL = window.SITEURL
+                data.SITENAME = window.SITENAME
+                data.LOGOPATH = window.LOGOPATH
+                data
+
 
             className : 'header navbar navbar-inverse'
 
             regions :
                 userDisplayRegion : '#user-display'
 
+            
         # return the header  layout instance
         HeaderLayout
 

@@ -48,7 +48,20 @@ function binpress_theme_setup() {
 
 }
 
-add_action( 'setup_theme', 'binpress_theme_setup' );
+add_action( 'after_setup_theme', 'binpress_theme_setup' );
+
+function arphabet_widgets_init() {
+
+    register_sidebar( array(
+        'name' => 'Home right sidebar',
+        'id' => 'home_right_1',
+        'before_widget' => '<div>',
+        'after_widget' => '</div>',
+        'before_title' => '<h2 class="rounded">',
+        'after_title' => '</h2>',
+    ) );
+}
+add_action( 'widgets_init', 'arphabet_widgets_init' );
 
 
 function binpress_after_init() {
@@ -155,6 +168,9 @@ if ( !is_development_environment() ) {
 function create_local_scripts( $handle ) {
     // localized variables
     wp_localize_script( $handle, "AJAXURL", admin_url( "admin-ajax.php" ) );
+    wp_localize_script( $handle, "SITEURL", site_url() );
+    wp_localize_script( $handle, "SITENAME", 'Chatcat.io' );
+    wp_localize_script( $handle, "LOGOPATH", 'http://placehold.it/100x40' );
     wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );
     wp_localize_script( $handle, "_WPNONCE", wp_create_nonce( 'media-form' ) );
     if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )

@@ -5,6 +5,7 @@ define "plugins-loader", [ 'underscore'
                            'backbone'
                            'marionette'
                            'backbonesyphon'
+                           'additionalmethods'
                            'jqueryvalidate' ], ->
 
 # set all plugin configurations for this SPA here

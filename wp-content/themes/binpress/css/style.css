@@ -16,7 +16,7 @@
     color: #333843 ! important;
 }
 
-/* Reset */
+/* Reset */ 
 html {
     font-size: 100%;
     height: 100%;
@@ -9033,4 +9033,52 @@ background: #F3F3F3 !important;
 }
 .logo h1{
 	font-style:normal;
+}
+
+#header-region nav > ul {
+    float: right;
+    overflow: visible !important;
+    transition: padding 0.8s ease 0s;
+}
+.sf-menu {
+    float: right;
+}
+.sf-menu {
+    line-height: 1;
+}
+.sf-menu, .sf-menu * {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+}
+.sf-menu {
+    float: left;
+    margin-bottom: 30px;
+}
+.sf-menu {
+    line-height: 1;
+}
+
+#header-region nav > ul > li {
+    float: left;
+}
+#header-region nav ul li {
+    float: right;
+}
+.sf-menu li {
+    float: left;
+    font-size: 12px !important;
+    line-height: 12px !important;
+    position: relative;
+}
+.sf-menu li {
+    float: left;
+    position: relative;
+}
+.sf-menu, .sf-menu * {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
 }

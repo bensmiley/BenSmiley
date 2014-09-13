@@ -6,6 +6,7 @@
   margin: auto;
   -webkit-filter: grayscale(100%);
   /* filter: url(css/grayscale.svg#greyscale); */
+
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
@@ -17,6 +18,7 @@
   opacity: 0.9 !important;
   -webkit-filter: grayscale(0%);
   /* filter: url(css/grayscale.svg#greyscale); */
+
   -moz-filter: grayscale(0%);
   -ms-filter: grayscale(0%);
   -o-filter: grayscale(0%);
@@ -45,6 +47,7 @@
 .grow li.plans {
   width: 19.6%;
   /* height: 320px;*/
+
   overflow: hidden;
   position: relative;
   display: inline-block;
@@ -83,6 +86,7 @@
   position: absolute;
   left: -1em;
   /* same as ul padding-left */
+
   top: 0em;
   color: #0AA699!important;
 }
