@@ -9,10 +9,15 @@
 require_once get_template_directory().'/vendor/braintree/braintree_php/lib/Braintree.php';
 
 
+// Braintree_Configuration::environment('sandbox');
+// Braintree_Configuration::merchantId('x8dwnhxhdmmhytj7');
+// Braintree_Configuration::publicKey('msc2t6xzfj2qdw59');
+// Braintree_Configuration::privateKey('5b8284e277f8c86552dcd6598e86e77c');
+
 Braintree_Configuration::environment('sandbox');
-Braintree_Configuration::merchantId('x8dwnhxhdmmhytj7');
-Braintree_Configuration::publicKey('msc2t6xzfj2qdw59');
-Braintree_Configuration::privateKey('5b8284e277f8c86552dcd6598e86e77c');
+Braintree_Configuration::merchantId(BT_MERCHANT_ID);
+Braintree_Configuration::publicKey(BT_PUBLIC_KEY);
+Braintree_Configuration::privateKey(BT_PRIVATE_KEY);
 
 //function ajax_make_payment(){
 
