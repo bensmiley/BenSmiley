@@ -199,19 +199,19 @@ function set_html_content_type() {
  */
 function get_user_activation_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
-    $body .= __( 'Thank you for creating an account with Chatcat.io.
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br><br>";
+    $body .= __( 'Thank you for creating an account with Chatcat.io.<br><br>
               Please confirm your email address by clicking the following:' ) . "<br>";
 
     $link = site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
             "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= '<a target ="_blank" href='.$link.'>Click here to activate profile</a><br>';
+    $body .= '<a target ="_blank" href='.$link.'>Click here to activate profile</a><br><br>';
 
     $body .= sprintf( __( "If you're not %s or didn't request verification, you can ignore this email." ),
             $user_data->display_name ) . "<br>";
 
-    $body .= __( 'If you have any questions please feel free to contact on support@chatcat.io' ) . "<br>";
+    $body .= __( 'If you have any questions please feel free to contact on support@chatcat.io' ) . "<br><br>";
 
     $body .= __( 'Regards,' ) . "<br>";
 
