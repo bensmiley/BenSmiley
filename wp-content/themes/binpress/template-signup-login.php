@@ -73,7 +73,7 @@ get_header();
                         <div class="control-group  col-md-10">
                             <div class="checkbox checkbox check-success">
                                 <input type="checkbox" id="agree_tc" value="1" name="agree_tc">
-                                <label for="agree_tc">I Agree to all <a>Terms & Conditions</a> </label>
+                                <label for="agree_tc">I Agree to all <a href="http://chatcat.io/terms-and-conditions/">Terms & Conditions</a> </label>
                             </div>
                         </div>
                     </div>
