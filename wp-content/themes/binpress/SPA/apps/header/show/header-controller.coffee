@@ -63,8 +63,8 @@ define [ 'app',
         class HeaderLayout extends Marionette.Layout
 
             template : '<div class="navbar-inner">
-                            <div class="logo">
-                                <div class="pull-left">
+                            <div>
+                                <div class="pull-left" style="margin-top:-10px">
                                     <a href="{{SITEURL}}">
                                         <img class="pull-left" src="{{LOGOPATH}}" />
                                     </a>
@@ -73,9 +73,10 @@ define [ 'app',
                                 <div id="user-display"></div>
                                 <nav class="pull-right" style="margin-right:15px;">
                                     <ul class="sf-menu sf-js-enabled sf-arrows">
-                                        <li><a href="{{SITEURL}}">Home</a></li>
-                                        <li><a href="{{SITEURL}}/support">Support</a></li>
                                         <li><a href="{{SITEURL}}/pricing">Pricing & Plans</a></li>
+                                        <li><a href="{{SITEURL}}/support">Support</a></li>
+                                        <li><a href="{{SITEURL}}">Home</a></li>
+                                        
                                     </ul>
                                 </nav>  
                             </div>
