@@ -9228,7 +9228,7 @@ background-image: none;
 header#top nav ul #sign-btn {
 	margin-left: 15px!important;
 	padding-bottom: 4.5px;
-padding-top: 4.5px;
+padding-top: 15px;
 }
 
 header#top nav ul #sign-btn > div {
@@ -9249,7 +9249,7 @@ padding-left: 23px;
 	background-repeat: no-repeat;
     box-sizing: content-box!important;
     -moz-box-sizing: content-box!important;
-	color:#27CCC0 !important;
+	/*color:#27CCC0 !important;*/
 }
 
 header#top nav ul #sign-btn a span {
