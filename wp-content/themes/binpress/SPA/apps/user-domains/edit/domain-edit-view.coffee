@@ -20,7 +20,7 @@ define [ 'marionette'
                     $( '.ajax-loader-login' ).show()
 
             'click #btn-delete-domain' : ->
-                if confirm "Delete the domain?"
+                if confirm "If you do this your payment plan will be cancelled and your domain will be deleted. You want to continue?"
                     $( '.ajax-loader-login' ).show()
                     @trigger "delete:domain:clicked"
 

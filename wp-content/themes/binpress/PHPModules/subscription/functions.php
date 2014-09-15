@@ -25,14 +25,14 @@ function query_subscription_table( $domain_id ) {
         return array();
 
     // check if the last subscription is pending or active
-    if ( $query_result[ 0 ][ 'status' ] == "pending" ) {
+    if ( isset($query_result[ 0 ]) && $query_result[ 0 ][ 'status' ] == "pending" ) {
         $query2 = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 1, 1";
 
         $last_active_subscription = $wpdb->get_results( $query2, ARRAY_A );
         return $last_active_subscription[ 0 ];
     }
 
-    return $query_result[ 0 ];
+    return isset($query_result[ 0 ]) ? $query_result[ 0 ] : array();
 }
 
 /**
