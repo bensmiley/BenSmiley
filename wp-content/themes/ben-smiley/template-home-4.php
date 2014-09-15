@@ -98,7 +98,7 @@ get_header(); ?>
 			<div class="search_area">
 			<label class="text_white">You Can Sign Up For Our Free Version</label>
 			<!--<input type="text" class="messg_txt"/>-->
-			<button class="messg_btn">Try It Now!</button>
+			<a href="http://chatcat.io/home/" class="messg_btn">Try It Now!</a>
 			</div>
 		</div>
 <div class="home-wrap">
