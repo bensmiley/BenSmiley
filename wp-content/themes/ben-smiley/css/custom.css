@@ -1,7 +1,7 @@
 /*color*/
 #header-outer {
-  padding-top: 10px !important;
-  height: 80px;
+  padding-top: 5px !important;
+  height: 90px;
 }
 #header-space {
   height: 80px !important;
@@ -232,7 +232,6 @@ body {
 #sidebar.left-sidebar {
   /*background-color: #efefef;
 	padding: 20px 30px;*/
-
 }
 #sidebar.left-sidebar .menu-doc-menu-container ul > li a {
   color: #19657d;
