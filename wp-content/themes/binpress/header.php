@@ -45,17 +45,14 @@
             <?php endif; ?>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-  <a class="logo" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-                <h1 class="blog-name">
-                    <?php
-                        $blog_name = get_bloginfo( 'name','display' );
-                        echo ucfirst($blog_name);
-                    ?>
-                </h1>
-            </a>
+        <div class="col-md-4">
+            <div style="margin-top:-10px" class="pull-left"> 
+                <a href="<?php echo home_url(); ?>"> 
+                    <img src="http://chatcat.io/wp-content/uploads/2014/09/unnamed.png" class="pull-left"> 
+                </a> 
+            </div>
         </div>
-         <div class="col-md-9">
+         <div class="col-md-8">
 
             <!-- show user name and photo display if user logged in  -->
             <?php
