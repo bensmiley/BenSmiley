@@ -5,7 +5,7 @@
 /**
  * http://localhost/bensmiley/reset-password/?action=reset-password&key=c476f62d9d1d00450b77797b827ed2d74eb9166b&login=tina%40mailinator.com
  */
-get_header();
+get_header('binpress');
 
 $form_action = "reset-password";
 
@@ -87,4 +87,4 @@ reset_activation_key( $user_data_object->user_email ); ?>
         </div>
     </div>
 
-<?php get_footer(); ?>
+<?php get_footer('binpress');

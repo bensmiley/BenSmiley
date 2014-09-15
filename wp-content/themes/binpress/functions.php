@@ -64,7 +64,7 @@ function arphabet_widgets_init() {
     register_sidebar( array( 'name' => 'Footer Area 3', 'id' => 'sidebar-6','before_widget' => '<div id="%1$s" class="widget %2$s">', 'after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>' ) );
 
 }
-add_action( 'widgets_init', 'arphabet_widgets_init' );
+//add_action( 'widgets_init', 'arphabet_widgets_init' );
 
 
 function binpress_after_init() {
@@ -90,6 +90,10 @@ add_action( 'init', 'binpress_after_init' );
 if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_scripts() {
+
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
+
         // TODO: handle with better logic to define patterns and folder names
         $module = get_module_name();
         $spa_pages = array( 'dashboard' );
@@ -122,6 +126,9 @@ if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_styles() {
 
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
+
         $module = get_module_name();
 
         wp_enqueue_style( "$module-style", get_template_directory_uri() . "/css/{$module}.styles.css" );
@@ -134,6 +141,9 @@ if ( is_development_environment() ) {
 if ( !is_development_environment() ) {
 
     function binpress_production_enqueue_script() {
+
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
 
         $module = get_module_name();
         $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
@@ -155,6 +165,9 @@ if ( !is_development_environment() ) {
 
     function binpress_production_enqueue_styles() {
 
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
+
         $module = get_module_name();
 
         wp_enqueue_style( "$module-style",
@@ -167,6 +180,34 @@ if ( !is_development_environment() ) {
 
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_styles' );
 }
+
+function change_template_directory_uri($template_dir_uri, $template, $theme_root_uri){
+    
+
+    if( !is_page('dashboard') && 
+        !is_page('user-activation') && 
+        !is_page('home') && 
+        !is_page('reset-password')){
+        $template_dir_uri = site_url('wp-content/themes/ben-smiley');
+    }
+        
+
+    return   $template_dir_uri;
+
+}
+add_filter('template_directory_uri', 'change_template_directory_uri', 100, 3);
+
+function change_template_directory($template_dir, $template, $theme_root ){
+    if( !is_page('dashboard') && 
+        !is_page('user-activation') && 
+        !is_page('home') && 
+        !is_page('reset-password')){
+
+        $template_dir = ABSPATH . 'wp-content/themes/ben-smiley';
+    }
+    return $template_dir;
+}
+add_filter('template_directory', 'change_template_directory', 100, 3 );
 
 function create_local_scripts( $handle ) {
     // localized variables
@@ -217,9 +258,7 @@ function get_module_name() {
     $module = "";
 
     // TODO: Handle with better logic here. Regex or something
-    if(is_front_page())
-        $module = 'home';
-    else if ( is_page() )
+    if ( is_page() )
         $module = sanitize_title( get_the_title() );
 
 

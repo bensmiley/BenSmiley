@@ -25,9 +25,12 @@ $options = get_option( 'salient' );
 
 function nectar_register_js() {
 
-    if ( !is_admin() ) {
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
+        return;
 
-        // Register 
+    if ( !is_admin()) {
+
+         // Register 
         wp_register_script( 'modernizer', get_template_directory_uri() . '/js/modernizr.js', 'jquery', '2.6.2' );
         wp_register_script( 'respond', get_template_directory_uri() . '/js/respond.js', 'jquery', '1.1', TRUE );
         wp_register_script( 'superfish', get_template_directory_uri() . '/js/superfish.js', 'jquery', '1.4.8', TRUE );
@@ -87,6 +90,9 @@ add_action( 'wp_enqueue_scripts', 'nectar_register_js' );
 
 
 function nectar_page_specific_js() {
+
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
+        return;
 
     global $post;
     global $options;
@@ -184,6 +190,9 @@ if ( $woocommerce ) {
 
 //Main Styles
 function nectar_main_styles() {
+
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
+        return;
 
     // Register 
     wp_register_style( 'rgs', get_template_directory_uri() . '/css/rgs.css', '', '4.1.1' );
@@ -2777,49 +2786,49 @@ if ( !function_exists( 'nectar_pagination' ) ) {
 
     }
 }
-#-----------------------------------------------------------------#
-# Custom Setting for Theme
-#-----------------------------------------------------------------#
-/**
- * Function to return an array containing data about the current logged in user
- *
- * @return array of logged in user data
- */
-function get_current_user_data() {
+// #-----------------------------------------------------------------#
+// # Custom Setting for Theme
+// #-----------------------------------------------------------------#
+// /**
+//  * Function to return an array containing data about the current logged in user
+//  *
+//  * @return array of logged in user data
+//  */
+// function get_current_user_data() {
 
-    $user_id = get_current_user_id();
+//     $user_id = get_current_user_id();
 
-    $current_user = get_userdata( $user_id );
+//     $current_user = get_userdata( $user_id );
 
-    $user_photo_url = "http://1.gravatar.com/avatar/5ba2411c7d1e867264c0dcec5a160a46?s=64&d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&r=G";
+//     $user_photo_url = "http://1.gravatar.com/avatar/5ba2411c7d1e867264c0dcec5a160a46?s=64&d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&r=G";
 
-    // get the display image of the logged in user
-    $user_photo_id = get_user_meta( $current_user->data->ID, 'user_photo_id', true );
+//     // get the display image of the logged in user
+//     $user_photo_id = get_user_meta( $current_user->data->ID, 'user_photo_id', true );
 
-    if ( !empty( $user_photo_id ) )
-        $user_photo_url = wp_get_attachment_thumb_url( $user_photo_id );
+//     if ( !empty( $user_photo_id ) )
+//         $user_photo_url = wp_get_attachment_thumb_url( $user_photo_id );
 
 
-    return array( 'ID' => $current_user->data->ID,
-        'user_login' => $current_user->data->user_login,
-        'user_email' => $current_user->data->user_email,
-        'display_name' => $current_user->data->display_name,
-        'user_photo' => $user_photo_url,
-        'role' => $current_user->roles,
-        'capabilities' => $current_user->allcaps );
+//     return array( 'ID' => $current_user->data->ID,
+//         'user_login' => $current_user->data->user_login,
+//         'user_email' => $current_user->data->user_email,
+//         'display_name' => $current_user->data->display_name,
+//         'user_photo' => $user_photo_url,
+//         'role' => $current_user->roles,
+//         'capabilities' => $current_user->allcaps );
 
-}
-/**
- * Function to logout a user from the site
- */
-function ajax_user_logout() {
-    wp_logout();
+// }
+// /**
+//  * Function to logout a user from the site
+//  */
+// function ajax_user_logout() {
+//     wp_logout();
 
-    wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
+//     wp_send_json( array( 'code' => 'OK', 'redirect_url' => home_url() ) );
 
-}
+// }
 
-add_action( 'wp_ajax_user-logout', 'ajax_user_logout' );
+// add_action( 'wp_ajax_user-logout', 'ajax_user_logout' );
 
 
 

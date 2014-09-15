@@ -3,7 +3,7 @@
  * Template Name: User Activation
  */
 
-get_header();
+get_header('binpress');
 
 $form_action = "activate-user";
 
@@ -42,4 +42,4 @@ set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
     </div>
     <!-- END CONTAINER -->
 <?php
-get_footer(); ?>
+get_footer('binpress');
