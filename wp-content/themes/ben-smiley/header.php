@@ -262,9 +262,9 @@ if ( !empty( $options[ 'transparent-header' ] ) && $options[ 'transparent-header
                                 echo '<li><a href="">No menu assigned!</a></li>';
                             }
                             ?>
-                            <li id="search-btn">
+                            <!--<li id="search-btn">
                                 <div><a href=""><span class="icon-salient-search" aria-hidden="true"></span></a></div>
-                            </li>
+                            </li>-->
                             <?php if ( ! is_user_logged_in()): ?>
                                 <li id="sign-btn">
                                     <div><a href="home/"><span class="icon-unlock-alt" aria-hidden="true"></span>Sign In</a>
