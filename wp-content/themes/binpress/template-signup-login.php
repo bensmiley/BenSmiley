@@ -3,7 +3,7 @@
  * Template Name: Home
  */
 
-get_header();
+get_header('binpress');
 
 ?>
     <!-- BEGIN CONTAINER -->
@@ -195,4 +195,4 @@ get_header();
     </div>
     <!-- END CONTAINER -->
 
-<?php get_footer(); ?>
+<?php get_footer('binpress');
