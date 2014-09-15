@@ -3,7 +3,7 @@
 #-----------------------------------------------------------------#
 # Default theme constants
 #-----------------------------------------------------------------#
-define( 'NECTAR_FRAMEWORK_DIRECTORY', get_template_directory_uri() . '/nectar/' );
+define( 'NECTAR_FRAMEWORK_DIRECTORY', site_url('wp-content/themes/ben-smiley') . '/nectar/' );
 define( 'NECTAR_THEME_NAME', 'salient' );
 
 #-----------------------------------------------------------------#
