@@ -1,4 +1,11 @@
 /*color*/
+#header-outer {
+  padding-top: 5px !important;
+  height: 90px;
+}
+#header-space {
+  height: 80px !important;
+}
 .user-actions {
   margin-top: 14px;
 }
@@ -41,6 +48,8 @@
   background: rgba(81, 78, 71, 0.45);
   padding: 20px;
   text-align: center;
+  margin-top: -35px;
+  margin-bottom: 20px;
 }
 .search_area label {
   font-size: 25px;
