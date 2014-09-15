@@ -2,7 +2,7 @@
 define [ 'app'
          'msgbus'
          'regioncontroller'
-         'apps/plans/list/list-plan-view' ], ( App, msgbus, RegionController, PlanListView )->
+         'apps/plans/list/list-plan-view' ], ( App, msgbus, RegionController, Views )->
 
     #start the app module
     App.module "PlansApp.List", ( List, App, BackBone, Marionette, $, _ )->
@@ -11,6 +11,10 @@ define [ 'app'
         class PlansListController extends RegionController
 
             initialize : ( opts )->
+
+                @show new Views.BetaReleaseView opts
+                return
+
                 #get the domain ID from the options passed to controller
                 @domainId = opts.domainID
 
@@ -38,7 +42,7 @@ define [ 'app'
                     loading : true
 
             getPlanListView : ( subscriptionModel ) ->
-                new PlanListView
+                new Views.PlansListView
                     collection : @planCollection
                     model : subscriptionModel
                     domainId : @domainId

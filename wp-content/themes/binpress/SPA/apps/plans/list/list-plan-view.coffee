@@ -1,19 +1,21 @@
 #include the files for the app
-define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marionette, listPlanViewTpl )->
+define [ 'marionette'
+        'text!apps/plans/templates/listPlanView.html'
+        'text!apps/plans/templates/beta-release.html' ], ( Marionette, listPlanViewTpl, betaRelease)->
 
     #view for each plan
     class SinglePlanView extends Marionette.ItemView
         template : '<div class="text-center">
-                                        <h4 class="title1">{{plan_name}}</h4>
-                                        <div class="content1" >
-										 <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub>
-										 </div>
-										</div>
-                                        {{{description}}}
-                                        <div class="pt-footer">
-										<a href="#change-plan/{{plan_id}}" class="plan-link">Subscribe</a>
-										</div>
-                                      </div>'
+                        <h4 class="title1">{{plan_name}}</h4>
+                        <div class="content1" >
+						 <div class="price"><sup>&#36;</sup><span>{{price}}</span><sub>/month</sub>
+						 </div>
+						</div>
+                        {{{description}}}
+                        <div class="pt-footer">
+						<a href="#change-plan/{{plan_id}}" class="plan-link">Subscribe</a>
+						</div>
+                      </div>'
         tagName : 'li'
 
         className : 'plans'
@@ -55,8 +57,21 @@ define [ 'marionette', 'text!apps/plans/templates/listPlanView.html' ], ( Marion
             domainId : domainID
 
 
+    class BetaReleaseView extends Marionette.ItemView
+
+        template : betaRelease
+
+        initialize : (opts)->
+            @domainId = opts.domainID
+
+        mixinTemplateHelpers : (data = {})->
+            data.domain_id = @domainId
+            data
+
+
     # return the view instances as objects
-    PlansListView
+    PlansListView : PlansListView
+    BetaReleaseView : BetaReleaseView
 
 
 

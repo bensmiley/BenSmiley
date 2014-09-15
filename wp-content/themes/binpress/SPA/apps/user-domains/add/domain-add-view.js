@@ -62,13 +62,13 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
           post_title: {
             required: true
           },
-          domain_url: {
+          domain: {
             required: true,
             domain: true
           }
         },
         messages: {
-          domain_url: 'Invalid domain name'
+          domain: 'Invalid domain name'
         }
       };
     };

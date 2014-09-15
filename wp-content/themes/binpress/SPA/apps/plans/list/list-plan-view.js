@@ -2,8 +2,8 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(Marionette, listPlanViewTpl) {
-  var PlansListView, SinglePlanView;
+define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/plans/templates/beta-release.html'], function(Marionette, listPlanViewTpl, betaRelease) {
+  var BetaReleaseView, PlansListView, SinglePlanView;
   SinglePlanView = (function(_super) {
     __extends(SinglePlanView, _super);
 
@@ -72,5 +72,32 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html'], function(M
     return PlansListView;
 
   })(Marionette.CompositeView);
-  return PlansListView;
+  BetaReleaseView = (function(_super) {
+    __extends(BetaReleaseView, _super);
+
+    function BetaReleaseView() {
+      return BetaReleaseView.__super__.constructor.apply(this, arguments);
+    }
+
+    BetaReleaseView.prototype.template = betaRelease;
+
+    BetaReleaseView.prototype.initialize = function(opts) {
+      return this.domainId = opts.domainID;
+    };
+
+    BetaReleaseView.prototype.mixinTemplateHelpers = function(data) {
+      if (data == null) {
+        data = {};
+      }
+      data.domain_id = this.domainId;
+      return data;
+    };
+
+    return BetaReleaseView;
+
+  })(Marionette.ItemView);
+  return {
+    PlansListView: PlansListView,
+    BetaReleaseView: BetaReleaseView
+  };
 });
