@@ -184,13 +184,12 @@ if ( !is_development_environment() ) {
 function change_template_directory_uri($template_dir_uri, $template, $theme_root_uri){
     
 
-    if( !is_page('dashboard') && 
-        !is_page('user-activation') && 
-        !is_page('home') && 
-        !is_page('reset-password')){
+    if( is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password')){
+        $template_dir_uri = site_url('wp-content/themes/binpress');
+    }
+    else{
         $template_dir_uri = site_url('wp-content/themes/ben-smiley');
     }
-        
 
     return   $template_dir_uri;
 
@@ -198,11 +197,13 @@ function change_template_directory_uri($template_dir_uri, $template, $theme_root
 add_filter('template_directory_uri', 'change_template_directory_uri', 100, 3);
 
 function change_template_directory($template_dir, $template, $theme_root ){
-    if( !is_page('dashboard') && 
-        !is_page('user-activation') && 
-        !is_page('home') && 
-        !is_page('reset-password')){
-
+    if( is_page('dashboard') || 
+        is_page('user-activation') || 
+        is_page('home') || 
+        is_page('reset-password')){
+        $template_dir = ABSPATH . 'wp-content/themes/binpress';
+    }
+    else{
         $template_dir = ABSPATH . 'wp-content/themes/ben-smiley';
     }
     return $template_dir;
