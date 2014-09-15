@@ -56,6 +56,13 @@ function arphabet_widgets_init() {
         'name' => 'Page Sidebar',
         'id' => 'sidebar-2'
     ) );
+
+    register_sidebar( array( 'name' => 'Footer Area 1', 'id' => 'sidebar-4','before_widget' => '<div id="%1$s" class="widget %2$s">', 'after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>' ) );
+
+    register_sidebar( array( 'name' => 'Footer Area 2', 'id' => 'sidebar-5','before_widget' => '<div id="%1$s" class="widget %2$s">', 'after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>' ) );
+
+    register_sidebar( array( 'name' => 'Footer Area 3', 'id' => 'sidebar-6','before_widget' => '<div id="%1$s" class="widget %2$s">', 'after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>' ) );
+
 }
 add_action( 'widgets_init', 'arphabet_widgets_init' );
 
