@@ -25,11 +25,11 @@ $options = get_option( 'salient' );
 
 function nectar_register_js() {
 
-    if(is_page('dashboard') && is_page('user-activation') && is_page('home') && is_page('reset-password'))
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
         return;
 
     if ( !is_admin()) {
-        
+
          // Register 
         wp_register_script( 'modernizer', get_template_directory_uri() . '/js/modernizr.js', 'jquery', '2.6.2' );
         wp_register_script( 'respond', get_template_directory_uri() . '/js/respond.js', 'jquery', '1.1', TRUE );
@@ -91,7 +91,7 @@ add_action( 'wp_enqueue_scripts', 'nectar_register_js' );
 
 function nectar_page_specific_js() {
 
-    if(is_page('dashboard') && is_page('user-activation') && is_page('home') && is_page('reset-password'))
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
         return;
 
     global $post;
@@ -191,7 +191,7 @@ if ( $woocommerce ) {
 //Main Styles
 function nectar_main_styles() {
 
-    if(is_page('dashboard') && is_page('user-activation') && is_page('home') && is_page('reset-password'))
+    if(is_page('dashboard') || is_page('user-activation') || is_page('home') || is_page('reset-password'))
         return;
 
     // Register 
