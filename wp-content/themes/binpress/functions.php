@@ -91,8 +91,8 @@ if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_scripts() {
 
-        if(!is_page('dashboard' ))
-            return;
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
 
         // TODO: handle with better logic to define patterns and folder names
         $module = get_module_name();
@@ -126,8 +126,8 @@ if ( is_development_environment() ) {
 
     function binpress_dev_enqueue_styles() {
 
-        if(!is_page('dashboard' ))
-            return;
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
 
         $module = get_module_name();
 
@@ -141,6 +141,9 @@ if ( is_development_environment() ) {
 if ( !is_development_environment() ) {
 
     function binpress_production_enqueue_script() {
+
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
 
         $module = get_module_name();
         $path = get_template_directory_uri() . "/production/js/{$module}.scripts.min.js";
@@ -161,6 +164,9 @@ if ( !is_development_environment() ) {
     add_action( 'wp_enqueue_scripts', 'binpress_production_enqueue_script' );
 
     function binpress_production_enqueue_styles() {
+
+        if(!is_page('dashboard') && !is_page('user-activation') && !is_page('home') && !is_page('reset-password'))
+        return;
 
         $module = get_module_name();
 
@@ -190,6 +196,18 @@ function change_template_directory_uri($template_dir_uri, $template, $theme_root
 
 }
 add_filter('template_directory_uri', 'change_template_directory_uri', 100, 3);
+
+function change_template_directory($template_dir, $template, $theme_root ){
+    if( !is_page('dashboard') && 
+        !is_page('user-activation') && 
+        !is_page('home') && 
+        !is_page('reset-password')){
+
+        $template_dir = ABSPATH . 'wp-content/themes/ben-smiley';
+    }
+    return $template_dir;
+}
+add_filter('template_directory', 'change_template_directory', 100, 3 );
 
 function create_local_scripts( $handle ) {
     // localized variables
@@ -240,9 +258,7 @@ function get_module_name() {
     $module = "";
 
     // TODO: Handle with better logic here. Regex or something
-    if(is_front_page())
-        $module = 'home';
-    else if ( is_page() )
+    if ( is_page() )
         $module = sanitize_title( get_the_title() );
 
 
