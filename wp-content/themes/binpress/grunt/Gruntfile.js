@@ -113,6 +113,21 @@ module.exports = function(grunt) {
       }
     },
     less: {
+      development: {
+        options: {
+          paths: ["../css"],
+          cleancss: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: "../css",
+            src: ["../css/*.styles.less"],
+            dest: "../css",
+            ext: ".styles.css"
+          }
+        ]
+      },
       production: {
         options: {
           paths: ["../css"],
@@ -128,6 +143,12 @@ module.exports = function(grunt) {
             ext: ".styles.min.css"
           }
         ]
+      }
+    },
+    watch: {
+      less: {
+        files: ["../css/*.less", '../css/style.css'],
+        tasks: ["less:development"]
       }
     },
     clean: {

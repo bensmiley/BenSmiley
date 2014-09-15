@@ -10,7 +10,7 @@ define(['marionette', 'msgbus'], function(Marionette, msgbus) {
     dialogRegion: '#dialog-region',
     loginRegion: '#login-region'
   });
-  App.rootRoute = "";
+  App.rootRoute = "#domains";
   msgbus.reqres.setHandler("default:region", function() {
     return App.mainContentRegion;
   });

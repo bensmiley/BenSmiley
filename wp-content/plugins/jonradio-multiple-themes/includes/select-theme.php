@@ -5,34 +5,56 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/*	Define Constants:
-	the URL keyword to use when Cookie is present
+/*	Select the relevant Theme
+	These hooks must be available immediately
+	as some Themes check them very early.
+	Also must be available in Admin for p2.
 */
-DEFINE( 'JR_MT_COOKIE_KEYWORD', '_jr_mt_theme' );
+add_filter( 'pre_option_stylesheet', 'jr_mt_stylesheet' );
+add_filter( 'pre_option_template', 'jr_mt_template' );
 
-add_action( 'plugins_loaded', 'jr_mt_plugins_loaded' );
-function jr_mt_plugins_loaded() {
-	/*	Select the relevant Theme
+if ( !is_admin() ) {	
+	/*	Hooks below shown in order of execution */
+	
+	/*	Only do this if All Posts or All Pages setting is present.
 	*/
-	add_filter( 'pre_option_stylesheet', 'jr_mt_stylesheet' );
-	add_filter( 'pre_option_template', 'jr_mt_template' );
-}
-
-add_action( 'wp_loaded', 'jr_mt_wp_loaded', 999 );
-function jr_mt_wp_loaded() {
-	/*	Purpose of this hook is to output any required Cookie before it is too late
-		(after the <html> or any other HTML is generated).
-		There is no performance impact because this effectively pre-caches values
-		for use later.
-	*/
-	global $jr_mt_cache;
-	if ( $jr_mt_cache === FALSE ) {
-		$settings = get_option( 'jr_mt_settings' );
-		if ( !empty( $settings['remember']['query'] ) ) {
-			jr_mt_template();
+	if ( jr_mt_all_posts_pages() ) {
+		/*	'setup_theme' is the earliest Action that I could find where url_to_postid( $url )
+			is valid.  get_post() works by then, too.
+		*/
+		add_action( 'setup_theme', 'jr_mt_page_conditional', JR_MT_RUN_FIRST );
+		function jr_mt_page_conditional() {		
+			/*	In case any requests for Theme came before this hook,
+				make sure that Theme Selection is repeated the next time
+				it is needed.
+				Because url_to_postid() and possibly get_post() don't work until now.
+				
+				Note:  in PHP, you cannot directly unset a global variable,
+				hence the cryptic code below.
+			*/
+			unset( $GLOBALS['jr_mt_theme'] );
+			DEFINE( 'JR_MT_PAGE_CONDITIONAL', TRUE );
 		}
 	}
-	DEFINE( 'JR_MT_TOO_LATE_FOR_COOKIES', TRUE );
+	
+	add_action( 'wp_loaded', 'jr_mt_wp_loaded', JR_MT_RUN_LAST );
+	function jr_mt_wp_loaded() {
+		/*	Purpose of this hook is to output any required Cookie before it is too late
+			(after the <html> or any other HTML is generated).
+			There is no performance impact because this effectively pre-caches values
+			for use later.
+			This timing is also used to enqueue JavaScript related to the Sticky feature.
+		*/
+		global $jr_mt_theme;
+		if ( !isset( $jr_mt_theme ) ) {
+			$settings = get_option( 'jr_mt_settings' );
+			if ( !empty( $settings['remember']['query'] ) ) {
+				jr_mt_template();
+			}
+		}
+
+		DEFINE( 'JR_MT_TOO_LATE_FOR_COOKIES', TRUE );
+	}
 }
 
 function jr_mt_stylesheet() {
@@ -56,147 +78,344 @@ function jr_mt_theme( $option ) {
 		These three different values for each Theme must be clearly separated, as all three usually
 		match, but do not have to, e.g. - Child Themes.
 	*/
-	$GLOBALS['jr_mt_cache'] = TRUE;
 	global $jr_mt_theme;
 	if ( !isset( $jr_mt_theme ) ) {
 		$jr_mt_theme = array();
 	}
 	if ( !isset( $jr_mt_theme[$option] ) ) {
 		$theme = jr_mt_chosen();
-		if ( $theme === FALSE ) {
+		$jr_mt_all_themes = jr_mt_all_themes();
+		/*	Check to be sure that Theme is still installed.
+			If not, do a massive cleanup to remove all Settings entries that
+			reference Themes that are no longer installed.
+		*/
+		if ( ( FALSE !== $theme ) && ( !isset( $jr_mt_all_themes[ $theme ] ) ) ) {
+			require_once( jr_mt_path() . 'includes/settings-cleanup.php' );
+			$theme = jr_mt_chosen();
+		}
+		if ( FALSE === $theme ) {
 			//	Get both at once, to save a repeat of this logic later:
 			$jr_mt_theme['stylesheet'] = jr_mt_current_theme( 'stylesheet' );
 			$jr_mt_theme['template'] = jr_mt_current_theme( 'template' );
 		} else {
-			$themes = wp_get_themes();
-			$jr_mt_theme['stylesheet'] = $themes[$theme]->stylesheet;
-			$jr_mt_theme['template'] = $themes[$theme]->template;
+			$jr_mt_theme['stylesheet'] = $jr_mt_all_themes[ $theme ]->stylesheet;
+			$jr_mt_theme['template'] = $jr_mt_all_themes[ $theme ]->template;
+		}
+		if ( !is_admin() ) {
+			jr_mt_cookie( 'all', 'clean' );
 		}
 	}
 	$theme = $jr_mt_theme[$option];
-	global $jr_mt_cache;
-	if ( $jr_mt_cache === FALSE ) {
-		unset( $jr_mt_theme[$option] );
-	}
 	return $theme;
 }
 
 //	Returns FALSE for Current Theme
-function jr_mt_chosen() {	
+function jr_mt_chosen() {
 	$settings = get_option( 'jr_mt_settings' );
-	if ( is_admin() ) {
-		//	Admin panel
-		//	return P2 theme if p2ajax= is present; current theme otherwise
-		$keywords = jr_mt_kw( 'QUERY_STRING' );
-		if ( isset( $keywords['p2ajax'] ) && array_key_exists( 'p2', wp_get_themes() ) ) {
-			$theme = 'p2';
-		} else {
-			$theme = FALSE;	// Current Theme
-		}
-	} else {
-		/*	Non-Admin page, i.e. - Public Site, etc.
-		
-			Begin by checking for any Query keywords specified by the Admin in Settings,
-			complicated by the fact that Remember entries take precedence.
-		*/
-		if ( empty( $settings['query'] ) ) {
-		} else {
-			$settings_query = $settings['query'];
-			$keywords = jr_mt_kw( 'QUERY_STRING' );
-			foreach ( $keywords as $keyword => $value ) {
-				if ( isset( $settings_query[$keyword] ) ) {
-					if ( isset( $settings_query[$keyword][$value] ) ) {
-						if ( isset( $settings['remember']['query'][$keyword][$value] ) ) {
-							/*	Replace Existing or Create New (if no existing) Cookie
-								to remember what Theme to use on this Browser on this Visitor Computer.
-								Return Theme after.
-							*/
-							jr_mt_cookie( 'put', "$keyword=$value" );
-							return $settings_query[$keyword][$value];
-						}
-						$query_entry = $settings_query[$keyword][$value];
-						/*	Stop looking
-						*/
-						break;
-					} else {
-						if ( isset( $settings_query[$keyword]['*'] ) ) {
-							$query_entry = $settings_query[$keyword]['*'];
-							/*	Stop looking
-							*/
-							break;
-						}
-					}
-				}
-			}
-		}
+	
+	/*	$queries - array of [keyword] => array( value, value, ... )
+			in the current URL.
+	*/
+	$queries = jr_mt_query_array(); 
 
-		$full_url = parse_url( home_url(), PHP_URL_SCHEME ) . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-		
-		if ( empty( $settings['remember']['query'] ) ) {
-			/*	Delete any Cookie that might exist
+	/*	P2 free Theme special processing:
+		for both Admin and Public site,
+		check for P2 keyword p2ajax=,
+		and select P2 theme, if present.
+	*/
+	if ( isset( $queries['p2ajax'] ) && array_key_exists( 'p2', jr_mt_all_themes() ) ) {
+		return 'p2';
+	}
+	/*	Otherwise, Admin gets current ("Active") WordPress Theme
+	*/
+	if ( is_admin() ) {
+		return FALSE;
+	}
+	
+	/*	KnowHow ThemeForest Paid Theme special processing:
+		if s= is present, and 'knowhow' is either the active WordPress Theme
+		or is specified in any Settings, then automatically select the KnowHow theme.
+	*/
+	if ( isset( $queries['s'] ) && in_array( 'knowhow', jr_mt_themes_defined() ) ) {
+		return 'knowhow';
+	}
+
+	/*	Non-Admin page, i.e. - Public Site, etc.
+	
+		Begin by checking for any Query keywords specified by the Admin in Settings,
+		complicated by the fact that Override entries take precedence.
+	*/
+	if ( !empty( $settings['query'] ) ) {
+		if ( '' !== $_SERVER['QUERY_STRING'] ) {
+			/*	Check Override entries
 			*/
-			jr_mt_cookie( 'del' );
-			if ( isset( $query_entry ) ) {
-				return $query_entry;
-			}
-		} else {
-			/*	Check for a Cookie (safe to do here because we exit immediately after cookie creation above)
-				If it exists, make sure both a ['remember']['query'] and ['query'] setting still exists for it
-				(i.e. - the Keyword=Value specified in the Cookie).
-				If so, use Redirection to add the Theme Name to the URL;
-				if not, delete the Cookie.
-			*/
-			if ( FALSE !== ( $cookie_value = jr_mt_cookie( 'get' ) ) ) {
-				list( $keyword, $value ) = explode( '=', $cookie_value );
-				if ( isset( $settings['remember']['query'][$keyword][$value] ) && isset( $settings['query'][$keyword][$value] ) ) {
-					if ( array_key_exists( JR_MT_COOKIE_KEYWORD, jr_mt_kw( 'QUERY_STRING' ) ) ) {
-						return $settings['query'][$keyword][$value];
-					} else {
-						/*	Use str_rot13() to hide Theme value "for appearances sake".
-							Browser caching can display occasional wrong values for the special keyword,
-							but it always works properly, displaying the correct Theme.
-						*/
-						wp_redirect( add_query_arg( JR_MT_COOKIE_KEYWORD, str_rot13( $settings['query'][$keyword][$value] ), $full_url ), 301 );
-						exit;
+			foreach ( $settings['override']['query'] as $override_keyword => $override_value_array ) {
+				if ( isset( $queries[ $override_keyword ] ) ) {
+					foreach ( $override_value_array as $override_value => $bool ) {
+						if ( in_array( $override_value, $queries[ $override_keyword ] ) ) {
+							$override_found[] = array( $override_keyword, $override_value );
+						}
 					}
-				} else {
-					jr_mt_cookie( 'del' );
 				}
 			}
-		}
-		
-		extract( jr_mt_url_to_id( rawurldecode(  $full_url ) ) );	
-		if ( ( 'livesearch' === $type ) && ( FALSE !== $livesearch_theme = jr_mt_livesearch_theme() ) ) {
-			return $livesearch_theme;
-		}
-		if ( $home ) {
-			if ( trim( $settings['site_home'] ) != '' ) {
-				return $settings['site_home'];
-			}
-		}
-		$ids = $settings['ids'];
-		if ( $id === FALSE ) {
-			if ( isset( $ids[$page_url] ) ) {
-				$theme = $ids[$page_url]['theme'];
-			} else {
-				$theme = jr_mt_check_all( $type, $rel_url, $ids );
-			}
-		} else {
-			if ( isset( $ids[$id] ) ) {
-				$theme = $ids[$id]['theme'];
-			} else {
-				$theme = jr_mt_check_all( $type, $rel_url, $ids );
+			if ( !isset( $overrides_found ) ) {
+				/*	Look for both keyword=value settings and keyword=* settings,
+					with keyword=value taking precedence (sorted out later).
+				*/
+				foreach ( $settings['query'] as $query_settings_keyword => $value_array ) {
+					if ( isset( $queries[ $query_settings_keyword ] ) ) {
+						foreach ( $value_array as $query_settings_value => $theme ) {
+							if ( in_array( $query_settings_value, $queries[ $query_settings_keyword ] ) ) {
+								$query_found[] = array( $query_settings_keyword, $query_settings_value );
+							}
+						}
+						if ( isset( $value_array['*'] ) ) {
+							$keyword_found[] = $query_settings_keyword;
+						}
+					}
+				}
 			}
 		}
 	}
-	return $theme;
+	
+	/*	Handle Overrides:
+		First, for Override keyword=value query in URL.
+		Second, for previous Override detected by PHP cookie.
+	*/
+	if ( isset( $override_found ) ) {
+		/*	If sticky, create JavaScript Sticky Cookie,
+			and PHP Sticky Cookie.
+			No matter what:
+			return Theme from the first Override found.
+		*/
+		$keyword = $override_found[0][0];
+		$value = $override_found[0][1];
+		if ( isset( $settings['remember']['query'][ $keyword ][ $value ] ) ) {
+			jr_mt_js_sticky_query( $keyword, $value );
+			jr_mt_cookie( 'php', 'put', "$keyword=$value" );
+		}
+		return $settings['query'][ $keyword ][ $value ];
+	} else {
+		/*	Is there a previous Override Query for this Site Visitor?
+			If so, use it, but only if it is still valid.
+		*/
+		if ( FALSE !== ( $cookie = jr_mt_cookie( 'php', 'get' ) ) ) {
+			list( $keyword, $value ) = explode( '=', $cookie );
+			if ( isset( $settings['override']['query'][ $keyword ][ $value ] ) ) {
+				/*	If sticky, create JavaScript Sticky Cookie,
+					and renew PHP Sticky Cookie.
+					No matter what:
+					Return Theme
+				*/
+				if ( isset( $settings['remember']['query'][ $keyword ][ $value ] ) ) {
+					jr_mt_js_sticky_query( $keyword, $value );
+					jr_mt_cookie( 'php', 'put', "$keyword=$value" );
+				}
+				return $settings['query'][ $keyword ][ $value ];
+			}
+		}
+	}
+
+	/*	Handle Non-Overrides:
+		keyword=value query in URL with matching setting entry.
+	*/
+	if ( isset( $query_found ) ) {
+		$query_keyword_found = $query_found[0][0];
+		$query_value_found = $query_found[0][1];
+		/*	Probably makes sense to give preference to the Sticky ones
+		*/
+		foreach ( $query_found as $query_kwval_array ) {
+			if ( isset( $settings['remember']['query'][ $query_kwval_array[0] ][ $query_kwval_array[1] ] ) ) {
+				$query_keyword_found = $query_kwval_array[0];
+				$query_value_found = $query_kwval_array[1];
+				/*	Create JavaScript Sticky Cookie,
+					and PHP Sticky Cookie.
+				*/
+				jr_mt_js_sticky_query( $query_keyword_found, $query_value_found );
+				jr_mt_cookie( 'php', 'put', "$query_keyword_found=$query_value_found" );
+				break;
+			}
+		}
+		/*	Return Theme
+		*/
+		return $settings['query'][ $query_keyword_found ][ $query_value_found ];
+	}
+	
+	/*	Handle Keyword wildcards:
+		keyword=* setting entry that matches keyword in URL query.
+	*/
+	if ( isset( $keyword_found ) ) {
+		return $settings['query'][ $keyword_found[0] ]['*'];
+	}
+	
+	/*	Now look at URL entries: $settings['url'] and ['url_prefix']
+	*/
+	
+	$home_url = home_url();
+	$prep_url = jr_mt_prep_url( $current_url = parse_url( $home_url, PHP_URL_SCHEME ) . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] );
+	foreach ( $settings['url'] as $settings_array ) {
+		if ( jr_mt_same_url( $settings_array['prep'], $prep_url ) ) {
+			return $settings_array['theme'];
+		}
+	}
+	foreach ( $settings['url_prefix'] as $settings_array ) {
+		if ( jr_mt_same_prefix_url( $settings_array['prep'], $prep_url ) ) {
+			return $settings_array['theme'];
+		}
+	}
+	foreach ( $settings['url_asterisk'] as $settings_array ) {
+		if ( jr_mt_same_prefix_url_asterisk( $settings_array['prep'], $prep_url ) ) {
+			return $settings_array['theme'];
+		}
+	}
+
+	/*	Must check for Home near the end as queries override
+	*/
+	$prep_url_no_query = $prep_url;
+	$prep_url_no_query['query'] = array();
+	if ( '' !== $settings['site_home'] ) {
+		/*	Check for Home Page,
+			with or without Query.
+		*/
+		$prep_url_no_query = $prep_url;
+		$prep_url_no_query['query'] = array();
+		if ( jr_mt_same_url( $home_url, $prep_url_no_query ) ) {
+			return $settings['site_home'];
+		}
+	}
+	/*	All Pages and All Posts settings are checked second to last, 
+		just before Everything Else.
+		
+		url_to_postid() only works after JR_MT_PAGE_CONDITIONAL is set.
+		But alternate means can be used with default Permalinks.
+		
+		First, see if any All Pages or All Posts setting exists.
+	*/
+	if ( jr_mt_all_posts_pages() ) {
+		if ( defined( 'JR_MT_PAGE_CONDITIONAL' ) ) {
+			if ( 0 !== ( $id = url_to_postid( $current_url ) ) ) {
+				if ( NULL !== ( $post = get_post( $id ) ) ) {
+					$type = $post->post_type;
+					if ( 'post' === $type ) {
+						if ( '' !== $settings['all_posts'] ) {
+							return $settings['all_posts'];
+						}
+					} else {
+						if ( 'page' === $type ) {
+							if ( '' !== $settings['all_pages'] ) {
+								return $settings['all_pages'];
+							}
+						}
+					}
+				}
+			}
+		} else {
+			$permalink = get_option( 'permalink_structure' );
+			if ( empty( $permalink ) ) {
+				if ( '' !== $settings['all_posts'] ) {
+					if ( isset( $queries['p'] ) ) {
+						return $settings['all_posts'];
+					}
+				}
+				
+				if ( '' !== $settings['all_pages'] ) {
+					if ( isset( $queries['page_id'] ) ) {
+						return $settings['all_pages'];
+					}
+				}
+			}
+		}
+	}
+	/*	This is the Theme for Everything Advanced Setting.
+		A Setting of Blank uses WordPress Current Theme value,
+		i.e. - the Setting is not set.
+	*/
+	if ( '' === $settings['current'] ) {
+		return FALSE;
+	} else {
+		return $settings['current'];
+	}
+}
+
+/**	Cookie to JavaScript with Sticky Query and related info.
+
+	Replace Existing or Create New (if no existing) Cookie
+	to remember what Sticky Keyword=Value to use on this Browser on this Visitor Computer.
+	Cookie is an encoding of this array:
+	- keyword=value query to append to URL
+	- FALSE if Setting "Append if no question mark ("?") found in URL", or
+		TRUE if Setting "Append if no Override keyword=value found in URL"
+	- an array of all sticky or override queries (empty array if FALSE)
+*/
+function jr_mt_js_sticky_query( $keyword, $value ) {
+	add_action( 'wp_enqueue_scripts', 'jr_mt_wp_enqueue_scripts' );
+	function jr_mt_wp_enqueue_scripts() {
+		global $jr_mt_plugin_data;
+		wp_enqueue_script( 'jr_mt_sticky', plugins_url() . '/' . dirname( jr_mt_plugin_basename() ) . '/js/sticky.js', array(), $jr_mt_plugin_data['Version'] );
+		/*	JavaScript needs some values passed in HTML,
+			so add that hook here, too.
+		*/
+		add_action( 'wp_footer', 'jr_mt_wp_footer' );
+	}
+	function jr_mt_wp_footer() {
+		echo '<div style="display: none;"><div id="jr-mt-home-url" title="'
+			. jr_mt_prep_comp_url( home_url() )
+			. '"></div><div id="jr-mt-site-admin" title="'
+			. jr_mt_prep_comp_url( admin_url() )
+			. '"></div></div>';
+	}
+	/**	Prepare URL for JavaScript compares
+	
+		Remove http[s]//: from beginning
+		Convert rest of URL to lower-case
+		Remove www. from beginning, if present
+		Convert any backslashes to forward slashes
+		Remove any trailing slash(es).
+	*/
+	function jr_mt_prep_comp_url( $url ) {
+		$comp_url = strtolower( substr( $url, 3 + strpos( $url, '://' ) ) );
+		if ( 'www.' === substr( $comp_url, 0, 4 ) ) {
+			$comp_url = substr( $comp_url, 4 );
+		}
+		return rtrim( str_replace( '\\', '/', $comp_url ), '/' );
+	}
+			
+	$settings = get_option( 'jr_mt_settings' );
+
+	if ( $settings['query_present'] ) {
+		foreach ( $settings['override']['query'] as $override_keyword => $override_value_array ) {
+			foreach ( $override_value_array as $override_value => $theme ) {
+				$override[] = "$override_keyword=$override_value";
+			}
+		}
+	} else {
+		$override = array();
+	}
+	
+	jr_mt_cookie( 'js', 'put', strtr( rawurlencode( json_encode(
+			array( "$keyword=$value", $settings['query_present'], $override ) ) ), 
+		array( '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' ) )
+	);
 }
 
 /*	All Cookie Handling occurs here.
 	$action - 'get', 'put', 'del'
 */
-function jr_mt_cookie( $action, $cookie_value = '' ) {
-	$cookie_name = 'jr-mt-remember-query';
+function jr_mt_cookie( $lang, $action, $cookie_value = '' ) {
+	switch ( $lang ) {
+		case 'js':
+			$cookie_name = 'jr-mt-remember-query';
+			$raw = TRUE;
+			$expiry = '+36 hours';
+			$function = 'setrawcookie';
+			break;
+		case 'php':
+			$cookie_name = 'jr_mt_php_override_query';
+			$raw = FALSE;
+			$expiry = '+1 year';
+			$function = 'setcookie';
+			break;
+	}
 	if ( 'get' === $action ) {
 		if ( isset( $_COOKIE[ $cookie_name ] ) ) {
 			return $_COOKIE[ $cookie_name ];
@@ -204,137 +423,84 @@ function jr_mt_cookie( $action, $cookie_value = '' ) {
 			return FALSE;
 		}
 	} else {
+		global $jr_mt_cookie_track;
 		if ( defined( 'JR_MT_TOO_LATE_FOR_COOKIES' ) ) {
 			return FALSE;
 		}
 		/*	Determine Path off Domain to WordPress Address, not Site Address, for Cookie Path value.
-			Which, confusingly enough, is site_url().
+			Using home_url().
 		*/
-		$cookie_path = parse_url( site_url(), PHP_URL_PATH ) . '/';
+		$cookie_path = parse_url( home_url(), PHP_URL_PATH ) . '/';
 		switch ( $action ) {
 			case 'put':
 				if ( empty( $cookie_value ) ) {
 					return FALSE;
 				} else {
-					return setcookie( $cookie_name, $cookie_value, strtotime( '+1 year' ), $cookie_path, $_SERVER['SERVER_NAME'] );
+					return ( $jr_mt_cookie_track[ $lang ] = $function( $cookie_name, $cookie_value, strtotime( $expiry ), $cookie_path, $_SERVER['SERVER_NAME'] ) );
 				}
 				break;
 			case 'del':
 				/*	Don't clutter up output to browser with a Cookie Delete request if a Cookie does not exist.
 				*/
 				if ( isset( $_COOKIE[ $cookie_name ] ) ) {
-					return setcookie( $cookie_name, '', strtotime( '-2 days' ), $cookie_path, $_SERVER['SERVER_NAME'] );
+					return ( $jr_mt_cookie_track[ $lang ] = setrawcookie( $cookie_name, '', strtotime( '-2 days' ), $cookie_path, $_SERVER['SERVER_NAME'] ) );
+				}
+				break;
+			case 'clean':
+				if ( 'all' === $lang ) {
+					$clean_langs = array( 'php', 'js' );
+				} else {
+					$clean_langs = array( $lang );
+				}
+				foreach ( $clean_langs as $clean_lang ) {
+					if ( !isset( $jr_mt_cookie_track[ $clean_lang ] ) ) {
+						jr_mt_cookie( $clean_lang, 'del' );
+					}
 				}
 				break;
 		}
 	}
 }
 
-/*	Returns Keyword=Value array based on $_SERVER variable requested.
+/**	Build Query Array
+
+	$array[keyword] = array( value, value, ... )
+	Sets both keyword and value to lower-case as
+	that is how they are stored in Settings.
+	
+	Supports only & separator, not proposed semi-colon separator.
+	
+	Handles duplicate keywords in all four of these forms:
+	kw=val1&kw=val2 kw[]=val1&kw[]=val2 kw=val1&kw=val1 kw[]=val1&kw[]=val1
+	but nothing else, e.g. - kw=val1,val2 is not valid;
+	it returns "val1,val2" as the Value.
+	Also handles kw1&kw2
+	
+	Tests of parse_str() in PHP 5.5.9 proved that semi-colon and comma
+	are not supported.  But, neither is kw=val1,kw=val2 which is why
+	this function is written without the use of parse_str.
 */
-function jr_mt_kw( $server ) {
-	$keywords_raw = jr_mt_parse_query( $_SERVER[ $server ] );
-	$keywords = array();
-	foreach ( $keywords_raw as $keyword => $value ) {
-		if ( is_array( $value ) ) {
-			$kw_prepped = jr_mt_prep_query_keyword( $keyword );
-			foreach ( $value as $arr_key => $arr_value ) {
-				$keywords[$kw_prepped][jr_mt_prep_query_value( $arr_key )] = jr_mt_prep_query_value( $arr_value );
+function jr_mt_query_array() {
+	/*	Remove array entry indicators ("[]") as we properly handle duplicate keywords,
+		and covert to lower-case for comparison purposes.
+	*/
+	$queries = array();
+	if ( !empty( $_SERVER['QUERY_STRING'] ) ) {
+		$query = explode( '&', jr_mt_strtolower( str_replace( '[]', '', $_SERVER['QUERY_STRING'] ) ) );
+		foreach ( $query as $kwval ) {
+			$query_entry = explode( '=', $kwval );
+			if ( !isset( $query_entry[1] ) ) {
+				$query_entry[1] = '';
 			}
-		} else {
-			$keywords[jr_mt_prep_query_keyword( $keyword )] = jr_mt_prep_query_value( $value );
+			$queries[ $query_entry[0] ][] = $query_entry[1];
 		}
 	}
-	return $keywords;
+	return $queries;
 }
 
-//	Returns FALSE for Current Theme
-function jr_mt_check_all( $type, $rel_url, $ids ) {
-	//	Check Prefix entries first, because we already know there is no specific entry for this URL.
-	$theme = '';
-	$match_length = 0;
-	foreach ( $ids as $key => $array ) {
-		if ( $array['type'] == 'prefix' ) {
-			$this_length = strlen( $array['rel_url'] );
-			if ( $array['rel_url'] == substr( $rel_url, 0, $this_length ) ) {
-				//	Need to find longest match if there are multiple prefix matches.
-				if ( $this_length > $match_length ) {
-					$theme = $array['theme'];
-					$match_length = $this_length;
-				}
-			}
-		}
-	}
-	//	See if a Prefix entry was found
-	if ( $match_length == 0 ) {
-		/*	No, so now check for Asterisk
-		*/
-		$current_url = str_replace( '\\', '/', $rel_url );
-		$current_url_dirs = explode( '/', $current_url );
-		$current_url_dirs_count = count( $current_url_dirs );
-		foreach ( $ids as $key => $array ) {
-			if ( '*' === $array['type'] ) {
-				$prefix_url = str_replace( '\\', '/', $array['rel_url'] );
-				$prefix_url_dirs = explode( '/', $prefix_url );
-				/*	Current URL must have at least as many subdirectory levels
-					specified as Prefix Entry being tested, or it cannot match
-				*/
-				if ( $current_url_dirs_count >= count( $prefix_url_dirs ) ) {
-					foreach ( $prefix_url_dirs as $element => $dir ) {
-						/*	Anywhere there is an Asterisk in Entry,
-							Make the Current URL match at that point (subdirectory level)
-						*/
-						if ( '*' === $dir ) {
-							$current_url_dirs[$element] = '*';
-						}
-					}
-					$this_length = strlen( $prefix_url );
-					if ( $prefix_url === substr( implode( '/', $current_url_dirs ), 0, $this_length ) ) {
-						//	Need to find longest match if there are multiple prefix matches.
-						if ( $this_length > $match_length ) {
-							$theme = $array['theme'];
-							$match_length = $this_length;
-						}
-					}
-				}
-			}
-		}
-		if ( $match_length == 0 ) {
-			if ( $type === FALSE ) {
-				$theme = FALSE;	// Current Theme
-			} else {	
-				$settings = get_option( 'jr_mt_settings' );
-				if ( isset( $settings["all_$type"] ) ) {
-					$theme = $settings["all_$type"];
-				} else {
-					$theme = '';
-				}
-				if ( empty( $theme ) ) {
-					$theme = FALSE;	// Current Theme
-				}
-			}
-		}
-	}
-	return $theme;
-}
-
-function jr_mt_livesearch_theme() {
-	$livesearch_themes = array( 'knowhow' );
-	if ( in_array( jr_mt_current_theme( 'stylesheet' ), $livesearch_themes ) ) {
-		return jr_mt_current_theme( 'stylesheet' );
-	} else {
-		if ( in_array( jr_mt_current_theme( 'template' ), $livesearch_themes ) ) {
-			return jr_mt_current_theme( 'template' );
-		} else {
-			//	Go through all the Themes defined in the Plugin's settings
-			foreach ( jr_mt_themes_defined() as $theme ) {
-				if ( in_array( $theme, $livesearch_themes ) ) {
-					return $theme;
-				}
-			}
-		}
-	}
-	return FALSE;
+function jr_mt_all_posts_pages() {
+	$settings = get_option( 'jr_mt_settings' );
+	return ! ( ( '' === $settings['all_posts'] ) && ( '' === $settings['all_pages'] ) );
 }
 
 ?>

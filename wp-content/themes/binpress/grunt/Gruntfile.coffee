@@ -112,6 +112,18 @@ module.exports = (grunt) ->
     # Compiles all *.styles.less files to respective css files for production
     # Uses *.styles.less pattern to detect files to compile
         less :
+            development : 
+                options :
+                    paths : ["../css"]
+                    cleancss : true
+                files : [
+                    expand : true
+                    cwd : "../css"
+                    src : ["../css/*.styles.less"]
+                    dest : "../css"
+                    ext : ".styles.css"
+                ]
+
             production :
                 options :
                     paths : ["../css"]
@@ -124,6 +136,11 @@ module.exports = (grunt) ->
                     dest : "../css"
                     ext : ".styles.min.css"
                 ]
+
+        watch:
+            less:
+                files: ["../css/*.less", '../css/style.css']
+                tasks: ["less:development"]
 
 
     # Clean production folder before new files are copied over

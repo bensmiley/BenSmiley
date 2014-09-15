@@ -69,7 +69,7 @@
     </div>
     <!-- END CONTAINER -->
 <footer>
-		<p>&copy; Bensmiley <?php echo date("Y");?></p>
+		<p>&copy; Chatcat.io <?php echo date("Y");?></p>
 		</footer>
         </div>
 

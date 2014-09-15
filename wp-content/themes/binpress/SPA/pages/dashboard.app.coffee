@@ -16,7 +16,7 @@ define [ 'marionette', 'msgbus' ], ( Marionette, msgbus )->
         loginRegion : '#login-region'
 
     # The default route for app
-    App.rootRoute = ""
+    App.rootRoute = "#domains"
 
     # Reqres handler to return a default region. If a controller is not explicitly specified a
     # region it will trigger default region handler

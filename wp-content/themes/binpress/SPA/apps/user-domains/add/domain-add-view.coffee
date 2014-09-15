@@ -41,9 +41,9 @@ define [ 'marionette'
             #show success msg
             @$el.find( '#msg' ).empty()
             successhtml = '<div class="alert alert-success">
-                                            <button class="close" data-dismiss="alert">&times;</button>
-                                            Domain Sucessfully Added
-                                        </div>'
+                                <button class="close" data-dismiss="alert">&times;</button>
+                                Domain Sucessfully Added
+                            </div>'
             @$el.find( '#msg' ).append successhtml
 
             #redirect to edit of the domain added
@@ -70,12 +70,12 @@ define [ 'marionette'
                 post_title :
                     required : true,
 
-                domain_url :
+                domain :
                     required : true,
-                    complete_url : true
+                    domain : true
 
             messages :
-                domain_url : 'Enter valid url'
+                domain : 'Invalid domain name'
 
     DomainAddView
 

@@ -12,7 +12,8 @@
     "jquery.validation": "~1.12.0",
     "plupload": "~2.1.2",
     "datatables": "~1.10.0",
-    "card": "~0.0.3"
+    "card": "~0.0.3",
+    "spin.js": "~2.0.1"
   },
   "devDependencies": {}
 }

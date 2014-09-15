@@ -1,4 +1,4 @@
-/* Font Import */
+.ca/* Font Import */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 
 :-moz-placeholder {
@@ -16,7 +16,7 @@
     color: #333843 ! important;
 }
 
-/* Reset */
+/* Reset */ 
 html {
     font-size: 100%;
     height: 100%;
@@ -137,7 +137,7 @@ Page sidebar
     background-color: #1b1e24 !important;
     height: 100%;
     font-family: 'Open Sans';
-
+    margin-top: 78px !important;
 }
 
 .nav-collapse.collapse {
@@ -1299,14 +1299,26 @@ span.iconset {
 /*** Header - Main Layout ***/
 
 .header {
-    padding: 0 !important;
+    padding: 10px 0 !important;
     margin: 0 !important;
     position: fixed;
     width: 100%;
     z-index: 999;
-    min-height: 60px;
+    height:80px;
 }
-
+.header .logo h1{
+	max-width: none;
+	display: block;
+	line-height: 22px;
+	font-size: 22px;
+	letter-spacing: -1.5px;
+	color: #444444;
+	font-family: 'Open Sans' !important;
+	font-weight: 600!important;
+}
+.header .container-fluid{
+	padding-top: 13px;
+}
 .header .btn-navbar {
     margin-bottom: 0px;
     padding-right: 0px;
@@ -2516,7 +2528,7 @@ span.iconset {
 
 /*** Main Page Content  ***/
 .page-content {
-    margin-top: 0px;
+    margin-top: 26px;
     padding: 0px;
     background-color: #e5e9ec;
     overflow: auto;
@@ -9021,4 +9033,84 @@ background: #F3F3F3 !important;
 }
 .logo h1{
 	font-style:normal;
+}
+
+#header-region nav > ul {
+    float: right;
+    overflow: visible !important;
+    transition: padding 0.8s ease 0s;
+}
+.sf-menu {
+    float: right;
+}
+.sf-menu {
+    line-height: 1;
+}
+.sf-menu, .sf-menu * {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+}
+.sf-menu {
+    float: left;
+    margin-bottom: 30px;
+}
+.sf-menu {
+    line-height: 1;
+}
+
+#header-region nav > ul > li {
+    float: left;
+}
+.header{
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.22);
+}
+#header-region nav ul li {
+    float: right;
+}
+
+#header-region .logo img {
+    height: 60px;
+}
+.sf-menu li {
+    float: left;
+    font-size: 12px !important;
+    line-height: 12px !important;
+    position: relative;
+}
+.sf-menu li {
+    float: left;
+    position: relative;
+}
+.sf-menu li a { 
+    padding: 20px 10px 48px;
+    color: #888;
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    transition: color 0.1s linear 0s;
+}
+.sf-menu li a:hover {
+    color: #27ccc0 !important;
+}
+.sf-menu, .sf-menu * {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+}
+
+ .features1 {
+list-style-type: none;
+background: #FFF;
+text-align: left;
+padding: 30px 15%;
+font-size: .9rem;
+}
+.ca-menu li.plans {
+    vertical-align: top;
+}
+.delete-group {
+    color: #ff3333;
 }

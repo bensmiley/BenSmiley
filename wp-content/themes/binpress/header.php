@@ -43,35 +43,23 @@
                      width="<?php echo get_custom_header()->width; ?>"
                      alt=""/>
             <?php endif; ?>
-
-            <a class="logo" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-                <h1 class="blog-name">
-                    <?php
-                        $blog_name = get_bloginfo( 'name','display' );
-                        echo ucfirst($blog_name);
-                    ?>
-                </h1>
-            </a>
-
-            <div class="menu"><?php
-
-                $nav_menu = wp_nav_menu(
-                    array(
-                        'container' => 'nav',
-                        'container_class' => 'main-menu',
-                        'items_wrap' => '<ul class="%2$s">%3$s</ul>',
-                        'theme_location' => 'main-menu',
-                        'fallback_cb' => '__return_false',
-                    )
-                ); ?>
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div style="margin-top:-10px" class="pull-left"> 
+                <a href="<?php echo home_url(); ?>"> 
+                    <img src="http://chatcat.io/wp-content/uploads/2014/09/unnamed.png" class="pull-left"> 
+                </a> 
             </div>
+        </div>
+         <div class="col-md-8">
+
             <!-- show user name and photo display if user logged in  -->
             <?php
             if ( is_user_logged_in() ):
                 $userdata = get_current_user_data();
             ?>
-            <div class="pull-right" style="margin-top:-55px;">
+            <div class="pull-right" >
                 <div class="user-profile pull-left m-t-10">
                     <img src="<?php echo $userdata['user_photo'];?>" alt="" width="35" height="35" id="user-photo">
                 </div>
@@ -83,16 +71,27 @@
                             </div>
                             <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                         </a>
-						<ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
-							<li> 
-								<a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> 
-							</li> 
-						</ul>
+                        <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options"> 
+                            <li> 
+                                <a href="#logout" id="logout"> <i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out </a> 
+                            </li> 
+                        </ul>
                     </li>
                 </ul>
             </div>
             <?php  endif;?>
             <!-- end user name and photo display if user logged in  -->
+            <?php if(is_page('home')): ?>
+            <div class="menu pull-right"><?php wp_nav_menu( array('menu_name' => 'Support', 'menu_class' => 'nav-menu' ) ); ?>
+            <?php endif; ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+          
+
+           
 
 
         </div>

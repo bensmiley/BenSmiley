@@ -48,7 +48,16 @@ function binpress_theme_setup() {
 
 }
 
-add_action( 'setup_theme', 'binpress_theme_setup' );
+add_action( 'after_setup_theme', 'binpress_theme_setup' );
+
+function arphabet_widgets_init() {
+
+    register_sidebar( array(
+        'name' => 'Page Sidebar',
+        'id' => 'sidebar-2'
+    ) );
+}
+add_action( 'widgets_init', 'arphabet_widgets_init' );
 
 
 function binpress_after_init() {
@@ -155,6 +164,11 @@ if ( !is_development_environment() ) {
 function create_local_scripts( $handle ) {
     // localized variables
     wp_localize_script( $handle, "AJAXURL", admin_url( "admin-ajax.php" ) );
+    wp_localize_script( $handle, "SITEURL", site_url() );
+    wp_localize_script( $handle, "SITENAME", 'Chatcat.io' );
+    wp_localize_script( $handle, "CSEK", BT_CSEK );
+
+    wp_localize_script( $handle, "LOGOPATH", 'http://placehold.it/100x40' );
     wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );
     wp_localize_script( $handle, "_WPNONCE", wp_create_nonce( 'media-form' ) );
     if ( is_user_logged_in() && is_page_template( 'template-dashboard.php' ) )
@@ -326,7 +340,7 @@ function register_domain_post() {
         'show_in_menu' => TRUE,
         'query_var' => TRUE,
         'rewrite' => array(
-            'slug' => 'room'
+            'slug' => 'domain'
         ),
         'capability_type' => 'post',
         'has_archive' => TRUE,
@@ -366,3 +380,21 @@ function register_terms_for_plans() {
 //    add_option( $term_free[ 'term_id' ], $term_free_data );
 //}
 
+function redirect_if_required(){
+
+    if(is_user_logged_in()){
+        if(is_page('user-activation') || is_page('reset-password') || is_page('home')){
+            wp_safe_redirect(site_url('dashboard/#profile'));
+            die();
+        }
+    }
+
+    if(!is_user_logged_in()){
+        if(is_page('dashboard' )){
+            wp_safe_redirect(site_url('home'));
+            die();
+        }
+    }
+
+}
+add_action('template_redirect', 'redirect_if_required');

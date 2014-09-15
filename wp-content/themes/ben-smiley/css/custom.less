@@ -13,18 +13,25 @@
 @theme_blue: #19657D;
 
 #header-outer {
-    background-color: @black;
+    padding-top: 10px !important;
+    height: 80px;
+}
+#header-space {
+	height: 80px !important;
+}
+.user-actions {
+	margin-top: 14px;
 }
 #search-btn{
 	display: none;
 }
-body #header-outer header#top nav ul li a {
+/*body #header-outer header#top nav ul li a {
     color: @white !important;
 	font-weight:bold;
     &:hover{
     	color: @white !important;
     }
-}
+}*/
 .user_img {
     border: 2px solid @black;
     border-radius: 50%;
@@ -290,6 +297,9 @@ body {
 header#top #logo {
     color: @white !important;
 	padding-left:10px;
+}
+header#top nav ul #sign-btn {
+	margin-top: 14px;
 }
 /*secondary nav*/
 #header-secondary-outer {

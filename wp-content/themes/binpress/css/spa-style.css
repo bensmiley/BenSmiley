@@ -6,6 +6,7 @@
   margin: auto;
   -webkit-filter: grayscale(100%);
   /* filter: url(css/grayscale.svg#greyscale); */
+
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
@@ -17,6 +18,7 @@
   opacity: 0.9 !important;
   -webkit-filter: grayscale(0%);
   /* filter: url(css/grayscale.svg#greyscale); */
+
   -moz-filter: grayscale(0%);
   -ms-filter: grayscale(0%);
   -o-filter: grayscale(0%);
@@ -45,6 +47,7 @@
 .grow li.plans {
   width: 19.6%;
   /* height: 320px;*/
+
   overflow: hidden;
   position: relative;
   display: inline-block;
@@ -83,6 +86,7 @@
   position: absolute;
   left: -1em;
   /* same as ul padding-left */
+
   top: 0em;
   color: #0AA699!important;
 }
@@ -90,11 +94,6 @@
 .grow .highlight {
   z-index: 999;
   box-shadow: none;
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
   margin-bottom: 25px;
 }
 .ca-menu .highlight .ca-sub,
@@ -240,6 +239,10 @@ body .page-content .breadcrumb li a {
   background: #ffffff !important;
 }
 /*price list*/
+.ca-menu li.plans,
+.grow li.plans {
+  float: left;
+}
 .title1 {
   background: #78CFBF;
   color: #FFFFFF;
@@ -270,6 +273,8 @@ body .page-content .breadcrumb li a {
   text-align: left;
   padding: 30px 15%;
   font-size: 0.9rem;
+  height: 430px;
+  border: 1px solid #78CFBF;
 }
 .features1 li {
   padding: 15px 0;
@@ -301,4 +306,8 @@ footer {
   position: fixed;
   bottom: 0;
   right: 5%;
+}
+/* Button Color */
+.btn-blue {
+  background: #0d82b3;
 }

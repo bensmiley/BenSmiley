@@ -125,7 +125,7 @@ define [ 'marionette', 'text!apps/user-domains/templates/groupsTemplate.html' ],
         showSuccessMsg : ( msgText )->
             @$el.find( '#success-msg' ).empty()
             msg = "<div class='alert alert-success'>
-                               <button class='close' data-dismiss='alert'>&times;</button>
+                               <button class='close' data-dismiss='alert'></button>
                                #{msgText}<div>"
             @$el.find( '#success-msg' ).append msg
 

@@ -43,19 +43,13 @@ function create_user_domain( $domain_details ) {
         'post_title' => $domain_details[ 'post_title' ],
         'post_status' => 'publish' );
 
-    // validate the domain url
-    $domain_url_check = validate_domain_url( $domain_details[ 'domain_url' ] );
-
-    if ( $domain_url_check[ 'code' ] == "ERROR" )
-        return array( 'code' => "ERROR", 'msg' => $domain_url_check[ 'msg' ] );
-
-    $formatted_url = $domain_url_check[ 'url' ];
+    $domain = $domain_details[ 'domain' ];
 
     // check domain url for uniqueness
-    $domain_url_unique = check_url_unique( $formatted_url );
+    $domain_exists = check_domain_unique( $domain );
 
-    if ( $domain_url_unique[ 'code' ] == "ERROR" )
-        return array( 'code' => "ERROR", 'msg' => $domain_url_unique[ 'msg' ] );
+    if ( $domain_exists === true )
+        return array( 'code' => "ERROR", 'msg' => 'Domain already registered' );
 
     // insert domain details
     $post_id = wp_insert_post( $post_array );
@@ -64,8 +58,8 @@ function create_user_domain( $domain_details ) {
         return array( 'code' => "ERROR", 'msg' => "Could not create domain" );
 
     // add the domain url as post meta for domain post
-    update_post_meta( $post_id, 'domain_url', $formatted_url );
-    update_post_meta( $post_id, 'plan_id', 'dm8w' );
+    update_post_meta( $post_id, 'domain', $domain );
+    update_post_meta( $post_id, 'plan_id', BT_FREEPLAN );
 
     // add the free plan as a term for domain post
     wp_set_post_terms( $post_id, 'Free', 'plan' );
@@ -74,7 +68,7 @@ function create_user_domain( $domain_details ) {
     create_free_subscription( $post_id );
 
     //generate api key for the domain by calling the api key generation API
-    $key = get_key_from_API( $formatted_url );
+    $key = get_key_from_API( $domain );
 
     //update the domain meta with the api key
     update_post_meta( $post_id, 'api_key', $key );
@@ -151,7 +145,7 @@ function update_domain_post( $domain_data ) {
 
     $domain_post_id = wp_update_post( $domain_details );
 
-    update_post_meta( $domain_post_id, 'domain_url', $domain_data[ 'domain_url' ] );
+    update_post_meta( $domain_post_id, 'domain', $domain_data[ 'domain' ] );
 
 }
 
@@ -216,32 +210,52 @@ function validate_domain_url( $domain_url ) {
  * @param $url
  * @return array of error and success msg
  */
-function check_url_unique( $url ) {
+function check_domain_unique( $domain ) {
     // intialize variable to false
-    $url_exists = false;
+    $domain_exists = false;
 
     // since the post id is not present,use wp-query to query the post meta table
     // and check if the domain url is exists
     $args = array(
         'post_type' => 'domain',
-        'meta_query' => array(
-            array(
-                'value' => $url
-            )
-        )
+        'meta_key' => 'domain',
+        'meta_value' => $domain
     );
 
     $query = new WP_Query( $args );
 
     if ( $query->have_posts() )
-        $url_exists = true;
+        $domain_exists = true;
 
     wp_reset_postdata();
 
-    if ( $url_exists )
-        return array( 'code' => "ERROR", 'msg' => 'Url already exists' );
-    else
-        return array( 'code' => "OK" );
+    return $domain_exists;
+
+}
+
+function get_domain_ID($domain){
+
+    // intialize variable to false
+    $domain_exists = false;
+
+    // since the post id is not present,use wp-query to query the post meta table
+    // and check if the domain url is exists
+    $args = array(
+        'post_type' => 'domain',
+        'meta_key' => 'domain',
+        'meta_value' => $domain
+    );
+
+    $query = new WP_Query( $args );
+
+    $domain_ID = 0;
+    while($query->have_posts()): $query->the_post();
+        $domain_ID = get_the_ID();
+    endwhile;
+
+    wp_reset_postdata();
+
+    return $domain_ID;
 
 }
 
@@ -250,37 +264,16 @@ function check_url_unique( $url ) {
  * @param $url
  * @return array
  */
-function check_url_exists( $url ) {
-    $domain_id = " ";
-
-    $args = array(
-        'post_type' => 'domain',
-        'meta_query' => array(
-            array(
-                'value' => $url
-            )
-        )
-    );
-
-    $query = new WP_Query( $args );
-
-    if ( $query->have_posts() ) {
-        $query->the_post();
-        $domain_id = get_the_ID();
-    }
-    wp_reset_postdata();
-
-    if ( empty( $domain_id ) )
-        return array( 'code' => 'ERROR', 'msg' => 'Url does not exists for any domain ' );
-    else
-        return array( 'code' => 'OK', 'domain_id' => $domain_id );
+function check_domain_exists( $domain ) {
+    
+    return check_domain_unique( $domain );
 
 }
 
-function get_key_from_API( $url ) {
+function get_key_from_API( $domain ) {
 
-    $key_generation_url = admin_url( "admin-ajax.php" ) . "?action=get-api-key&url=" . $url;
-    $api_response = file_get_contents( $key_generation_url );
-    $api_key = json_decode( $api_response, true );
-    return $api_key['api_key'];
+    $salt = base64_encode( $domain );
+    $key = sha1( $domain . time() . $salt );
+
+    return $key;
 }

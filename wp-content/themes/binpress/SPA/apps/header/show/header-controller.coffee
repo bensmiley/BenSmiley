@@ -63,20 +63,39 @@ define [ 'app',
         class HeaderLayout extends Marionette.Layout
 
             template : '<div class="navbar-inner">
-                            <div class="">
-                                <div class="pull-left">
-                                    <a href="javascript:void(0)">
-                                        <h3 class="p-l-30 ">Bensmiley</h3></a>
+                            <div>
+                                <div class="pull-left" style="margin-top:-10px">
+                                    <a href="{{SITEURL}}">
+                                        <img class="pull-left" src="{{LOGOPATH}}" />
+                                    </a>
                                 </div>
+
                                 <div id="user-display"></div>
+                                <nav class="pull-right" style="margin-right:15px;">
+                                    <ul class="sf-menu sf-js-enabled sf-arrows">
+                                        <li><a href="{{SITEURL}}/pricing">Pricing & Plans</a></li>
+                                        <li><a href="{{SITEURL}}/support">Support</a></li>
+                                        <li><a href="{{SITEURL}}">Home</a></li>
+                                        
+                                    </ul>
+                                </nav>  
                             </div>
                         </div>'
+
+            mixinTemplateHelpers : (data) ->
+                data  = super data
+                data.SITEURL = window.SITEURL
+                data.SITENAME = window.SITENAME
+                data.LOGOPATH = 'http://chatcat.io/wp-content/uploads/2014/09/unnamed.png'
+                data
+
 
             className : 'header navbar navbar-inverse'
 
             regions :
                 userDisplayRegion : '#user-display'
 
+            
         # return the header  layout instance
         HeaderLayout
 
