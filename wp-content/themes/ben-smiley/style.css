@@ -828,6 +828,8 @@ header#top nav > ul > li > a {
     -moz-transition: color 0.1s linear;
     -o-transition: color 0.1s linear;
     transition: color 0.1s linear;
+    padding-bottom: 28px !important;
+	padding-top: 30px;
 }
 
 html:not(.js) header#top nav > ul > li > a {
