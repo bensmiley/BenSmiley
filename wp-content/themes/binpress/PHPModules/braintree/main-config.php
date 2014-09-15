@@ -9,7 +9,7 @@
  *                    from the sandbox account of Braintree are added here.
  */
 
-require_once get_template_directory().'/vendor/braintree/braintree_php/lib/Braintree.php';
+require_once ABSPATH  .'wp-content/themes/binpress/vendor/braintree/braintree_php/lib/Braintree.php';
 
 
 Braintree_Configuration::environment('sandbox');

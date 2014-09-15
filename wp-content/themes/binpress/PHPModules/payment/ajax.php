@@ -5,8 +5,7 @@
  * Date: 6/11/14
  * Time: 2:21 PM
  */
-
-require_once get_template_directory().'/vendor/braintree/braintree_php/lib/Braintree.php';
+require_once ABSPATH  .'wp-content/themes/binpress/vendor/braintree/braintree_php/lib/Braintree.php';
 
 
 // Braintree_Configuration::environment('sandbox');
