@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], function(App, msgbus, RegionController, PlanListView) {
+define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], function(App, msgbus, RegionController, Views) {
   return App.module("PlansApp.List", function(List, App, BackBone, Marionette, $, _) {
     var PlansListController;
     PlansListController = (function(_super) {
@@ -15,6 +15,8 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       }
 
       PlansListController.prototype.initialize = function(opts) {
+        this.show(new Views.BetaReleaseView(opts));
+        return;
         this.domainId = opts.domainID;
         this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
         this.subscriptionModel.fetch();
@@ -45,7 +47,7 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       };
 
       PlansListController.prototype.getPlanListView = function(subscriptionModel) {
-        return new PlanListView({
+        return new Views.PlansListView({
           collection: this.planCollection,
           model: subscriptionModel,
           domainId: this.domainId
