@@ -25,3 +25,8 @@ require_once 'customer.php';
 require_once 'plans.php';
 require_once 'subscription.php';
 require_once 'payment.php';
+
+function generate_client_token(){
+    $clientToken = Braintree_ClientToken::generate();
+    return $clientToken;
+}
