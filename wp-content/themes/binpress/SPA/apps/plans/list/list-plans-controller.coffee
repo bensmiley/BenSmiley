@@ -12,8 +12,8 @@ define [ 'app'
 
             initialize : ( opts )->
 
-                @show new Views.BetaReleaseView opts
-                return
+                # @show new Views.BetaReleaseView opts
+                # return
 
                 #get the domain ID from the options passed to controller
                 @domainId = opts.domainID
