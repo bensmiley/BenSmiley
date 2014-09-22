@@ -47,6 +47,11 @@ function get_customer_credit_card_details( $customer_id ) {
 
     $customer = Braintree_Customer::find( $customer_id );
 
+    if ( empty( $customer->creditCards ) )
+        return array( 'card_exists' => false,
+            'customer_id' => $customer_id,
+            'braintree_client_token' => generate_client_token() );
+
     $customer_credit_card_data = customer_credit_card_details( $customer->creditCards );
 
     $customer_credit_card_data[ 'braintree_customer_id' ] = $customer_id;
@@ -54,6 +59,7 @@ function get_customer_credit_card_details( $customer_id ) {
     return $customer_credit_card_data;
 
 }
+
 
 /**
  * Function to check if credit card exists for customer and returns card details
