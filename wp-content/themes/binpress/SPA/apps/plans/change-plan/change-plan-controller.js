@@ -10,6 +10,7 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       __extends(ChangePlanController, _super);
 
       function ChangePlanController() {
+        this.newCardPayment = __bind(this.newCardPayment, this);
         this.showPaymentFormView = __bind(this.showPaymentFormView, this);
         this.showPaymentCardView = __bind(this.showPaymentCardView, this);
         this.showPaymentView = __bind(this.showPaymentView, this);
@@ -105,8 +106,8 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
       ChangePlanController.prototype.showPaymentFormView = function() {
         this.paymentFormView = this.getPaymentFormView(this.userBillingModel);
         this.layout.paymentViewRegion.show(this.paymentFormView);
-        this.listenTo(this.paymentFormView, 'user:credit:card:details', this.newCreditCardPayment);
-        return this.listenTo(this.paymentFormView, 'use:stored:card', this.useStoredCreditCard);
+        this.listenTo(this.paymentFormView, 'use:stored:card', this.useStoredCreditCard);
+        return this.listenTo(this.paymentFormView, "new:credit:card:payment", this.newCardPayment);
       };
 
       ChangePlanController.prototype.useStoredCreditCard = function() {
@@ -119,25 +120,27 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         });
       };
 
-      ChangePlanController.prototype.newCreditCardPayment = function(creditCardData) {
+      ChangePlanController.prototype.newCardPayment = function(paymentMethodNonce) {
         var options;
+        console.log(paymentMethodNonce);
         options = {
+          method: 'POST',
           url: AJAXURL,
-          method: "POST",
           data: {
-            action: 'user-new-payment',
-            creditCardData: creditCardData,
-            selectedPlanId: this.planId,
-            selectedPlanName: this.selectedPlanModel.get('plan_name'),
-            selectedPlanPrice: this.selectedPlanModel.get('price'),
-            domainId: this.domainId,
-            activePlanId: this.domainModel.get('plan_id'),
-            subscriptionId: this.domainModel.get('subscription_id')
+            'paymentMethodNonce': paymentMethodNonce,
+            'selectedPlanId': this.planId,
+            'customerId': this.userBillingModel.get('customer_id'),
+            'currentSubscriptionId': this.domainModel.get('subscription_id'),
+            'action': 'user-new-payment'
           }
         };
         return $.ajax(options).done((function(_this) {
           return function(response) {
-            return _this.paymentFormView.triggerMethod("payment:sucess", response, _this.domainId);
+            if (response.code === "OK") {
+              return _this.paymentView.triggerMethod("payment:success");
+            } else {
+              return _this.paymentView.triggerMethod("payment:error", response.msg);
+            }
           };
         })(this));
       };

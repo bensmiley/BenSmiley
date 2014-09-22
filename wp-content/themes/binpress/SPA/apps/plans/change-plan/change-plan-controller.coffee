@@ -93,8 +93,10 @@ define [ 'app'
                 @layout.paymentViewRegion.show @paymentFormView
 
                 #listen to the card form view click events
-                @listenTo @paymentFormView, 'user:credit:card:details', @newCreditCardPayment
+                # @listenTo @paymentFormView, 'user:credit:card:details', @newCreditCardPayment
                 @listenTo @paymentFormView, 'use:stored:card', @useStoredCreditCard
+
+                @listenTo @paymentFormView, "new:credit:card:payment", @newCardPayment 
 
             #when user clicks cancel and chooses to use the stored card for payment
             # instead of changing the card
@@ -105,23 +107,43 @@ define [ 'app'
                 new ChangePlanView.PaymentFormView
                     model : userBillingModel
 
+            #=======================MAHIMA's OLD CODE BEGINS=======================
             #ajax action when user makes payment through card for the first time
-            newCreditCardPayment : ( creditCardData )->
+            # newCreditCardPayment : ( creditCardData )->
+            #     options =
+            #         url : AJAXURL
+            #         method : "POST"
+            #         data :
+            #             action : 'user-new-payment'
+            #             creditCardData : creditCardData
+            #             selectedPlanId : @planId
+            #             selectedPlanName : @selectedPlanModel.get 'plan_name'
+            #             selectedPlanPrice : @selectedPlanModel.get 'price'
+            #             domainId : @domainId
+            #             activePlanId : @domainModel.get 'plan_id'
+            #             subscriptionId : @domainModel.get 'subscription_id'
+
+            #     $.ajax( options ).done ( response )=>
+            #         @paymentFormView.triggerMethod "payment:sucess", response, @domainId
+            #=======================MAHIMA's OLD CODE ENDS=======================
+
+            newCardPayment : ( paymentMethodNonce )=>
+                console.log paymentMethodNonce
                 options =
+                    method : 'POST'
                     url : AJAXURL
-                    method : "POST"
                     data :
-                        action : 'user-new-payment'
-                        creditCardData : creditCardData
-                        selectedPlanId : @planId
-                        selectedPlanName : @selectedPlanModel.get 'plan_name'
-                        selectedPlanPrice : @selectedPlanModel.get 'price'
-                        domainId : @domainId
-                        activePlanId : @domainModel.get 'plan_id'
-                        subscriptionId : @domainModel.get 'subscription_id'
+                        'paymentMethodNonce' : paymentMethodNonce
+                        'selectedPlanId' : @planId
+                        'customerId' : @userBillingModel.get 'customer_id'
+                        'currentSubscriptionId' : @domainModel.get 'subscription_id'
+                        'action' : 'user-new-payment'
 
                 $.ajax( options ).done ( response )=>
-                    @paymentFormView.triggerMethod "payment:sucess", response, @domainId
+                    if response.code == "OK"
+                        @paymentView.triggerMethod "payment:success"
+                    else
+                        @paymentView.triggerMethod "payment:error", response.msg
 
             #ajax action when user makes payment through card for the first time
             creditCardPayment : ( creditCardToken )->

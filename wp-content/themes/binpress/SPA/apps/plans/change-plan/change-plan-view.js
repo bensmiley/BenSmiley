@@ -124,25 +124,29 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
     PaymentFormView.prototype.events = function() {
       return {
         'click #submit': function() {
-          var braintree, cardholderName, clientSideEncryptionKey, creditCardCvv, creditCardNumber, data, expirationDate;
-          creditCardNumber = this.$el.find('#credit_card_number').val();
-          cardholderName = this.$el.find('#cardholder_name').val();
+          var cardNumber, client, clientToken, cvv, expirationDate, nameOnCard;
+          console.log(this.model);
+          console.log("Submit credit card details");
+          cardNumber = this.$el.find('#credit_card_number').val();
+          nameOnCard = this.$el.find('#cardholder_name').val();
           expirationDate = this.$el.find('#expiration_date').val();
-          creditCardCvv = this.$el.find('#credit_card_cvv').val();
-          clientSideEncryptionKey = window.CSEK;
-          braintree = Braintree.create(clientSideEncryptionKey);
-          creditCardNumber = braintree.encrypt(creditCardNumber);
-          cardholderName = braintree.encrypt(cardholderName);
-          expirationDate = braintree.encrypt(expirationDate);
-          creditCardCvv = braintree.encrypt(creditCardCvv);
-          data = {
-            'creditCardNumber': creditCardNumber,
-            'cardholderName': cardholderName,
-            'expirationDate': expirationDate,
-            'creditCardCvv': creditCardCvv,
-            'braintree_customer_id': this.model.get('braintree_customer_id')
-          };
-          this.trigger("user:credit:card:details", data);
+          cvv = this.$el.find('#credit_card_cvv').val();
+          clientToken = this.model.get('braintree_client_token');
+          console.log(clientToken);
+          client = new braintree.api.Client({
+            clientToken: clientToken
+          });
+          console.log(client);
+          client.tokenizeCard({
+            number: cardNumber,
+            cvv: cvv,
+            cardholderName: nameOnCard,
+            expiration_date: expirationDate
+          }, (function(_this) {
+            return function(err, nonce) {
+              return _this.trigger("new:credit:card:payment", nonce);
+            };
+          })(this));
           return this.$el.find('.ajax-loader-login').show();
         },
         'click #cancel': function() {

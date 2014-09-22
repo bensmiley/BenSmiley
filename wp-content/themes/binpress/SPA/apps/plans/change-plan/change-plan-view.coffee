@@ -141,33 +141,51 @@ define [ 'marionette'
 
         events : ->
             'click #submit' : ->
-                #get all card details for encryption
-                creditCardNumber = @$el.find( '#credit_card_number' ).val()
-                cardholderName = @$el.find( '#cardholder_name' ).val()
+                console.log @model
+                console.log "Submit credit card details"
+
+                # Extract all credit card info from the form
+                cardNumber = @$el.find( '#credit_card_number' ).val()
+                nameOnCard = @$el.find( '#cardholder_name' ).val()
                 expirationDate = @$el.find( '#expiration_date' ).val()
-                creditCardCvv = @$el.find( '#credit_card_cvv' ).val()
+                cvv = @$el.find( '#credit_card_cvv' ).val()
 
-                #The client side encryption key from the sandbox account of braintree
-                # clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB"
-                clientSideEncryptionKey = window.CSEK
-                braintree = Braintree.create( clientSideEncryptionKey )
+                clientToken = @model.get 'braintree_client_token'
+                console.log clientToken
+                client = new braintree.api.Client(clientToken: clientToken)
 
-                #encrypt the card data
-                creditCardNumber = braintree.encrypt( creditCardNumber )
-                cardholderName = braintree.encrypt( cardholderName )
-                expirationDate = braintree.encrypt( expirationDate )
-                creditCardCvv = braintree.encrypt( creditCardCvv )
+                console.log client 
+                client.tokenizeCard number : cardNumber, cvv : cvv, cardholderName : nameOnCard, expiration_date : expirationDate, ( err, nonce )=>
+                    @trigger "new:credit:card:payment", nonce
+                #=======================MAHIMA's OLD CODE BEGINS=======================
+                # #get all card details for encryption
+                # creditCardNumber = @$el.find( '#credit_card_number' ).val()
+                # cardholderName = @$el.find( '#cardholder_name' ).val()
+                # expirationDate = @$el.find( '#expiration_date' ).val()
+                # creditCardCvv = @$el.find( '#credit_card_cvv' ).val()
 
-                #card data array
-                data =
-                    'creditCardNumber' : creditCardNumber
-                    'cardholderName' : cardholderName
-                    'expirationDate' : expirationDate
-                    'creditCardCvv' : creditCardCvv
-                    'braintree_customer_id' : @model.get 'braintree_customer_id'
+                # #The client side encryption key from the sandbox account of braintree
+                # # clientSideEncryptionKey = "MIIBCgKCAQEA0fQXY7zHRl2PSEoZGOWDseI9MTDz2eO45C5M27KhN/HJXqi7sj8UDybrZJdsK+QL4Cw55r285Eeka+a5tAciEqd3E6YXkNokVmgo6/Wg21vYJKRvcnLkPE+J5iBFfQBBEMNKZMALl1P7HHkfOJsFZNO9+YOfiE+wl0QC8SnjZApftJ69ibbuFdFSR3L4kP6tZSQWeJS9WnkDzxGvRUyGFfs26x/q7Kxn+hdXkxTDd1o8FhjTCP/EkmHxhhJyYgzagtbJ84nxaLBuz6yW8bx5Qwt1ZiWUVVUIJlMiQtXUP05CId+aMIV8wX3OWtyAmTpn8N++tXYGjt/kY/bf8oY3yQIDAQAB"
+                # clientSideEncryptionKey = window.CSEK
+                # braintree = Braintree.create( clientSideEncryptionKey )
 
-                #send the card details to the controller for ajax event
-                @trigger "user:credit:card:details", data
+                # #encrypt the card data
+                # creditCardNumber = braintree.encrypt( creditCardNumber )
+                # cardholderName = braintree.encrypt( cardholderName )
+                # expirationDate = braintree.encrypt( expirationDate )
+                # creditCardCvv = braintree.encrypt( creditCardCvv )
+
+                # #card data array
+                # data =
+                #     'creditCardNumber' : creditCardNumber
+                #     'cardholderName' : cardholderName
+                #     'expirationDate' : expirationDate
+                #     'creditCardCvv' : creditCardCvv
+                #     'braintree_customer_id' : @model.get 'braintree_customer_id'
+
+                # #send the card details to the controller for ajax event
+                # @trigger "user:credit:card:details", data
+                #=======================MAHIMA's OLD CODE ENDS=======================
 
                 #show the loader
                 @$el.find( '.ajax-loader-login' ).show()
