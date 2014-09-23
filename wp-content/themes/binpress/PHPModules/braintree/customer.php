@@ -80,6 +80,7 @@ function customer_credit_card_details( $credit_cards ) {
     $credit_card_details[ 'expiration_date' ] = $credit_cards[ 0 ]->expirationDate;
     $credit_card_details[ 'token' ] = $credit_cards[ 0 ]->token;
     $credit_card_details[ 'card_exists' ] = true;
+    $credit_card_details[ 'braintree_client_token' ] = generate_client_token();
 
     return $credit_card_details;
 
@@ -92,22 +93,18 @@ function customer_credit_card_details( $credit_cards ) {
  * @param $credit_card_data
  * @return array containing credit card token on success and error msg on failure
  */
-function create_credit_card_for_customer( $credit_card_data ) {
+function create_credit_card_for_customer( $customer_id, $payment_method_nonce ) {
 
-    $create_card = Braintree_Customer::update( $credit_card_data[ 'braintree_customer_id' ], array(
-        'creditCard' => array(
-            'cardholderName' => $credit_card_data[ 'cardholderName' ],
-            'number' => $credit_card_data[ 'creditCardNumber' ],
-            'expirationDate' => $credit_card_data[ 'expirationDate' ],
-            'cvv' => $credit_card_data[ 'creditCardCvv' ],
-            'options' => array(
-                'verifyCard' => true
-            )
+    $create_card = Braintree_PaymentMethod::create(array(
+        'customerId' => $customer_id,
+        'paymentMethodNonce' => $payment_method_nonce,
+        'options' => array(
+            'failOnDuplicatePaymentMethod' => true
         )
-    ) );
+    ));
 
     if ( $create_card->success ) {
-        $credit_card_token = $create_card->customer->creditCards[ 0 ]->token;
+        $credit_card_token = $create_card->paymentMethod->token;
         $success_msg = array( 'code' => 'OK', 'credit_card_token' => $credit_card_token );
         return $success_msg;
 

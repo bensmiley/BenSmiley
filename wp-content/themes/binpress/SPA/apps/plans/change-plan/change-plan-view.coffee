@@ -65,6 +65,7 @@ define [ 'marionette'
         template : paymentCardTpl
         events : ->
             'click #submit' : ->
+                console.log "PAy using stored card"
                 #get all card details for encryption
                 creditCardToken = @model.get 'token'
 
@@ -123,7 +124,6 @@ define [ 'marionette'
         #show sucess msg
         onPaymentSucess : ( response, domainId )->
             @$el.find( '#success-msg' ).empty()
-            msgText = response.msg
             msg = "<div class='alert alert-success'>
                     <button class='close' data-dismiss='alert'>&times;</button>
                            #{msgText}<div>"
@@ -135,6 +135,13 @@ define [ 'marionette'
 #            _.delay =>
 #                @redirectPage redirect_url
 #            , 2000
+        
+        onPaymentError : ( msgText )->
+                @$el.find( '#success-msg' ).empty()
+                msg = "<div class='alert alert-success'>
+                    <button class='close' data-dismiss='alert'>&times;</button>
+                     #{msgText}<div>"
+                @$el.find( '#success-msg' ).append( msg )
 
         redirectPage : ( redirect_url )->
             window.location.href = redirect_url
@@ -148,6 +155,8 @@ define [ 'marionette'
                 cardNumber = @$el.find( '#credit_card_number' ).val()
                 nameOnCard = @$el.find( '#cardholder_name' ).val()
                 expirationDate = @$el.find( '#expiration_date' ).val()
+                expirationDate = expirationDate.replace RegExp(" ", "g"), ""
+                console.log expirationDate
                 cvv = @$el.find( '#credit_card_cvv' ).val()
 
                 clientToken = @model.get 'braintree_client_token'

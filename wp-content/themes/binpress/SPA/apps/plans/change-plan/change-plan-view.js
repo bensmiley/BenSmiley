@@ -61,6 +61,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       return {
         'click #submit': function() {
           var braintree, clientSideEncryptionKey, creditCardToken;
+          console.log("PAy using stored card");
           creditCardToken = this.model.get('token');
           clientSideEncryptionKey = window.CSEK;
           braintree = Braintree.create(clientSideEncryptionKey);
@@ -110,9 +111,15 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
     };
 
     PaymentFormView.prototype.onPaymentSucess = function(response, domainId) {
-      var msg, msgText;
+      var msg;
       this.$el.find('#success-msg').empty();
-      msgText = response.msg;
+      msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button> " + msgText + "<div>";
+      return this.$el.find('#success-msg').append(msg);
+    };
+
+    PaymentFormView.prototype.onPaymentError = function(msgText) {
+      var msg;
+      this.$el.find('#success-msg').empty();
       msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button> " + msgText + "<div>";
       return this.$el.find('#success-msg').append(msg);
     };
@@ -130,6 +137,8 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
           cardNumber = this.$el.find('#credit_card_number').val();
           nameOnCard = this.$el.find('#cardholder_name').val();
           expirationDate = this.$el.find('#expiration_date').val();
+          expirationDate = expirationDate.replace(RegExp(" ", "g"), "");
+          console.log(expirationDate);
           cvv = this.$el.find('#credit_card_cvv').val();
           clientToken = this.model.get('braintree_client_token');
           console.log(clientToken);

@@ -135,15 +135,15 @@ define [ 'app'
                     data :
                         'paymentMethodNonce' : paymentMethodNonce
                         'selectedPlanId' : @planId
-                        'customerId' : @userBillingModel.get 'customer_id'
+                        'customerId' : @userBillingModel.get 'braintree_customer_id'
                         'currentSubscriptionId' : @domainModel.get 'subscription_id'
                         'action' : 'user-new-payment'
 
                 $.ajax( options ).done ( response )=>
                     if response.code == "OK"
-                        @paymentView.triggerMethod "payment:success"
+                        @paymentFormView.triggerMethod "payment:success", response.msg
                     else
-                        @paymentView.triggerMethod "payment:error", response.msg
+                        @paymentFormView.triggerMethod "payment:error", response.msg
 
             #ajax action when user makes payment through card for the first time
             creditCardPayment : ( creditCardToken )->

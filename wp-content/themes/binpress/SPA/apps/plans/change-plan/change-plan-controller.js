@@ -129,7 +129,7 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
           data: {
             'paymentMethodNonce': paymentMethodNonce,
             'selectedPlanId': this.planId,
-            'customerId': this.userBillingModel.get('customer_id'),
+            'customerId': this.userBillingModel.get('braintree_customer_id'),
             'currentSubscriptionId': this.domainModel.get('subscription_id'),
             'action': 'user-new-payment'
           }
@@ -137,9 +137,9 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
         return $.ajax(options).done((function(_this) {
           return function(response) {
             if (response.code === "OK") {
-              return _this.paymentView.triggerMethod("payment:success");
+              return _this.paymentFormView.triggerMethod("payment:success", response.msg);
             } else {
-              return _this.paymentView.triggerMethod("payment:error", response.msg);
+              return _this.paymentFormView.triggerMethod("payment:error", response.msg);
             }
           };
         })(this));
