@@ -199,23 +199,23 @@ function set_html_content_type() {
  */
 function get_user_activation_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br><br>";
-    $body .= __( 'Thank you for creating an account with Chatcat.io.<br><br>
-              Please confirm your email address by clicking the following:' ) . "<br>";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br /><br />";
+    $body .= __( 'Thank you for creating an account with Chatcat.io.<br /><br />
+              Please confirm your email address by clicking the following:' ) . "<br /><br />";
 
     $link = site_url( "user-activation?action=activate-user&key=" . $user_data->user_activation_key .
             "&login=" . rawurlencode( $user_data->user_login ), 'login' );
 
-    $body .= '<a target ="_blank" href='.$link.'>Click here to activate profile</a><br><br>';
+    $body .= '<a target ="_blank" href='.$link.'>Click here to activate profile</a><br /><br />';
 
     $body .= sprintf( __( "If you're not %s or didn't request verification, you can ignore this email." ),
-            $user_data->display_name ) . "<br>";
+            $user_data->display_name ) . "<br />";
 
-    $body .= __( 'If you have any questions please feel free to contact on support@chatcat.io' ) . "<br><br>";
+    $body .= __( 'If you have any questions please feel free to contact on support@chatcat.io' ) . "<br /><br />";
 
-    $body .= __( 'Regards,' ) . "<br>";
+    $body .= __( 'Regards,' ) . "<br />";
 
-    $body .= __( 'Chatcat.io team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br />";
 
     return $body;
 
@@ -229,16 +229,16 @@ function get_user_activation_mail_content( $user_data ) {
  */
 function get_admin_newuser_mail_content( $user_data ) {
 
-    $body = __( 'Hi' ) . "<br>";
+    $body = __( 'Hi' ) . "<br />";
 
-    $body .= __( 'A new User has registered on Chatcat.io' ) . "<br>";
-    $body .= __( 'User details : ' ) . "<br>";
-    $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "<br>";
-    $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "<br>";
+    $body .= __( 'A new User has registered on Chatcat.io' ) . "<br />";
+    $body .= __( 'User details : ' ) . "<br />";
+    $body .= sprintf( __( 'Name: :   %s' ), $user_data->display_name ) . "<br />";
+    $body .= sprintf( __( 'Email :   %s' ), $user_data->user_login ) . "<br />";
 
-    $body .= __( 'Regards,' ) . "<br>";
+    $body .= __( 'Regards,' ) . "<br />";
 
-    $body .= __( 'Team' ) . "<br>";
+    $body .= __( 'Team' ) . "<br />";
 
     return $body;
 }
@@ -251,24 +251,24 @@ function get_admin_newuser_mail_content( $user_data ) {
  */
 function get_user_welcome_mail_content( $user_data ) {
 
-    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br>";
-    $body .= __( 'Welcome to Chatcat.io. ' ) . "<br>";
+    $body = sprintf( __( 'Hi  %s' ), $user_data->display_name ) . "<br /><br />";
+    $body .= __( 'Welcome to Chatcat.io. ' ) . "<br /><br />";
 
     $body .= __( 'Your account has been successfully verified! You can
                     now login with the credentials provided by you at the time of registration
-                to start using your account.' ) . "<br>";
+                to start using your account.' ) . "<br /><br />";
 
-    $body .= __( 'Start by following these 3 simple steps ' ) . "<br>";
-    $body .= __( '1. Login to your account ' ) . "<br>";
-    $body .= __( '2. Select a plan that is best suited for you.You can choose from our range of plans ' ) . "<br>";
-    $body .= __( '3. Start adding domains & creating groups ' ) . "<br>";
-    $body .= __( 'You can then chat, add/edit groups anytime on the go!  ' ) . "<br>";
+    $body .= __( 'Start by following these 3 simple steps ' ) . "<br /><br />";
+    $body .= __( '1. Login to your account ' ) . "<br />";
+    $body .= __( '2. Select a plan that is best suited for you.You can choose from our range of plans ' ) . "<br />";
+    $body .= __( '3. Start adding domains & creating groups ' ) . "<br /><br />";
+    $body .= __( 'You can then chat, add/edit groups anytime on the go!  ' ) . "<br />";
     $body .= __( 'Meanwhile,if you have any queries please feel free to contact our team on number
-                or email us at support@chatcat.io.  ' ) . "<br>";
+                or email us at support@chatcat.io.  ' ) . "<br /><br />";
 
-    $body .= __( 'Regards,' ) . "<br>";
+    $body .= __( 'Regards,' ) . "<br />";
 
-    $body .= __( 'Chatcat.io team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br />";
 
     return $body;
 }
@@ -294,9 +294,9 @@ function get_password_reset_mail_content( $user_data ) {
 
     $body .= __( 'If you have any queries please contact us at support@chatcat.io.  ' ) . "<br /><br />";
 
-    $body .= __( 'Regards,' ) . "<br>";
+    $body .= __( 'Regards,' ) . "<br />";
 
-    $body .= __( 'Chatcat.io team' ) . "<br>";
+    $body .= __( 'Chatcat.io team' ) . "<br />";
 
     return $body;
 }
