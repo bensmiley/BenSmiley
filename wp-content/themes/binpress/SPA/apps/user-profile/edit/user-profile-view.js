@@ -71,7 +71,8 @@ define(['marionette', 'text!apps/user-profile/templates/userprofile.html'], func
       } else {
         msg = '<div class="alert alert-success"> <button class="close" data-dismiss="alert"></button> Updated User profile</div>';
       }
-      return this.$el.find('#form-msg').append(msg);
+      this.$el.find('#form-msg').append(msg);
+      return this.$el.find('.upload-success').hide();
     };
 
     return UserProfileView;

@@ -59,6 +59,9 @@ define [ 'marionette' , 'text!apps/user-profile/templates/userprofile.html' ], (
                         Updated User profile</div>'
             @$el.find( '#form-msg' ).append msg
 
+            #clear upload pic msg
+            @$el.find( '.upload-success' ).hide()
+
     # return the user profile view instance
     UserProfileView
 

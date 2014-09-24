@@ -41,5 +41,6 @@ define [ 'marionette', 'msgbus' ], ( Marionette, msgbus )->
     App.on "initialize:after", ( options ) ->
         App.startHistory()
         App.navigate( @rootRoute, trigger : true ) unless App.getCurrentRoute()
+        App.vent.trigger 'app:started'
 
     App

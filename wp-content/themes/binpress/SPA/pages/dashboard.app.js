@@ -30,10 +30,11 @@ define(['marionette', 'msgbus'], function(Marionette, msgbus) {
   App.on("initialize:after", function(options) {
     App.startHistory();
     if (!App.getCurrentRoute()) {
-      return App.navigate(this.rootRoute, {
+      App.navigate(this.rootRoute, {
         trigger: true
       });
     }
+    return App.vent.trigger('app:started');
   });
   return App;
 });
