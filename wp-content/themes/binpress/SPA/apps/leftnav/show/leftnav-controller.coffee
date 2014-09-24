@@ -24,7 +24,7 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
 
             template : '<div class="page-sidebar-wrapper" id="main-menu-wrapper">
                             <ul>
-                                <li class="start">
+                                <li class="start active">
                                     <a href="#domains" id="user-domains">
                                         <i class="fa fa-globe"></i>
                                         <span class="title">My Domains</span>
@@ -45,6 +45,22 @@ define [ 'app', 'regioncontroller' ], ( App, RegionController )->
                      </div>'
 
             className : 'page-sidebar'
+
+            events :
+                'click ul > li' : 'highlightActive'
+
+            initialize : (opt)->
+                @listenTo App.vent, 'app:started', @setHighlighted
+                super opt
+
+            highlightActive : (evt)->
+                $(evt.currentTarget).siblings().removeClass 'active'
+                $(evt.currentTarget).addClass 'active'
+
+            setHighlighted : =>
+                route = App.getCurrentRoute()
+                console.log route
+                @$el.find("a[href='##{route}']").click()
 
         # return the instance of the leftnav view
         LeftNavView
