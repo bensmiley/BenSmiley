@@ -113,6 +113,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
     PaymentFormView.prototype.onPaymentSucess = function(msgText) {
       var msg;
       this.$el.find('#success-msg').empty();
+      this.$el.find('.ajax-loader-login').hide();
       msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button> " + msgText + "<div>";
       return this.$el.find('#success-msg').append(msg);
     };
@@ -120,6 +121,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
     PaymentFormView.prototype.onPaymentError = function(msgText) {
       var msg;
       this.$el.find('#success-msg').empty();
+      this.$el.find('.ajax-loader-login').hide();
       msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button> " + msgText + "<div>";
       return this.$el.find('#success-msg').append(msg);
     };
@@ -133,21 +135,16 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
         'click #submit': function(e) {
           var cardNumber, client, clientToken, cvv, expirationDate, nameOnCard;
           e.preventDefault();
-          console.log(this.model);
-          console.log("Submit credit card details");
           this.$el.find('.ajax-loader-login').show();
           cardNumber = this.$el.find('#credit_card_number').val();
           nameOnCard = this.$el.find('#cardholder_name').val();
           expirationDate = this.$el.find('#expiration_date').val();
           expirationDate = expirationDate.replace(RegExp(" ", "g"), "");
-          console.log(expirationDate);
           cvv = this.$el.find('#credit_card_cvv').val();
           clientToken = this.model.get('braintree_client_token');
-          console.log(clientToken);
           client = new braintree.api.Client({
             clientToken: clientToken
           });
-          console.log(client);
           return client.tokenizeCard({
             number: cardNumber,
             cvv: cvv,

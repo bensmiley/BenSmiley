@@ -124,6 +124,8 @@ define [ 'marionette'
         #show sucess msg
         onPaymentSucess : ( msgText )->
             @$el.find( '#success-msg' ).empty()
+            #hide the loader
+            @$el.find( '.ajax-loader-login' ).hide()
             msg = "<div class='alert alert-success'>
                     <button class='close' data-dismiss='alert'>&times;</button>
                            #{msgText}<div>"
@@ -137,11 +139,13 @@ define [ 'marionette'
 #            , 2000
         
         onPaymentError : ( msgText )->
-                @$el.find( '#success-msg' ).empty()
-                msg = "<div class='alert alert-success'>
+            @$el.find( '#success-msg' ).empty()
+            #hide the loader
+            @$el.find( '.ajax-loader-login' ).hide()
+            msg = "<div class='alert alert-success'>
                     <button class='close' data-dismiss='alert'>&times;</button>
                      #{msgText}<div>"
-                @$el.find( '#success-msg' ).append( msg )
+            @$el.find( '#success-msg' ).append( msg )
 
         redirectPage : ( redirect_url )->
             window.location.href = redirect_url
@@ -149,8 +153,8 @@ define [ 'marionette'
         events : ->
             'click #submit' : (e)->
                 e.preventDefault()
-                console.log @model
-                console.log "Submit credit card details"
+                # console.log @model
+                # console.log "Submit credit card details"
 
                 #show the loader
                 @$el.find( '.ajax-loader-login' ).show()
@@ -160,14 +164,14 @@ define [ 'marionette'
                 nameOnCard = @$el.find( '#cardholder_name' ).val()
                 expirationDate = @$el.find( '#expiration_date' ).val()
                 expirationDate = expirationDate.replace RegExp(" ", "g"), ""
-                console.log expirationDate
+                # console.log expirationDate
                 cvv = @$el.find( '#credit_card_cvv' ).val()
 
                 clientToken = @model.get 'braintree_client_token'
-                console.log clientToken
+                # console.log clientToken
                 client = new braintree.api.Client(clientToken: clientToken)
 
-                console.log client 
+                # console.log client 
                 client.tokenizeCard number : cardNumber, cvv : cvv, cardholderName : nameOnCard, expiration_date : expirationDate, ( err, nonce )=>
                     @trigger "new:credit:card:payment", nonce
                 #=======================MAHIMA's OLD CODE BEGINS=======================

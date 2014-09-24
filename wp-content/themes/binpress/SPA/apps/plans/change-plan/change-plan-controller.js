@@ -122,7 +122,6 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
 
       ChangePlanController.prototype.newCardPayment = function(paymentMethodNonce) {
         var options;
-        console.log(paymentMethodNonce);
         options = {
           method: 'POST',
           url: AJAXURL,

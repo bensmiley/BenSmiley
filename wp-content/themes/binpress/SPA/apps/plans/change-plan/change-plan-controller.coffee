@@ -128,7 +128,8 @@ define [ 'app'
             #=======================MAHIMA's OLD CODE ENDS=======================
 
             newCardPayment : ( paymentMethodNonce )=>
-                console.log paymentMethodNonce
+                # console.log paymentMethodNonce
+                # console.log @domainModel.get 'subscription_id'
                 options =
                     method : 'POST'
                     url : AJAXURL
