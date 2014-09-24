@@ -131,6 +131,10 @@ define(['app', 'regioncontroller', 'apps/plans/change-plan/change-plan-view', 'm
             'selectedPlanId': this.planId,
             'customerId': this.userBillingModel.get('braintree_customer_id'),
             'currentSubscriptionId': this.domainModel.get('subscription_id'),
+            'selectedPlanName': this.selectedPlanModel.get('plan_name'),
+            'selectedPlanPrice': this.selectedPlanModel.get('price'),
+            'domainId': this.domainId,
+            'activePlanId': this.domainModel.get('plan_id'),
             'action': 'user-new-payment'
           }
         };

@@ -122,7 +122,7 @@ define [ 'marionette'
                 @$el.find( '.cancel-card' ).show()
 
         #show sucess msg
-        onPaymentSucess : ( response, domainId )->
+        onPaymentSucess : ( msgText )->
             @$el.find( '#success-msg' ).empty()
             msg = "<div class='alert alert-success'>
                     <button class='close' data-dismiss='alert'>&times;</button>
@@ -147,9 +147,13 @@ define [ 'marionette'
             window.location.href = redirect_url
 
         events : ->
-            'click #submit' : ->
+            'click #submit' : (e)->
+                e.preventDefault()
                 console.log @model
                 console.log "Submit credit card details"
+
+                #show the loader
+                @$el.find( '.ajax-loader-login' ).show()
 
                 # Extract all credit card info from the form
                 cardNumber = @$el.find( '#credit_card_number' ).val()
@@ -195,9 +199,6 @@ define [ 'marionette'
                 # #send the card details to the controller for ajax event
                 # @trigger "user:credit:card:details", data
                 #=======================MAHIMA's OLD CODE ENDS=======================
-
-                #show the loader
-                @$el.find( '.ajax-loader-login' ).show()
 
             'click #cancel' : ->
                 @trigger "use:stored:card"

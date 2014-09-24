@@ -110,7 +110,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       }
     };
 
-    PaymentFormView.prototype.onPaymentSucess = function(response, domainId) {
+    PaymentFormView.prototype.onPaymentSucess = function(msgText) {
       var msg;
       this.$el.find('#success-msg').empty();
       msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button> " + msgText + "<div>";
@@ -130,10 +130,12 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
 
     PaymentFormView.prototype.events = function() {
       return {
-        'click #submit': function() {
+        'click #submit': function(e) {
           var cardNumber, client, clientToken, cvv, expirationDate, nameOnCard;
+          e.preventDefault();
           console.log(this.model);
           console.log("Submit credit card details");
+          this.$el.find('.ajax-loader-login').show();
           cardNumber = this.$el.find('#credit_card_number').val();
           nameOnCard = this.$el.find('#cardholder_name').val();
           expirationDate = this.$el.find('#expiration_date').val();
@@ -146,7 +148,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
             clientToken: clientToken
           });
           console.log(client);
-          client.tokenizeCard({
+          return client.tokenizeCard({
             number: cardNumber,
             cvv: cvv,
             cardholderName: nameOnCard,
@@ -156,7 +158,6 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
               return _this.trigger("new:credit:card:payment", nonce);
             };
           })(this));
-          return this.$el.find('.ajax-loader-login').show();
         },
         'click #cancel': function() {
           return this.trigger("use:stored:card");

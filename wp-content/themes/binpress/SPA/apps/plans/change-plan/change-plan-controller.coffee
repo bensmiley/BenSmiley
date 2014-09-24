@@ -137,6 +137,10 @@ define [ 'app'
                         'selectedPlanId' : @planId
                         'customerId' : @userBillingModel.get 'braintree_customer_id'
                         'currentSubscriptionId' : @domainModel.get 'subscription_id'
+                        'selectedPlanName' : @selectedPlanModel.get 'plan_name'
+                        'selectedPlanPrice' : @selectedPlanModel.get 'price'
+                        'domainId' : @domainId
+                        'activePlanId' : @domainModel.get 'plan_id'
                         'action' : 'user-new-payment'
 
                 $.ajax( options ).done ( response )=>

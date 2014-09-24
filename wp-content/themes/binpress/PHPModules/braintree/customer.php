@@ -49,7 +49,7 @@ function get_customer_credit_card_details( $customer_id ) {
 
     if ( empty( $customer->creditCards ) )
         return array( 'card_exists' => false,
-            'customer_id' => $customer_id,
+            'braintree_customer_id' => $customer_id,
             'braintree_client_token' => generate_client_token() );
 
     $customer_credit_card_data = customer_credit_card_details( $customer->creditCards );

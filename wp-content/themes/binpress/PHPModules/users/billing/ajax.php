@@ -50,6 +50,10 @@ function ajax_user_new_payment() {
     $payment_method_nonce = $_POST[ 'paymentMethodNonce' ];
     $customer_id = $_POST[ 'customerId' ];
     $current_subscription_id = $_POST[ 'currentSubscriptionId' ];
+    $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
+    $selected_plan_price = $credit_card_data[ 'selectedPlanPrice' ];
+    $domain_id = $credit_card_data[ 'domainId' ];
+    $active_plan_id = $credit_card_data[ 'activePlanId' ];
     unset( $_POST[ 'action' ] );
 
     // create the credit card for the user
@@ -58,12 +62,24 @@ function ajax_user_new_payment() {
     if ( $create_card[ 'code' ] == 'ERROR' )
             wp_send_json( array( 'code' => 'ERROR', 'msg' => $create_card[ 'msg' ] ) );
 
-    else{
-            $card_token = $create_card[ 'credit_card_token' ];
-            wp_send_json( array( 'code' => 'OK', 'credit_card_token' => $credit_card_token ) );
-    }
+    // compare the price of active and current plans
+    $price_compare = compare_plan_price( $selected_plan_id, $active_plan_id );
 
-   
+    // prepare the array to create subscriptions
+    $subscription_array = array(
+        'card_token' => $create_card[ 'credit_card_token' ],
+        'domain_id' => $domain_id,
+        'selected_plan_id' => $selected_plan_id,
+        'selected_plan_name' => $selected_plan_name,
+        'selected_plan_price' => $selected_plan_price,
+        'current_subscription_id' => $current_subscription_id,
+    );
+
+    // if true make a active subscription else make pending subscription
+    if ( !$price_compare )
+        make_pending_subscription( $subscription_array );
+    else
+        make_active_subscription( $subscription_array );
 
     //====================old code begins============================
     // $credit_card_data = $_POST;
@@ -90,7 +106,7 @@ function ajax_user_new_payment() {
     //     wp_send_json( array( 'code' => 'OK', 'msg' => $card_token[ 'msg' ] ) );
 
     // // compare the price of active and current plans
-    $price_compare = compare_plan_price( $selected_plan_id, $active_plan_id );
+    // $price_compare = compare_plan_price( $selected_plan_id, $active_plan_id );
 
     // // prepare the array to create subscriptions
     // $subscription_array = array(
@@ -104,7 +120,7 @@ function ajax_user_new_payment() {
 
     // // if true make a active subscription else make pending subscription
     // if ( !$price_compare )
-    //     make_pending_subscription( $subscription_array );
+        // make_pending_subscription( $subscription_array );
     // else
     //     make_active_subscription( $subscription_array );
     //====================old code ends===========================
