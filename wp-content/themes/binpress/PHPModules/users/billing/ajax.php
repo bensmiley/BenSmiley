@@ -50,10 +50,10 @@ function ajax_user_new_payment() {
     $payment_method_nonce = $_POST[ 'paymentMethodNonce' ];
     $customer_id = $_POST[ 'customerId' ];
     $current_subscription_id = $_POST[ 'currentSubscriptionId' ];
-    $selected_plan_name = $credit_card_data[ 'selectedPlanName' ];
-    $selected_plan_price = $credit_card_data[ 'selectedPlanPrice' ];
-    $domain_id = $credit_card_data[ 'domainId' ];
-    $active_plan_id = $credit_card_data[ 'activePlanId' ];
+    $selected_plan_name = $_POST[ 'selectedPlanName' ];
+    $selected_plan_price = $_POST[ 'selectedPlanPrice' ];
+    $domain_id = $_POST[ 'domainId' ];
+    $active_plan_id = $_POST[ 'activePlanId' ];
     unset( $_POST[ 'action' ] );
 
     // create the credit card for the user
