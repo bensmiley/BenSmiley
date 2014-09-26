@@ -57,6 +57,8 @@ function create_user_domain( $domain_details ) {
     if ( $post_id == 0 )
         return array( 'code' => "ERROR", 'msg' => "Could not create domain" );
 
+    $domain = refactor_domain($domain);
+
     // add the domain url as post meta for domain post
     update_post_meta( $post_id, 'domain', $domain );
     update_post_meta( $post_id, 'plan_id', BT_FREEPLAN );
@@ -74,6 +76,20 @@ function create_user_domain( $domain_details ) {
     update_post_meta( $post_id, 'api_key', $key );
 
     return array( 'code' => "OK", 'domain_id' => $post_id );
+}
+
+
+/**
+*/
+function refactor_domain($domain){
+    //REMOVE HTTP IF PRESENT
+    
+    //CHECK IF HOST NAME HAS WWW AND REMOVE IT
+    if ( strripos( $domain, "www" ) === 0 ) {
+        $domain = str_ireplace( "www.", "", $domain );
+    }
+
+    return $domain;
 }
 
 /**
@@ -145,7 +161,9 @@ function update_domain_post( $domain_data ) {
 
     $domain_post_id = wp_update_post( $domain_details );
 
-    update_post_meta( $domain_post_id, 'domain', $domain_data[ 'domain' ] );
+    $domain = refactor_domain($domain_data[ 'domain' ]);
+
+    update_post_meta( $domain_post_id, 'domain', $domain );
 
 }
 
@@ -265,7 +283,7 @@ function get_domain_ID($domain){
  * @return array
  */
 function check_domain_exists( $domain ) {
-    
+
     return check_domain_unique( $domain );
 
 }

@@ -36,9 +36,11 @@ function ajax_get_api_key() {
     if ( empty( $domain ) )
         echo wp_send_json( array( 'code' => 400, 'message' => 'Domain name not passed in the request' ) );
 
+    $domain = refactor_domain($domain);
 
     //CHECK IF DOMAIN URL EXISTS IN DB ANG GET THE DOMAIN ID FOR THE URL IF EXISTS
     $domain_exists = check_domain_exists( $domain );
+    
     if ( $domain_exists === false )
         echo wp_send_json( array( 'code' => 400, 'message' => 'Domain does not exists' ) );
 
