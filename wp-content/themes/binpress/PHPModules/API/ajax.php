@@ -20,7 +20,13 @@
  *
  * @apiSuccess {Int} code Response code.(200)
  * @apiSuccess {String} api_key  API key requested
- * @apiSuccess {Int} plan_id  Plan Id
+ * @apiSuccess {String} plan_id  Plan Id
+ * @apiSuccess {Object} plan_details Plan details
+ * @apiSuccess {String} plan_details.name Plan name
+ * @apiSuccess {Int} plan_details.no_of_chatters Number of chatters
+ * @apiSuccess {Boolean} plan_details.ads_enabled Ads enabled
+ * @apiSuccess {Boolean} plan_details.single_sign_in Single sign in enabled
+ * @apiSuccess {Boolean} plan_details.white_label White label enabled
  *
  * @apiError {Int} code Error code
  * @apiError {String} message Error message
@@ -40,7 +46,7 @@ function ajax_get_api_key() {
 
     //CHECK IF DOMAIN URL EXISTS IN DB ANG GET THE DOMAIN ID FOR THE URL IF EXISTS
     $domain_exists = check_domain_exists( $domain );
-    
+
     if ( $domain_exists === false )
         echo wp_send_json( array( 'code' => 400, 'message' => 'Domain does not exists' ) );
 
@@ -51,11 +57,14 @@ function ajax_get_api_key() {
     $api_key = get_post_meta( $domain_id, 'api_key', true );
 
 
+    $plan_details = get_plan($plan_id);
+
     //GENERATE API KEY FOR DOMAIN
     $response = array(
         'code' => 200,
         'api_key' => $api_key,
-        'plan_id' => $plan_id
+        'plan_id' => $plan_id,
+        'plan_details' => $plan_details
     );
 
     echo wp_send_json( $response );
@@ -63,6 +72,18 @@ function ajax_get_api_key() {
 
 add_action( 'wp_ajax_nopriv_get-api-key', 'ajax_get_api_key' );
 add_action( 'wp_ajax_get-api-key', 'ajax_get_api_key' );
+
+/**
+*/
+function get_plan($plan_id){
+
+    global $bt_plans;
+
+    if(!isset($bt_plans[$plan_id]))
+        return array();
+
+    return $bt_plans[$plan_id];
+}
 
 /**
  * Function to get the group details.
