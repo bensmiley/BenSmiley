@@ -219,8 +219,8 @@ function cancel_subscription( $old_subscription_id ) {
  */
 function delete_subscription( $subscription_id ) {
     global $wpdb;
-
-    $wpdb->delete( 'subscription',array( 'ID' => $subscription_id ) );
+    $wpdb->delete( 'subscription',array( 'subscription_id' => $subscription_id ) );
+    
 }
 
 /**
