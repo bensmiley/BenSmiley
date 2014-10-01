@@ -57,7 +57,9 @@ function make_active_subscription( $subscription_array ) {
  */
 function make_pending_subscription( $subscription_array ) {
 
+    //Last active subscription from subscription table
     $current_subscription_id = $subscription_array[ 'current_subscription_id' ];
+
     $plan_id = $subscription_array[ 'selected_plan_id' ];
     $card_token = $subscription_array[ 'card_token' ];
     $domain_id = $subscription_array[ 'domain_id' ];
@@ -74,10 +76,21 @@ function make_pending_subscription( $subscription_array ) {
     if ( $pending_subscription[ 'code' ] == 'ERROR' )
         wp_send_json( array( 'code' => 'OK', 'msg' => $pending_subscription[ 'msg' ] ) );
 
-    // make the pending subscription entry in the database
-    create_pending_subscription( $domain_id, $pending_subscription[ 'subscription_id' ] );
+    //Cancel the current subscription from braintree
+    $cancel_subscription = cancel_subscription_in_braintree( $current_subscription_id );
 
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Subscription Successful' ) );
+    if ( $cancel_subscription[ 'code' ] === 'OK' ) {
+
+        // make the pending subscription entry in the database
+        create_pending_subscription( $domain_id, $pending_subscription[ 'subscription_id' ] );
+
+        //Add pending and current subscription ids to subscription_cron_job table , so that their status can later be updated to active and cancelled respectively
+        create_subscription_cron_job( $current_subscription_id, $pending_subscription[ 'subscription_id' ], $bill_end_date );
+
+        wp_send_json( array( 'code' => 'OK', 'msg' => 'New Subscription Successful' ) );
+    } 
+    else
+        wp_send_json( array( 'code' => 'ERROR', 'msg' => $cancel_subscription[ 'msg' ] ) );
 }
 
 /**
@@ -102,5 +115,70 @@ function compare_plan_price( $selected_plan_id, $active_plan_id ) {
         return true;
 
     return false;
+
+}
+
+/***
+ * Function to get the list of all subscription to be cancelled using cron
+ */
+function get_cancel_subscription_list() {
+
+    global $wpdb;
+
+    $table_name = 'subscription_cron_jobs';
+
+    $sql = "SELECT * FROM " . $table_name . " WHERE status = '1' AND cancel_date = CURDATE()";
+
+    $query_result = $wpdb->get_results( $sql, ARRAY_A );
+
+    if ( empty ( $query_result ) )
+        return array();
+    else
+        return $query_result[ 0 ];
+}
+
+/**
+ * Function to update the status of the subscription entry
+ *
+ * @param $subscription_record_id
+ */
+function update_subscription_table( $cancel_cron_job_id, $old_subscription_id, $new_subscription_id ) {
+
+    global $wpdb;
+
+    $subscription_table = 'subscription';
+    $cron_job_table = 'subscription_cron_jobs';
+
+    //update status of old_subscription_id from 'active' to 'cancelled'
+    $wpdb->update( $subscription_table, array( 'status' => 'cancelled' ), array( 'subscription_id' => $old_subscription_id , 'status'=>'active') );
+
+    //update status of new_subscription_id from 'pending' to 'active'
+    $wpdb->update( $subscription_table, array( 'status' => 'active' ), array( 'subscription_id' => $new_subscription_id, 'status'=>'pending' ) );
+
+    //update status of cron job table to 0
+    $wpdb->update( $cron_job_table, array( 'status' => '0' ), array( 'id' => $cancel_cron_job_id ) );
+   
+}
+
+/**
+ * Function to enter a cron job entry for pending subscriptions
+ *
+ * @param $current_subscription_id, $new_subscription_id , $bill_end_date
+ */
+
+function create_subscription_cron_job( $current_subscription_id, $new_subscription_id, $bill_end_date ) {
+
+    global $wpdb;
+
+    $cancel_date = date( 'Y-m-d', strtotime( $bill_end_date ) );
+
+    $table_name = 'subscription_cron_jobs';
+
+    $subscription_details = array( 'old_subscription_id' => $current_subscription_id,
+        'new_subscription_id' => $new_subscription_id,
+        'cancel_date' => $cancel_date,
+        'status' => '1' );
+
+    $wpdb->insert( $table_name, $subscription_details );
 
 }

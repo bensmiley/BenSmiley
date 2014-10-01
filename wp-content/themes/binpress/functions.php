@@ -445,3 +445,24 @@ function redirect_if_required(){
 
 }
 add_action('template_redirect', 'redirect_if_required');
+
+
+/**
+ * Function to cancel a braintree subscription
+ */
+
+function update_pending_subscription() {
+
+    $cancel_subscription_array = get_cancel_subscription_list();
+    // echo "Get list of subscriptions to be cancelled";
+    // print_r($cancel_subscription_array);
+
+    // $cancel_subscription = cancel_subscription_in_braintree( $cancel_subscription_array[ 'old_subscription_id' ] );
+
+    update_subscription_table($cancel_subscription_array[ 'id' ], $cancel_subscription_array[ 'old_subscription_id' ],$cancel_subscription_array[ 'new_subscription_id' ]);
+   
+
+}
+// add_action( 'init', 'update_pending_subscription' );
+add_action( 'wp_update_pending_subscription', 'update_pending_subscription' );
+
