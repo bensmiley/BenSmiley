@@ -7275,7 +7275,7 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 /*-------------------------------------------------------------------------*/
 
 #footer-outer {
-	color: #ccc;
+	color: #fff;
 	position: relative; 
 	z-index: 10;
 	background-color: #252525;
@@ -7287,7 +7287,7 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 }
 
 #footer-outer .widget h4 {
-	color: #777;
+	color: #000;
 	font-size: 12px;
 	font-family: 'OpenSansbold';
     letter-spacing: 2px; 
@@ -7324,7 +7324,7 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 }
 
 #footer-outer a {
-	color: #ccc;
+	color: #fff;
 }
 
 #footer-outer a:hover {
@@ -7391,7 +7391,8 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 
 #footer-outer #copyright p {
 	line-height: 22px;
-	margin-top: 3px;	
+	margin-top: 3px;
+	color: #000;
 }
 
 #footer-outer #copyright .col ul {
@@ -7442,6 +7443,10 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 
 #header-secondary-outer #social li .icon-be {
 	font-size: 18px!important;
+}
+
+.textwidget #social{
+	text-align: center;
 }
 
 /***************** Flickr widget ******************/
