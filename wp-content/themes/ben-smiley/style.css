@@ -7817,7 +7817,7 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
     margin-bottom: 10px;
     color: #999;
     font-family: 'OpenSansbold';
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 2px;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -7896,9 +7896,10 @@ html:not(.js) .full-width-section, html:not(.js) .full-width-content {
 }
 
 #sidebar .widget.widget_categories li a, #sidebar .widget.widget_pages li a, #sidebar .widget.widget_nav_menu li a {
-	padding: 8px 0px;
+	padding: 12px 0px;
 	display: block;
-	border-bottom: 1px solid #E6E6E6;	
+	border-bottom: 1px solid #E6E6E6;
+	font-size: 16px;
 }
 
 #sidebar .widget.widget_categories > ul > li:first-child > a, #sidebar .widget.widget_pages > ul > li:first-child > a, #sidebar .widget.widget_nav_menu > ul > li:first-child > a {

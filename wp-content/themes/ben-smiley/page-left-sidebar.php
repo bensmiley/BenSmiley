@@ -10,7 +10,7 @@ get_header(); ?>
 		
 		<div class="row">
 			
-			<div id="post-area" class="col span_9 col_last">
+			<div id="post-area" class="col span_10 col_last">
 				<?php 
 				
 				if(have_posts()) : while(have_posts()) : the_post(); ?>
@@ -21,7 +21,7 @@ get_header(); ?>
 				
 			</div><!--/span_9-->
 			
-			<div id="sidebar" class="col span_3 left-sidebar">
+			<div id="sidebar" class="col span_2 left-sidebar">
 				<?php get_sidebar(); ?>
 			</div><!--/span_9-->
 			
