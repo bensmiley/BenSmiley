@@ -78,6 +78,7 @@
 .container .wpb_content_element .tabbed > ul li a {
   background-color: #f9f9f9 !important;
   border: 1px solid #dcdcdc !important;
+  border-right: none !important;
   color: #808080;
   font-size: 12px;
   font-weight: bold;
@@ -111,6 +112,9 @@
   border-top-color: #073a4f;
   border-width: 0px;
   margin-left: -36px;
+}
+.container .wpb_content_element .tabbed > ul li:last-child a {
+  border: 1px solid #dcdcdc !important;
 }
 /*.container .wpb_content_element .tabbed > ul li a{
 	background-color: @tab_grey !important;

@@ -93,6 +93,7 @@
 a { 
 	background-color: @tab_grey !important;
 	border: 1px solid @tab_border !important;
+	border-right: none !important;
 	color: @tab_grey_txt;
     font-size: 12px;
     font-weight: bold;
@@ -125,6 +126,9 @@ a.active-tab:after {
  	border-top-color: @navyblue; 
  	border-width: 0px; 
  	margin-left: -36px; 
+ }
+ &:last-child a{
+ 	border: 1px solid @tab_border !important;
  }
 }
 
