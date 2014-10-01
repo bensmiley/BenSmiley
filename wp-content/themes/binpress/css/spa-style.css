@@ -214,7 +214,7 @@ body .page-content .breadcrumb li a {
 }
 /* table ui */
 #main-content-region .table-striped tr:hover {
-  background: #e2e8eb !important;
+  background: #f8f8f8 !important;
   cursor: pointer;
 }
 .mtop {
