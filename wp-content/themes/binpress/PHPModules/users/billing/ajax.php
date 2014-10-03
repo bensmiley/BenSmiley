@@ -180,12 +180,16 @@ add_action( 'wp_ajax_user-make-payment', 'ajax_user_make_payment' );
 function ajax_cancel_subscription() {
 
     $pending_subscription_id = $_POST[ 'subscriptionId' ];
+    $domain_id = $_POST[ 'domainId' ];
 
     $cancel_subscription = cancel_subscription_in_braintree( $pending_subscription_id );
 
     if ( $cancel_subscription[ 'code' ] ) {
-        //delete the entry for the subscription in db
+        //delete the entry for the previously pending subscription in db
         delete_subscription( $pending_subscription_id );
+
+        //Add BENAJFREE as pending subscription in db
+        create_pending_free_subscription( $domain_id );
 
         wp_send_json( array( 'code' => 'OK', 'data' => 'Subscription cancelled' ) );
     } else

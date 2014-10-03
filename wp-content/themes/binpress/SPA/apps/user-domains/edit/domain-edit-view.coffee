@@ -72,13 +72,21 @@ define [ 'marionette'
             'click #cancel-plan' : ->
                 if confirm 'Delete the subscription?'
                     pendingSubscription = (@model.get 'pending_subscription').subscription_id
-                    @trigger "delete:pending:subscription", pendingSubscription
+                    domain_id = @model.get 'domain_id'
+                    @trigger "delete:pending:subscription", pendingSubscription,domain_id
 
         onShow : ->
             if not _.isUndefined @model.get 'pending_subscription'
                 @$el.find( '#change-plan' ).hide()
                 @$el.find( '.text-muted' ).hide()
                 @$el.find( '#pending-subscription' ).show()
+                if (@model.get 'pending_subscription').subscription_id is "BENAJFREE"
+                    @$el.find( '#cancel-plan' ).hide()
+                # else
+                #     @$el.find( '#change-plan' ).hide()
+                #     @$el.find( '.text-muted' ).hide()
+                #     @$el.find( '#pending-subscription' ).show()
+
 
         serializeData : ->
             data = super()
