@@ -154,7 +154,12 @@ footer,header,hgroup,menu,nav,section {
 /*-------------------------------------------------------------------------*/
 #user-meta{
 	margin-left:5px;
-	margin-top:5px;
+	margin-top:8px;
+	
+}
+
+#user-meta .display_name{
+	color: #888;
 }
 
 body {
