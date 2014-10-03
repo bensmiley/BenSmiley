@@ -79,10 +79,10 @@ get_header('binpress');
                     </div>
                     <div class="row">
                         <div class="col-md-10">
-                            <a class="btn btn-primary btn-cons ladda-button pull-right"
+                            <button class="btn btn-primary btn-cons ladda-button pull-right"
                             data-style="expand-left" id="btn-signup">
                             <span class="ladda-label">Sign Up</span>
-                            </a>
+                            </button>
                             <span class="ajax-loader-signup" style="display: none"></span>
                             <input type="reset" id="btn-signup-form-reset" style="display: none"/>
                         </div>
@@ -137,9 +137,9 @@ get_header('binpress');
                     <div class="row">
                         <div class="col-md-10">
 						<span class="ajax-loader-login pull-right" style="display: none"></span>
-                            <a class="btn btn-primary btn-cons pull-right"
+                            <button class="btn btn-primary btn-cons pull-right"
                                     type="submit" id="btn-login">Login
-                            </a>
+                            </button>
 
                         </div>
                     </div>
@@ -175,9 +175,9 @@ get_header('binpress');
                                 </div>
                             </div>
                             <div class="m-t-10">
-                                <a class="btn btn-primary btn-cons"
+                                <button class="btn btn-primary btn-cons"
                                         id="btn-forgot-pass">Submit
-                                </a>
+                                </button>
 
                                 <input type="reset" id="btn-forgot-form-reset" style="display: none"/>
 
