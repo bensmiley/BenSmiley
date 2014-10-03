@@ -141,3 +141,25 @@ function update_subscription_in_braintree( $subscription_id, $card_token, $plan_
         return $error_msg;
     }
 }
+
+
+/**
+ * Function to get complete subscription details based on the subscription Id
+ *
+ * @param $subscription_id
+ * @return mixed
+ */
+function get_complete_subscription_details( $subscription_id ) {
+
+    $subscription = new stdClass();
+    try {
+        $subscription = Braintree_Subscription::find( $subscription_id );
+        $subscription->success = 1;
+        $subscription->errormsg = 'No errors in fetching subscription details';
+    } catch (Braintree_Exception_NotFound $e) {
+        $subscription->success = 0;
+        $subscription->errormsg = $e->getMessage();
+    }
+
+    return $subscription;
+}

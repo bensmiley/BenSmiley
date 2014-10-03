@@ -448,21 +448,78 @@ add_action('template_redirect', 'redirect_if_required');
 
 
 /**
- * Function to cancel a braintree subscription
+ * Function to update a pending braintree subscription
  */
 
 function update_pending_subscription() {
+    global $wpdb;
 
-    $cancel_subscription_array = get_cancel_subscription_list();
-    // echo "Get list of subscriptions to be cancelled";
-    // print_r($cancel_subscription_array);
+    //Get all the pending subscriptions
+    $pending_subscriptions = get_pending_subscription_list();
+    
+    //For each pending subscription
+    foreach ($pending_subscriptions as $pending_subscription) {
 
-    // $cancel_subscription = cancel_subscription_in_braintree( $cancel_subscription_array[ 'old_subscription_id' ] );
+        $pending_subscription_id = $pending_subscription['subscription_id'];
+        $pending_domain_id = $pending_subscription['domain_id'];
+        $pending_db_id = $pending_subscription['id'];
 
-    update_subscription_table($cancel_subscription_array[ 'id' ], $cancel_subscription_array[ 'old_subscription_id' ],$cancel_subscription_array[ 'new_subscription_id' ]);
-   
+        // Get old subscription record that needs to be cancelled
+        $old_subscription_db_id = $pending_db_id-1;
+        $sql_to_get_old_subscription = "SELECT * FROM subscription WHERE id =".$old_subscription_db_id." and domain_id = ".$pending_domain_id;
+        $old_active_subscription = $wpdb->get_row( $sql_to_get_old_subscription);
 
+        $old_active_subscription_id = $old_active_subscription->subscription_id;
+
+        
+        //If subscription id is BENAJFREE
+        if ($pending_subscription_id === 'BENAJFREE') {
+            
+            //Get braintree bill end date of previous active subscription
+            $old_active_subscription_braintree_details = get_complete_subscription_details( $old_active_subscription_id );
+            if ($old_active_subscription_braintree_details->success) {
+                if (!empty( $old_active_subscription_braintree_details->billingPeriodEndDate )){
+                        // echo "Pending is BENAJFREE - old active subs id is ==> ";
+                        // echo $old_active_subscription_id;
+                        // echo " ==> ";
+                        // echo $old_active_subscription_braintree_details->status;
+                        // echo "<br/>";
+
+                        $bill_end_date = $old_active_subscription_braintree_details->billingPeriodEndDate->format( 'Y-m-d' );
+                        //If bill end date of prev active subscription is a past date, then update subscription table to activate pending subscription and cancel active subscription
+                        if (is_past_date($bill_end_date)) {
+                            //update subscription table
+                             update_subscription_table($old_active_subscription_id,$pending_subscription_id);
+                        }
+                        
+                }
+            }
+            
+        }
+        else{
+            //Check braintree status of pending_subscription_id
+            $pending_subscription_braintree_details = get_complete_subscription_details( $pending_subscription_id );
+
+            if ($pending_subscription_braintree_details->success) {
+                // echo $pending_subscription_id;
+                // echo " ==> ";
+                // echo $pending_subscription_braintree_details->status;
+                // echo "<br/>";
+
+                $braintree_subscription_status = $pending_subscription_braintree_details->status;
+
+                //status - Active,Pending,Canceled,Past due,Expired
+
+                //If pending subscription status is Active, then update subscription table to activate pending subscription and cancel active subscription
+                if ($braintree_subscription_status==='Active') {
+                    update_subscription_table($old_active_subscription_id,$pending_subscription_id);
+                }
+                
+            }
+        }
+    }
 }
+
 // add_action( 'init', 'update_pending_subscription' );
 add_action( 'wp_update_pending_subscription', 'update_pending_subscription' );
 
