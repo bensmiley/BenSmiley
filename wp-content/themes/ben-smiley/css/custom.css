@@ -1,7 +1,7 @@
 /*color*/
 #header-outer {
-  padding-top: 5px !important;
-  height: 90px;
+  padding-top: 0 !important;
+  height: 80px;
 }
 #header-space {
   height: 80px !important;
@@ -78,6 +78,7 @@
 .container .wpb_content_element .tabbed > ul li a {
   background-color: #f9f9f9 !important;
   border: 1px solid #dcdcdc !important;
+  border-right: none !important;
   color: #808080;
   font-size: 12px;
   font-weight: bold;
@@ -111,6 +112,9 @@
   border-top-color: #073a4f;
   border-width: 0px;
   margin-left: -36px;
+}
+.container .wpb_content_element .tabbed > ul li:last-child a {
+  border: 1px solid #dcdcdc !important;
 }
 /*.container .wpb_content_element .tabbed > ul li a{
 	background-color: @tab_grey !important;
@@ -308,11 +312,18 @@ header#top nav ul #sign-btn {
 }
 .sign {
   padding: 10px 20px;
-  background: #ff003c;
+  background: #f37032;
   border-radius: 5px;
   font-weight: bold;
+  font-size: initial;
   cursor: pointer;
   color: #ffffff !important;
+}
+.sign:hover {
+  color: #ccc !important;
+}
+#footer-outer a.sign:hover {
+  color: #ccc !important;
 }
 .icon-arrow-right {
   font-size: 10px;
