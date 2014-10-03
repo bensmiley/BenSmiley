@@ -138,7 +138,7 @@ get_header('binpress');
                         <div class="col-md-10">
 						<span class="ajax-loader-login pull-right" style="display: none"></span>
                             <button class="btn btn-primary btn-cons pull-right"
-                                    type="submit" id="btn-login">Login
+                                    id="btn-login">Login
                             </button>
 
                         </div>

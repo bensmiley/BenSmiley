@@ -64,7 +64,7 @@ define [ 'app',
 
             template : '<div class="navbar-inner">
                             <div>
-                                <div class="pull-left" style="margin-top:-10px">
+                                <div class="pull-left" style="margin-top:-10px; margin-left:10px;">
                                     <a href="{{SITEURL}}">
                                         <img class="pull-left" src="{{LOGOPATH}}" />
                                     </a>
@@ -110,7 +110,7 @@ define [ 'app',
                                             <a data-toggle="dropdown" class="dropdown-toggle  pull-right "
                                                 href="javascript:void(0)" id="user-options">
                                                 <div class="pull-left">
-                                                     <span class="bold display_name">{{display_name}}</span>
+                                                     <span class="display_name">{{display_name}}</span>
                                                 </div>
                                                <div class="iconset top-down-arrow pull-left m-t-5 m-l-10"></div>
                                             </a>
