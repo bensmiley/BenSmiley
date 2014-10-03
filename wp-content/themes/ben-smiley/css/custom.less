@@ -13,8 +13,8 @@
 @theme_blue: #19657D;
 
 #header-outer {
-    padding-top: 5px !important;
-    height: 90px;
+    padding-top: 0 !important;
+    height: 80px;
 }
 #header-space {
 	height: 80px !important;
@@ -93,6 +93,7 @@
 a { 
 	background-color: @tab_grey !important;
 	border: 1px solid @tab_border !important;
+	border-right: none !important;
 	color: @tab_grey_txt;
     font-size: 12px;
     font-weight: bold;
@@ -125,6 +126,9 @@ a.active-tab:after {
  	border-top-color: @navyblue; 
  	border-width: 0px; 
  	margin-left: -36px; 
+ }
+ &:last-child a{
+ 	border: 1px solid @tab_border !important;
  }
 }
 
@@ -328,12 +332,19 @@ header#top nav ul #sign-btn {
 	margin-bottom:-24px;
 }
 .sign{
-	padding:10px 20px;
-	background:#ff003c;
-	border-radius:5px;
-	font-weight:bold;
-	cursor:pointer;
-	color:@white !important;
+	padding: 10px 20px;
+	background: #f37032;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: initial;
+	cursor: pointer;
+	color: @white !important;
+	&:hover{
+		color: #ccc !important;
+	}
+}
+#footer-outer a.sign:hover{
+	color: #ccc !important;
 }
 .icon-arrow-right{
 	font-size:10px;
