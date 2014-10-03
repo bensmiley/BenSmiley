@@ -19,11 +19,14 @@ function get_all_plans() {
 
     foreach ( $plans as $key => $plan ) {
 
-        $braintree_plan[ $key ][ 'plan_id' ] = $plan->id;
-        $braintree_plan[ $key ][ 'plan_name' ] = $plan->name;
-        $braintree_plan[ $key ][ 'description' ] = $plan->description;
-        $braintree_plan[ $key ][ 'price' ] = $plan->price;
+        // Hide free plan
+        if($plan->id!=='mpjw'){
 
+            $braintree_plan[ $key ][ 'plan_id' ] = $plan->id;
+            $braintree_plan[ $key ][ 'plan_name' ] = $plan->name;
+            $braintree_plan[ $key ][ 'description' ] = $plan->description;
+            $braintree_plan[ $key ][ 'price' ] = $plan->price;
+        }
     }
 
     return $braintree_plan;

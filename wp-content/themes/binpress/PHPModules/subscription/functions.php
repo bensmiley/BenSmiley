@@ -25,11 +25,19 @@ function query_subscription_table( $domain_id ) {
         return array();
 
     // check if the last subscription is pending or active
-    if ( isset($query_result[ 0 ]) && $query_result[ 0 ][ 'status' ] == "pending" ) {
-        $query2 = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 1, 1";
+    if ( isset($query_result[ 0 ]) && ($query_result[ 0 ][ 'status' ] == "pending") ) {
 
-        $last_active_subscription = $wpdb->get_results( $query2, ARRAY_A );
-        return $last_active_subscription[ 0 ];
+        if($query_result[ 0 ][ 'subscription_id' ] !== "BENAJFREE"){
+
+            //get one row from table starting from the 2nd row
+            //LIMIT 1,1 -> offset=1 :starting from 2nd row , row count to display = 1: display 1 row
+            $query2 = "SELECT * FROM subscription WHERE domain_id = " . $domain_id . " ORDER BY id DESC LIMIT 1, 1";
+
+            //returns last active subscription
+            $last_active_subscription = $wpdb->get_results( $query2, ARRAY_A );
+            return $last_active_subscription[ 0 ];
+        }
+
     }
 
     return isset($query_result[ 0 ]) ? $query_result[ 0 ] : array();
@@ -88,8 +96,14 @@ function get_subscription_details_for_domain( $domain_id ) {
     }
 
     $subscription_details[ 'active_subscription' ] = get_subscription_details( $subscription_data[ 'subscription_id' ] );
-    if ( isset( $subscription_data[ 'pending_subscription_id' ] ) )
-        $subscription_details[ 'pending_subscription' ] = get_subscription_details( $subscription_data[ 'pending_subscription_id' ] );
+    if ( isset( $subscription_data[ 'pending_subscription_id' ] ) ){
+        if($subscription_data[ 'pending_subscription_id' ]!=="BENAJFREE")
+            $subscription_details[ 'pending_subscription' ] = get_subscription_details( $subscription_data[ 'pending_subscription_id' ] );
+        else{
+            $subscription_data[ 'previous_active_enddate' ]  = $subscription_details[ 'active_subscription' ][ 'bill_end' ];
+            $subscription_details[ 'pending_subscription' ] = get_free_subscription_data( $subscription_data );
+        }
+    }
 
 
     return $subscription_details;
@@ -102,8 +116,11 @@ function get_subscription_details_for_domain( $domain_id ) {
  * @param $subscription_details
  */
 function get_free_subscription_data( $subscription_details ) {
-
+    
     $subscription_data[ 'start_date' ] = date( 'd/m/Y', strtotime( $subscription_details[ 'datetime' ] ) );
+    if (isset($subscription_details[ 'previous_active_enddate' ])) {
+        $subscription_data[ 'start_date' ] = $subscription_details[ 'previous_active_enddate' ];
+    }
     $subscription_data[ 'subscription_id' ] = "BENAJFREE";
     $subscription_data[ 'plan_name' ] = 'Free';
     $subscription_data[ 'plan_id' ] = 'dm8w';
@@ -244,5 +261,27 @@ function delete_subscription_for_domain( $domain_id ) {
 
     // delete all subscription records for the domain
     $wpdb->delete( 'subscription', array( 'domain_id' => $domain_id ) );
+}
+
+/**
+ * Function to create a free pending subscription when pending plan is cancelled or
+ * when user cancels free subscription
+ * @param $domain_id
+ */
+function create_pending_free_subscription( $domain_id ) {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $date_time = date( 'Y-m-d H:i:s' );
+
+    $wpdb->insert( $table_name,
+        array(
+            'domain_id' => $domain_id,
+            'subscription_id' => 'BENAJFREE',
+            'datetime' => $date_time,
+            'status' => 'pending'
+        ) );
 }
 

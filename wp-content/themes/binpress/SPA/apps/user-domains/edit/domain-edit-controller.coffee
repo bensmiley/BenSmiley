@@ -72,13 +72,14 @@ define [ 'app'
                 @listenTo activeSubscriptionView, "delete:pending:subscription", @deleteSubscription
 
             #cancel the pending subscription and reload the view
-            deleteSubscription : ( pendingSubscriptionId )->
+            deleteSubscription : ( pendingSubscriptionId, domainId )->
                 options =
                     url : AJAXURL
                     method : "POST"
                     data :
                         action : 'cancel-subscription'
                         subscriptionId : pendingSubscriptionId
+                        domainId : domainId
 
                 $.ajax( options ).done ( response )=>
                     @subscriptionModel.unset 'pending_subscription'

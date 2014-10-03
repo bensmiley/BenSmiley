@@ -57,7 +57,9 @@ function make_active_subscription( $subscription_array ) {
  */
 function make_pending_subscription( $subscription_array ) {
 
+    //Last active subscription from subscription table
     $current_subscription_id = $subscription_array[ 'current_subscription_id' ];
+
     $plan_id = $subscription_array[ 'selected_plan_id' ];
     $card_token = $subscription_array[ 'card_token' ];
     $domain_id = $subscription_array[ 'domain_id' ];
@@ -68,16 +70,28 @@ function make_pending_subscription( $subscription_array ) {
 
     // convert date to d-m-Y format since datetime does not recognise d/m/Y for conversion
     $bill_end_date = str_replace( '/', '-', $bill_end_date );
-    $new_billing_date = new DateTime( $bill_end_date );
+
+    //+1 day added to last bill date
+    $new_billing_date = strtotime($bill_end_date);
+    $new_billing_date = strtotime('+1 day', $new_billing_date);
+    $new_billing_date = date( 'Y-m-d',$new_billing_date );
 
     $pending_subscription = create_pending_subscription_in_braintree( $card_token, $plan_id, $new_billing_date );
     if ( $pending_subscription[ 'code' ] == 'ERROR' )
         wp_send_json( array( 'code' => 'OK', 'msg' => $pending_subscription[ 'msg' ] ) );
 
-    // make the pending subscription entry in the database
-    create_pending_subscription( $domain_id, $pending_subscription[ 'subscription_id' ] );
+    //Cancel the current subscription from braintree
+    $cancel_subscription = cancel_subscription_in_braintree( $current_subscription_id );
 
-    wp_send_json( array( 'code' => 'OK', 'msg' => 'Subscription Successful' ) );
+    if ( $cancel_subscription[ 'code' ] === 'OK' ) {
+
+        // make the pending subscription entry in the database
+        create_pending_subscription( $domain_id, $pending_subscription[ 'subscription_id' ] );
+
+        wp_send_json( array( 'code' => 'OK', 'msg' => 'New Subscription Successful' ) );
+    } 
+    else
+        wp_send_json( array( 'code' => 'ERROR', 'msg' => $cancel_subscription[ 'msg' ] ) );
 }
 
 /**
@@ -103,4 +117,58 @@ function compare_plan_price( $selected_plan_id, $active_plan_id ) {
 
     return false;
 
+}
+
+/***
+ * Function to get the list of all subscription to be cancelled using cron
+ */
+function get_pending_subscription_list() {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $sql = "SELECT * FROM " . $table_name . " WHERE `status`= 'pending' ";
+
+    $query_result = $wpdb->get_results( $sql, ARRAY_A );
+
+    if ( empty ( $query_result ) )
+        return array();
+    else
+        return $query_result;
+}
+
+/**
+ * Function to update the status of the subscription entry
+ *
+ * @param $subscription_record_id
+ */
+function update_subscription_table( $old_subscription_id, $new_subscription_id ) {
+
+    global $wpdb;
+
+    $subscription_table = 'subscription';
+
+    //update status of old_subscription_id from 'active' to 'canceled'
+    $wpdb->update( $subscription_table, array( 'status' => 'canceled' ), array( 'subscription_id' => $old_subscription_id , 'status'=>'active') );
+
+    //update status of new_subscription_id from 'pending' to 'active'
+    $wpdb->update( $subscription_table, array( 'status' => 'active' ), array( 'subscription_id' => $new_subscription_id, 'status'=>'pending' ) );
+   
+}
+
+/**
+ * Check if a date is in the present or future
+ */
+
+function is_past_date($date){
+
+    if ((date('Y-m-d') == date('Y-m-d', strtotime($date))) ||(strtotime($date) > time())){
+        //date is in the present/future
+        return false;
+    }
+    else if(strtotime($date) < time()) {
+        // date is in the past
+        return true;
+    }
 }
