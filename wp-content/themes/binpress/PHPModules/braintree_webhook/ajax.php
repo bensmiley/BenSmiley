@@ -16,18 +16,54 @@ function ajax_braintree_webhook() {
 		echo(Braintree_WebhookNotification::verify($_GET["bt_challenge"]));
 	}
 
-	if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"])) 
+	// //Test webhooks
+	// $sampleNotification = Braintree_WebhookTesting::sampleNotification(
+	// 	Braintree_WebhookNotification::SUBSCRIPTION_WENT_PAST_DUE,
+	// 	'7d6syw'
+	// 	);
+
+	if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"]))
 	{
 		//Parse the recieved payload and signature
 		$webhookNotification = Braintree_WebhookNotification::parse(
 			$_POST["bt_signature"], $_POST["bt_payload"]
 			);
 
+		// //Test webhook data
+		// $webhookNotification = Braintree_WebhookNotification::parse(
+		// 	$sampleNotification['signature'],
+		// 	$sampleNotification['payload']
+		// 	);
+		
 		$new_subscription_id = $webhookNotification->subscription->id;
 		$date_time = $webhookNotification->timestamp->format('Y-m-d H:i:s');
 		$webhook_kind = $webhookNotification->kind;
 
 		//make function calls based on webhook kind
+		switch ($webhook_kind) {
+			case 'subscription_charged_successfully':
+				echo "Charged successfully";
+				// bt_subscription_charged_successfully($new_subscription_id);
+				break;
+
+			case 'subscription_charged_unsuccessfully':
+				echo "Not Charged successfully";
+				break;
+
+			case 'subscription_went_active':
+				echo "Subscription went active";
+				// bt_subscription_went_active($new_subscription_id,$date_time);
+				break;
+
+			case 'subscription_went_past_due':
+				echo "Subscription went past due";
+				bt_subscription_went_past_due($new_subscription_id);
+				break;
+
+			default:
+				echo "No change";
+				break;
+		}
 
 		
 	}
