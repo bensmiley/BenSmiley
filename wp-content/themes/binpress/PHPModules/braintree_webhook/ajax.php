@@ -10,35 +10,29 @@ function ajax_braintree_webhook() {
 	Braintree_Configuration::publicKey(BT_PUBLIC_KEY);
 	Braintree_Configuration::privateKey(BT_PRIVATE_KEY);
 
+	
+	//Verify webhook
 	if(isset($_GET["bt_challenge"])) {
 		echo(Braintree_WebhookNotification::verify($_GET["bt_challenge"]));
 	}
 
-	if(
-		isset($_POST["bt_signature"]) &&
-		isset($_POST["bt_payload"])
-		) {
+	if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"])) 
+	{
+		//Parse the recieved payload and signature
 		$webhookNotification = Braintree_WebhookNotification::parse(
 			$_POST["bt_signature"], $_POST["bt_payload"]
 			);
 
+		$new_subscription_id = $webhookNotification->subscription->id;
+		$date_time = $webhookNotification->timestamp->format('Y-m-d H:i:s');
+		$webhook_kind = $webhookNotification->kind;
+
+		//make function calls based on webhook kind
+
+		
+	}
 	
-	global $wpdb;
-	$new_subscription_id = $webhookNotification->subscription->id;
-	$date_time = $webhookNotification->timestamp->format('Y-m-d H:i:s');
-	$webhook_kind = $webhookNotification->kind;
-
-    $table_name = 'subscription';
-
-    $wpdb->insert( $table_name,
-        array(
-            'domain_id' => 12345,
-            'subscription_id' => $new_subscription_id,
-            'datetime' => $date_time,
-            'status' => $webhook_kind
-        ) );
-}
-wp_die();
+	wp_die();
 }
 
 add_action( 'wp_ajax_nopriv_braintree_webhook', 'ajax_braintree_webhook' );
