@@ -24,6 +24,7 @@ require_once 'PHPModules/braintree/main-config.php';
 require_once 'PHPModules/plans/ajax.php';
 require_once 'PHPModules/subscription/ajax.php';
 require_once 'PHPModules/API/ajax.php';
+require_once 'PHPModules/braintree_webhook/ajax.php';
 
 function binpress_theme_setup() {
 
