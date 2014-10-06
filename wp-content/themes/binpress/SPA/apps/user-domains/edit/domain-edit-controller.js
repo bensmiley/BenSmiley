@@ -64,6 +64,7 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         var activeSubscriptionView;
         activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
         this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
+        $('#cancel-plan').hide();
         return this.listenTo(activeSubscriptionView, "delete:pending:subscription", this.deleteSubscription);
       };
 
@@ -80,7 +81,13 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         };
         return $.ajax(options).done((function(_this) {
           return function(response) {
-            _this.subscriptionModel.unset('pending_subscription');
+            _this.subscriptionModel.set({
+              'pending_subscription': {
+                'plan_name': "Free",
+                'price': "0",
+                'start_date': (_this.subscriptionModel.get('active_subscription')).bill_end
+              }
+            });
             return _this.showActiveSubscription(_this.subscriptionModel);
           };
         })(this));

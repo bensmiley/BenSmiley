@@ -67,6 +67,7 @@ define [ 'app'
             showActiveSubscription : ( subscriptionModel )=>
                 activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
                 @layout.activeSubscriptionRegion.show activeSubscriptionView
+                $( '#cancel-plan' ).hide()
 
                 #listen to cancel pending subscription view click event
                 @listenTo activeSubscriptionView, "delete:pending:subscription", @deleteSubscription
@@ -82,7 +83,11 @@ define [ 'app'
                         domainId : domainId
 
                 $.ajax( options ).done ( response )=>
-                    @subscriptionModel.unset 'pending_subscription'
+                    # @subscriptionModel.unset 'pending_subscription'
+                    @subscriptionModel.set 'pending_subscription':
+                      'plan_name': "Free"
+                      'price': "0"
+                      'start_date': (@subscriptionModel.get 'active_subscription').bill_end
                     @showActiveSubscription @subscriptionModel
 
             editDomain : ( domainData )=>
