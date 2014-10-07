@@ -51,6 +51,18 @@ define [ 'marionette'
                 domainId = @model.get 'domain_id'
                 @trigger "cancel:paid:subscription", activeSubscriptionId, domainId
 
+        onShow :->
+            # Do not show cancel paid subscription button if active subscription is free or if pending subscription is free
+            activeSubscriptionId = (@model.get 'active_subscription').subscription_id
+            if activeSubscriptionId is 'BENAJFREE'
+                @$el.find( '#btn-cancel-paid-subscription' ).hide()
+
+            if not _.isUndefined @model.get 'pending_subscription'
+                pendingSubscriptionId = (@model.get 'pending_subscription').subscription_id
+                if pendingSubscriptionId is 'BENAJFREE'
+                    @$el.find( '#btn-cancel-paid-subscription' ).hide()
+
+
         serializeData : ->
             data = super()
             data.plan_name = (@model.get 'active_subscription').plan_name

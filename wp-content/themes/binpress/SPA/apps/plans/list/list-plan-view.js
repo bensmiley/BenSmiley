@@ -63,6 +63,20 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
       };
     };
 
+    PlansListView.prototype.onShow = function() {
+      var activeSubscriptionId, pendingSubscriptionId;
+      activeSubscriptionId = (this.model.get('active_subscription')).subscription_id;
+      if (activeSubscriptionId === 'BENAJFREE') {
+        this.$el.find('#btn-cancel-paid-subscription').hide();
+      }
+      if (!_.isUndefined(this.model.get('pending_subscription'))) {
+        pendingSubscriptionId = (this.model.get('pending_subscription')).subscription_id;
+        if (pendingSubscriptionId === 'BENAJFREE') {
+          return this.$el.find('#btn-cancel-paid-subscription').hide();
+        }
+      }
+    };
+
     PlansListView.prototype.serializeData = function() {
       var data;
       data = PlansListView.__super__.serializeData.call(this);
