@@ -138,6 +138,25 @@ function get_pending_subscription_list() {
         return $query_result;
 }
 
+/***
+ * Function to get pending subscription for a domain
+ */
+function get_pending_subscription($domain_id) {
+
+    global $wpdb;
+
+    $table_name = 'subscription';
+
+    $sql = "SELECT * FROM " . $table_name . " WHERE `status`= 'pending' AND domain_id=" .$domain_id;
+
+    $query_result = $wpdb->get_row( $sql, ARRAY_A );
+
+    if ( empty ( $query_result ) )
+        return array();
+    else
+        return $query_result;
+}
+
 /**
  * Function to update the status of the subscription entry
  *

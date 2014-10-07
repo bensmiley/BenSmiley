@@ -37,6 +37,9 @@ define [ 'app'
 
             showPlanListView : =>
                 planListShowView = @getPlanListView @subscriptionModel
+
+                planListShowView.on 'cancel:paid:subscription', @cancelPaidSubscription
+                
                 #show the view
                 @show planListShowView,
                     loading : true
@@ -46,6 +49,22 @@ define [ 'app'
                     collection : @planCollection
                     model : subscriptionModel
                     domainId : @domainId
+
+            cancelPaidSubscription : ( activeSubscriptionId, domainId ) ->
+                console.log "Cancel paidd"
+                console.log activeSubscriptionId
+                console.log domainId
+                options =
+                    url : AJAXURL
+                    method : "POST"
+                    data :
+                        action : 'cancel-paid-subscription'
+                        activeSubscriptionId : activeSubscriptionId
+                        domainId : domainId
+
+                $.ajax( options ).done ( response )=>
+                    console.log "Response"
+                    console.log response.data
 
         #handler for showing the plans list page,options to be passed to controller are:
         # region :  App.mainContentRegion

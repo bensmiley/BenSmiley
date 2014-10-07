@@ -51,6 +51,18 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
 
     PlansListView.prototype.itemView = SinglePlanView;
 
+    PlansListView.prototype.events = function() {
+      return {
+        'click #btn-cancel-paid-subscription': function() {
+          var activeSubscriptionId, domainId;
+          console.log("Cancel Paid subscription");
+          activeSubscriptionId = (this.model.get('active_subscription')).subscription_id;
+          domainId = this.model.get('domain_id');
+          return this.trigger("cancel:paid:subscription", activeSubscriptionId, domainId);
+        }
+      };
+    };
+
     PlansListView.prototype.serializeData = function() {
       var data;
       data = PlansListView.__super__.serializeData.call(this);

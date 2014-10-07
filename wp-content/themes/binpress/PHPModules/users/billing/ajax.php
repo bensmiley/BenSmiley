@@ -199,3 +199,63 @@ function ajax_cancel_subscription() {
 
 add_action( 'wp_ajax_cancel-subscription', 'ajax_cancel_subscription' );
 
+
+/**
+ * Function to cancel a subscription in braintree
+ */
+function ajax_cancel_paid_subscription() {
+
+    $current_subscription_id = $_POST[ 'activeSubscriptionId' ];
+    $domain_id = $_POST[ 'domainId' ];
+
+    
+    //Get pending subscription for the domainid
+    $pending_subscription = get_pending_subscription($domain_id);
+
+    //If there is a pending subscription
+    if(!empty($pending_subscription)){
+        $pending_subscription_id = $pending_subscription['subscription_id'];
+
+        if ($pending_subscription_id!=='BENAJFREE') {
+            $cancel_subscription = cancel_subscription_in_braintree( $pending_subscription_id );
+        }
+
+        //delete the entry for the previously pending subscription in db
+        delete_subscription( $pending_subscription_id );
+        
+    }
+
+    //cancel active subscription in braintree if not already cancelled
+     $active_subscription_braintree_details = get_complete_subscription_details( $current_subscription_id );
+
+     $braintree_subscription_status = $active_subscription_braintree_details->status;
+
+     if ($braintree_subscription_status==='Active') {
+           $cancel_subscription = cancel_subscription_in_braintree( $current_subscription_id );
+
+           if ( $cancel_subscription[ 'code' ] ) {
+            
+                //Add BENAJFREE as pending subscription in db
+                create_pending_free_subscription( $domain_id );
+
+                wp_send_json( array( 'code' => 'OK', 'data' => 'Paid Subscription cancelled' ) );
+            } 
+            else{
+                wp_send_json( array( 'code' => 'ERROR', 'data' => $cancel_subscription[ 'msg' ] ) );
+            }
+
+     }
+     else{
+            //delete the entry for the previously pending subscription in db
+            delete_subscription( $pending_subscription_id );
+
+            //Add BENAJFREE as pending subscription in db
+            create_pending_free_subscription( $domain_id );
+
+            wp_send_json( array( 'code' => 'OK', 'data' => 'Paid Subscription cancelled' ) ); 
+     }
+
+}
+
+add_action( 'wp_ajax_cancel-paid-subscription', 'ajax_cancel_paid_subscription' );
+

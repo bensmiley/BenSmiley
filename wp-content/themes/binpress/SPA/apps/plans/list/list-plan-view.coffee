@@ -44,6 +44,13 @@ define [ 'marionette'
 
         itemView : SinglePlanView
 
+        events : ->
+            'click #btn-cancel-paid-subscription' : ->
+                console.log "Cancel Paid subscription"
+                activeSubscriptionId = (@model.get 'active_subscription').subscription_id
+                domainId = @model.get 'domain_id'
+                @trigger "cancel:paid:subscription", activeSubscriptionId, domainId
+
         serializeData : ->
             data = super()
             data.plan_name = (@model.get 'active_subscription').plan_name
