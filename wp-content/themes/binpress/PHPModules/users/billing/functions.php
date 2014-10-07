@@ -150,13 +150,13 @@ function update_subscription_table( $old_subscription_id, $new_subscription_id, 
     $subscription_table = 'subscription';
 
     //update status of old_subscription_id from 'active' to 'canceled'
-    $wpdb->update( $subscription_table, array( 'status' => 'canceled' ), array( 'subscription_id' => $old_subscription_id , 'status'=>'active') );
+    $wpdb->update( $subscription_table, array( 'status' => 'canceled' ), array( 'subscription_id' => $old_subscription_id) );
 
     //update status of new_subscription_id from 'pending' to 'active'
     $wpdb->update( $subscription_table, array( 'status' => 'active' ), array( 'subscription_id' => $new_subscription_id, 'status'=>'pending' ) );
 
     //Update postmeta and post term for domain
-    if ($pending_subscription_id === 'BENAJFREE'){
+    if ($new_subscription_id === 'BENAJFREE'){
         update_post_meta( $pending_domain_id, 'plan_id', BT_FREEPLAN );
         wp_set_post_terms( $pending_domain_id, 'Free', 'plan' );
     }

@@ -67,7 +67,6 @@ define [ 'app'
             showActiveSubscription : ( subscriptionModel )=>
                 activeSubscriptionView = @getActiveSubscriptionView subscriptionModel
                 @layout.activeSubscriptionRegion.show activeSubscriptionView
-                $( '#cancel-plan' ).hide()
 
                 #listen to cancel pending subscription view click event
                 @listenTo activeSubscriptionView, "delete:pending:subscription", @deleteSubscription

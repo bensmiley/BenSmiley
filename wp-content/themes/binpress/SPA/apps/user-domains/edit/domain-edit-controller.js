@@ -64,7 +64,6 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
         var activeSubscriptionView;
         activeSubscriptionView = this.getActiveSubscriptionView(subscriptionModel);
         this.layout.activeSubscriptionRegion.show(activeSubscriptionView);
-        $('#cancel-plan').hide();
         return this.listenTo(activeSubscriptionView, "delete:pending:subscription", this.deleteSubscription);
       };
 

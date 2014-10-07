@@ -460,19 +460,16 @@ function update_pending_subscription() {
     
     //For each pending subscription
     foreach ($pending_subscriptions as $pending_subscription) {
-
         $pending_subscription_id = $pending_subscription['subscription_id'];
         $pending_domain_id = $pending_subscription['domain_id'];
         $pending_db_id = $pending_subscription['id'];
 
-        // Get old subscription record that needs to be cancelled
-        $old_subscription_db_id = $pending_db_id-1;
-        $sql_to_get_old_subscription = "SELECT * FROM subscription WHERE id =".$old_subscription_db_id." and domain_id = ".$pending_domain_id;
-        $old_active_subscription = $wpdb->get_row( $sql_to_get_old_subscription);
+        // Get old active subscription record that needs to be cancelled
+        $subscription_data = query_subscription_table( $pending_domain_id );
+        $old_active_subscription_id = $subscription_data[ 'subscription_id' ];
 
-        $old_active_subscription_id = $old_active_subscription->subscription_id;
-
-        
+        // echo "<br/>".$pending_domain_id."===============>"."<br/>".$pending_subscription_id."===============>".$old_active_subscription_id."<br/><br/>";
+       
         //If subscription id is BENAJFREE
         if ($pending_subscription_id === 'BENAJFREE') {
             
@@ -519,6 +516,7 @@ function update_pending_subscription() {
             }
         }
     }
+
 }
 
 // add_action( 'init', 'update_pending_subscription' );
