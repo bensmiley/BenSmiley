@@ -143,7 +143,7 @@ function get_pending_subscription_list() {
  *
  * @param $subscription_record_id
  */
-function update_subscription_table( $old_subscription_id, $new_subscription_id ) {
+function update_subscription_table( $old_subscription_id, $new_subscription_id, $pending_domain_id ) {
 
     global $wpdb;
 
@@ -154,6 +154,19 @@ function update_subscription_table( $old_subscription_id, $new_subscription_id )
 
     //update status of new_subscription_id from 'pending' to 'active'
     $wpdb->update( $subscription_table, array( 'status' => 'active' ), array( 'subscription_id' => $new_subscription_id, 'status'=>'pending' ) );
+
+    //Update postmeta and post term for domain
+    if ($pending_subscription_id === 'BENAJFREE'){
+        update_post_meta( $pending_domain_id, 'plan_id', BT_FREEPLAN );
+        wp_set_post_terms( $pending_domain_id, 'Free', 'plan' );
+    }
+    else{
+        $subscription_details = get_subscription_details( $new_subscription_id );
+        $plan_id = $subscription_details['plan_id'];
+        $plan_name = $subscription_details['plan_name'];
+        update_post_meta( $pending_domain_id, 'plan_id', $plan_id );
+        wp_set_post_terms( $pending_domain_id, $plan_name, 'plan' );
+    }
    
 }
 

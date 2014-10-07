@@ -490,7 +490,7 @@ function update_pending_subscription() {
                         //If bill end date of prev active subscription is a past date, then update subscription table to activate pending subscription and cancel active subscription
                         if (is_past_date($bill_end_date)) {
                             //update subscription table
-                             update_subscription_table($old_active_subscription_id,$pending_subscription_id);
+                             update_subscription_table($old_active_subscription_id,$pending_subscription_id,$pending_domain_id);
                         }
                         
                 }
@@ -513,7 +513,7 @@ function update_pending_subscription() {
 
                 //If pending subscription status is Active, then update subscription table to activate pending subscription and cancel active subscription
                 if ($braintree_subscription_status==='Active') {
-                    update_subscription_table($old_active_subscription_id,$pending_subscription_id);
+                    update_subscription_table($old_active_subscription_id,$pending_subscription_id,$pending_domain_id);
                 }
                 
             }
