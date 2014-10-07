@@ -53,7 +53,14 @@ function ajax_get_api_key() {
     $domain_id = get_domain_ID($domain);
 
     // GET PLAN ID FOR THE DOMAIN
-    $plan_id = get_post_meta( $domain_id, 'plan_id', true );
+
+    //Get the active subscription for the domain
+    $subscription_data = query_subscription_table( $domain_id );
+    $current_active_subscription = $subscription_data[ 'subscription_id' ];
+
+    //Get plan_id based on past_due status
+    $plan_id = get_plan_id_for_api($current_active_subscription,$domain_id);
+
     $api_key = get_post_meta( $domain_id, 'api_key', true );
 
 
@@ -72,6 +79,33 @@ function ajax_get_api_key() {
 
 add_action( 'wp_ajax_nopriv_get-api-key', 'ajax_get_api_key' );
 add_action( 'wp_ajax_get-api-key', 'ajax_get_api_key' );
+
+
+
+/**
+ * Function to get plan_id based on the past_due status of an active subscription
+ * if the subscription is past_due, then api should return freeplan else it should return paid plan
+ */
+function get_plan_id_for_api($current_active_subscription,$domain_id){
+
+    global $wpdb;
+    $table = 'subscription';
+
+    $susbscription_row = $wpdb->get_row("SELECT * FROM ".$table." WHERE subscription_id = '".$current_active_subscription."'");
+
+    $past_due_status = $susbscription_row->past_due;
+    
+    //If the active subscription's past_due is 0, then fetch plan id from post meta
+    $plan_id = get_post_meta( $domain_id, 'plan_id', true );
+
+    //if the active subscription's past_due is 1, then plan id should be BT_FREEPLAN
+    if ($past_due_status) {
+        $plan_id = BT_FREEPLAN;
+    }
+
+    return $plan_id;
+
+}
 
 /**
 */
