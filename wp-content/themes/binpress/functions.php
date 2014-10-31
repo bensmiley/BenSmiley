@@ -522,3 +522,30 @@ function update_pending_subscription() {
 // add_action( 'init', 'update_pending_subscription' );
 add_action( 'wp_update_pending_subscription', 'update_pending_subscription' );
 
+
+
+function delete_unverified_users(){
+
+    global $wpdb;
+
+    $table_name = $wpdb->users;
+
+    //get all users that have not activated their account after 5 days from registration
+    $query = "SELECT ID, user_email, user_status FROM $table_name WHERE user_status = 1 AND DATE(user_registered) < DATE_SUB(CURDATE(), INTERVAL 5 DAY)";
+
+    $users = $wpdb->get_results( $query, ARRAY_A );
+
+    //Foreach such user, delete the user from wp db
+    foreach ($users as $user) {
+        
+        require_once(ABSPATH.'wp-admin/includes/user.php' );
+        $delete_status = wp_delete_user( $user['ID'] );
+
+        // if ($delete_status) {
+        //     echo "User ".$user['user_email']." deleted" ;
+        //  } 
+        
+    }
+}
+add_action( 'cron_delete_unverified_users', 'delete_unverified_users' );
+
