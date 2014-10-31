@@ -43,20 +43,37 @@ function create_customer( $user_name ) {
  */
 function get_customer_credit_card_details( $customer_id ) {
 
-    //$customer_id = '81538496';
+    // $customer_id = '89088489';
 
-    $customer = Braintree_Customer::find( $customer_id );
+     try {
+        $customer = Braintree_Customer::find( $customer_id );
 
-    if ( empty( $customer->creditCards ) )
-        return array( 'card_exists' => false,
-            'braintree_customer_id' => $customer_id,
-            'braintree_client_token' => generate_client_token() );
+        if ( empty( $customer->creditCards ) ){
+            $customer_credit_card_data =  array( 'card_exists' => false,
+                'braintree_customer_id' => $customer_id,
+                'braintree_client_token' => generate_client_token() );
+            return $customer_credit_card_data;
+        }
 
-    $customer_credit_card_data = customer_credit_card_details( $customer->creditCards );
+        $customer_credit_card_data = customer_credit_card_details( $customer->creditCards );
 
-    $customer_credit_card_data[ 'braintree_customer_id' ] = $customer_id;
+        $customer_credit_card_data[ 'braintree_customer_id' ] = $customer_id;
 
-    return $customer_credit_card_data;
+        return $customer_credit_card_data;
+
+    } catch ( Braintree_Exception_NotFound $e ) {
+
+        $customer_id = '';
+
+        $customer_credit_card_data =  array( 'card_exists' => false,
+                'braintree_customer_id' => $customer_id,
+                'braintree_client_token' => generate_client_token(),
+                'errorMsg' => $e->getMessage());
+        
+        return $customer_credit_card_data ;
+    }
+
+    
 
 }
 
@@ -114,4 +131,36 @@ function create_credit_card_for_customer( $customer_id, $payment_method_nonce ) 
     }
 
 
+}
+
+/**
+ * Create a customer with credit card in the vault
+ */
+
+function create_braintree_customer_with_card($user_data){
+
+   $create_customer_with_card = Braintree_Customer::create( array(
+        'firstName' => $user_data[ 'user_name' ],
+        'email' => $user_data[ 'user_email' ],
+        'creditCard' => array(
+            'paymentMethodNonce' => $customer_data[ 'payment_method_nonce' ]
+        )
+    ) );
+
+   print_r($create_customer_with_card);
+
+    if ( $create_customer_with_card->success ) {
+
+    //     $credit_card_token = $create_customer_with_card->customer->creditCards[ 0 ]->token;
+    //     $customer_id = $create_customer_with_card->customer->id;
+
+    //     $success_msg = array( 'code' => 'OK',
+    //         'credit_card_token' => $credit_card_token,
+    //         'customer_id' => $customer_id );
+        return "$success_msg";
+
+    } else {
+        $error_msg = array( 'code' => 'ERROR', 'msg' => $create_customer_with_card->message );
+        return $error_msg;
+    } 
 }

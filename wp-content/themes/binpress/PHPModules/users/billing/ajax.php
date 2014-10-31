@@ -21,6 +21,27 @@ function ajax_read_user_payment() {
     //get the braintree customer id for the user
     $braintree_customer_id = get_user_meta( $user_id, 'braintree_customer_id', true );
 
+    //Check if customer exists , if not create customer in braintree
+    if ($braintree_customer_id == NULL) {
+        $current_user = wp_get_current_user();
+        $user_name = $current_user->display_name;
+        $user_email = $current_user->user_email;
+
+        $customer_array = array(
+            'first_name' => $user_name,
+            'last_name' => "",
+            'email' => $user_email );
+        
+        //Create custome and return customer id
+        $braintree_customer = create_customer( $customer_array );
+
+        if ( $braintree_customer[ 'success' ] ){
+            update_user_meta( $current_user->ID, 'braintree_customer_id', $braintree_customer[ 'customer_id' ] );
+            $braintree_customer_id = $braintree_customer[ 'customer_id' ];
+        } 
+
+    }
+
     // get the credit card info for the customer
     $customer_credit_card_data = get_customer_credit_card_details( $braintree_customer_id );
 
