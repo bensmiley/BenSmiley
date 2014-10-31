@@ -43,7 +43,7 @@ function ajax_braintree_webhook() {
 		switch ($webhook_kind) {
 			case 'subscription_charged_successfully':
 				echo "Charged successfully";
-				// bt_subscription_charged_successfully($new_subscription_id);
+				bt_subscription_charged_successfully($new_subscription_id);
 				break;
 
 			case 'subscription_charged_unsuccessfully':
@@ -52,7 +52,7 @@ function ajax_braintree_webhook() {
 
 			case 'subscription_went_active':
 				echo "Subscription went active";
-				// bt_subscription_went_active($new_subscription_id,$date_time);
+				bt_subscription_went_active($new_subscription_id,$date_time);
 				break;
 
 			case 'subscription_went_past_due':
