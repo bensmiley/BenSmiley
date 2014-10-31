@@ -95,6 +95,10 @@ define(['marionette', 'text!apps/user-domains/templates/AddEditUserDomain.html',
       }
     };
 
+    ActiveSubscriptionView.prototype.modelEvents = {
+      'change': 'render'
+    };
+
     ActiveSubscriptionView.prototype.onShow = function() {
       if (!_.isUndefined(this.model.get('pending_subscription'))) {
         this.$el.find('#change-plan').hide();

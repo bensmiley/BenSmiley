@@ -84,7 +84,8 @@ define(['app', 'regioncontroller', 'apps/user-domains/edit/domain-edit-view', 'm
               'pending_subscription': {
                 'plan_name': "Free",
                 'price': "0",
-                'start_date': (_this.subscriptionModel.get('active_subscription')).bill_end
+                'start_date': (_this.subscriptionModel.get('active_subscription')).bill_end,
+                'subscription_id': "BENAJFREE"
               }
             });
             return _this.showActiveSubscription(_this.subscriptionModel);

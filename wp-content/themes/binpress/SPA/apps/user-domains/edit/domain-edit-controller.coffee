@@ -87,6 +87,7 @@ define [ 'app'
                       'plan_name': "Free"
                       'price': "0"
                       'start_date': (@subscriptionModel.get 'active_subscription').bill_end
+                      'subscription_id' : "BENAJFREE"
                     @showActiveSubscription @subscriptionModel
 
             editDomain : ( domainData )=>

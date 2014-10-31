@@ -75,6 +75,9 @@ define [ 'marionette'
                     domain_id = @model.get 'domain_id'
                     @trigger "delete:pending:subscription", pendingSubscription,domain_id
 
+        modelEvents:
+            'change': 'render'
+
         onShow : ->
             if not _.isUndefined @model.get 'pending_subscription'
                 @$el.find( '#change-plan' ).hide()
