@@ -34,10 +34,22 @@ function ajax_braintree_webhook() {
 		// 	$sampleNotification['signature'],
 		// 	$sampleNotification['payload']
 		// 	);
-		
 		$new_subscription_id = $webhookNotification->subscription->id;
 		$date_time = $webhookNotification->timestamp->format('Y-m-d H:i:s');
 		$webhook_kind = $webhookNotification->kind;
+		$customer_transactions = $webhookNotification->subscription->transactions; 
+		foreach ($customer_transactions as $item) 
+		{ 
+			$customer_email = $item->customerDetails->email;
+			$customer_name = $item->customerDetails->firstName;
+			$customer_id = $item->customerDetails->id;
+		}
+
+		$customer_details = array(
+			'id' => $customer_id, 
+			'email' => $customer_email, 
+			'name' => $customer_name, 
+			);
 
 		//make function calls based on webhook kind
 		switch ($webhook_kind) {
@@ -52,7 +64,8 @@ function ajax_braintree_webhook() {
 
 			case 'subscription_went_active':
 				echo "Subscription went active";
-				bt_subscription_went_active($new_subscription_id,$date_time);
+
+				bt_subscription_went_active($new_subscription_id,$customer_details);
 				break;
 
 			case 'subscription_went_past_due':

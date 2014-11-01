@@ -24,12 +24,11 @@ function bt_subscription_charged_successfully($new_subscription_id){
 
 	}
 
-function bt_subscription_went_active($new_subscription_id,$date_time){
+function bt_subscription_went_active($new_subscription_id,$customer_details){
 
-$to = "nutankamat769@gmail.com";
+$to = $customer_details['email'];
 $subject = "Subscription is now active";
-$content = "Your subscription".$new_subscription_id." is now active";
- 
+$content = "Your subscription is now active";
 $status = wp_mail($to, $subject, $content);
 
 }
