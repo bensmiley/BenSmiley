@@ -549,3 +549,24 @@ function delete_unverified_users(){
 }
 add_action( 'cron_delete_unverified_users', 'delete_unverified_users' );
 
+/*
+ * Configuring the communication module
+ * Registering communication components
+ */
+
+function chatcat_add_communication_components($defined_comm_components){
+
+    $comm_arr = array(
+        'subscription_active',
+        'subscription_plan_updated',
+        'fsubscription_cancelled'
+    );
+
+    $ajcm_components['chatcat_subscriptions'] = $comm_arr;
+
+    return $ajcm_components;
+
+}
+add_filter('add_commponents_filter','chatcat_add_communication_components',10,1);
+
+
