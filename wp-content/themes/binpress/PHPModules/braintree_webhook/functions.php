@@ -26,9 +26,8 @@ function bt_subscription_charged_successfully($new_subscription_id){
 
 function bt_subscription_went_active($new_subscription_id,$customer_details){
 
-$to = $customer_details['email'];
-$subject = "Subscription is now active";
-$content = "Your subscription is now active";
-$status = wp_mail($to, $subject, $content);
+$user_email = $customer_details['email'];
+$user_name = $customer_details['name'];
+subscription_active_email($user_name,$user_email, $new_subscription_id);
 
 }

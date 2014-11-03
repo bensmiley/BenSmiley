@@ -286,3 +286,87 @@ function create_pending_free_subscription( $domain_id ) {
         ) );
 }
 
+  
+/**Functions for sending subscription related emails**/
+
+/*  
+* Send email when a new subscription is activated
+*/
+function subscription_active_email($user_name,$email_id, $subscription_id){
+
+    global $aj_comm;
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'subscription_active'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+
+function get_subscription_active_email_data($new_subscription_id){
+    //new subscription
+    $new_subscription_data = get_subscription_details($new_subscription_id);
+    $new_plan_id = $new_subscription_data['plan_id'];
+    $new_plan_data = get_plan_by_id( $new_plan_id ); 
+
+    //Get domain id from subscription_id
+    $domain_id = get_domain_for_bt_subscription($new_subscription_id);
+
+    //old subscription
+    $subscription_data = query_subscription_table( $domain_id );
+
+    $old_subscription_id = $subscription_data[ 'subscription_id' ];
+
+    $old_subscription_data = get_subscription_details($old_subscription_id);
+    $old_plan_id = $old_subscription_data['plan_id'];
+    $old_plan_data = get_plan_by_id( $old_plan_id ); 
+
+    //domain details
+    $domain_details = get_user_domain_details( $domain_id );
+    $domain_name = $domain_details['domain'];
+    
+    $subscription_active_email_data =  array(
+                                            'domain_name' => $domain_name,
+                                            'old_plan' => $old_plan_data->name, 
+                                            'new_plan' =>  $new_plan_data->name,
+                                            'amount' => $new_plan_data->price,
+                                            'plan_features' => $new_plan_data->description
+                                            );
+    return $subscription_active_email_data;
+}
+
+function get_domain_for_bt_subscription($subscription_id){
+
+    global $wpdb;
+
+    $domain_id= "";
+
+    $query = "SELECT * FROM subscription WHERE subscription_id = '" . $subscription_id ."'";
+
+    $query_result = $wpdb->get_row( $query, ARRAY_A );
+
+    $domain_id = $query_result['domain_id'];
+
+    return $domain_id;
+}
+
