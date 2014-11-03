@@ -12,6 +12,14 @@ function getvars_subscription_active($recipients_email,$comm_data){
     $subscription_id   = $aj_comm->get_communication_meta($comm_data['id'],'subscription_id');
     $subscription_details   = get_subscription_details($subscription_id);
 
+    $domain_name = "domain.com";
+    $name = "Hermione Granger";
+    $domain_url = "www.domain.com";
+    $plan_name = "Pro Plan";
+    $plan_amount = "$ 40";
+    $transaction_amount = "$ 40";
+    $bill_next_date = "03-11-2014";
+
     $subject    = 'ChatCat Subscription activated for '.$domain_name; //New Plan selected for <Domain Name>
     $message    = 'Subscription is active';
 
