@@ -37,8 +37,17 @@ function make_active_subscription( $subscription_array ) {
 
     } else {
         $subscription = update_subscription_in_braintree( $current_subscription_id, $card_token, $plan_id, $plan_price );
-        if ( $subscription[ 'code' ] == 'ERROR' )
+        if ( $subscription[ 'code' ] == 'ERROR' ){
             wp_send_json( array( 'code' => 'OK', 'msg' => $subscription[ 'msg' ] ) );
+        }
+        else {
+            $current_user = wp_get_current_user();
+            $user_name = $current_user->display_name;
+            $user_email = $current_user->user_email;
+            
+            //Send email to customer notifying update of subscription with new plan i.e. change of plan
+            subscription_active_email($user_name,$user_email, $current_subscription_id);
+        }
 
     }
 
