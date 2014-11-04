@@ -10,9 +10,9 @@ function getvars_subscription_active($recipients_email,$comm_data){
 
     $email_id   = $aj_comm->get_communication_meta($comm_data['id'],'email_id');
     $name   = $aj_comm->get_communication_meta($comm_data['id'],'user_name');
-    $subscription_id   = $aj_comm->get_communication_meta($comm_data['id'],'subscription_id');
+    $new_subscription_id   = $aj_comm->get_communication_meta($comm_data['id'],'subscription_id');
     
-    $subscription_active_email_details   = get_subscription_active_email_data($subscription_id);
+    $subscription_active_email_details   = get_subscription_active_email_data($new_subscription_id);
 
     // $domain_name = "domain.com";
     // $name = "Hermione Granger";
@@ -22,7 +22,6 @@ function getvars_subscription_active($recipients_email,$comm_data){
     // $plan_features = "$ 40";
 
     $domain_name = $subscription_active_email_details['domain_name'];
-    $old_plan = $subscription_active_email_details['old_plan'];
     $new_plan = $subscription_active_email_details['new_plan'];
     $amount = $subscription_active_email_details['amount'];
     $plan_features = $subscription_active_email_details['plan_features'];

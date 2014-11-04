@@ -332,22 +332,12 @@ function get_subscription_active_email_data($new_subscription_id){
     //Get domain id from subscription_id
     $domain_id = get_domain_for_bt_subscription($new_subscription_id);
 
-    //old subscription
-    $subscription_data = query_subscription_table( $domain_id );
-
-    $old_subscription_id = $subscription_data[ 'subscription_id' ];
-
-    $old_subscription_data = get_subscription_details($old_subscription_id);
-    $old_plan_id = $old_subscription_data['plan_id'];
-    $old_plan_data = get_plan_by_id( $old_plan_id ); 
-
     //domain details
     $domain_details = get_user_domain_details( $domain_id );
     $domain_name = $domain_details['domain'];
     
     $subscription_active_email_data =  array(
                                             'domain_name' => $domain_name,
-                                            'old_plan' => $old_plan_data->name, 
                                             'new_plan' =>  $new_plan_data->name,
                                             'amount' => $new_plan_data->price,
                                             'plan_features' => $new_plan_data->description
