@@ -51,7 +51,7 @@ function ajax_braintree_webhook() {
 			'name' => $customer_name, 
 			);
 
-		//make function calls based on webhook kind
+		//make function calls based on the webhook kind
 		switch ($webhook_kind) {
 			case 'subscription_charged_successfully':
 				echo "Charged successfully";

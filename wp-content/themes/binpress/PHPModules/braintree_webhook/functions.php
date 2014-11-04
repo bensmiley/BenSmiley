@@ -34,25 +34,10 @@ subscription_active_email($user_name,$user_email, $new_subscription_id);
 
 function bt_subscription_cancelled($new_subscription_id,$customer_details){
 
-	if(empty($customer_details['email'])){
-		$domain_id = get_domain_for_bt_subscription($new_subscription_id);
-		$domain_user_id = get_post_field( 'post_author', $domain_id );
-		$user = get_user_by( 'email', $email_id );
-		$user_email = $user->user_email;
-		$user_name = $user->display_name;	
-	}
-	else{
+	if(!empty($customer_details['email'])){
 		$user_email = $customer_details['email'];
-		$user_name = $customer_details['name'];		
+		$user_name = $customer_details['name'];	
+		subscription_canceled_email($user_name,$user_email, $new_subscription_id);
 	}
-
-	$to = "nutankamat769@gmail.com";
-	$subject = "Subscription is cancelled";
-	$content = "Your subscription".$new_subscription_id." is cancelled successfully and your emails id is ".$user_email;
-
-	$status = wp_mail($to, $subject, $content);
-
-
-	subscription_canceled_email($user_name,$user_email, $new_subscription_id);
 
 }
