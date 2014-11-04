@@ -205,7 +205,13 @@ function ajax_cancel_subscription() {
 
     $cancel_subscription = cancel_subscription_in_braintree( $pending_subscription_id );
 
-    if ( $cancel_subscription[ 'code' ] ) {
+    if ( $cancel_subscription[ 'code' ] =='OK') {
+        //On successful cancellation of pending subscription, send email to customer notifying pending subscription cancellation
+        $current_user = wp_get_current_user();
+        $user_name = $current_user->display_name;
+        $user_email = $current_user->user_email;
+        pending_subscription_canceled_email($user_name,$user_email, $pending_subscription_id);
+
         //delete the entry for the previously pending subscription in db
         delete_subscription( $pending_subscription_id );
 

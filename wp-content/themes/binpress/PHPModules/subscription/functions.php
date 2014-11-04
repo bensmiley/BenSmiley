@@ -355,15 +355,53 @@ function subscription_canceled_email($user_name,$email_id, $subscription_id){
 
 }
 
+/*  
+* Send email when a pending subscription is canceled
+*/
+function pending_subscription_canceled_email($user_name,$email_id, $subscription_id){
 
-function get_subscription_email_data($new_subscription_id){
+    global $aj_comm;
+
+    $domain_id = get_domain_for_bt_subscription($subscription_id);
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'domain_id' => $domain_id,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'pending_subscription_canceled'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+
+function get_subscription_email_data($new_subscription_id, $domain_id=NULL){
     //new subscription
     $new_subscription_data = get_subscription_details($new_subscription_id);
     $new_plan_id = $new_subscription_data['plan_id'];
     $new_plan_data = get_plan_by_id( $new_plan_id ); 
 
     //Get domain id from subscription_id
-    $domain_id = get_domain_for_bt_subscription($new_subscription_id);
+    if ($domain_id==NULL) {
+         $domain_id = get_domain_for_bt_subscription($new_subscription_id);
+    }
 
     //domain details
     $domain_details = get_user_domain_details( $domain_id );
