@@ -558,8 +558,7 @@ function chatcat_add_communication_components($defined_comm_components){
 
     $comm_arr = array(
         'subscription_active',
-        'subscription_plan_updated',
-        'fsubscription_cancelled'
+        'subscription_canceled'
     );
 
     $ajcm_components['chatcat_subscriptions'] = $comm_arr;

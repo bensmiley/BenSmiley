@@ -31,3 +31,11 @@ $user_name = $customer_details['name'];
 subscription_active_email($user_name,$user_email, $new_subscription_id);
 
 }
+
+function bt_subscription_cancelled($new_subscription_id,$customer_details){
+
+$user_email = $customer_details['email'];
+$user_name = $customer_details['name'];
+subscription_canceled_email($user_name,$user_email, $new_subscription_id);
+
+}

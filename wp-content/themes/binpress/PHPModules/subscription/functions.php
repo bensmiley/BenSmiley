@@ -322,8 +322,41 @@ function subscription_active_email($user_name,$email_id, $subscription_id){
 
 }
 
+/*  
+* Send email when a subscription is canceled
+*/
+function subscription_canceled_email($user_name,$email_id, $subscription_id){
 
-function get_subscription_active_email_data($new_subscription_id){
+    global $aj_comm;
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'subscription_canceled'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+
+function get_subscription_email_data($new_subscription_id){
     //new subscription
     $new_subscription_data = get_subscription_details($new_subscription_id);
     $new_plan_id = $new_subscription_data['plan_id'];

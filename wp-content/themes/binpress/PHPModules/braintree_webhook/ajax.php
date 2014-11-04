@@ -73,6 +73,11 @@ function ajax_braintree_webhook() {
 				bt_subscription_went_past_due($new_subscription_id);
 				break;
 
+			case 'subscription_canceled':
+				echo "Subscription cancelled";
+				bt_subscription_cancelled($new_subscription_id,$customer_details);
+				break;				
+
 			default:
 				echo "No change";
 				break;
