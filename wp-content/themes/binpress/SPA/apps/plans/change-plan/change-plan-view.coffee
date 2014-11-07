@@ -89,6 +89,9 @@ define [ 'marionette'
 
         #show sucess msg
         onPaymentSucess : ( response, domainId )->
+            #hide the loader
+            $( '.ajax-loader-login' ).hide()
+
             @$el.find( '#success-msg' ).empty()
             msgText = response.msg
             msg = "<div class='alert alert-success'>
@@ -123,12 +126,13 @@ define [ 'marionette'
 
         #show sucess msg
         onPaymentSucess : ( msgText )->
-            @$el.find( '#success-msg' ).empty()
             #hide the loader
-            @$el.find( '.ajax-loader-login' ).hide()
+            $( '.ajax-loader-login' ).hide()
+
+            @$el.find( '#success-msg' ).empty()
+            
             msg = "<div class='alert alert-success'>
-                    <button class='close' data-dismiss='alert'>&times;</button>
-                           #{msgText}<div>"
+                    <button class='close' data-dismiss='alert'>&times;</button>"+msgText+"<div>"
             @$el.find( '#success-msg' ).append( msg )
 
             #redirect the page to domain page
@@ -139,12 +143,13 @@ define [ 'marionette'
 #            , 2000
         
         onPaymentError : ( msgText )->
-            @$el.find( '#success-msg' ).empty()
             #hide the loader
-            @$el.find( '.ajax-loader-login' ).hide()
+            $( '.ajax-loader-login' ).hide()
+
+            @$el.find( '#success-msg' ).empty()
+            
             msg = "<div class='alert alert-success'>
-                    <button class='close' data-dismiss='alert'>&times;</button>
-                     #{msgText}<div>"
+                    <button class='close' data-dismiss='alert'>&times;</button>"+msgText+"<div>"
             @$el.find( '#success-msg' ).append( msg )
 
         redirectPage : ( redirect_url )->
