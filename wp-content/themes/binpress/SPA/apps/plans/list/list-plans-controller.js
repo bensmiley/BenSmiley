@@ -15,6 +15,11 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       }
 
       PlansListController.prototype.initialize = function(opts) {
+        this.current_user_id = msgbus.reqres.request("get:current:user:id");
+        if (this.current_user_id !== 1969) {
+          this.show(new Views.BetaReleaseView(opts));
+          return;
+        }
         this.domainId = opts.domainID;
         this.subscriptionModel = msgbus.reqres.request("get:subscription:for:domain", this.domainId);
         this.subscriptionModel.fetch();
