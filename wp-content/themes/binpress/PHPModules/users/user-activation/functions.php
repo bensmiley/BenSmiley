@@ -212,7 +212,8 @@ function activate_user( $user_email ) {
     $user_data = get_user_data( $user_email );
 
     // create a user in brain tree vault
-    braintree_create_customer( $user_data );
+    //Temporarily comment out adding customer to braintree vault on user activation
+    // braintree_create_customer( $user_data );
 
 }
 
