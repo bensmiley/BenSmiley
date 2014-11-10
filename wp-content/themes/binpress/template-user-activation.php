@@ -24,8 +24,15 @@ activate_user( $user_data_object->user_email );
 // insert details in db for sending welcome email to user and new-user signup mail to admin through cron
 $user_data = array( 'user_email' => $user_data_object->user_email,
                     'user_name' => $user_data_object->display_name );
-set_user_details_for_mail( $user_data, 'new-user-welcome' );
-set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
+
+/**COMMENT OLD welcome email AND admin notification emails**/
+// set_user_details_for_mail( $user_data, 'new-user-welcome' );
+// set_user_details_for_mail( $user_data, 'admin-newuser-notification' );
+
+/**SEND EMAILS USING COMM MODULE**/
+new_user_welcome_email($user_data);
+admin_newuser_notification_email($user_data);
+
 ?>
     <!-- BEGIN CONTAINER -->
     <div class="container">
