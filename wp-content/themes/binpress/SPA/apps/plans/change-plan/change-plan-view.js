@@ -111,7 +111,7 @@ define(['marionette', 'text!apps/plans/templates/changePlanLayout.html', 'text!a
       }
     };
 
-    PaymentFormView.prototype.onPaymentSucess = function(msgText) {
+    PaymentFormView.prototype.onPaymentSuccess = function(msgText) {
       var msg;
       $('.ajax-loader-login').hide();
       this.$el.find('#success-msg').empty();

@@ -125,7 +125,7 @@ define [ 'marionette'
                 @$el.find( '.cancel-card' ).show()
 
         #show sucess msg
-        onPaymentSucess : ( msgText )->
+        onPaymentSuccess : ( msgText )->
             #hide the loader
             $( '.ajax-loader-login' ).hide()
 
