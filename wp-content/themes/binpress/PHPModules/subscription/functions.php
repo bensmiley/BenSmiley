@@ -323,6 +323,105 @@ function subscription_active_email($user_name,$email_id, $subscription_id){
 }
 
 /*  
+* Send email when a subscription is successfully charged for
+*/
+function subscription_charged_email($user_name,$email_id, $subscription_id){
+
+    global $aj_comm;
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'subscription_charged'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+/*  
+* Send email when a subscription is not successfully charged for
+*/
+function subscription_uncharged_email($user_name,$email_id, $subscription_id){
+
+    global $aj_comm;
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'subscription_uncharged'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+/*  
+* Send email when a subscription is not successfully charged for
+*/
+function subscription_past_due_email($user_name,$email_id, $subscription_id){
+
+    global $aj_comm;
+
+    $meta_data = array(
+        'email_id' => $email_id,
+        'user_name' => $user_name,
+        'subscription_id' => $subscription_id
+    );
+
+    $comm_data = array(
+        'component' => 'chatcat_subscriptions',
+        'communication_type' => 'subscription_went_past_due'
+    );
+
+    $user = get_user_by( 'email', $email_id );
+
+    $recipient_emails =  array(
+                            array(
+                                'user_id' => $user->ID,
+                                'type' => 'email',
+                                'value' => $user->user_email,
+                                'status' => 'linedup'
+                            )
+                        );
+
+    $aj_comm->create_communication($comm_data,$meta_data,$recipient_emails);
+
+}
+
+/*  
 * Send email when a subscription is canceled
 */
 function subscription_canceled_email($user_name,$email_id, $subscription_id){
