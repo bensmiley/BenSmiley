@@ -15,9 +15,9 @@ define [ 'app'
                 @current_user_id = msgbus.reqres.request "get:current:user:id"
 
                 # Only for one test user billing view is enabled on chatcat.io 
-                if @current_user_id isnt 1969
-                    @show new Views.BetaReleaseView opts
-                    return
+                # if @current_user_id isnt 1969
+                #     @show new Views.BetaReleaseView opts
+                #     return
 
                 #get the domain ID from the options passed to controller
                 @domainId = opts.domainID
