@@ -53,9 +53,17 @@ function ajax_reset_user_password() {
 
     //insert the hashed user activation key in db for the user
     update_new_user_activation_key_db( $hashed_user_activation_key, $user_login );
+    
+    /**COMMENT OLD EMAIL SENDING
     //insert user details in db for sending password reset email through cron
     set_user_details_for_mail(array( 'user_email' => $user_email ), 'user-password-reset' );
     send_mail_cron();
+    **/
+
+    /**EMAILS THROUGH COMM MODULE**/
+    $userdata = array('user_name' => $user_data->display_name, 
+                      'user_email' => $user_data->user_email );
+    user_password_reset_email($userdata,$hashed_user_activation_key);
 
     $msg = '<div class="alert alert-info"><button class="close" data-dismiss="alert"></button>A password reset email has been sent to your email address.</div>';
     wp_send_json( array( 'code' => 'OK', 'msg' => $msg ) );
