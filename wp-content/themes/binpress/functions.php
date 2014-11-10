@@ -14,6 +14,7 @@ require_once 'PHPModules/users/signup/ajax.php';
 require_once 'PHPModules/users/login/ajax.php';
 require_once 'PHPModules/users/forgot-password/ajax.php';
 require_once 'PHPModules/users/user-activation/functions.php';
+require_once 'PHPModules/users/user-emails/functions.php';
 require_once 'PHPModules/users/user-profile/ajax.php';
 require_once 'PHPModules/users/billing/ajax.php';
 require_once 'PHPModules/domains/ajax.php';
@@ -566,6 +567,15 @@ function chatcat_add_communication_components($defined_comm_components){
     );
 
     $ajcm_components['chatcat_subscriptions'] = $comm_arr;
+
+    $user_comm_arr = array(
+        'new_user_activation',
+        'new_user_welcome',
+        'admin_newuser_notification',
+        'user_password_reset'
+    );
+
+    $ajcm_components['chatcat_users'] = $user_comm_arr;
 
     return $ajcm_components;
 

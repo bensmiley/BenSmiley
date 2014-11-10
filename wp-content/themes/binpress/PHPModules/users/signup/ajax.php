@@ -57,10 +57,14 @@ function ajax_new_user_signup() {
     //insert the user activation key into the user record
     set_user_activation_key( $user_activation_key, $user_id );
 
-    //insert user details in db for sending user-activation email through cron
-    set_user_details_for_mail( $user_data, 'new-user-activation' );
+    /**COMMENT OLD EMAIL SENDING**/
+    // //insert user details in db for sending user-activation email through cron
+    // set_user_details_for_mail( $user_data, 'new-user-activation' );
 
-    send_mail_cron();
+    // send_mail_cron();
+
+    /**SEND EMAILS THROUGH COMM MODULE**/
+    new_user_activation_email($user_data,$user_activation_key);
 
     wp_send_json( array( 'code' => 'OK',
         'msg' => '<div class="alert alert-info">
