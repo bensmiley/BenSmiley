@@ -30,7 +30,7 @@ function getvars_subscription_active($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-activated'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -76,7 +76,7 @@ function getvars_subscription_charged($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-charged'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -115,7 +115,7 @@ function getvars_subscription_uncharged($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-uncharged'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -154,7 +154,7 @@ function getvars_subscription_went_past_due($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-past-due'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -187,7 +187,7 @@ function getvars_subscription_canceled($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-canceled'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -219,7 +219,7 @@ function getvars_pending_subscription_canceled($recipients_email,$comm_data){
 
     $template_data['name']          = 'subscription-canceled'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 

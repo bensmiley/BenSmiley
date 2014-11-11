@@ -16,7 +16,7 @@ function getvars_new_user_activation($recipients_email,$comm_data){
 
     $template_data['name']          = 'new-user-activation'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -41,7 +41,7 @@ function getvars_user_password_reset($recipients_email,$comm_data){
 
     $template_data['name']          = 'user-password-reset'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -65,7 +65,7 @@ function getvars_new_user_welcome($recipients_email,$comm_data){
 
     $template_data['name']          = 'new-user-welcome'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
@@ -88,7 +88,7 @@ function getvars_admin_newuser_notification($recipients_email,$comm_data){
 
     $template_data['name']          = 'admin-new-user-notification'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
-    $template_data['from_email']    = 'nutankamat769@gmail.com';
+    $template_data['from_email']    = 'chatcatio@outlook.com';
     $template_data['from_name']     = 'Chatcat.io';
 
 
