@@ -9021,7 +9021,7 @@ ul.my-friends li .profile-pic {
 	bottom:0;
 	right:5%;
 }
-.page-template-template-signup-login-php{
+.page-template-template-signup-login-php, .page-template-template-reset-password-php{
 background: #F3F3F3 !important;
 }
 #menu-top-menu{
