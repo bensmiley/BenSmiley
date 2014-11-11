@@ -10,6 +10,7 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       __extends(PlansListController, _super);
 
       function PlansListController() {
+        this.cancelPaidSubscription = __bind(this.cancelPaidSubscription, this);
         this.showPlanListView = __bind(this.showPlanListView, this);
         return PlansListController.__super__.constructor.apply(this, arguments);
       }
@@ -55,10 +56,8 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       };
 
       PlansListController.prototype.cancelPaidSubscription = function(activeSubscriptionId, domainId) {
-        var options;
-        console.log("Cancel paidd");
-        console.log(activeSubscriptionId);
-        console.log(domainId);
+        var options, planListShowView;
+        planListShowView = this.getPlanListView(this.subscriptionModel);
         options = {
           url: AJAXURL,
           method: "POST",
@@ -70,8 +69,7 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
         };
         return $.ajax(options).done((function(_this) {
           return function(response) {
-            console.log("Response");
-            return console.log(response.data);
+            return planListShowView.triggerMethod("cancel:subscription:msg", response.data);
           };
         })(this));
       };

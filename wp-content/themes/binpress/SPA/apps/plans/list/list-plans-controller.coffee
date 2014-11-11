@@ -54,10 +54,8 @@ define [ 'app'
                     model : subscriptionModel
                     domainId : @domainId
 
-            cancelPaidSubscription : ( activeSubscriptionId, domainId ) ->
-                console.log "Cancel paidd"
-                console.log activeSubscriptionId
-                console.log domainId
+            cancelPaidSubscription : ( activeSubscriptionId, domainId ) =>
+                planListShowView = @getPlanListView @subscriptionModel
                 options =
                     url : AJAXURL
                     method : "POST"
@@ -67,8 +65,7 @@ define [ 'app'
                         domainId : domainId
 
                 $.ajax( options ).done ( response )=>
-                    console.log "Response"
-                    console.log response.data
+                    planListShowView.triggerMethod "cancel:subscription:msg", response.data
 
         #handler for showing the plans list page,options to be passed to controller are:
         # region :  App.mainContentRegion

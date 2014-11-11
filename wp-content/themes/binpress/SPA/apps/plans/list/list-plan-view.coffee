@@ -34,6 +34,11 @@ define [ 'marionette'
                 @$el.addClass 'highlight'
                 @$el.find( '.plan-link' ).attr 'href' : 'javascript:void(0)'
 
+            pendingSubscriptionId = Marionette.getOption @, 'pendingSubscriptionId'
+            # console.log pendingSubscriptionId
+            if pendingSubscriptionId is 'BENAJFREE'
+                @$el.find( '.plan-link' ).attr 'href' : 'javascript:void(0)'
+
 
     # Plans list main view
     class PlansListView extends Marionette.CompositeView
@@ -46,7 +51,7 @@ define [ 'marionette'
 
         events : ->
             'click #btn-cancel-paid-subscription' : ->
-                console.log "Cancel Paid subscription"
+                # console.log "Cancel Paid subscription"
                 activeSubscriptionId = (@model.get 'active_subscription').subscription_id
                 domainId = @model.get 'domain_id'
                 @trigger "cancel:paid:subscription", activeSubscriptionId, domainId
@@ -72,8 +77,21 @@ define [ 'marionette'
         itemViewOptions : ->
             planName = (@model.get 'active_subscription').plan_name
             domainID = Marionette.getOption @, 'domainId'
+            if not _.isUndefined @model.get 'pending_subscription'
+                pendingSubscription = (@model.get 'pending_subscription').subscription_id
+            else
+                pendingSubscription = undefined
+            pendingSubscriptionId: pendingSubscription
             activePlanName : planName
             domainId : domainID
+
+
+        onCancelSubscriptionMsg : ( msgText )->
+            $( '#btn-cancel-paid-subscription' ).hide()
+            $( '#success-msg' ).empty()
+            msg = "<div class='alert alert-success'>
+                    <button class='close' data-dismiss='alert'>&times;</button>"+msgText+"<div>"
+            $( '#success-msg' ).append( msg )
 
 
     class BetaReleaseView extends Marionette.ItemView

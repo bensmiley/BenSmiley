@@ -18,7 +18,7 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
     SinglePlanView.prototype.className = 'plans';
 
     SinglePlanView.prototype.onShow = function() {
-      var activePlanName, domainId, linkValue, newLinkValue, planName;
+      var activePlanName, domainId, linkValue, newLinkValue, pendingSubscriptionId, planName;
       linkValue = this.$el.find('.plan-link').attr('href');
       domainId = Marionette.getOption(this, 'domainId');
       newLinkValue = "" + linkValue + "/" + domainId;
@@ -29,6 +29,12 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
       planName = this.model.get('plan_name');
       if (activePlanName === planName) {
         this.$el.addClass('highlight');
+        this.$el.find('.plan-link').attr({
+          'href': 'javascript:void(0)'
+        });
+      }
+      pendingSubscriptionId = Marionette.getOption(this, 'pendingSubscriptionId');
+      if (pendingSubscriptionId === 'BENAJFREE') {
         return this.$el.find('.plan-link').attr({
           'href': 'javascript:void(0)'
         });
@@ -55,7 +61,6 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
       return {
         'click #btn-cancel-paid-subscription': function() {
           var activeSubscriptionId, domainId;
-          console.log("Cancel Paid subscription");
           activeSubscriptionId = (this.model.get('active_subscription')).subscription_id;
           domainId = this.model.get('domain_id');
           return this.trigger("cancel:paid:subscription", activeSubscriptionId, domainId);
@@ -86,13 +91,27 @@ define(['marionette', 'text!apps/plans/templates/listPlanView.html', 'text!apps/
     };
 
     PlansListView.prototype.itemViewOptions = function() {
-      var domainID, planName;
+      var domainID, pendingSubscription, planName;
       planName = (this.model.get('active_subscription')).plan_name;
       domainID = Marionette.getOption(this, 'domainId');
+      if (!_.isUndefined(this.model.get('pending_subscription'))) {
+        pendingSubscription = (this.model.get('pending_subscription')).subscription_id;
+      } else {
+        pendingSubscription = void 0;
+      }
       return {
+        pendingSubscriptionId: pendingSubscription,
         activePlanName: planName,
         domainId: domainID
       };
+    };
+
+    PlansListView.prototype.onCancelSubscriptionMsg = function(msgText) {
+      var msg;
+      $('#btn-cancel-paid-subscription').hide();
+      $('#success-msg').empty();
+      msg = "<div class='alert alert-success'> <button class='close' data-dismiss='alert'>&times;</button>" + msgText + "<div>";
+      return $('#success-msg').append(msg);
     };
 
     return PlansListView;
