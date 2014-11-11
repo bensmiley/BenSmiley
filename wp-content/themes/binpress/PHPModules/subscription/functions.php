@@ -512,6 +512,13 @@ function get_subscription_email_data($new_subscription_id, $domain_id=NULL){
                                             'amount' => $new_plan_data->price,
                                             'plan_features' => $new_plan_data->description
                                             );
+    if (isset($new_subscription_data[ 'bill_start' ])) 
+       $subscription_active_email_data['bill_start'] = $new_subscription_data[ 'bill_start' ];
+
+    if (isset($new_subscription_data[ 'bill_end' ])) 
+         $subscription_active_email_data['bill_end'] = $new_subscription_data[ 'bill_end' ];
+
+
     return $subscription_active_email_data;
 }
 
