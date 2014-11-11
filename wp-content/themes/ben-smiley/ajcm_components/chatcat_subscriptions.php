@@ -110,8 +110,10 @@ function getvars_subscription_uncharged($recipients_email,$comm_data){
     $new_plan = $subscription_active_email_details['new_plan'];
     $amount = $subscription_active_email_details['amount'];
     $plan_features = $subscription_active_email_details['plan_features'];
+    $bill_start = $subscription_active_email_details['bill_start'];
+    $bill_end = $subscription_active_email_details['bill_end'];
 
-    $subject    = 'ChatCat.io - Plan Renewal failed for '.$domain_name; //New Plan selected for <Domain Name>
+    $subject    = 'ChatCat.io - Payment Failed for '.$domain_name; //New Plan selected for <Domain Name>
 
     $template_data['name']          = 'subscription-uncharged'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;
@@ -126,6 +128,8 @@ function getvars_subscription_uncharged($recipients_email,$comm_data){
     $template_data['global_merge_vars'][] = array('name' => 'DOMAIN_NAME','content' => $domain_name);
     $template_data['global_merge_vars'][] = array('name' => 'AMOUNT','content' => $amount);
     $template_data['global_merge_vars'][] = array('name' => 'PLAN_FEATURES','content' => $plan_features);
+    $template_data['global_merge_vars'][] = array('name' => 'BILL_START','content' => $bill_start);
+    $template_data['global_merge_vars'][] = array('name' => 'BILL_END','content' => $bill_end);    
 
 
     return $template_data;
