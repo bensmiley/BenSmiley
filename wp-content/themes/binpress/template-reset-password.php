@@ -23,67 +23,69 @@ $user_data_object = $validated_url[ 'user_data_obj' ];
 // on successful validation: clear the activation key
 reset_activation_key( $user_data_object->user_email ); ?>
 
-    <div class="row login-container">
-        <div class="col-md-3 ">
-        </div>
-        <div class="col-md-6 col-md-offset-1">
-            <h2> Reset Password</h2>
-            <br>
+    <div class="container">
+        <div class="row reset-container">
+            <div class="col-md-3 ">
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+                <h2> Reset Password</h2>
+                <br>
 
-            <form id="reset-password-form" class="login-form" method="post"  >
-                <div class="row">
-                    <div class="form-group col-md-10">
-                        <label class="form-label">Email</label>
+                <form id="reset-password-form" class="login-form" method="post"  >
+                    <div class="row">
+                        <div class="form-group col-md-10">
+                            <label class="form-label">Email</label>
 
-                        <div class="controls">
-                            <div class="input-with-icon  right">
-                                <i class=""></i>
-                                <input type="text" name="user_email" id="user_email" class="form-control"
-                                       value="<?php echo $_GET[ 'login' ]; ?>">
+                            <div class="controls">
+                                <div class="input-with-icon  right">
+                                    <i class=""></i>
+                                    <input type="text" name="user_email" id="user_email" class="form-control"
+                                           value="<?php echo $_GET[ 'login' ]; ?>">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-10">
-                        <label class="form-label">Password</label>
-                        <span class="help"></span>
+                    <div class="row">
+                        <div class="form-group col-md-10">
+                            <label class="form-label">Password</label>
+                            <span class="help"></span>
 
-                        <div class="controls">
-                            <div class="input-with-icon  right">
-                                <i class=""></i>
-                                <input type="password" name="user_pass" id="user_pass" class="form-control">
+                            <div class="controls">
+                                <div class="input-with-icon  right">
+                                    <i class=""></i>
+                                    <input type="password" name="user_pass" id="user_pass" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-10">
-                        <label class="form-label">Confirm Password</label>
-                        <span class="help"></span>
+                    <div class="row">
+                        <div class="form-group col-md-10">
+                            <label class="form-label">Confirm Password</label>
+                            <span class="help"></span>
 
-                        <div class="controls">
-                            <div class="input-with-icon  right">
-                                <i class=""></i>
-                                <input type="password" name="confirm_password"
-                                       id="confirm_password" class="form-control">
+                            <div class="controls">
+                                <div class="input-with-icon  right">
+                                    <i class=""></i>
+                                    <input type="password" name="confirm_password"
+                                           id="confirm_password" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <button class="btn btn-primary btn-cons pull-right m-t-10" id="btn-reset-password"
-                                type="button">Save
-                        </button>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <button class="btn btn-primary btn-cons pull-right m-t-10" id="btn-reset-password"
+                                    type="button">Save
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <input type="reset" id="btn-reset-form" style="display: none"/>
+                    <input type="reset" id="btn-reset-form" style="display: none"/>
 
-                <div id="display-reset-msg"></div>
-            </form>
-        </div>
-        <div class="col-md-3 ">
+                    <div id="display-reset-msg"></div>
+                </form>
+            </div>
+            <div class="col-md-3 ">
+            </div>
         </div>
     </div>
 
