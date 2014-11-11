@@ -74,7 +74,7 @@ reset_activation_key( $user_data_object->user_email ); ?>
                 <div class="row">
                     <div class="col-md-10">
                         <button class="btn btn-primary btn-cons pull-right m-t-10" id="btn-reset-password"
-                                type="submit">Save
+                                type="button">Save
                         </button>
                     </div>
                 </div>
