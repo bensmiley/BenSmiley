@@ -20,13 +20,15 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
         this.current_user_id = msgbus.reqres.request("get:current:user:id");
         betaview_show_status = true;
         enabled_billing_users = BILLING_ENABLED_USERS;
-        billing_users = enabled_billing_users.split(",");
-        i = 0;
-        while (i < billing_users.length) {
-          if (parseInt(billing_users[i]) === this.current_user_id) {
-            betaview_show_status = false;
+        if (jQuery.trim(enabled_billing_users) !== "") {
+          billing_users = enabled_billing_users.split(",");
+          i = 0;
+          while (i < billing_users.length) {
+            if (parseInt(billing_users[i]) === this.current_user_id) {
+              betaview_show_status = false;
+            }
+            i++;
           }
-          i++;
         }
         console.log("Beta view status " + betaview_show_status);
         if (betaview_show_status) {
