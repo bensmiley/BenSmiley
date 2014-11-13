@@ -26,6 +26,7 @@ require_once 'PHPModules/plans/ajax.php';
 require_once 'PHPModules/subscription/ajax.php';
 require_once 'PHPModules/API/ajax.php';
 require_once 'PHPModules/braintree_webhook/ajax.php';
+require_once 'PHPModules/admin_menu/admin-menu.php';
 
 function binpress_theme_setup() {
 
@@ -218,6 +219,10 @@ function create_local_scripts( $handle ) {
     wp_localize_script( $handle, "SITEURL", site_url() );
     wp_localize_script( $handle, "SITENAME", 'Chatcat.io' );
     wp_localize_script( $handle, "CSEK", BT_CSEK );
+   
+   //Variable for getting n array of all users that have billing enabled
+    $billing_users = get_option('billing-users-chatcat');
+    wp_localize_script( $handle, "BILLING_ENABLED_USERS", $billing_users);
 
     wp_localize_script( $handle, "LOGOPATH", 'http://placehold.it/100x40' );
     wp_localize_script( $handle, "UPLOADURL", admin_url( "async-upload.php" ) );

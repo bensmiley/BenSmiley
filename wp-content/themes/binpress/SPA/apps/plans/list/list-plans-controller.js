@@ -16,8 +16,20 @@ define(['app', 'msgbus', 'regioncontroller', 'apps/plans/list/list-plan-view'], 
       }
 
       PlansListController.prototype.initialize = function(opts) {
+        var betaview_show_status, billing_users, enabled_billing_users, i;
         this.current_user_id = msgbus.reqres.request("get:current:user:id");
-        if (this.current_user_id !== 1969) {
+        betaview_show_status = true;
+        enabled_billing_users = BILLING_ENABLED_USERS;
+        billing_users = enabled_billing_users.split(",");
+        i = 0;
+        while (i < billing_users.length) {
+          if (parseInt(billing_users[i]) === this.current_user_id) {
+            betaview_show_status = false;
+          }
+          i++;
+        }
+        console.log("Beta view status " + betaview_show_status);
+        if (betaview_show_status) {
           this.show(new Views.BetaReleaseView(opts));
           return;
         }

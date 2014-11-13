@@ -13,9 +13,20 @@ define [ 'app'
             initialize : ( opts )->
 
                 @current_user_id = msgbus.reqres.request "get:current:user:id"
+                betaview_show_status = true 
+                enabled_billing_users = BILLING_ENABLED_USERS
+                billing_users = enabled_billing_users.split(",")
+
+                i = 0
+                while i < billing_users.length
+                    if parseInt(billing_users[i]) is @current_user_id
+                        betaview_show_status = false 
+                    i++
+
+                console.log "Beta view status "+betaview_show_status
 
                 # Only for one test user billing view is enabled on chatcat.io 
-                if @current_user_id isnt 1969
+                if betaview_show_status
                     @show new Views.BetaReleaseView opts
                     return
 
