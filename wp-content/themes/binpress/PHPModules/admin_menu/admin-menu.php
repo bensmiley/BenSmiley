@@ -20,6 +20,7 @@ $billing_users_arr = explode(',', $billing_users);
 
 function theme_settings_init(){
 	register_setting( 'theme_settings', 'theme_settings' );
+    wp_enqueue_style("panel_style", content_url()."/themes/binpress/css/wp-dashboard.styles.css", false, "1.0", "all");
 	wp_enqueue_script("panel_script", content_url()."/themes/binpress/PHPModules/admin_menu/panel_script.js", true, "1.0");
 }
 add_action( 'admin_init', 'theme_settings_init' );
