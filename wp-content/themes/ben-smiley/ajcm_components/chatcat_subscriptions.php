@@ -60,19 +60,14 @@ function getvars_subscription_charged($recipients_email,$comm_data){
     
     $subscription_active_email_details   = get_subscription_email_data($new_subscription_id);
 
-    // $domain_name = "domain.com";
-    // $name = "Hermione Granger";
-    // $old_plan = "Pro Plan";
-    // $new_plan = "Standard Plan";
-    // $amount = "$ 40";
-    // $plan_features = "$ 40";
-
     $domain_name = $subscription_active_email_details['domain_name'];
     $new_plan = $subscription_active_email_details['new_plan'];
     $amount = $subscription_active_email_details['amount'];
     $plan_features = $subscription_active_email_details['plan_features'];
+    $bill_start = $subscription_active_email_details['bill_start'];
+    $bill_end = $subscription_active_email_details['bill_end'];
 
-    $subject    = 'ChatCat.io - Plan Renewal for '.$domain_name; //New Plan selected for <Domain Name>
+    $subject    = 'ChatCat.io - Payment Success for '.$domain_name; //New Plan selected for <Domain Name>
 
     $template_data['name']          = 'subscription-charged'; // [slug] name or slug of a template that exists in the user's mandrill account
     $template_data['subject']       = $subject;

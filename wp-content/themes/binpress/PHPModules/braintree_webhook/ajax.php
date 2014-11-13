@@ -55,7 +55,7 @@ function ajax_braintree_webhook() {
 		switch ($webhook_kind) {
 			case 'subscription_charged_successfully':
 				echo "Charged successfully";
-				// bt_subscription_charged_successfully($new_subscription_id,$customer_details);
+				bt_subscription_charged_successfully($new_subscription_id,$customer_details);
 				break;
 
 			case 'subscription_charged_unsuccessfully':
