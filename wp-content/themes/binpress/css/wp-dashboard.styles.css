@@ -7,7 +7,7 @@
 }
 .widefat.users th:first-child,
 .widefat.users td:first-child {
-  width: 1%;
+  width: 40px;
 }
 .widefat.users th input,
 .widefat.users td input {
