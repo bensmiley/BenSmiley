@@ -82,6 +82,9 @@ function getvars_subscription_charged($recipients_email,$comm_data){
     $template_data['global_merge_vars'][] = array('name' => 'DOMAIN_NAME','content' => $domain_name);
     $template_data['global_merge_vars'][] = array('name' => 'AMOUNT','content' => $amount);
     $template_data['global_merge_vars'][] = array('name' => 'PLAN_FEATURES','content' => $plan_features);
+    $template_data['global_merge_vars'][] = array('name' => 'BILL_START','content' => $bill_start);
+    $template_data['global_merge_vars'][] = array('name' => 'BILL_END','content' => $bill_end);    
+
 
 
     return $template_data;
