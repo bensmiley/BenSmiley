@@ -12,7 +12,7 @@
 require_once ABSPATH  .'wp-content/themes/binpress/vendor/braintree/braintree_php/lib/Braintree.php';
 
 
-Braintree_Configuration::environment('sandbox');
+Braintree_Configuration::environment(BT_ENVIRONMENT);
 Braintree_Configuration::merchantId(BT_MERCHANT_ID);
 Braintree_Configuration::publicKey(BT_PUBLIC_KEY);
 Braintree_Configuration::privateKey(BT_PRIVATE_KEY);
