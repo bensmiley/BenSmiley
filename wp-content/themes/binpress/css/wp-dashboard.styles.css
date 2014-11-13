@@ -1,0 +1,15 @@
+.widefat.users th {
+  font-weight: 600;
+}
+.widefat.users th,
+.widefat.users td {
+  text-align: left;
+}
+.widefat.users th:first-child,
+.widefat.users td:first-child {
+  width: 1%;
+}
+.widefat.users th input,
+.widefat.users td input {
+  margin-left: 8px;
+}
