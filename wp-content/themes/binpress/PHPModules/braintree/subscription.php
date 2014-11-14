@@ -49,7 +49,9 @@ function create_subscription_in_braintree( $credit_card_token, $plan_id ) {
 
     $create_subscription = Braintree_Subscription::create( array(
         'paymentMethodToken' => $credit_card_token,
-        'planId' => $plan_id
+        'planId' => $plan_id,
+        'merchantAccountId' => DEFAULT_MERCHANT_ACCOUNTID
+        
     ) );
 
     if ( $create_subscription->success ) {
@@ -103,7 +105,8 @@ function create_pending_subscription_in_braintree( $card_token, $plan_id, $new_b
     $create_subscription = Braintree_Subscription::create( array(
         'paymentMethodToken' => $card_token,
         'planId' => $plan_id,
-        'firstBillingDate' => $new_billing_date
+        'firstBillingDate' => $new_billing_date,
+        'merchantAccountId' => DEFAULT_MERCHANT_ACCOUNTID
     ) );
 
     if ( $create_subscription->success ) {
